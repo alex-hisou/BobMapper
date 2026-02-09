@@ -33,8 +33,13 @@ namespace BobMapper.Model
         {
             internal Coordinate coordinates;
             internal int rotation;
-
             public Coordinate Coordinates { get; set; }
+
+            internal Prop(Coordinate coordinates, int rotation)
+            {
+                this.coordinates = coordinates;
+                this.rotation = rotation;
+            }
 
             public void DeleteObject()
             {
@@ -49,27 +54,15 @@ namespace BobMapper.Model
 
         internal class NPC : IObject
         {
-            internal enum NPCType
-            {
-                BulkyCop,
-                BaldCop,
-                RedDresslady,
-                RedShirtGuy,
-                Grandma,
-                Dog,
-                Agent,
-                Scientist,
-                RedShirtLady2,
-                SkinnyCop,
-                BaldCop_Flashlight,
-                SecretSam,
-                Biff
-
-            }
+            
             internal NPCType type;
             internal Coordinate coordinates;
             public Coordinate Coordinates { get; set; }
-
+            internal NPC(Coordinate coordinates, NPCType npcType)
+            {
+                this.coordinates = coordinates;
+                this.type = npcType;
+            }
             public void UpdatePos(Coordinate newCoordinate)
             {
                 throw new NotImplementedException();
@@ -78,6 +71,23 @@ namespace BobMapper.Model
             public void DeleteObject()
             {
                 throw new NotImplementedException();
+            }
+            internal enum NPCType
+            {
+                BulkyCop,
+                BaldCop,
+                RedDressLady,
+                RedShirtGuy,
+                Grandma,
+                Dog,
+                Agent,
+                Scientist,
+                RedDressLady2,
+                SkinnyCop,
+                BaldCop_Flashlight,
+                SecretSam,
+                Biff
+
             }
         }
 
@@ -89,6 +99,14 @@ namespace BobMapper.Model
             internal int connectToId;
 
             public Coordinate Coordinates { get; set; }
+
+            internal PathPoint(Coordinate coordinates, int id, int connectFromID, int connectToId)
+            {
+                this.coordinates = coordinates;
+                this.id = id;
+                this.connectFromId = connectFromID;
+                this.connectToId = connectToId;
+            }
 
             public void DeleteObject()
             {
@@ -118,6 +136,12 @@ namespace BobMapper.Model
             internal Coordinate coordinates;
 
             public Coordinate Coordinates { get; set; }
+
+            internal Misc(Coordinate coordinates, MiscObjects type)
+            {
+                this.coordinates = coordinates;
+                this.type = type;
+            }
 
             public void UpdatePos(Coordinate newCoordinate)
             {
