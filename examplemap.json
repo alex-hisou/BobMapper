@@ -1,1 +1,85 @@
-{"walls":[{},{}],"props":[{"Coordinates":{}},{"Coordinates":{}}],"npcs":[{"Coordinates":{}},{"Coordinates":{}}],"pathPoints":[{"Coordinates":{}},{"Coordinates":{}}],"miscs":[{"Coordinates":{}}]}
+{
+  "walls": [
+    {
+      "Point1": {
+        "x": 1,
+        "y": 2
+      },
+      "Point2": {
+        "x": 2,
+        "y": 2
+      },
+      "Type": 0
+    },
+    {
+      "Point1": {
+        "x": 3,
+        "y": 2
+      },
+      "Point2": {
+        "x": 4,
+        "y": 2
+      },
+      "Type": 0
+    }
+  ],
+  "props": [
+    {
+      "Rotation": 180,
+      "Coordinates": {
+        "x": 50,
+        "y": 20
+      }
+    },
+    {
+      "Rotation": 90,
+      "Coordinates": {
+        "x": 10,
+        "y": 40
+      }
+    }
+  ],
+  "npcs": [
+    {
+      "Coordinates": {
+        "x": 10,
+        "y": 20
+      }
+    },
+    {
+      "Coordinates": {
+        "x": 40,
+        "y": 20
+      }
+    }
+  ],
+  "pathPoints": [
+    {
+      "Id": 1,
+      "ConnectFromId": 0,
+      "ConnectToId": 2,
+      "Coordinates": {
+        "x": 10,
+        "y": 20
+      }
+    },
+    {
+      "Id": 2,
+      "ConnectFromId": 1,
+      "ConnectToId": 3,
+      "Coordinates": {
+        "x": 10,
+        "y": 20
+      }
+    }
+  ],
+  "miscs": [
+    {
+      "Type": 9,
+      "Coordinates": {
+        "x": 10,
+        "y": 20
+      }
+    }
+  ]
+}

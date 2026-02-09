@@ -21,7 +21,7 @@ namespace BobMapper
         internal static void SaveData(Map map)
         {
             var wrapper = new { map.walls, map.props, map.npcs, map.pathPoints, map.miscs };
-            var jsonData = JsonSerializer.Serialize(wrapper);
+            var jsonData = JsonSerializer.Serialize(wrapper, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(saveFile.ToString(), jsonData);
         }
     }

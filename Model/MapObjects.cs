@@ -6,39 +6,38 @@ using System.Threading.Tasks;
 
 namespace BobMapper.Model
 {
-    internal class MapObjects
+    public class MapObjects
     {
-        internal class Wall
+        public class Wall
         {
-            internal enum WallType
+            public enum WallType
             {
                 Normal,
                 Door,
                 Paperthin,
                 Fence
             }
-            internal Coordinate point1;
-            internal Coordinate point2;
-            internal WallType type;
+            public Coordinate Point1 { get; set; }
+            public Coordinate Point2 { get; set; }
+            public WallType Type { get; set; }
 
-            internal Wall(Coordinate point1, Coordinate point2, WallType type)
+            public Wall(Coordinate point1, Coordinate point2, WallType type)
             {
-                this.point1 = point1;
-                this.point2 = point2;
-                this.type = type;
+                Point1 = point1;
+                Point2 = point2;
+                Type = type;
             }
         }
 
-        internal class Prop : IObject
+        public class Prop : IObject
         {
-            internal Coordinate coordinates;
-            internal int rotation;
+            public int Rotation { get; set; }
             public Coordinate Coordinates { get; set; }
 
-            internal Prop(Coordinate coordinates, int rotation)
+            public Prop(Coordinate coordinates, int rotation)
             {
-                this.coordinates = coordinates;
-                this.rotation = rotation;
+                Coordinates = coordinates;
+                Rotation = rotation;
             }
 
             public void DeleteObject()
@@ -52,16 +51,15 @@ namespace BobMapper.Model
             }
         }
 
-        internal class NPC : IObject
+        public class NPC : IObject
         {
             
-            internal NPCType type;
-            internal Coordinate coordinates;
+            internal NPCType Type { get; set; }
             public Coordinate Coordinates { get; set; }
             internal NPC(Coordinate coordinates, NPCType npcType)
             {
-                this.coordinates = coordinates;
-                this.type = npcType;
+                Coordinates = coordinates;
+                Type = npcType;
             }
             public void UpdatePos(Coordinate newCoordinate)
             {
@@ -72,7 +70,7 @@ namespace BobMapper.Model
             {
                 throw new NotImplementedException();
             }
-            internal enum NPCType
+            public enum NPCType
             {
                 BulkyCop,
                 BaldCop,
@@ -91,21 +89,20 @@ namespace BobMapper.Model
             }
         }
 
-        internal class PathPoint : IObject
+        public class PathPoint : IObject
         {
-            internal Coordinate coordinates;
-            internal int id;
-            internal int connectFromId;
-            internal int connectToId;
+            public int Id { get; set; }
+            public int ConnectFromId { get; set; }
+            public int ConnectToId { get; set; }
 
             public Coordinate Coordinates { get; set; }
 
-            internal PathPoint(Coordinate coordinates, int id, int connectFromID, int connectToId)
+            public PathPoint(Coordinate coordinates, int id, int connectFromID, int connectToId)
             {
-                this.coordinates = coordinates;
-                this.id = id;
-                this.connectFromId = connectFromID;
-                this.connectToId = connectToId;
+                Coordinates = coordinates;
+                Id = id;
+                ConnectFromId = connectFromID;
+                ConnectToId = connectToId;
             }
 
             public void DeleteObject()
@@ -119,9 +116,9 @@ namespace BobMapper.Model
             }
         }
 
-        internal class Misc : IObject
+        public class Misc : IObject
         {
-            internal enum MiscObjects
+            public enum MiscObjects
             {
                 Loot = 6,
                 MainLoot = 7,
@@ -132,15 +129,14 @@ namespace BobMapper.Model
                 PermLock = 13
             }
 
-            internal MiscObjects type;
-            internal Coordinate coordinates;
+            public MiscObjects Type { get; set; }
 
             public Coordinate Coordinates { get; set; }
 
-            internal Misc(Coordinate coordinates, MiscObjects type)
+            public Misc(Coordinate coordinates, MiscObjects type)
             {
-                this.coordinates = coordinates;
-                this.type = type;
+                Coordinates = coordinates;
+                Type = type;
             }
 
             public void UpdatePos(Coordinate newCoordinate)
@@ -154,7 +150,7 @@ namespace BobMapper.Model
             }
         }
 
-        internal enum Type
+        public enum Type
         {
             Wall,
             Prop,

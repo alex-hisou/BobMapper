@@ -15,11 +15,12 @@ namespace BobMapper
     {
     }
 
-    internal struct Coordinate
+    public struct Coordinate
     {
-        internal int x, y;
+        public int x {  get; set; }
+        public int y { get; set; }
 
-        internal Coordinate(int x, int y)
+        public Coordinate(int x, int y)
         {
             this.x = x;
             this.y = y;
