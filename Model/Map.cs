@@ -2,22 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BobMapper.Model
 {
-    internal class Map
+    public class Map
     {
-        internal int houseSize;
-        internal List<MapObjects.Wall> walls = new List<MapObjects.Wall>();
-        internal List<MapObjects.Prop> props = new List<MapObjects.Prop>();
-        internal List<MapObjects.NPC> npcs = new List<MapObjects.NPC>();
-        internal List<MapObjects.PathPoint> pathPoints = new List<MapObjects.PathPoint>();
-        internal List<MapObjects.Misc> miscs = new List<MapObjects.Misc>();
+        public int houseSize;
+        public List<MapObjects.Wall> walls = new List<MapObjects.Wall>();
+        public List<MapObjects.Prop> props = new List<MapObjects.Prop>();
+        public List<MapObjects.NPC> npcs = new List<MapObjects.NPC>();
+        public List<MapObjects.PathPoint> pathPoints = new List<MapObjects.PathPoint>();
+        public List<MapObjects.Misc> miscs = new List<MapObjects.Misc>();
 
-        internal Map() 
+        public Map()
         {
             
         }
+
+        
+        [JsonConstructor]
+        public Map(List<MapObjects.Wall> walls, List<MapObjects.Prop> props, List<MapObjects.NPC> npcs, List<MapObjects.PathPoint> pathPoints, List<MapObjects.Misc> miscs)
+        {
+            this.walls = walls;
+            this.props = props;
+            this.npcs = npcs;
+            this.pathPoints = pathPoints;
+            this.miscs = miscs;
+        }
+        
     }
 }

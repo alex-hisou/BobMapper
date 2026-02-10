@@ -8,6 +8,7 @@ namespace BobMapper.Model
 {
     public class MapObjects
     {
+        
         public class Wall
         {
             public enum WallType
@@ -54,12 +55,12 @@ namespace BobMapper.Model
         public class NPC : IObject
         {
             
-            internal NPCType Type { get; set; }
+            public NPCType Type { get; set; }
             public Coordinate Coordinates { get; set; }
-            internal NPC(Coordinate coordinates, NPCType npcType)
+            public NPC(Coordinate coordinates, NPCType type)
             {
                 Coordinates = coordinates;
-                Type = npcType;
+                Type = type;
             }
             public void UpdatePos(Coordinate newCoordinate)
             {
@@ -158,5 +159,11 @@ namespace BobMapper.Model
             PathPoint,
             Misc
         }
+
+        private static string texture;
+
+        public static string Texture { get { return texture; } set { texture = value; }  }
+
+        private static readonly List<string> textureSchema = new() { "text 1" };
     }
 }

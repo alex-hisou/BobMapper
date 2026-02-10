@@ -41,16 +41,18 @@
   ],
   "npcs": [
     {
-      "Coordinates": {
-        "x": 10,
-        "y": 20
-      }
+        "Coordinates": {
+            "x": 10,
+            "y": 20
+        },
+        "Type":  0
     },
     {
-      "Coordinates": {
-        "x": 40,
-        "y": 20
-      }
+        "Coordinates": {
+            "x": 40,
+            "y": 20
+        },
+        "Type":  5
     }
   ],
   "pathPoints": [
