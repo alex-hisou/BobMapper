@@ -4,26 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using BobMapper.Model;
 
 namespace BobMapper.Model
 {
     public class Map
     {
         public int houseSize;
-        public List<MapObjects.Wall> walls = new List<MapObjects.Wall>();
-        public List<MapObjects.Prop> props = new List<MapObjects.Prop>();
-        public List<MapObjects.NPC> npcs = new List<MapObjects.NPC>();
-        public List<MapObjects.PathPoint> pathPoints = new List<MapObjects.PathPoint>();
-        public List<MapObjects.Misc> miscs = new List<MapObjects.Misc>();
+        public List<Wall> walls = new List<Wall>();
+        public List<Prop> props = new List<Prop>();
+        public List<NPC> npcs = new List<NPC>();
+        public List<PathPoint> pathPoints = new List<PathPoint>();
+        public List<Misc> miscs = new List<Misc>();
+        public Floor[,] floors;
 
         public Map()
         {
-            
+
         }
 
-        
-        [JsonConstructor]
-        public Map(List<MapObjects.Wall> walls, List<MapObjects.Prop> props, List<MapObjects.NPC> npcs, List<MapObjects.PathPoint> pathPoints, List<MapObjects.Misc> miscs)
+
+        [JsonConstructor] //Use only for initialization from json. Otherwise write properties directly using the no param constructor above
+        public Map(int houseSize, List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, Floor[,] floors)
         {
             this.walls = walls;
             this.props = props;
