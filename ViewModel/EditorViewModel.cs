@@ -39,8 +39,8 @@ namespace BobMapper.ViewModel
         public EditorViewModel()
         {
             Map saveMap = new Map();
-            saveMap.props.Add(new Prop(new Coordinate(10, -20), 45, "/resources/Level_Strip/box.png"));
-            saveMap.props.Add(new Prop(new Coordinate(10, -20), 45, "/resources/Level_Strip/toilet.png"));
+            saveMap.props.Add(new Prop(new Coordinate(-40, -40), 45, "/resources/Level_Strip/box.png"));
+            saveMap.props.Add(new Prop(new Coordinate(40, -20), 45, "/resources/Level_Strip/toilet.png"));
             CurrentMap = saveMap;
             Props = new ObservableCollection<Prop>(saveMap.props);
             DataParse.SaveData(saveMap);

@@ -22,8 +22,8 @@ namespace BobMapper
 
         public Coordinate(int x, int y)
         {
-            this.x = x;
-            this.y = y;
+            this.x = x * 5;
+            this.y = y * 5;
         }
     }
 }

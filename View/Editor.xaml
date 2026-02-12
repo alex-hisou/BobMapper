@@ -43,22 +43,29 @@
                     
                 </StackPanel>
             </Menu>
-            <ScrollViewer HorizontalScrollBarVisibility="Visible">
-                <Grid Background="White">
+            <ScrollViewer HorizontalScrollBarVisibility="Visible" Background="White">
+                <!-- BAD CANVAS CODE AHEAD -->
+                <Canvas RenderTransform="1 0 0 -1 0 0" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <ContentControl>
                         <ItemsControl ItemsSource="{Binding Props}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="{x:Type model:Prop}">
-                                    <StackPanel>
-                                        <Image Source="{Binding PropTexture}" Width="auto" Height="auto">
+                                    <Image Source="{Binding PropTexture}" Width="auto" Height="auto">
+                                            <Image.RenderTransform>
+                                                <TranslateTransform X="{Binding Coordinates.x}" Y="{Binding Coordinates.y}"/>
+                                            </Image.RenderTransform>
 
                                         </Image>
-                                    </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas></Canvas>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
                         </ItemsControl>
                     </ContentControl>
-                </Grid>
+                </Canvas>
             </ScrollViewer>
         </DockPanel>
         

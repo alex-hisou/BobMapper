@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Media;
 using System.Resources;
@@ -56,6 +57,7 @@ namespace BobMapper.Model
     {
         public int Rotation { get; set; }
         public Coordinate Coordinates { get; set; }
+
         public string PropTexture { get; set; }
         public Prop(Coordinate coordinates, int rotation, string propTextureName)
         {

@@ -4,18 +4,18 @@
     {
       "Rotation": 45,
       "Coordinates": {
-        "x": 10,
-        "y": -20
+        "x": -200,
+        "y": -200
       },
-      "PropTexture": "box.png"
+      "PropTexture": "/resources/Level_Strip/box.png"
     },
     {
       "Rotation": 45,
       "Coordinates": {
-        "x": 10,
-        "y": -20
+        "x": 200,
+        "y": -100
       },
-      "PropTexture": "toilet.png"
+      "PropTexture": "/resources/Level_Strip/toilet.png"
     }
   ],
   "npcs": [],
