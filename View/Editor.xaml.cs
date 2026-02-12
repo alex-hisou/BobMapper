@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BobMapper.Model;
 using BobMapper.Services;
+using BobMapper.ViewModel;
 using static BobMapper.Model.MapObjects;
 
 namespace BobMapper
@@ -22,9 +23,13 @@ namespace BobMapper
         public Editor()
         {
             InitializeComponent();
+
+            EditorViewModel viewModel = new EditorViewModel();
+            DataContext = viewModel;
+
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight; //otherwise covers taskbar
-            Map map = DataParse.LoadData();
-            Console.WriteLine(map.npcs); 
+            
+            //Map map = DataParse.LoadData();
         }
     }
 }

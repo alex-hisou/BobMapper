@@ -1,87 +1,25 @@
 {
-  "walls": [
-    {
-      "Point1": {
-        "x": 1,
-        "y": 2
-      },
-      "Point2": {
-        "x": 2,
-        "y": 2
-      },
-      "Type": 0
-    },
-    {
-      "Point1": {
-        "x": 3,
-        "y": 2
-      },
-      "Point2": {
-        "x": 4,
-        "y": 2
-      },
-      "Type": 0
-    }
-  ],
+  "walls": [],
   "props": [
     {
-      "Rotation": 180,
+      "Rotation": 45,
       "Coordinates": {
-        "x": 50,
-        "y": 20
-      }
+        "x": 10,
+        "y": -20
+      },
+      "PropTexture": "box.png"
     },
     {
-      "Rotation": 90,
+      "Rotation": 45,
       "Coordinates": {
         "x": 10,
-        "y": 40
-      }
+        "y": -20
+      },
+      "PropTexture": "toilet.png"
     }
   ],
-  "npcs": [
-    {
-        "Coordinates": {
-            "x": 10,
-            "y": 20
-        },
-        "Type":  0
-    },
-    {
-        "Coordinates": {
-            "x": 40,
-            "y": 20
-        },
-        "Type":  5
-    }
-  ],
-  "pathPoints": [
-    {
-      "Id": 1,
-      "ConnectFromId": 0,
-      "ConnectToId": 2,
-      "Coordinates": {
-        "x": 10,
-        "y": 20
-      }
-    },
-    {
-      "Id": 2,
-      "ConnectFromId": 1,
-      "ConnectToId": 3,
-      "Coordinates": {
-        "x": 10,
-        "y": 20
-      }
-    }
-  ],
-  "miscs": [
-    {
-      "Type": 9,
-      "Coordinates": {
-        "x": 10,
-        "y": 20
-      }
-    }
-  ]
+  "npcs": [],
+  "pathPoints": [],
+  "miscs": [],
+  "floors": null
 }
