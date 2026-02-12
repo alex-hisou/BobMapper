@@ -11,20 +11,19 @@ namespace BobMapper.Services
 {
     internal static class DataParse
     {
-        private static FileInfo saveFile = new FileInfo("examplemap.json");
-        private static JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
+        private static readonly FileInfo saveFile = new("examplemap.json");
+        private static readonly JsonSerializerOptions jsonSerializerOptions = new() { WriteIndented = true, IncludeFields = true };
 
         internal static Map LoadData()
         {
             var jsonData = File.ReadAllText(saveFile.ToString());
-            Map map = new Map();
-            map = JsonSerializer.Deserialize<Map>(jsonData, jsonSerializerOptions);
+            Map map = JsonSerializer.Deserialize<Map>(jsonData, jsonSerializerOptions);
             return map;
         }
 
         internal static void SaveData(Map map)
         {
-            var wrapper = new { map.walls, map.props, map.npcs, map.pathPoints, map.miscs };
+            var wrapper = new { map.walls, map.props, map.npcs, map.pathPoints, map.miscs, map.floors };
             var jsonData = JsonSerializer.Serialize(wrapper, jsonSerializerOptions);
             File.WriteAllText(saveFile.ToString(), jsonData);
         }
