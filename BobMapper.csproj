@@ -40,8 +40,12 @@
     <Resource Include="resources\Level_Strip.png" />
     <Resource Include="resources\Props_Strip.atlas.xml" />
     <Resource Include="resources\Props_strip.png" />
-	<Resource Include="resources\Level_Strip\toilet.png"/>
-	<Resource Include="resources\Level_Strip\box.png"/>  
+	<Resource Include="resources\Level_Strip\toilet.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Resource>
+	<Resource Include="resources\Level_Strip\box.png">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Resource>  
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\Level_Strip\" />

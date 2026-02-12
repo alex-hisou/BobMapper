@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using BobMapper.Model;
+using BobMapper.Properties;
 
 namespace BobMapper.Model
 {
@@ -17,6 +19,8 @@ namespace BobMapper.Model
         public List<PathPoint> pathPoints = new List<PathPoint>();
         public List<Misc> miscs = new List<Misc>();
         public Floor[,] floors;
+
+        
 
         public Map()
         {

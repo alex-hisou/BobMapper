@@ -12,8 +12,7 @@ namespace BobMapper.ViewModel
 {
     internal class EditorViewModel : ViewModelBase
     {
-        internal MapObjects.Type selectedObjectType;
-        internal int selectedObjectIndex;
+        
 
         public ObservableCollection<Prop> Props { get => props; set => props = value; }
 
@@ -40,8 +39,8 @@ namespace BobMapper.ViewModel
         public EditorViewModel()
         {
             Map saveMap = new Map();
-            saveMap.props.Add(new Prop(new Coordinate(10, -20), 45, "box.png"));
-            saveMap.props.Add(new Prop(new Coordinate(10, -20), 45, "toilet.png"));
+            saveMap.props.Add(new Prop(new Coordinate(10, -20), 45, "/resources/Level_Strip/box.png"));
+            saveMap.props.Add(new Prop(new Coordinate(10, -20), 45, "/resources/Level_Strip/toilet.png"));
             CurrentMap = saveMap;
             Props = new ObservableCollection<Prop>(saveMap.props);
             DataParse.SaveData(saveMap);

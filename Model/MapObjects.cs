@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using BobMapper.Properties;
 
 namespace BobMapper.Model
 {
-    public class MapObjects
+    public static class MapObjects
     {
+        internal static Type selectedObjectType;
+        internal static int selectedObjectIndex;
         public enum Type
         {
             Wall,
@@ -18,8 +24,7 @@ namespace BobMapper.Model
             Floor
         }
 
-
-        private static readonly List<string> textureSchema = new() { "text 1" };
+        public static ResourceManager resourceManager = Resources.ResourceManager;
     }
 
     public class Wall
@@ -52,11 +57,11 @@ namespace BobMapper.Model
         public int Rotation { get; set; }
         public Coordinate Coordinates { get; set; }
         public string PropTexture { get; set; }
-        public Prop(Coordinate coordinates, int rotation, string propTexture)
+        public Prop(Coordinate coordinates, int rotation, string propTextureName)
         {
             Coordinates = coordinates;
             Rotation = rotation;
-            PropTexture = propTexture;
+            PropTexture = propTextureName;
         }
 
         public void DeleteObject()
