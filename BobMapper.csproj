@@ -41,4 +41,9 @@
     <Resource Include="resources\Props_Strip.atlas.xml" />
     <Resource Include="resources\Props_strip.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="View\Editor.xaml.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
 </Project>
