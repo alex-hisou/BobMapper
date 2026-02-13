@@ -11,19 +11,23 @@ namespace BobMapper
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
+    /// 
+
+    
     public partial class App : Application
     {
     }
 
     public struct Coordinate
     {
+        public const int gridFactor = 5;
         public int x {  get; set; }
         public int y { get; set; }
 
         public Coordinate(int x, int y)
         {
-            this.x = x * 5;
-            this.y = y * 5;
+            this.x = x * gridFactor;
+            this.y = y * gridFactor;
         }
     }
 }

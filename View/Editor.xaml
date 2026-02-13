@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BobMapper"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:model="clr-namespace:BobMapper.Model"
         xmlns:vm="clr-namespace:BobMapper.ViewModel"
         mc:Ignorable="d"
-        Background="DimGray"
+        Background="LightGray"
         Title="Editor" Height="720" Width="1280" WindowState="Maximized" ResizeMode="NoResize">
         <Window.DataContext>
             <vm:EditorViewModel/>
@@ -38,24 +39,38 @@
                 <MenuItem Header="NPC"></MenuItem>
                 <MenuItem Header="Add Misc"></MenuItem>
             </Menu>
-            <Menu DockPanel.Dock="Right" Width="400" Height="auto" HorizontalAlignment="Right">
+            <StackPanel DockPanel.Dock="Right" Width="400" Height="auto" HorizontalAlignment="Right" Background="LightGray">
                 <StackPanel>
-                    
+                        <Label>Visibility</Label>
+                    </StackPanel>
+                    <Separator Foreground="Gray"></Separator>
+                    <StackPanel>
+                        <Label>Properties</Label>
+                    <Label> X Coordinate</Label>
+                    <TextBox></TextBox>
+                    </StackPanel>
                 </StackPanel>
-            </Menu>
             <ScrollViewer HorizontalScrollBarVisibility="Visible" Background="White">
                 <!-- BAD CANVAS CODE AHEAD -->
-                <Canvas RenderTransform="1 0 0 -1 0 0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Canvas HorizontalAlignment="Center" VerticalAlignment="Center">
                     <ContentControl>
                         <ItemsControl ItemsSource="{Binding Props}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="{x:Type model:Prop}">
                                     <Image Source="{Binding PropTexture}" Width="auto" Height="auto">
-                                            <Image.RenderTransform>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                    RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <Image.RenderTransform>
+                                            <TransformGroup>
                                                 <TranslateTransform X="{Binding Coordinates.x}" Y="{Binding Coordinates.y}"/>
-                                            </Image.RenderTransform>
-
-                                        </Image>
+                                                <RotateTransform Angle="{Binding Rotation}"/>
+                                            </TransformGroup>
+                                        </Image.RenderTransform>
+                                    </Image>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                             <ItemsControl.ItemsPanel>
@@ -65,6 +80,7 @@
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
                     </ContentControl>
+                    
                 </Canvas>
             </ScrollViewer>
         </DockPanel>
@@ -72,6 +88,10 @@
     </Grid>
 
     <Window.Resources>
-        
+        <Style TargetType="Image">
+            
+        </Style>
     </Window.Resources>
 </Window>
+
+    
