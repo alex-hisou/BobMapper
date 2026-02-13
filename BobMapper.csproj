@@ -53,4 +53,9 @@
     <Folder Include="resources\Level_Strip\" />
     <Folder Include="View\UserControls\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="View\Editor.xaml.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
 </Project>
