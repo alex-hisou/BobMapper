@@ -4,14 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BobMapper"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:model="clr-namespace:BobMapper.Model"
         xmlns:vm="clr-namespace:BobMapper.ViewModel"
         mc:Ignorable="d"
-        Background="DimGray"
+        Background="LightGray"
         Title="Editor" Height="720" Width="1280" WindowState="Maximized" ResizeMode="NoResize">
-        <Window.DataContext>
-            <vm:EditorViewModel/>
-        </Window.DataContext>
+        
     <Grid>
         <DockPanel Background="SlateGray">
             <Menu DockPanel.Dock="Top" Width="auto" Height="20">
@@ -38,27 +37,59 @@
                 <MenuItem Header="NPC"></MenuItem>
                 <MenuItem Header="Add Misc"></MenuItem>
             </Menu>
-            <Menu DockPanel.Dock="Right" Width="400" Height="auto" HorizontalAlignment="Right">
+            <StackPanel DockPanel.Dock="Right" Width="400" Height="auto" HorizontalAlignment="Right" Background="LightGray">
                 <StackPanel>
-                    
+                        <Label>Visibility</Label>
+                    </StackPanel>
+                    <Separator Foreground="Gray"></Separator>
+                <StackPanel>
+                    <Label>Properties</Label>
+                    <Expander>
+                        <StackPanel>
+                            <Label>X Coordinate</Label>
+                            <TextBox></TextBox>
+                            <Label>Y Coordinate</Label>
+                            <TextBox></TextBox>
+                        </StackPanel>
+                    </Expander>
                 </StackPanel>
-            </Menu>
-            <ScrollViewer HorizontalScrollBarVisibility="Visible">
-                <Grid Background="White">
-                    <ContentControl>
-                        <ItemsControl ItemsSource="{Binding Props}">
+                </StackPanel>
+            <ScrollViewer HorizontalScrollBarVisibility="Visible" Background="White">
+                <!-- BAD CANVAS CODE AHEAD -->
+                <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Name="PropParentCanvas">
+                    
+                        <ItemsControl ItemsSource="{Binding CurrentProps}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="{x:Type model:Prop}">
-                                    <StackPanel>
-                                        <Image Source="{Binding PropTexture}" Width="auto" Height="auto">
-
-                                        </Image>
-                                    </StackPanel>
+                                    <Image Source="{Binding PropTexture}" Width="auto" Height="auto" x:Name="img">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                    RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Image>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding Coordinates.XPos}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="{Binding Rotation}"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas></Canvas>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
                         </ItemsControl>
-                    </ContentControl>
-                </Grid>
+
+                </Canvas>
             </ScrollViewer>
         </DockPanel>
         
@@ -68,3 +99,5 @@
         
     </Window.Resources>
 </Window>
+
+    
