@@ -10,9 +10,7 @@
         mc:Ignorable="d"
         Background="LightGray"
         Title="Editor" Height="720" Width="1280" WindowState="Maximized" ResizeMode="NoResize">
-        <Window.DataContext>
-            <vm:EditorViewModel/>
-        </Window.DataContext>
+        
     <Grid>
         <DockPanel Background="SlateGray">
             <Menu DockPanel.Dock="Top" Width="auto" Height="20">
@@ -44,43 +42,53 @@
                         <Label>Visibility</Label>
                     </StackPanel>
                     <Separator Foreground="Gray"></Separator>
-                    <StackPanel>
-                        <Label>Properties</Label>
-                    <Label> X Coordinate</Label>
-                    <TextBox></TextBox>
-                    </StackPanel>
+                <StackPanel>
+                    <Label>Properties</Label>
+                    <Expander>
+                        <StackPanel>
+                            <Label>X Coordinate</Label>
+                            <TextBox></TextBox>
+                            <Label>Y Coordinate</Label>
+                            <TextBox></TextBox>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
                 </StackPanel>
             <ScrollViewer HorizontalScrollBarVisibility="Visible" Background="White">
                 <!-- BAD CANVAS CODE AHEAD -->
-                <Canvas HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <ContentControl>
-                        <ItemsControl ItemsSource="{Binding Props}">
+                <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Name="PropParentCanvas">
+                    
+                        <ItemsControl ItemsSource="{Binding CurrentProps}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="{x:Type model:Prop}">
-                                    <Image Source="{Binding PropTexture}" Width="auto" Height="auto">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                    <Image Source="{Binding PropTexture}" Width="auto" Height="auto" x:Name="img">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
                                                     RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                        <Image.RenderTransform>
-                                            <TransformGroup>
-                                                <TranslateTransform X="{Binding Coordinates.x}" Y="{Binding Coordinates.y}"/>
-                                                <RotateTransform Angle="{Binding Rotation}"/>
-                                            </TransformGroup>
-                                        </Image.RenderTransform>
-                                    </Image>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Image>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding Coordinates.XPos}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="{Binding Rotation}"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <Canvas></Canvas>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
-                    </ContentControl>
-                    
+
                 </Canvas>
             </ScrollViewer>
         </DockPanel>
@@ -88,9 +96,7 @@
     </Grid>
 
     <Window.Resources>
-        <Style TargetType="Image">
-            
-        </Style>
+        
     </Window.Resources>
 </Window>
 

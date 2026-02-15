@@ -30,6 +30,7 @@ namespace BobMapper
         {
             Editor editor = new Editor();
             editor.Show();
+            this.Close();
         }
     }
 }

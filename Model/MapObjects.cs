@@ -51,13 +51,13 @@ namespace BobMapper.Model
 
     public class Prop : IObject
     {
-        public int Rotation { get; set; }
+        public double Rotation { get; set; }
         public Coordinate Coordinates { get; set; }
 
         public string PropTexture { get; set; }
         public bool IsSelected { get; set; }
 
-        public Prop(Coordinate coordinates, int rotation, string propTextureName)
+        public Prop(Coordinate coordinates, double rotation, string propTextureName)
         {
             Coordinates = coordinates;
             Rotation = rotation;

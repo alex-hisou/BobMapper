@@ -25,8 +25,8 @@ namespace BobMapper.Model
 
         public Map(int inputHouseSize)
         {
-            Width = MapObjects.houseSizeSchema[inputHouseSize].x;
-            Height = MapObjects.houseSizeSchema[inputHouseSize].y;
+            Width = MapObjects.houseSizeSchema[inputHouseSize].XPos;
+            Height = MapObjects.houseSizeSchema[inputHouseSize].YPos;
         }
 
 

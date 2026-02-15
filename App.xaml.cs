@@ -21,13 +21,13 @@ namespace BobMapper
     public struct Coordinate
     {
         public const int gridFactor = 5;
-        public int x {  get; set; }
-        public int y { get; set; }
+        public int XPos {  get; set; }
+        public int YPos { get; set; }
 
         public Coordinate(int x, int y)
         {
-            this.x = x * gridFactor;
-            this.y = y * gridFactor;
+            this.XPos = x * gridFactor;
+            this.YPos = y * gridFactor;
         }
     }
 }

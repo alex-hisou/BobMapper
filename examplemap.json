@@ -4,8 +4,8 @@
     {
       "Rotation": 45,
       "Coordinates": {
-        "x": -25,
-        "y": -150
+        "XPos": -25,
+        "YPos": -150
       },
       "PropTexture": "/resources/Level_Strip/box.png",
       "IsSelected": false
@@ -13,8 +13,8 @@
     {
       "Rotation": 45,
       "Coordinates": {
-        "x": 200,
-        "y": -50
+        "XPos": 200,
+        "YPos": -50
       },
       "PropTexture": "/resources/Level_Strip/toilet.png",
       "IsSelected": false
