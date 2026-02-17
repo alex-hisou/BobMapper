@@ -10,7 +10,9 @@
         mc:Ignorable="d"
         Background="LightGray"
         Title="Editor" Height="720" Width="1280" WindowState="Maximized" ResizeMode="NoResize">
-        
+    <Window.DataContext>
+        <vm:EditorViewModel></vm:EditorViewModel>
+    </Window.DataContext>
     <Grid>
         <DockPanel Background="SlateGray">
             <Menu DockPanel.Dock="Top" Width="auto" Height="20">
@@ -41,19 +43,38 @@
                 <StackPanel>
                         <Label>Visibility</Label>
                     </StackPanel>
-                    <Separator Foreground="Gray"></Separator>
-                <StackPanel>
-                    <Label>Properties</Label>
-                    <Expander>
-                        <StackPanel>
-                            <Label>X Coordinate</Label>
-                            <TextBox></TextBox>
-                            <Label>Y Coordinate</Label>
-                            <TextBox></TextBox>
-                        </StackPanel>
-                    </Expander>
-                </StackPanel>
-                </StackPanel>
+                <Separator Foreground="Gray"></Separator>
+                <Label>Properties</Label>
+                <Expander>
+                    <StackPanel>
+                    <ContentControl Content="{Binding SelectedProp}">
+                        <ContentControl.Resources>
+                            <DataTemplate DataType="{x:Type model:Prop}">
+                                <StackPanel>
+                                    <Label>X Coordinate</Label>
+                                    <TextBox Text="{Binding Coordinates.XPos, Mode=TwoWay}"></TextBox>
+                                    <Label>Y Coordinate</Label>
+                                    <TextBox Text="{Binding Coordinates.YPos}"></TextBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ContentControl.Resources>
+                    </ContentControl>
+                    <ContentControl Content="{Binding SelectedWall}">
+                        <ContentControl.Resources>
+                            <DataTemplate DataType="{x:Type model:Wall}">
+                                <StackPanel>
+                                    <Label>Point 1 - X Coordinate</Label>
+                                     <TextBox Text="{Binding Point1.XPos, Mode=TwoWay}"></TextBox>
+
+                                    <Label>Point 2 - Y Coordinate</Label>
+                                    <TextBox Text="{Binding Point1.YPos}"></TextBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ContentControl.Resources>
+                    </ContentControl>
+                    </StackPanel>
+                </Expander>
+            </StackPanel>
             <ScrollViewer HorizontalScrollBarVisibility="Visible" Background="White">
                 <!-- BAD CANVAS CODE AHEAD -->
                 <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Name="PropParentCanvas">
@@ -96,7 +117,7 @@
     </Grid>
 
     <Window.Resources>
-        
+        <vm:ParameterConverter x:Key="ParamConverter"></vm:ParameterConverter>
     </Window.Resources>
 </Window>
 

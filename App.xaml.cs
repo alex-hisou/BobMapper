@@ -18,7 +18,9 @@ namespace BobMapper
     {
     }
 
-    public struct Coordinate
+    
+
+    public class Coordinate
     {
         public const int gridFactor = 5;
         public int XPos {  get; set; }

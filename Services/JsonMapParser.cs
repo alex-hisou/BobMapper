@@ -9,7 +9,7 @@ using System.IO;
 
 namespace BobMapper.Services
 {
-    internal static class DataParse
+    internal static class JsonMapParse
     {
         private static readonly FileInfo saveFile = new("examplemap.json");
         private static readonly JsonSerializerOptions jsonSerializerOptions = new() { WriteIndented = true, IncludeFields = true };
@@ -23,8 +23,7 @@ namespace BobMapper.Services
 
         internal static void SaveData(Map map)
         {
-            var wrapper = new { map.walls, map.props, map.npcs, map.pathPoints, map.miscs, map.floors };
-            var jsonData = JsonSerializer.Serialize(wrapper, jsonSerializerOptions);
+            var jsonData = JsonSerializer.Serialize(map, jsonSerializerOptions);
             File.WriteAllText(saveFile.ToString(), jsonData);
         }
     }
