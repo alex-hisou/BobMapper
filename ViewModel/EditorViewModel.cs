@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using BobMapper.Model;
 using BobMapper.Services;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using static BobMapper.Model.MapObjects;
 
@@ -15,17 +21,72 @@ namespace BobMapper.ViewModel
 {
     internal partial class EditorViewModel : ViewModelBase
     {
+        private Type selectedObjectType;
+        
 
-        public static class SelectedObject
-        {
-            internal static Type selectedObjectType;
-            internal static int selectedObjectIndex;
-            public static Coordinate coordinates;
+        private Wall selectedWall;
 
-
+        public Wall SelectedWall
+            {
+            get { return selectedWall; }
+            set { selectedWall = value;
+                OnPropertyChanged();
+            }
         }
+        private Prop selectedProp;
 
+        public Prop SelectedProp
+        {
+            get { return selectedProp; }
+            set
+            {
+                selectedProp = value;
+                OnPropertyChanged();
+            }
+        }
+            private NPC selectedNPC;
+
+            public NPC SelectedNPC
+            {
+                get { return selectedNPC; }
+                set { selectedNPC = value;
+                OnPropertyChanged();
+            }
+            }
+
+            private PathPoint selectedPathPoint;
+
+            public PathPoint SelectedPathPoint
+            {
+                get { return selectedPathPoint; }
+                set { selectedPathPoint = value;
+                OnPropertyChanged();
+            }
+            }
+
+            private Floor selectedFloor;
+
+            public Floor SelectedFloor
+            {
+                get { return selectedFloor; }
+                set { selectedFloor = value;
+                OnPropertyChanged();
+            }
+            }
+
+            private Misc selectedMisc;
+
+            public Misc SelectedMisc
+            {
+                get { return selectedMisc; }
+                set { selectedMisc = value;
+                OnPropertyChanged();
+            }
+            }
+
+        public event EventHandler CurrentObjectEvent;
         public ObservableCollection<Prop> CurrentProps { get => currentProps; set => currentProps = value; }
+        public int SelectedObjectIndex;
         private Map currentMap;
         private ObservableCollection<Prop> currentProps;
 
@@ -52,32 +113,21 @@ namespace BobMapper.ViewModel
             saveMap.props.Add(new Prop(new Coordinate(100, -10), 45, "/resources/Level_Strip/toilet.png"));
             CurrentMap = saveMap;
             CurrentProps = new ObservableCollection<Prop>(CurrentMap.props);
-            DataParse.SaveData(saveMap);
+            JsonMapParse.SaveData(saveMap);
         }
 
         [RelayCommand]
         public void ClickObject(object sender)
         {
-            SelectNew(sender);
+            SelectNew((Prop)sender);
         }
 
-        public void SelectNew(object sender)
+        public void SelectNew(Prop sender)
         {
-            SelectedObject.selectedObjectType = sender.GetType();
-            //Terrible way of selecting objects
-            switch (TypeSchema[sender.GetType()])
-            {
-                case 0:
-                    break;
-                case 1:
-                    SelectedObject.selectedObjectIndex = CurrentProps.IndexOf((Prop)sender);
-                    break;
-                default:
-                    return;
-            }
-            int newX;
-            int newY;
-            SelectedObject.coordinates = new Coordinate();
+            SelectedProp = sender; //BAD CODE
+            SelectedObjectIndex = CurrentProps.IndexOf(SelectedProp);
+            //TODO: Use TypeSchema to determine type, then set SelectedObjectType and Selected(Object)
+
         }
 
         public Dictionary<Type, int> TypeSchema = new Dictionary<Type, int>()
@@ -86,9 +136,10 @@ namespace BobMapper.ViewModel
             {typeof(Prop), 1},
             {typeof(NPC), 2},
             {typeof(PathPoint), 3},
-            {typeof(Misc), 4}
+            {typeof(Floor), 4},
+            {typeof(Misc), 5}
         };
 
-
+        
     }
 }

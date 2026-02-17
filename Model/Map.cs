@@ -14,6 +14,8 @@ namespace BobMapper.Model
     {
         public double Width;
         public double Height;
+        public int levelNumber;
+        public Chapter levelChapter;
         public List<Wall> walls = new List<Wall>();
         public List<Prop> props = new List<Prop>();
         public List<NPC> npcs = new List<NPC>();
@@ -46,6 +48,19 @@ namespace BobMapper.Model
 
         }
 
+        public enum Chapter
+        {
+            Suburbs,    //NOT USED
+            Downtown,   //NOT USED
+            SecretLabs, //NOT USED
+            Advanced,
+            Winter,
+            HighRise,
+            SummerCamp,
+            Bonus,
+            Extras,
+            Challenge
+        }
         
     }
 }

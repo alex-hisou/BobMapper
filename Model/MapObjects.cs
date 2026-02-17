@@ -13,6 +13,16 @@ namespace BobMapper.Model
 {
     public static class MapObjects
     {
+        public enum ObjectType
+        {
+            Wall,
+            Prop,
+            NPC,
+            PathPoint,
+            Floor,
+            Misc
+        }
+
         
 
         public static ResourceManager resourceManager = Resources.ResourceManager;
@@ -24,7 +34,7 @@ namespace BobMapper.Model
         };
     }
 
-    public class Wall
+    public class Wall : IDoublePointObject
     {
         public enum WallType
         {
@@ -49,20 +59,18 @@ namespace BobMapper.Model
         }
     }
 
-    public class Prop : IObject
+    public class Prop : ISinglePointObject
     {
         public double Rotation { get; set; }
         public Coordinate Coordinates { get; set; }
 
         public string PropTexture { get; set; }
-        public bool IsSelected { get; set; }
 
         public Prop(Coordinate coordinates, double rotation, string propTextureName)
         {
             Coordinates = coordinates;
             Rotation = rotation;
             PropTexture = propTextureName;
-            IsSelected = false;
         }
 
         public void DeleteObject()
@@ -75,18 +83,17 @@ namespace BobMapper.Model
 
         }
     }
-    public class NPC : IObject
+    public class NPC : ISinglePointObject
     {
 
         public NPCType Type { get; set; }
         public Coordinate Coordinates { get; set; }
-        public bool IsSelected { get; set; }
+        public double Rotation { get; set; }
 
         public NPC(Coordinate coordinates, NPCType type)
         {
             Coordinates = coordinates;
             Type = type;
-            IsSelected= false;
         }
         public void UpdatePos(Coordinate newCoordinate)
         {
@@ -116,14 +123,13 @@ namespace BobMapper.Model
         }
     }
 
-    public class PathPoint : IObject
+    public class PathPoint : ISinglePointObject
     {
         public int Id { get; set; }
         public int ConnectFromId { get; set; }
         public int ConnectToId { get; set; }
 
         public Coordinate Coordinates { get; set; }
-        public bool IsSelected { get; set; }
 
         public PathPoint(Coordinate coordinates, int id, int connectFromID, int connectToId)
         {
@@ -131,7 +137,6 @@ namespace BobMapper.Model
             Id = id;
             ConnectFromId = connectFromID;
             ConnectToId = connectToId;
-            IsSelected = false;
         }
 
         public void DeleteObject()
@@ -156,7 +161,7 @@ namespace BobMapper.Model
         }
     }
 
-    public class Misc : IObject
+    public class Misc : ISinglePointObject
     {
         public enum MiscObjects
         {
@@ -172,13 +177,11 @@ namespace BobMapper.Model
         public MiscObjects Type { get; set; }
 
         public Coordinate Coordinates { get; set; }
-        public bool IsSelected { get; set; }
 
         public Misc(Coordinate coordinates, MiscObjects type)
         {
             Coordinates = coordinates;
             Type = type;
-            IsSelected = false;
         }
 
         public void UpdatePos(Coordinate newCoordinate)
