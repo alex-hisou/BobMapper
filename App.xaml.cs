@@ -22,14 +22,13 @@ namespace BobMapper
 
     public class Coordinate
     {
-        public const int gridFactor = 5;
         public int XPos {  get; set; }
         public int YPos { get; set; }
 
         public Coordinate(int x, int y)
         {
-            this.XPos = x * gridFactor;
-            this.YPos = y * gridFactor;
+            this.XPos = x;
+            this.YPos = y;
         }
     }
 }

@@ -52,9 +52,11 @@
                             <DataTemplate DataType="{x:Type model:Prop}">
                                 <StackPanel>
                                     <Label>X Coordinate</Label>
-                                    <TextBox Text="{Binding Coordinates.XPos, Mode=TwoWay}"></TextBox>
+                                        <TextBox Text="{Binding Coordinates.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                 PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
                                     <Label>Y Coordinate</Label>
-                                    <TextBox Text="{Binding Coordinates.YPos}"></TextBox>
+                                    <TextBox Text="{Binding Coordinates.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                             PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
                                 </StackPanel>
                             </DataTemplate>
                         </ContentControl.Resources>
@@ -63,15 +65,23 @@
                         <ContentControl.Resources>
                             <DataTemplate DataType="{x:Type model:Wall}">
                                 <StackPanel>
-                                    <Label>Point 1 - X Coordinate</Label>
-                                     <TextBox Text="{Binding Point1.XPos, Mode=TwoWay}"></TextBox>
-
-                                    <Label>Point 2 - Y Coordinate</Label>
-                                    <TextBox Text="{Binding Point1.YPos}"></TextBox>
-                                </StackPanel>
+                                        <Label>Point 1 - X Coordinate</Label>
+                                        <TextBox Text="{Binding Point1.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                             PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                        <Label>Point 1 - Y Coordinate</Label>
+                                        <TextBox Text="{Binding Point1.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                             PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                        <Label>Point 2 - X Coordinate</Label>
+                                        <TextBox Text="{Binding Point2.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                             PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                        <Label>Point 2 - Y Coordinate</Label>
+                                        <TextBox Text="{Binding Point2.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                             PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                    </StackPanel>
                             </DataTemplate>
                         </ContentControl.Resources>
                     </ContentControl>
+                     
                     </StackPanel>
                 </Expander>
             </StackPanel>

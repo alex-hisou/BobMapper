@@ -21,7 +21,15 @@ namespace BobMapper.ViewModel
 {
     internal partial class EditorViewModel : ViewModelBase
     {
-        private Type selectedObjectType;
+        private ObjectType selectedObjectType;
+
+        private Tools selectedTool;
+
+        public Tools SelectedTool
+        {
+            get { return selectedTool; }
+            set { selectedTool = value; }
+        }
 
 
         private Wall selectedWall;
@@ -104,16 +112,7 @@ namespace BobMapper.ViewModel
             get { return currentMap; }
             set { currentMap = value; }
         }
-        internal enum Tools
-        {
-            None,
-            Select,
-            Move,
-            Rotate,
-            AddWall,
-            AddProp,
-            AddNPC
-        }
+        
 
         public EditorViewModel()
         {
@@ -131,9 +130,97 @@ namespace BobMapper.ViewModel
         [RelayCommand]
         public void ClickObject(object sender)
         {
+            switch(SelectedTool)
+            {
+                //TODO: Move code here
+            }
+            
+            SelectObject(sender);
             //TODO: Switch on the type of sender, find it in the crapper and set the selectedobject
         }
 
+        private void SelectObject(object sender)
+        {
+            //Not the best code, but this will do
+            switch (selectedObjectType)
+            {
+                case ObjectType.Wall:
+                {
+                    SelectedWall = null;
+                    break;
+                }
+                case ObjectType.Prop:
+                {
+                    SelectedProp = null;
+                    break;
+                }
+                case ObjectType.NPC:
+                {
+                    SelectedNPC = null;
+                    break;
+                }
+                case ObjectType.PathPoint:
+                {
+                    SelectedPathPoint = null;
+                    break;
+                }
+                case ObjectType.Floor:
+                {
+                     SelectedFloor = null;
+                     break;
+                }
+                case ObjectType.Misc: 
+                {
+                     SelectedMisc = null;
+                     break;
+                }
+            }
+            int selectedObjectIndex;
+            switch (TypeSchema[sender.GetType()])
+            {
+                case 0: //Wall
+                    selectedObjectIndex = CurrentWalls.IndexOf((Wall)sender);
+                    SelectedWall = CurrentWalls[selectedObjectIndex];
+                    selectedObjectType = ObjectType.Wall;
+                    break;
+                case 1: //Prop
+                    selectedObjectIndex = CurrentProps.IndexOf((Prop)sender);
+                    SelectedProp = CurrentProps[selectedObjectIndex];
+                    selectedObjectType = ObjectType.Prop;
+                    break;
+                case 2: //NPC
+                    break;
+                case 3: //PathPoint
+                    break;
+                case 4: //Floor
+                    break;
+                case 5: //Misc
+                    break;
+                default:
+                    throw new Exception("Invalid object type");
+            }
+        }
 
+        public Dictionary<Type, int> TypeSchema = new Dictionary<Type, int>()
+        {
+            {typeof(Wall), 0},
+            {typeof(Prop), 1},
+            {typeof(NPC), 2},
+            {typeof(PathPoint), 3},
+            {typeof(Floor), 4},
+            {typeof(Misc), 5}
+        };
+
+        internal enum Tools
+        {
+            None,
+            Select,
+            Move,
+            Rotate,
+            AddWall,
+            AddProp,
+            AddNPC,
+            AddMisc
+        }
     }
 }
