@@ -150,7 +150,7 @@ namespace BobMapper.Model
         }
     }
 
-    public struct Floor
+    public class Floor
     {
         public string Texture1 { get; set; }
         public string Texture2 { get; set; }

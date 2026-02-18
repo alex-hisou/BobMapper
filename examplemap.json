@@ -1,23 +1,50 @@
 {
-  "Width": 200,
-  "Height": 200,
+  "Width": 40,
+  "Height": 40,
   "levelNumber": 0,
   "levelChapter": 0,
-  "walls": [],
+  "walls": [
+    {
+      "Point1": {
+        "XPos": 100,
+        "YPos": -10
+      },
+      "Point2": {
+        "XPos": 100,
+        "YPos": 0
+      },
+      "Type": 0,
+      "Texture1": "/resources/Level_Strip/PlainGreen.png",
+      "Texture2": "/resources/Level_Strip/PlainGreen.png"
+    },
+    {
+      "Point1": {
+        "XPos": 90,
+        "YPos": 40
+      },
+      "Point2": {
+        "XPos": 80,
+        "YPos": 20
+      },
+      "Type": 0,
+      "Texture1": "/resources/Level_Strip/PlainGreen.png",
+      "Texture2": "/resources/Level_Strip/PlainGreen.png"
+    }
+  ],
   "props": [
     {
       "Rotation": 45,
       "Coordinates": {
-        "XPos": -25,
-        "YPos": -500
+        "XPos": -5,
+        "YPos": -100
       },
       "PropTexture": "/resources/Level_Strip/box.png"
     },
     {
       "Rotation": 45,
       "Coordinates": {
-        "XPos": 500,
-        "YPos": -50
+        "XPos": 100,
+        "YPos": -10
       },
       "PropTexture": "/resources/Level_Strip/toilet.png"
     }
