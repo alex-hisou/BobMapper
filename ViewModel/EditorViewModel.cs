@@ -22,14 +22,16 @@ namespace BobMapper.ViewModel
     internal partial class EditorViewModel : ViewModelBase
     {
         private Type selectedObjectType;
-        
+
 
         private Wall selectedWall;
 
         public Wall SelectedWall
-            {
+        {
             get { return selectedWall; }
-            set { selectedWall = value;
+            set
+            {
+                selectedWall = value;
                 OnPropertyChanged();
             }
         }
@@ -44,51 +46,58 @@ namespace BobMapper.ViewModel
                 OnPropertyChanged();
             }
         }
-            private NPC selectedNPC;
+        private NPC selectedNPC;
 
-            public NPC SelectedNPC
+        public NPC SelectedNPC
+        {
+            get { return selectedNPC; }
+            set
             {
-                get { return selectedNPC; }
-                set { selectedNPC = value;
+                selectedNPC = value;
                 OnPropertyChanged();
             }
-            }
+        }
 
-            private PathPoint selectedPathPoint;
+        private PathPoint selectedPathPoint;
 
-            public PathPoint SelectedPathPoint
+        public PathPoint SelectedPathPoint
+        {
+            get { return selectedPathPoint; }
+            set
             {
-                get { return selectedPathPoint; }
-                set { selectedPathPoint = value;
+                selectedPathPoint = value;
                 OnPropertyChanged();
             }
-            }
+        }
 
-            private Floor selectedFloor;
+        private Floor selectedFloor;
 
-            public Floor SelectedFloor
+        public Floor SelectedFloor
+        {
+            get { return selectedFloor; }
+            set
             {
-                get { return selectedFloor; }
-                set { selectedFloor = value;
+                selectedFloor = value;
                 OnPropertyChanged();
             }
-            }
+        }
 
-            private Misc selectedMisc;
+        private Misc selectedMisc;
 
-            public Misc SelectedMisc
+        public Misc SelectedMisc
+        {
+            get { return selectedMisc; }
+            set
             {
-                get { return selectedMisc; }
-                set { selectedMisc = value;
+                selectedMisc = value;
                 OnPropertyChanged();
             }
-            }
-
-        public event EventHandler CurrentObjectEvent;
+        }
+        public ObservableCollection<Wall> CurrentWalls { get => currentWalls; set => currentWalls = value; }
+        private ObservableCollection<Wall> currentWalls;
         public ObservableCollection<Prop> CurrentProps { get => currentProps; set => currentProps = value; }
-        public int SelectedObjectIndex;
-        private Map currentMap;
         private ObservableCollection<Prop> currentProps;
+        private Map currentMap;
 
         public Map CurrentMap
         {
@@ -111,35 +120,20 @@ namespace BobMapper.ViewModel
             Map saveMap = new Map(0);
             saveMap.props.Add(new Prop(new Coordinate(-5, -100), 45, "/resources/Level_Strip/box.png"));
             saveMap.props.Add(new Prop(new Coordinate(100, -10), 45, "/resources/Level_Strip/toilet.png"));
+            saveMap.walls.Add(new Wall(new Coordinate(100, -10), new Coordinate(100, 0), Wall.WallType.Normal, "/resources/Level_Strip/PlainGreen.png", "/resources/Level_Strip/PlainGreen.png"));
+            saveMap.walls.Add(new Wall(new Coordinate(90, 40), new Coordinate(80, 20), Wall.WallType.Normal, "/resources/Level_Strip/PlainGreen.png", "/resources/Level_Strip/PlainGreen.png"));
             CurrentMap = saveMap;
             CurrentProps = new ObservableCollection<Prop>(CurrentMap.props);
+            CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls);
             JsonMapParse.SaveData(saveMap);
         }
 
         [RelayCommand]
         public void ClickObject(object sender)
         {
-            SelectNew((Prop)sender);
+            //TODO: Switch on the type of sender, find it in the crapper and set the selectedobject
         }
 
-        public void SelectNew(Prop sender)
-        {
-            SelectedProp = sender; //BAD CODE
-            SelectedObjectIndex = CurrentProps.IndexOf(SelectedProp);
-            //TODO: Use TypeSchema to determine type, then set SelectedObjectType and Selected(Object)
 
-        }
-
-        public Dictionary<Type, int> TypeSchema = new Dictionary<Type, int>()
-        {
-            {typeof(Wall), 0},
-            {typeof(Prop), 1},
-            {typeof(NPC), 2},
-            {typeof(PathPoint), 3},
-            {typeof(Floor), 4},
-            {typeof(Misc), 5}
-        };
-
-        
     }
 }

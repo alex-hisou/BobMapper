@@ -78,8 +78,7 @@
             <ScrollViewer HorizontalScrollBarVisibility="Visible" Background="White">
                 <!-- BAD CANVAS CODE AHEAD -->
                 <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Name="PropParentCanvas">
-                    
-                        <ItemsControl ItemsSource="{Binding CurrentProps}">
+                    <ItemsControl ItemsSource="{Binding CurrentProps}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="{x:Type model:Prop}">
                                     <Image Source="{Binding PropTexture}" Width="auto" Height="auto" x:Name="img">
@@ -109,7 +108,21 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
-
+                    <ItemsControl ItemsSource="{Binding CurrentWalls}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type model:Wall}">
+                                <Line StrokeThickness="20" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
+                                      X2="{Binding Point2.XPos}" Y2="{Binding Point2.YPos}" Fill="Beige" Stroke="Beige">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Line>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Canvas>
             </ScrollViewer>
         </DockPanel>

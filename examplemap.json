@@ -3,7 +3,34 @@
   "Height": 200,
   "levelNumber": 0,
   "levelChapter": 0,
-  "walls": [],
+  "walls": [
+    {
+      "Point1": {
+        "XPos": 500,
+        "YPos": -50
+      },
+      "Point2": {
+        "XPos": 500,
+        "YPos": 0
+      },
+      "Type": 0,
+      "Texture1": "/resources/Level_Strip/PlainGreen.png",
+      "Texture2": "/resources/Level_Strip/PlainGreen.png"
+    },
+    {
+      "Point1": {
+        "XPos": 450,
+        "YPos": 200
+      },
+      "Point2": {
+        "XPos": 400,
+        "YPos": 100
+      },
+      "Type": 0,
+      "Texture1": "/resources/Level_Strip/PlainGreen.png",
+      "Texture2": "/resources/Level_Strip/PlainGreen.png"
+    }
+  ],
   "props": [
     {
       "Rotation": 45,
