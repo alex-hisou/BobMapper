@@ -15,6 +15,7 @@ namespace BobMapper.Model
     {
         public enum ObjectType
         {
+            None,
             Wall,
             Prop,
             NPC,
@@ -29,7 +30,7 @@ namespace BobMapper.Model
 
         public static Dictionary<int, Coordinate> houseSizeSchema = new Dictionary<int, Coordinate>()
         {
-            { 0, new Coordinate(40,40) }
+            { 0, new Coordinate(12,12) }
 
         };
     }

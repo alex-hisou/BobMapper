@@ -12,8 +12,8 @@ namespace BobMapper.Model
 {
     public class Map
     {
-        public double Width;
-        public double Height;
+        public int Width { get; set; }
+        public int Height { get; set; }
         public int levelNumber;
         public Chapter levelChapter;
         public List<Wall> walls = new List<Wall>();
@@ -21,7 +21,7 @@ namespace BobMapper.Model
         public List<NPC> npcs = new List<NPC>();
         public List<PathPoint> pathPoints = new List<PathPoint>();
         public List<Misc> miscs = new List<Misc>();
-        public Floor[,] floors;
+        public Floor[][] floors;
 
         
 
@@ -29,13 +29,22 @@ namespace BobMapper.Model
         {
             Width = MapObjects.houseSizeSchema[inputHouseSize].XPos;
             Height = MapObjects.houseSizeSchema[inputHouseSize].YPos;
+            floors = new Floor[Width][];
+            //System.Text.Json doesnt support multi-d arrays, which is why we do this terribleness
+            //And Im too lazy to switch to newtonsoft
+            for (int i = 0; i < Height; i++)
+            {
+                floors[i] = new Floor[Height];
+            }
+            Width *= Coordinate.FloorSize; 
+            Height *= Coordinate.FloorSize;
         }
 
 
 
 
         [JsonConstructor] //Use only for initialization from json. Otherwise write properties directly using the no param constructor above
-        public Map(int inputHouseSize, List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, Floor[,] floors)
+        public Map(int inputHouseSize, List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, Floor[][] floors)
         {
             this.walls = walls;
             this.props = props;

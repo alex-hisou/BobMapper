@@ -22,6 +22,7 @@ namespace BobMapper
 
     public class Coordinate
     {
+        public const int FloorSize = 64;
         public int XPos {  get; set; }
         public int YPos { get; set; }
 
