@@ -1,6 +1,6 @@
 {
-  "Width": 40,
-  "Height": 40,
+  "Width": 768,
+  "Height": 768,
   "levelNumber": 0,
   "levelChapter": 0,
   "walls": [
@@ -14,8 +14,8 @@
         "YPos": 0
       },
       "Type": 0,
-      "Texture1": "/resources/Level_Strip/PlainGreen.png",
-      "Texture2": "/resources/Level_Strip/PlainGreen.png"
+      "Texture1": "/Resources/WallTextures/PlainGreen.png",
+      "Texture2": "/Resources/WallTextures/PlainGreen.png"
     },
     {
       "Point1": {
@@ -27,8 +27,8 @@
         "YPos": 20
       },
       "Type": 0,
-      "Texture1": "/resources/Level_Strip/PlainGreen.png",
-      "Texture2": "/resources/Level_Strip/PlainGreen.png"
+      "Texture1": "/Resources/WallTextures/PlainGreen.png",
+      "Texture2": "/Resources/WallTextures/PlainGreen.png"
     }
   ],
   "props": [
@@ -38,7 +38,7 @@
         "XPos": -5,
         "YPos": -100
       },
-      "PropTexture": "/resources/Level_Strip/box.png"
+      "PropTexture": "/Resources/PropTextures/box.png"
     },
     {
       "Rotation": 45,
@@ -46,11 +46,180 @@
         "XPos": 100,
         "YPos": -10
       },
-      "PropTexture": "/resources/Level_Strip/toilet.png"
+      "PropTexture": "/Resources/PropTextures/toilet.png"
     }
   ],
   "npcs": [],
   "pathPoints": [],
   "miscs": [],
-  "floors": null
+  "floors": [
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  ]
 }

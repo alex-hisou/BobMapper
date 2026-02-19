@@ -16,127 +16,164 @@
     <Grid>
         <DockPanel Background="SlateGray">
             <Menu DockPanel.Dock="Top" Width="auto" Height="20">
-                <MenuItem Header="File"></MenuItem>
-                <MenuItem Header="Edit"/>
-                <MenuItem Header="Tools"/>
-                <MenuItem Header="Compile"/>
-                <MenuItem Header="Help"/>
-            </Menu>
-            <Menu DockPanel.Dock="Left" Width="40" Height="auto">
-                <MenuItem>
-                    <StackPanel>
-                        <Image>
-
-                        </Image>
-                    </StackPanel>
+                <MenuItem Header="File">
+                    <MenuItem Header="New Project"/>
+                    <MenuItem Header="Open Project"/>
+                    <Separator/>
+                    <MenuItem Header="Save"/>
+                    <MenuItem Header="Save as"/>
+                    <MenuItem Header="Exit"/>
                 </MenuItem>
-                <MenuItem Header="Move"/>
-                <MenuItem Header="Rotate"/>
+                <MenuItem Header="Edit"></MenuItem>
+                <MenuItem Header="Tools"></MenuItem>
+                <MenuItem Header="Compile"></MenuItem>
+                <MenuItem Header="Help"></MenuItem>
+            </Menu>
+            <Menu DockPanel.Dock="Left" Width="auto" Height="auto">
+                <MenuItem Header="Select">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/UI/SelectionTool.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Move">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/UI/MoveTool.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Rotate">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/UI/RotateTool.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Draw Floor"/>
                 <MenuItem Header="Draw Wall"></MenuItem>
                 <MenuItem Header="Place Prop"></MenuItem>
-                <MenuItem Header="NPC"></MenuItem>
+                <MenuItem Header="Add NPC"></MenuItem>
+                <MenuItem Header="Add Path"></MenuItem>
+                <MenuItem Header="Paint Floor"/>
                 <MenuItem Header="Add Misc"></MenuItem>
+                <Menu.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </Menu.ItemsPanel>
             </Menu>
             <StackPanel DockPanel.Dock="Right" Width="400" Height="auto" HorizontalAlignment="Right" Background="LightGray">
-                <StackPanel>
-                        <Label>Visibility</Label>
-                    </StackPanel>
-                <Separator Foreground="Gray"></Separator>
-                <Label>Properties</Label>
-                <Expander>
-                    <StackPanel>
-                    <ContentControl Content="{Binding SelectedProp}">
-                        <ContentControl.Resources>
-                            <DataTemplate DataType="{x:Type model:Prop}">
-                                <StackPanel>
-                                    <Label>X Coordinate</Label>
-                                        <TextBox Text="{Binding Coordinates.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Visibility"/>
+                    <Expander/>
+                </StackPanel>
+                <Separator Foreground="Black"></Separator>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label>Properties</Label>
+                    <Expander>
+                        <StackPanel>
+                            <ContentControl Content="{Binding SelectedProp}">
+                                <ContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type model:Prop}">
+                                        <StackPanel>
+                                            <Label>X Coordinate</Label>
+                                            <TextBox Text="{Binding Coordinates.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                  PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
-                                    <Label>Y Coordinate</Label>
-                                    <TextBox Text="{Binding Coordinates.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            <Label>Y Coordinate</Label>
+                                            <TextBox Text="{Binding Coordinates.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                              PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ContentControl.Resources>
-                    </ContentControl>
-                    <ContentControl Content="{Binding SelectedWall}">
-                        <ContentControl.Resources>
-                            <DataTemplate DataType="{x:Type model:Wall}">
-                                <StackPanel>
-                                        <Label>Point 1 - X Coordinate</Label>
-                                        <TextBox Text="{Binding Point1.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ContentControl.Resources>
+                            </ContentControl>
+                            <ContentControl Content="{Binding SelectedWall}">
+                                <ContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type model:Wall}">
+                                        <StackPanel>
+                                            <Label>Point 1 - X Coordinate</Label>
+                                            <TextBox Text="{Binding Point1.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                              PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
-                                        <Label>Point 1 - Y Coordinate</Label>
-                                        <TextBox Text="{Binding Point1.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            <Label>Point 1 - Y Coordinate</Label>
+                                            <TextBox Text="{Binding Point1.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                              PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
-                                        <Label>Point 2 - X Coordinate</Label>
-                                        <TextBox Text="{Binding Point2.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            <Label>Point 2 - X Coordinate</Label>
+                                            <TextBox Text="{Binding Point2.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                              PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
-                                        <Label>Point 2 - Y Coordinate</Label>
-                                        <TextBox Text="{Binding Point2.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            <Label>Point 2 - Y Coordinate</Label>
+                                            <TextBox Text="{Binding Point2.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                              PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
-                                    </StackPanel>
-                            </DataTemplate>
-                        </ContentControl.Resources>
-                    </ContentControl>
-                     
-                    </StackPanel>
-                </Expander>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ContentControl.Resources>
+                            </ContentControl>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+                <Separator Foreground="Black"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Texture Gallery</Label>
+                    <Expander></Expander>
+                </StackPanel>
             </StackPanel>
-            <ScrollViewer HorizontalScrollBarVisibility="Visible" Background="White">
-                <!-- BAD CANVAS CODE AHEAD -->
-                <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Name="PropParentCanvas">
+            <!-- BAD CANVAS CODE AHEAD -->
+            <ScrollViewer HorizontalScrollBarVisibility="Visible" HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center" Background="Gray">
+            <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Width="0" Height="0" 
+                    RenderTransformOrigin="0.5,0.5">
+                    <Canvas.RenderTransform>
+                        <ScaleTransform ScaleY="-1"/>
+                    </Canvas.RenderTransform>
                     <ItemsControl ItemsSource="{Binding CurrentProps}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="{x:Type model:Prop}">
-                                    <Image Source="{Binding PropTexture}" Width="auto" Height="auto" x:Name="img">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type model:Prop}">
+                            <Image Source="{Binding PropTexture}" Width="auto" Height="auto" x:Name="img">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
                                                     RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Image>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ContentPresenter">
-                                <Setter Property="Canvas.Left" Value="{Binding Coordinates.XPos}" />
-                                <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
-                                <Setter Property="RenderTransform">
-                                    <Setter.Value>
-                                        <RotateTransform Angle="{Binding Rotation}"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <Canvas></Canvas>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentWalls}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type model:Wall}">
-                                <Line StrokeThickness="20" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Canvas.Left" Value="{Binding Coordinates.XPos}" />
+                            <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="{Binding Rotation}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas></Canvas>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding CurrentWalls}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type model:Wall}">
+                            <Line StrokeThickness="20" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
                                       X2="{Binding Point2.XPos}" Y2="{Binding Point2.YPos}" Fill="Beige" Stroke="Beige">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
                                                 RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Line>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Canvas>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Line>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas></Canvas>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Canvas>
             </ScrollViewer>
         </DockPanel>
-        
+
     </Grid>
 
     <Window.Resources>
