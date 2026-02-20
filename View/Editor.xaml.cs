@@ -25,7 +25,8 @@ namespace BobMapper
         {
             InitializeComponent();
 
-            DataContext = new EditorViewModel();
+            var editorViewModel = new EditorViewModel();
+            DataContext = editorViewModel;
 
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight; //otherwise covers taskbar
             

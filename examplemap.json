@@ -49,7 +49,26 @@
       "PropTexture": "/Resources/PropTextures/toilet.png"
     }
   ],
-  "npcs": [],
+  "npcs": [
+    {
+      "Type": 1,
+      "Coordinates": {
+        "XPos": 0,
+        "YPos": 0
+      },
+      "Rotation": 0,
+      "Texture": "/Resources/NPCTextures/BaldGuard.png"
+    },
+    {
+      "Type": 2,
+      "Coordinates": {
+        "XPos": 0,
+        "YPos": 0
+      },
+      "Rotation": 0,
+      "Texture": "/Resources/NPCTextures/Female.png"
+    }
+  ],
   "pathPoints": [],
   "miscs": [],
   "floors": [

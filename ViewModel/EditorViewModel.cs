@@ -28,10 +28,14 @@ namespace BobMapper.ViewModel
             get { return selectedObjectType; }
             set { selectedObjectType = value; }
         }
-
+        private string selectedTexture;
+        public string SelectedTexture
+        {
+            get { return selectedTexture; }
+            set { selectedTexture = value; }
+        }
 
         private Tools selectedTool;
-
         public Tools SelectedTool
         {
             get { return selectedTool; }
@@ -40,7 +44,6 @@ namespace BobMapper.ViewModel
 
 
         private Wall selectedWall;
-
         public Wall SelectedWall
         {
             get { return selectedWall; }
@@ -51,7 +54,6 @@ namespace BobMapper.ViewModel
             }
         }
         private Prop selectedProp;
-
         public Prop SelectedProp
         {
             get { return selectedProp; }
@@ -62,7 +64,6 @@ namespace BobMapper.ViewModel
             }
         }
         private NPC selectedNPC;
-
         public NPC SelectedNPC
         {
             get { return selectedNPC; }
@@ -72,9 +73,7 @@ namespace BobMapper.ViewModel
                 OnPropertyChanged();
             }
         }
-
         private PathPoint selectedPathPoint;
-
         public PathPoint SelectedPathPoint
         {
             get { return selectedPathPoint; }
@@ -84,9 +83,7 @@ namespace BobMapper.ViewModel
                 OnPropertyChanged();
             }
         }
-
         private Floor selectedFloor;
-
         public Floor SelectedFloor
         {
             get { return selectedFloor; }
@@ -96,9 +93,7 @@ namespace BobMapper.ViewModel
                 OnPropertyChanged();
             }
         }
-
         private Misc selectedMisc;
-
         public Misc SelectedMisc
         {
             get { return selectedMisc; }
@@ -118,8 +113,8 @@ namespace BobMapper.ViewModel
         private ObservableCollection<PathPoint> currentPathPoints;
         public ObservableCollection<Misc> CurrentMiscs { get => currentMiscs; set => currentMiscs = value; }
         private ObservableCollection<Misc> currentMiscs;
-        public Floor[,] CurrentFloors { get { return currentFloors; } set { currentFloors = value; } }
-        private Floor[,] currentFloors;
+        public ObservableCollection<Floor> CurrentFloors { get => currentFloors; set => currentFloors = value; }
+        private ObservableCollection<Floor> currentFloors;
 
         private Map currentMap;
 
@@ -137,10 +132,19 @@ namespace BobMapper.ViewModel
             saveMap.props.Add(new Prop(new Coordinate(100, -10), 45, "/Resources/PropTextures/toilet.png"));
             saveMap.walls.Add(new Wall(new Coordinate(100, -10), new Coordinate(100, 0), Wall.WallType.Normal, "/Resources/WallTextures/PlainGreen.png", "/Resources/WallTextures/PlainGreen.png"));
             saveMap.walls.Add(new Wall(new Coordinate(90, 40), new Coordinate(80, 20), Wall.WallType.Normal, "/Resources/WallTextures/PlainGreen.png", "/Resources/WallTextures/PlainGreen.png"));
+            saveMap.npcs.Add(new NPC(new Coordinate(0, 0), NPC.NPCType.BaldCop, 0));
+            saveMap.npcs.Add(new NPC(new Coordinate(0, 0), NPC.NPCType.RedDressLady, 0));
             CurrentMap = saveMap;
             CurrentProps = new ObservableCollection<Prop>(CurrentMap.props);
             CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls);
+            CurrentNPCs = new ObservableCollection<NPC>(CurrentMap.npcs);
             JsonMapParse.SaveData(saveMap);
+        }
+
+        [RelayCommand]
+        public void ClickEmpty(object sender)
+        {
+            ResetSelection();
         }
 
         [RelayCommand]
@@ -266,17 +270,6 @@ namespace BobMapper.ViewModel
             {typeof(Misc), 5}
         };
 
-        internal enum Tools
-        {
-            None,
-            Select,
-            Move,
-            Rotate,
-            AddWall,
-            AddProp,
-            AddNPC,
-            AddPathPoint,
-            AddMisc
-        }
+        
     }
 }

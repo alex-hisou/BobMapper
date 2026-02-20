@@ -18,8 +18,19 @@ namespace BobMapper
     {
     }
 
-    
 
+    internal enum Tools
+    {
+        None,
+        Select,
+        Move,
+        Rotate,
+        AddWall,
+        AddProp,
+        AddNPC,
+        AddPathPoint,
+        AddMisc
+    }
     public class Coordinate
     {
         public const int FloorSize = 64;
