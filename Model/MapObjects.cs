@@ -91,10 +91,27 @@ namespace BobMapper.Model
         public Coordinate Coordinates { get; set; }
         public double Rotation { get; set; }
 
-        public NPC(Coordinate coordinates, NPCType type)
+        public string Texture { get; set; }
+
+        public NPC(Coordinate coordinates, NPCType type, int rotation)
         {
             Coordinates = coordinates;
             Type = type;
+            Rotation = rotation;
+            switch (type)
+            {
+                //TODO: Rewrite with aliases and finish
+                case NPCType.BulkyCop:
+                    Texture = "/Resources/NPCTextures/Guard.png";
+                    break;
+                case NPCType.BaldCop:
+                    Texture = "/Resources/NPCTextures/BaldGuard.png";
+                    break;
+                case NPCType.RedDressLady:
+                    Texture = "/Resources/NPCTextures/Female.png";
+                    break;
+
+            }
         }
         public void UpdatePos(Coordinate newCoordinate)
         {
@@ -120,24 +137,23 @@ namespace BobMapper.Model
             BaldCop_Flashlight,
             SecretSam,
             Biff
-
         }
     }
 
     public class PathPoint : ISinglePointObject
     {
         public int Id { get; set; }
-        public int ConnectFromId { get; set; }
-        public int ConnectToId { get; set; }
+        public PathPoint ConnectFromPoint { get; set; }
+        public PathPoint ConnectToPoint { get; set; }
 
         public Coordinate Coordinates { get; set; }
 
-        public PathPoint(Coordinate coordinates, int id, int connectFromID, int connectToId)
+        public PathPoint(Coordinate coordinates, int id, PathPoint connectFromID, PathPoint connectToId)
         {
             Coordinates = coordinates;
             Id = id;
-            ConnectFromId = connectFromID;
-            ConnectToId = connectToId;
+            ConnectFromPoint = connectFromID;
+            ConnectToPoint = connectToId;
         }
 
         public void DeleteObject()
@@ -148,6 +164,11 @@ namespace BobMapper.Model
         public void UpdatePos(Coordinate newCoordinate)
         {
             throw new NotImplementedException();
+        }
+
+        public void UpdateConnectPoint(bool fromTo, PathPoint source)
+        {
+            throw new NotImplementedException(); 
         }
     }
 

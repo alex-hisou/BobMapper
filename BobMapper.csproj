@@ -327,6 +327,9 @@
     <None Remove="Resources\LootTextures\Loot_Wallet.png" />
     <None Remove="Resources\LootTextures\Loot_WitheredPlant.png" />
     <None Remove="Resources\LootTextures\Loot_Yarn.png" />
+    <None Remove="Resources\NPCTextures\BaldGuard.png" />
+    <None Remove="Resources\NPCTextures\Female.png" />
+    <None Remove="Resources\NPCTextures\Guard.png" />
     <None Remove="Resources\PropTextures\alarmclock.png" />
     <None Remove="Resources\PropTextures\AngelFountain.png" />
     <None Remove="Resources\PropTextures\Apple.png" />
@@ -1069,6 +1072,14 @@
     <None Remove="Resources\SpecialWallTextures\Fence_White.png" />
     <None Remove="Resources\SpecialWallTextures\Window.png" />
     <None Remove="Resources\SpecialWallTextures\WindowTop.png" />
+    <None Remove="Resources\UI\AddFloorTool.png" />
+    <None Remove="Resources\UI\AddMiscTool.png" />
+    <None Remove="Resources\UI\AddNPCTool.png" />
+    <None Remove="Resources\UI\AddPathTool.png" />
+    <None Remove="Resources\UI\AddPropTool.png" />
+    <None Remove="Resources\UI\AddWallTool.png" />
+    <None Remove="Resources\UI\MoveTool.png" />
+    <None Remove="Resources\UI\RotateTool.png" />
     <None Remove="Resources\UI\SelectionTool.png" />
     <None Remove="Resources\WallTextures\Wall_bankbox_front.png" />
     <None Remove="Resources\WallTextures\Wall_bankbox_side.png" />
@@ -1266,9 +1277,6 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\UserControls\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\FloorTextures\Floor_Asphalt.png" />
@@ -1569,6 +1577,9 @@
     <Resource Include="Resources\LootTextures\Loot_Wallet.png" />
     <Resource Include="Resources\LootTextures\Loot_WitheredPlant.png" />
     <Resource Include="Resources\LootTextures\Loot_Yarn.png" />
+    <Resource Include="Resources\NPCTextures\BaldGuard.png" />
+    <Resource Include="Resources\NPCTextures\Female.png" />
+    <Resource Include="Resources\NPCTextures\Guard.png" />
     <Resource Include="Resources\PropTextures\alarmclock.png" />
     <Resource Include="Resources\PropTextures\AngelFountain.png" />
     <Resource Include="Resources\PropTextures\Apple.png" />
@@ -2311,6 +2322,14 @@
     <Resource Include="Resources\SpecialWallTextures\Fence_White.png" />
     <Resource Include="Resources\SpecialWallTextures\Window.png" />
     <Resource Include="Resources\SpecialWallTextures\WindowTop.png" />
+    <Resource Include="Resources\UI\AddFloorTool.png" />
+    <Resource Include="Resources\UI\AddMiscTool.png" />
+    <Resource Include="Resources\UI\AddNPCTool.png" />
+    <Resource Include="Resources\UI\AddPathTool.png" />
+    <Resource Include="Resources\UI\AddPropTool.png" />
+    <Resource Include="Resources\UI\AddWallTool.png" />
+    <Resource Include="Resources\UI\MoveTool.png" />
+    <Resource Include="Resources\UI\RotateTool.png" />
     <Resource Include="Resources\UI\SelectionTool.png" />
     <Resource Include="Resources\WallTextures\Wall_bankbox_front.png" />
     <Resource Include="Resources\WallTextures\Wall_bankbox_side.png" />

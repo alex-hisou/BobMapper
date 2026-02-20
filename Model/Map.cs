@@ -44,7 +44,7 @@ namespace BobMapper.Model
 
 
         [JsonConstructor] //Use only for initialization from json. Otherwise write properties directly using the no param constructor above
-        public Map(int inputHouseSize, List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, Floor[][] floors)
+        public Map(int inputHouseSize, List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, Floor[][] floors, Chapter chapter, int levelNumber)
         {
             this.walls = walls;
             this.props = props;
@@ -52,7 +52,8 @@ namespace BobMapper.Model
             this.pathPoints = pathPoints;
             this.miscs = miscs;
             this.floors = floors;
-
+            this.levelChapter = chapter;
+            this.levelNumber = levelNumber;
 
 
         }
