@@ -5,6 +5,7 @@ using System.Linq;
 using System.Media;
 using System.Resources;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using BobMapper.Properties;
@@ -41,8 +42,7 @@ namespace BobMapper.Model
         {
             Normal,
             Door,
-            Paperthin,
-            Fence
+            Paperthin
         }
         public Coordinate Point1 { get; set; }
         public Coordinate Point2 { get; set; }
@@ -143,16 +143,16 @@ namespace BobMapper.Model
     public class PathPoint : ISinglePointObject
     {
         public int Id { get; set; }
-        public PathPoint ConnectFromPoint { get; set; }
-        public PathPoint ConnectToPoint { get; set; }
+        public int? ConnectToPoint { get; set; }
 
         public Coordinate Coordinates { get; set; }
 
-        public PathPoint(Coordinate coordinates, int id, PathPoint connectFromID, PathPoint connectToId)
+
+        [JsonConstructor]
+        public PathPoint(Coordinate coordinates, int id, int connectToId)
         {
             Coordinates = coordinates;
             Id = id;
-            ConnectFromPoint = connectFromID;
             ConnectToPoint = connectToId;
         }
 
@@ -190,10 +190,8 @@ namespace BobMapper.Model
             Loot = 6,
             MainLoot = 7,
             Key = 8,
-            Lock = 9,
             DisguisePoint = 11,
             SoundPoint = 12,
-            PermLock = 13
         }
 
         public MiscObjects Type { get; set; }

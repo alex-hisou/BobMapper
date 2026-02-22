@@ -14,8 +14,8 @@
         "YPos": 0
       },
       "Type": 0,
-      "Texture1": "/Resources/WallTextures/PlainGreen.png",
-      "Texture2": "/Resources/WallTextures/PlainGreen.png"
+      "Texture1": "/Resources/WallTextures/Wall_Plain_Blue.png",
+      "Texture2": "/Resources/WallTextures/Wall_Plain_Green.png"
     },
     {
       "Point1": {
@@ -27,8 +27,8 @@
         "YPos": 20
       },
       "Type": 0,
-      "Texture1": "/Resources/WallTextures/PlainGreen.png",
-      "Texture2": "/Resources/WallTextures/PlainGreen.png"
+      "Texture1": "/Resources/WallTextures/Wall_Plain_Green.png",
+      "Texture2": "/Resources/WallTextures/Wall_Plain_Green.png"
     }
   ],
   "props": [
@@ -69,7 +69,32 @@
       "Texture": "/Resources/NPCTextures/Female.png"
     }
   ],
-  "pathPoints": [],
+  "pathPoints": [
+    {
+      "Id": 1,
+      "ConnectToPoint": 2,
+      "Coordinates": {
+        "XPos": -200,
+        "YPos": -200
+      }
+    },
+    {
+      "Id": 2,
+      "ConnectToPoint": 3,
+      "Coordinates": {
+        "XPos": -200,
+        "YPos": -100
+      }
+    },
+    {
+      "Id": 3,
+      "ConnectToPoint": 1,
+      "Coordinates": {
+        "XPos": -100,
+        "YPos": -100
+      }
+    }
+  ],
   "miscs": [],
   "floors": [
     [
@@ -240,5 +265,6 @@
       null,
       null
     ]
-  ]
+  ],
+  "tileset": null
 }

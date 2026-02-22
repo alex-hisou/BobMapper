@@ -32,7 +32,14 @@ namespace BobMapper.ViewModel
         public string SelectedTexture
         {
             get { return selectedTexture; }
-            set { selectedTexture = value; }
+            set { selectedTexture = value; OnPropertyChanged(); }
+        }
+
+        private string[] currentTextureSet;
+        public string[] CurrentTextureSet
+        {
+            get { return currentTextureSet; }
+            set { currentTextureSet = value; OnPropertyChanged(); }
         }
 
         private Tools selectedTool;
@@ -116,12 +123,21 @@ namespace BobMapper.ViewModel
         public ObservableCollection<Floor> CurrentFloors { get => currentFloors; set => currentFloors = value; }
         private ObservableCollection<Floor> currentFloors;
 
+        
+
+
         private Map currentMap;
 
         public Map CurrentMap
         {
             get { return currentMap; }
             set { currentMap = value; }
+        }
+
+        private void InitaializeTextureSchema()
+        {
+            //TODO: Look at the tileset and put all the textures in there
+            //For the texture selector, use linq
         }
         
 
@@ -130,15 +146,25 @@ namespace BobMapper.ViewModel
             Map saveMap = new Map(0);
             saveMap.props.Add(new Prop(new Coordinate(-5, -100), 45, "/Resources/PropTextures/box.png"));
             saveMap.props.Add(new Prop(new Coordinate(100, -10), 45, "/Resources/PropTextures/toilet.png"));
-            saveMap.walls.Add(new Wall(new Coordinate(100, -10), new Coordinate(100, 0), Wall.WallType.Normal, "/Resources/WallTextures/PlainGreen.png", "/Resources/WallTextures/PlainGreen.png"));
-            saveMap.walls.Add(new Wall(new Coordinate(90, 40), new Coordinate(80, 20), Wall.WallType.Normal, "/Resources/WallTextures/PlainGreen.png", "/Resources/WallTextures/PlainGreen.png"));
+            saveMap.walls.Add(new Wall(new Coordinate(100, -10), new Coordinate(100, 0), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Blue.png"));
+            saveMap.walls.Add(new Wall(new Coordinate(90, 40), new Coordinate(80, 20), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Green.png"));
             saveMap.npcs.Add(new NPC(new Coordinate(0, 0), NPC.NPCType.BaldCop, 0));
             saveMap.npcs.Add(new NPC(new Coordinate(0, 0), NPC.NPCType.RedDressLady, 0));
+            PathPoint pathPoint1 = new(new Coordinate(-200, -200), 1, 2);
+            PathPoint pathPoint2 = new(new Coordinate(-200, -100), 2, 3);
+            PathPoint pathPoint3 = new(new Coordinate(-100, -100), 3, 1);
+            saveMap.pathPoints.Add(pathPoint1);
+            saveMap.pathPoints.Add(pathPoint2);
+            saveMap.pathPoints.Add(pathPoint3);
             CurrentMap = saveMap;
             CurrentProps = new ObservableCollection<Prop>(CurrentMap.props);
             CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls);
             CurrentNPCs = new ObservableCollection<NPC>(CurrentMap.npcs);
+            CurrentPathPoints = new ObservableCollection<PathPoint>(CurrentMap.pathPoints);
+            CurrentMiscs = new ObservableCollection<Misc>(CurrentMap.miscs);
             JsonMapParse.SaveData(saveMap);
+            CurrentTextureSet = ["/Resources/WallTextures/Wall_Plain_Blue.png", "/Resources/WallTextures/Wall_Plain_Green.png"];
+            InitaializeTextureSchema();
         }
 
         [RelayCommand]
@@ -216,6 +242,12 @@ namespace BobMapper.ViewModel
             SelectedObjectType = ObjectType.None;
         }
 
+        [RelayCommand]
+        public void SetTexture(object sender)
+        {
+            SelectedTexture = (string)sender;
+        }
+
         private void SelectObject(object sender)
         {
             //Not the best code, but this will do
@@ -270,6 +302,15 @@ namespace BobMapper.ViewModel
             {typeof(Misc), 5}
         };
 
-        
+        public int PathConnectX(object sender)
+        {
+            int x = 0;
+            return x;
+        }
+        public int PathConnectY(object sender)
+        {
+            int y = 0;
+            return y;
+        }
     }
 }

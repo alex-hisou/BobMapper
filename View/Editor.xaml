@@ -108,6 +108,7 @@
                                                 PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
                                             <Label Width="170">Asset</Label>
                                             <Image Source="{Binding PropTexture}" MaxHeight="100" MaxWidth="100"/>
+                                            <Label Content="{Binding PropTexture}"/>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ContentControl.Resources>
@@ -128,6 +129,12 @@
                                             <Label Width="170">Point 2 - Y Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Point2.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                              PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Left Texture</Label>
+                                            <Image Source="{Binding Texture1}" MaxHeight="100" MaxWidth="100"/>
+                                            <Label Content="{Binding Texture1}"/>
+                                            <Label Width="170">Right Texture</Label>
+                                            <Image Source="{Binding Texture2}" MaxHeight="100" MaxWidth="100"/>
+                                            <Label Content="{Binding Texture2}"/>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ContentControl.Resources>
@@ -158,16 +165,31 @@
                 <Separator Foreground="Black"/>
                 <StackPanel Orientation="Horizontal">
                     <Expander>
-                        <WrapPanel>
-                            <Label>Selected Texture</Label>
+                        <WrapPanel Orientation="Horizontal" Width="300">
+                            <Label Width="170">Selected Texture</Label>
                             <Image Source="{Binding SelectedTexture}" Height="100" Width="100"/>
-                            <ComboBox>
-                                
+                            <ComboBox Width="150" Height="20">
                             </ComboBox>
-                            <ScrollViewer>
-                                <Grid>
-                            
-                                </Grid>
+                            <ScrollViewer Width="300">
+                                <ItemsControl ItemsSource="{Binding CurrentTextureSet}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Image Source="{Binding}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.SetTextureCommand, 
+                                                        RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="{Binding}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Image>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="3"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
                             </ScrollViewer>
                         </WrapPanel>
                     </Expander>
@@ -263,6 +285,37 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
+                    <ItemsControl ItemsSource="{Binding CurrentPathPoints}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type model:PathPoint}">
+                                <Canvas>
+                                    <Ellipse Width="10" Height="10" Stroke="White" Fill="White">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                RelativeSource={RelativeSource AncestorType=Grid}}" CommandParameter="{Binding}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Ellipse>
+                                    <Line StrokeDashArray="4 2" StrokeThickness="2" Stroke="White"
+                                          X1="{Binding Coordinates.XPos}" Y1="{Binding Coordinates.YPos}">
+                                        <Line.X2>
+                                            <Binding/>
+                                        </Line.X2>
+                                        <Line.Y2>
+                                            <Binding/>
+                                        </Line.Y2>
+                                    </Line>
+                                </Canvas>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding Coordinates.XPos}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                    </ItemsControl>
                 </Canvas>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
@@ -279,6 +332,9 @@
             <ObjectDataProvider.MethodParameters>
                 <x:Type Type="{x:Type local:Tools}"/>
             </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="returnConnectX" ObjectType="{x:Type vm:EditorViewModel}" MethodName="PathConnectX">
+            
         </ObjectDataProvider>
     </Window.Resources>
 </Window>
