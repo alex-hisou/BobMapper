@@ -16,103 +16,24 @@ using BobMapper.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using static BobMapper.Model.MapObjects;
+using static BobMapper.Model.Selections;
 
 namespace BobMapper.ViewModel
 {
     internal partial class EditorViewModel : ViewModelBase
     {
-        private ObjectType selectedObjectType;
+        private Selections currentSelections;
 
-        public ObjectType SelectedObjectType
+        public Selections CurrentSelections
         {
-            get { return selectedObjectType; }
-            set { selectedObjectType = value; }
-        }
-        private string selectedTexture;
-        public string SelectedTexture
-        {
-            get { return selectedTexture; }
-            set { selectedTexture = value; OnPropertyChanged(); }
-        }
-
-        private string[] currentTextureSet;
-        public string[] CurrentTextureSet
-        {
-            get { return currentTextureSet; }
-            set { currentTextureSet = value; OnPropertyChanged(); }
-        }
-
-        private Tools selectedTool;
-        public Tools SelectedTool
-        {
-            get { return selectedTool; }
-            set { selectedTool = value; }
+            get { return currentSelections; }
+            set { currentSelections = value; }
         }
 
 
-        private Wall selectedWall;
-        public Wall SelectedWall
-        {
-            get { return selectedWall; }
-            set
-            {
-                selectedWall = value;
-                OnPropertyChanged();
-            }
-        }
-        private Prop selectedProp;
-        public Prop SelectedProp
-        {
-            get { return selectedProp; }
-            set
-            {
-                selectedProp = value;
-                OnPropertyChanged();
-            }
-        }
-        private NPC selectedNPC;
-        public NPC SelectedNPC
-        {
-            get { return selectedNPC; }
-            set
-            {
-                selectedNPC = value;
-                OnPropertyChanged();
-            }
-        }
-        private PathPoint selectedPathPoint;
-        public PathPoint SelectedPathPoint
-        {
-            get { return selectedPathPoint; }
-            set
-            {
-                selectedPathPoint = value;
-                OnPropertyChanged();
-            }
-        }
-        private Floor selectedFloor;
-        public Floor SelectedFloor
-        {
-            get { return selectedFloor; }
-            set
-            {
-                selectedFloor = value;
-                OnPropertyChanged();
-            }
-        }
-        private Misc selectedMisc;
-        public Misc SelectedMisc
-        {
-            get { return selectedMisc; }
-            set
-            {
-                selectedMisc = value;
-                OnPropertyChanged();
-            }
-        }
         public ObservableCollection<Wall> CurrentWalls { get => currentWalls; set => currentWalls = value; }
         private ObservableCollection<Wall> currentWalls;
-        public ObservableCollection<Prop> CurrentProps { get => currentProps; set => currentProps = value; }
+        public ObservableCollection<Prop> CurrentProps { get => currentProps; set { currentProps = value; OnPropertyChanged(); } }
         private ObservableCollection<Prop> currentProps;
         public ObservableCollection<NPC> CurrentNPCs { get => currentNPCs; set => currentNPCs = value; }
         private ObservableCollection<NPC> currentNPCs;
@@ -138,13 +59,15 @@ namespace BobMapper.ViewModel
         {
             //TODO: Look at the tileset and put all the textures in there
             //For the texture selector, use linq
+            
         }
         
 
         public EditorViewModel()
         {
+            CurrentSelections = new Selections();
             Map saveMap = new Map(0);
-            saveMap.props.Add(new Prop(new Coordinate(-5, -100), 45, "/Resources/PropTextures/box.png"));
+            saveMap.props.Add(new Prop(new Coordinate(-5, -100), 45, "/Resources/PropTextures/boombox.png"));
             saveMap.props.Add(new Prop(new Coordinate(100, -10), 45, "/Resources/PropTextures/toilet.png"));
             saveMap.walls.Add(new Wall(new Coordinate(100, -10), new Coordinate(100, 0), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Blue.png"));
             saveMap.walls.Add(new Wall(new Coordinate(90, 40), new Coordinate(80, 20), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Green.png"));
@@ -163,7 +86,7 @@ namespace BobMapper.ViewModel
             CurrentPathPoints = new ObservableCollection<PathPoint>(CurrentMap.pathPoints);
             CurrentMiscs = new ObservableCollection<Misc>(CurrentMap.miscs);
             JsonMapParse.SaveData(saveMap);
-            CurrentTextureSet = ["/Resources/WallTextures/Wall_Plain_Blue.png", "/Resources/WallTextures/Wall_Plain_Green.png"];
+            CurrentSelections.CurrentTextureSet = ["/Resources/WallTextures/Wall_Plain_Blue.png", "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/PropTextures/toilet.png", "/Resources/PropTextures/boombox.png"];
             InitaializeTextureSchema();
         }
 
@@ -174,10 +97,22 @@ namespace BobMapper.ViewModel
         }
 
         [RelayCommand]
+        public void SetObjectTexture(object sender)
+        {
+            //SUUUUUUUUPER BAAAAAAAD!!!!!
+            switch (CurrentSelections.SelectedObjectType)
+            {
+                case ObjectType.Prop:
+                    CurrentSelections.SelectedProp.PropTexture = CurrentSelections.SelectedTexture;
+                    break;
+            }
+        }
+
+        [RelayCommand]
         public void ClickObject(object sender)
         {
             
-            switch(SelectedTool)
+            switch(CurrentSelections.SelectedTool)
             {
                 case Tools.None:
                     break;
@@ -206,46 +141,46 @@ namespace BobMapper.ViewModel
 
         private void ResetSelection()
         {
-            switch (SelectedObjectType)
+            switch (CurrentSelections.SelectedObjectType)
             {
                 case ObjectType.Wall:
                     {
-                        SelectedWall = null;
+                        CurrentSelections.SelectedWall = null;
                         break;
                     }
                 case ObjectType.Prop:
                     {
-                        SelectedProp = null;
+                        CurrentSelections.SelectedProp = null;
                         break;
                     }
                 case ObjectType.NPC:
                     {
-                        SelectedNPC = null;
+                        CurrentSelections.SelectedNPC = null;
                         break;
                     }
                 case ObjectType.PathPoint:
                     {
-                        SelectedPathPoint = null;
+                        CurrentSelections.SelectedPathPoint = null;
                         break;
                     }
                 case ObjectType.Floor:
                     {
-                        SelectedFloor = null;
+                        CurrentSelections.SelectedFloor = null;
                         break;
                     }
                 case ObjectType.Misc:
                     {
-                        SelectedMisc = null;
+                        CurrentSelections.SelectedMisc = null;
                         break;
                     }
             }
-            SelectedObjectType = ObjectType.None;
+            CurrentSelections.SelectedObjectType = ObjectType.None;
         }
 
         [RelayCommand]
         public void SetTexture(object sender)
         {
-            SelectedTexture = (string)sender;
+            CurrentSelections.SelectedTexture = (string)sender;
         }
 
         private void SelectObject(object sender)
@@ -257,23 +192,23 @@ namespace BobMapper.ViewModel
             {
                 case 0: //Wall
                     selectedObjectIndex = CurrentWalls.IndexOf((Wall)sender);
-                    SelectedWall = CurrentWalls[selectedObjectIndex];
-                    SelectedObjectType = ObjectType.Wall;
+                    CurrentSelections.SelectedWall = CurrentWalls[selectedObjectIndex];
+                    CurrentSelections.SelectedObjectType = ObjectType.Wall;
                     break;
                 case 1: //Prop
                     selectedObjectIndex = CurrentProps.IndexOf((Prop)sender);
-                    SelectedProp = CurrentProps[selectedObjectIndex];
-                    SelectedObjectType = ObjectType.Prop;
+                    CurrentSelections.SelectedProp = CurrentProps[selectedObjectIndex];
+                    CurrentSelections.SelectedObjectType = ObjectType.Prop;
                     break;
                 case 2: //NPC
                     selectedObjectIndex = CurrentNPCs.IndexOf((NPC)sender);
-                    SelectedNPC = CurrentNPCs[selectedObjectIndex];
-                    SelectedObjectType = ObjectType.NPC;
+                    CurrentSelections.SelectedNPC = CurrentNPCs[selectedObjectIndex];
+                    CurrentSelections.SelectedObjectType = ObjectType.NPC;
                     break;
                 case 3: //PathPoint
                     selectedObjectIndex = CurrentPathPoints.IndexOf((PathPoint)sender);
-                    SelectedPathPoint = CurrentPathPoints[selectedObjectIndex];
-                    SelectedObjectType = ObjectType.PathPoint;
+                    CurrentSelections.SelectedPathPoint = CurrentPathPoints[selectedObjectIndex];
+                    CurrentSelections.SelectedObjectType = ObjectType.PathPoint;
                     break;
                 case 4: //Floor TODO: Implement
                     /*
@@ -284,8 +219,8 @@ namespace BobMapper.ViewModel
                     break;
                 case 5: //Misc
                     selectedObjectIndex = CurrentMiscs.IndexOf((Misc)sender);
-                    SelectedMisc = CurrentMiscs[selectedObjectIndex];
-                    SelectedObjectType = ObjectType.Misc;
+                    CurrentSelections.SelectedMisc = CurrentMiscs[selectedObjectIndex];
+                    CurrentSelections.SelectedObjectType = ObjectType.Misc;
                     break;
                 default:
                     throw new Exception("Invalid object type");

@@ -85,15 +85,15 @@
             </Menu>
             <StackPanel DockPanel.Dock="Right" Width="300" Height="auto" HorizontalAlignment="Right" Background="LightGray">
                 <StackPanel Orientation="Horizontal">
-                    <Expander/>
+                    <Expander IsExpanded="True"/>
                     <Label>Layers</Label>
                 </StackPanel>
                 <Separator Foreground="Black"></Separator>
 
                 <StackPanel Orientation="Horizontal">
-                    <Expander>
+                    <Expander IsExpanded="True">
                         <WrapPanel Orientation="Horizontal">
-                            <ContentControl Content="{Binding SelectedProp}">
+                            <ContentControl Content="{Binding CurrentSelections.SelectedProp}">
                                 <ContentControl.Resources>
                                     <DataTemplate DataType="{x:Type model:Prop}">
                                         <WrapPanel Width="300">
@@ -109,11 +109,19 @@
                                             <Label Width="170">Asset</Label>
                                             <Image Source="{Binding PropTexture}" MaxHeight="100" MaxWidth="100"/>
                                             <Label Content="{Binding PropTexture}"/>
+                                            <Button Content="Set to selected asset">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.SetObjectTextureCommand, 
+                                                        RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="{Binding}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ContentControl.Resources>
                             </ContentControl>
-                            <ContentControl Content="{Binding SelectedWall}">
+                            <ContentControl Content="{Binding CurrentSelections.SelectedWall}">
                                 <ContentControl.Resources>
                                     <DataTemplate DataType="{x:Type model:Wall}">
                                         <WrapPanel Width="300">
@@ -139,7 +147,7 @@
                                     </DataTemplate>
                                 </ContentControl.Resources>
                             </ContentControl>
-                            <ContentControl Content="{Binding SelectedNPC}">
+                            <ContentControl Content="{Binding CurrentSelections.SelectedNPC}">
                                 <ContentControl.Resources>
                                     <DataTemplate DataType="{x:Type model:NPC}">
                                         <WrapPanel Width="300">
@@ -164,14 +172,14 @@
                 </StackPanel>
                 <Separator Foreground="Black"/>
                 <StackPanel Orientation="Horizontal">
-                    <Expander>
+                    <Expander IsExpanded="True">
                         <WrapPanel Orientation="Horizontal" Width="300">
                             <Label Width="170">Selected Texture</Label>
-                            <Image Source="{Binding SelectedTexture}" Height="100" Width="100"/>
+                            <Image Source="{Binding CurrentSelections.SelectedTexture}" Height="100" Width="100"/>
                             <ComboBox Width="150" Height="20">
                             </ComboBox>
                             <ScrollViewer Width="300">
-                                <ItemsControl ItemsSource="{Binding CurrentTextureSet}">
+                                <ItemsControl ItemsSource="{Binding CurrentSelections.CurrentTextureSet}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Image Source="{Binding}">
@@ -227,6 +235,7 @@
                                     <RotateTransform Angle="{Binding Rotation}"/>
                                 </Setter.Value>
                             </Setter>
+                            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                         </Style>
                     </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemsPanel>
@@ -277,6 +286,7 @@
                                         <RotateTransform Angle="{Binding Rotation}"/>
                                     </Setter.Value>
                                 </Setter>
+                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemsPanel>
@@ -329,6 +339,11 @@
 
     <Window.Resources>
         <ObjectDataProvider x:Key="Tools" ObjectType="{x:Type s:Enum}" MethodName="GetValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type Type="{x:Type local:Tools}"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="TextureTypes" ObjectType="{x:Type s:Enum}" MethodName="GetValues">
             <ObjectDataProvider.MethodParameters>
                 <x:Type Type="{x:Type local:Tools}"/>
             </ObjectDataProvider.MethodParameters>
