@@ -9,6 +9,7 @@
         Title="BobMapper" Height="450" Width="800" ResizeMode="CanMinimize">
     <Grid>
         <Button x:Name="NewMod" Content="Start new mapping project" HorizontalAlignment="Left" Margin="49,90,0,0" VerticalAlignment="Top" Width="367" Height="40" Click="NewMod_Click"/>
+        <Button x:Name="LoadMod" Content="Load existing mapping project" HorizontalAlignment="Left" Margin="49,135,0,0" VerticalAlignment="Top" Width="367" Height="40" Click="NewMod_Click"/>
 
     </Grid>
 </Window>

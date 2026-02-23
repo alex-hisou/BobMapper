@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Media;
 using System.Resources;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using BobMapper.Properties;
@@ -35,20 +37,38 @@ namespace BobMapper.Model
         };
     }
 
-    public class Wall : IDoublePointObject
+    public class Wall : IDoublePointObject, INotifyPropertyChanged
     {
         public enum WallType
         {
             Normal,
             Door,
-            Paperthin,
-            Fence
+            Paperthin
         }
         public Coordinate Point1 { get; set; }
         public Coordinate Point2 { get; set; }
         public WallType Type { get; set; }
-        public string Texture1 { get; set; }
-        public string Texture2 { get; set; }
+
+        private string texture1;
+        public string Texture1
+        {
+            get { return texture1; }
+            set { texture1 = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(texture1)));
+            }
+        }
+
+        private string texture2;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string Texture2
+        {
+            get { return texture2; }
+            set { texture2 = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(texture2)));
+            }
+        }
 
         public Wall(Coordinate point1, Coordinate point2, WallType type, string texture2, string texture1)
         {
@@ -60,14 +80,28 @@ namespace BobMapper.Model
         }
     }
 
-    public class Prop : ISinglePointObject
+    public class Prop : ISinglePointObject, INotifyPropertyChanged
     {
-        public double Rotation { get; set; }
+        private int rotation;
+
+        public int Rotation
+        {
+            get { return rotation; }
+            set { rotation = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rotation))); }
+        }
+
         public Coordinate Coordinates { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public string PropTexture { get; set; }
+        private string propTexture;
+        public string PropTexture
+        {
+            get { return propTexture; }
+            set { propTexture = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PropTexture))); }
+        }
 
-        public Prop(Coordinate coordinates, double rotation, string propTextureName)
+
+        public Prop(Coordinate coordinates, int rotation, string propTextureName)
         {
             Coordinates = coordinates;
             Rotation = rotation;
@@ -84,14 +118,29 @@ namespace BobMapper.Model
 
         }
     }
-    public class NPC : ISinglePointObject
+    public class NPC : ISinglePointObject, INotifyPropertyChanged
     {
 
         public NPCType Type { get; set; }
         public Coordinate Coordinates { get; set; }
-        public double Rotation { get; set; }
 
-        public string Texture { get; set; }
+        private int rotation;
+        public int Rotation
+        {
+            get { return rotation; }
+            set { rotation = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rotation))); }
+        }
+
+        private string texture;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string Texture
+        {
+            get { return texture; }
+            set { texture = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture))); }
+        }
+
 
         public NPC(Coordinate coordinates, NPCType type, int rotation)
         {
@@ -140,21 +189,23 @@ namespace BobMapper.Model
         }
     }
 
-    public class PathPoint : ISinglePointObject
+    public class PathPoint : ISinglePointObject, INotifyPropertyChanged
     {
         public int Id { get; set; }
-        public PathPoint ConnectFromPoint { get; set; }
-        public PathPoint ConnectToPoint { get; set; }
+        public int? ConnectToPoint { get; set; }
 
         public Coordinate Coordinates { get; set; }
 
-        public PathPoint(Coordinate coordinates, int id, PathPoint connectFromID, PathPoint connectToId)
+
+        
+        public PathPoint(Coordinate coordinates, int id, int connectToId)
         {
             Coordinates = coordinates;
             Id = id;
-            ConnectFromPoint = connectFromID;
             ConnectToPoint = connectToId;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public void DeleteObject()
         {
@@ -190,10 +241,8 @@ namespace BobMapper.Model
             Loot = 6,
             MainLoot = 7,
             Key = 8,
-            Lock = 9,
             DisguisePoint = 11,
             SoundPoint = 12,
-            PermLock = 13
         }
 
         public MiscObjects Type { get; set; }

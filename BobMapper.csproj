@@ -1275,7 +1275,9 @@
     </BootstrapperPackage>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.3" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+    <PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
@@ -2320,8 +2322,8 @@
     <Resource Include="Resources\SpecialWallTextures\Door_White.png" />
     <Resource Include="Resources\SpecialWallTextures\Door_Yellow.png" />
     <Resource Include="Resources\SpecialWallTextures\Fence_White.png" />
-    <Resource Include="Resources\SpecialWallTextures\Window.png" />
-    <Resource Include="Resources\SpecialWallTextures\WindowTop.png" />
+    <Resource Include="Resources\WallTextures\Window.png" />
+    <Resource Include="Resources\WallTextures\WindowTop.png" />
     <Resource Include="Resources\UI\AddFloorTool.png" />
     <Resource Include="Resources\UI\AddMiscTool.png" />
     <Resource Include="Resources\UI\AddNPCTool.png" />
