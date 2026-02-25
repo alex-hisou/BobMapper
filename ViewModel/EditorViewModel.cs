@@ -33,7 +33,7 @@ namespace BobMapper.ViewModel
 
         public ObservableCollection<Wall> CurrentWalls { get => currentWalls; set => currentWalls = value; }
         private ObservableCollection<Wall> currentWalls;
-        public ObservableCollection<Prop> CurrentProps { get => currentProps; set { currentProps = value; OnPropertyChanged(); } }
+        public ObservableCollection<Prop> CurrentProps { get => currentProps; set => currentProps = value; }
         private ObservableCollection<Prop> currentProps;
         public ObservableCollection<NPC> CurrentNPCs { get => currentNPCs; set => currentNPCs = value; }
         private ObservableCollection<NPC> currentNPCs;
@@ -41,10 +41,8 @@ namespace BobMapper.ViewModel
         private ObservableCollection<PathPoint> currentPathPoints;
         public ObservableCollection<Misc> CurrentMiscs { get => currentMiscs; set => currentMiscs = value; }
         private ObservableCollection<Misc> currentMiscs;
-        public ObservableCollection<Floor> CurrentFloors { get => currentFloors; set => currentFloors = value; }
-        private ObservableCollection<Floor> currentFloors;
-
-        
+        public ObservableCollection<ObservableCollection<Floor>> CurrentFloors { get => currentFloors; set => currentFloors = value; }
+        private ObservableCollection<ObservableCollection<Floor>> currentFloors;
 
 
         private Map currentMap;
@@ -67,33 +65,76 @@ namespace BobMapper.ViewModel
         {
             CurrentSelections = new Selections();
             Map saveMap = new Map(0);
-            saveMap.props.Add(new Prop(new Coordinate(-5, -100), 45, "/Resources/PropTextures/boombox.png"));
-            saveMap.props.Add(new Prop(new Coordinate(100, -10), 45, "/Resources/PropTextures/toilet.png"));
-            saveMap.walls.Add(new Wall(new Coordinate(100, -10), new Coordinate(100, 0), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Blue.png"));
-            saveMap.walls.Add(new Wall(new Coordinate(90, 40), new Coordinate(80, 20), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Green.png"));
-            saveMap.npcs.Add(new NPC(new Coordinate(0, 0), NPC.NPCType.BaldCop, 0));
-            saveMap.npcs.Add(new NPC(new Coordinate(0, 0), NPC.NPCType.RedDressLady, 0));
-            PathPoint pathPoint1 = new(new Coordinate(-200, -200), 1, 2);
-            PathPoint pathPoint2 = new(new Coordinate(-200, -100), 2, 3);
-            PathPoint pathPoint3 = new(new Coordinate(-100, -100), 3, 1);
-            saveMap.pathPoints.Add(pathPoint1);
-            saveMap.pathPoints.Add(pathPoint2);
-            saveMap.pathPoints.Add(pathPoint3);
+            //saveMap.props.Add(new Prop(new Coordinate(-5, -100), 45, "/Resources/PropTextures/cactus.png"));
+            //saveMap.props.Add(new Prop(new Coordinate(100, -10), 45, "/Resources/PropTextures/toilet.png"));
+            saveMap.walls.Add(new Wall(new Coordinate(100, -100), new Coordinate(100, 0), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Blue.png"));
+            saveMap.walls.Add(new Wall(new Coordinate(120, 400), new Coordinate(80, 200), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Green.png"));
+            //saveMap.npcs.Add(new NPC(new Coordinate(300, 0), NPC.NPCType.BaldCop, 0));
+            //saveMap.npcs.Add(new NPC(new Coordinate(300, 300), NPC.NPCType.RedDressLady, 0));
+            //PathPoint pathPoint1 = new(new Coordinate(-200, -200), 1, 2);
+            //PathPoint pathPoint2 = new(new Coordinate(-200, -100), 2, 3);
+            //PathPoint pathPoint3 = new(new Coordinate(-100, -100), 3, 1);
+            //saveMap.pathPoints.Add(pathPoint1);
+            //saveMap.pathPoints.Add(pathPoint2);
+            //saveMap.pathPoints.Add(pathPoint3);
             CurrentMap = saveMap;
             CurrentProps = new ObservableCollection<Prop>(CurrentMap.props);
             CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls);
             CurrentNPCs = new ObservableCollection<NPC>(CurrentMap.npcs);
             CurrentPathPoints = new ObservableCollection<PathPoint>(CurrentMap.pathPoints);
             CurrentMiscs = new ObservableCollection<Misc>(CurrentMap.miscs);
+            CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors));
             JsonMapParse.SaveData(saveMap);
-            CurrentSelections.CurrentTextureSet = ["/Resources/WallTextures/Wall_Plain_Blue.png", "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/PropTextures/toilet.png", "/Resources/PropTextures/boombox.png"];
+            CurrentSelections.CurrentTextureSet = ["/Resources/WallTextures/Wall_Plain_Blue.png", "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/PropTextures/toilet.png", "/Resources/PropTextures/cactus.png"];
             InitaializeTextureSchema();
+        }
+
+        [RelayCommand]
+        public void SelectTool(Tools tool)
+        {
+            if (CurrentSelections.SelectedTool == Tools.None)
+            {
+                CurrentSelections.SelectedTool = tool;
+            }
+            else { CurrentSelections.SelectedTool = Tools.None; }
         }
 
         [RelayCommand]
         public void ClickEmpty(object sender)
         {
-            ResetSelection();
+            //Put in code-behind
+            Point point = new Point(Mouse.GetPosition().X, Mouse.GetPosition().Y);
+            switch (CurrentSelections.SelectedTool)
+            {
+                case Tools.None:
+                    break;
+                case Tools.Select:
+                    break;
+                case Tools.Move:
+                    break;
+                case Tools.Rotate:
+                    break;
+                case Tools.AddWall:
+                    Wall wall = new Wall(new Coordinate(0, 0), new Coordinate(0, 0), Wall.WallType.Normal, CurrentSelections.SelectedTexture, CurrentSelections.SelectedTexture);
+                    CurrentWalls.Add(wall);
+                    break;
+                case Tools.AddProp:
+                    Prop prop = new Prop(new Coordinate(0, 0), 0, CurrentSelections.SelectedTexture);
+                    CurrentProps.Add(prop);
+                    break;
+                case Tools.AddNPC:
+                    NPC npc = new NPC(new Coordinate(0, 0), NPC.NPCType.BulkyCop, 0);
+                    CurrentNPCs.Add(npc);
+                    break;
+                case Tools.AddPathPoint:
+                    PathPoint pathPoint = new PathPoint(new Coordinate(0, 0), 0);
+                    CurrentPathPoints.Add(pathPoint);
+                    break;
+                case Tools.AddMisc:
+                    Misc misc = new Misc(new Coordinate(0, 0), Misc.MiscObjects.Loot);
+                    CurrentMiscs.Add(misc);
+                    break;
+            }
         }
 
         [RelayCommand]
@@ -111,32 +152,10 @@ namespace BobMapper.ViewModel
         [RelayCommand]
         public void ClickObject(object sender)
         {
-            
-            switch(CurrentSelections.SelectedTool)
+            if(CurrentSelections.SelectedTool == Tools.Select)
             {
-                case Tools.None:
-                    break;
-                case Tools.Select:
-                    break;
-                case Tools.Move: 
-                    break;
-                case Tools.Rotate: 
-                    break;
-                case Tools.AddWall: 
-                    break;
-                case Tools.AddProp:
-                    break;
-                case Tools.AddNPC:
-                    break;
-                case Tools.AddPathPoint:
-                    break;
-                case Tools.AddMisc:
-                    break;
-                //TODO: Move code here
+                SelectObject(sender);
             }
-            
-            SelectObject(sender);
-            //TODO: Switch on the type of sender, find it in the crapper and set the selectedobject
         }
 
         private void ResetSelection()

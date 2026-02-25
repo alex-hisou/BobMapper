@@ -6,11 +6,11 @@
   "walls": [
     {
       "Point1": {
-        "XPos": 100,
-        "YPos": -10
+        "XPos": 64,
+        "YPos": -64
       },
       "Point2": {
-        "XPos": 100,
+        "XPos": 64,
         "YPos": 0
       },
       "Type": 0,
@@ -19,82 +19,21 @@
     },
     {
       "Point1": {
-        "XPos": 90,
-        "YPos": 40
+        "XPos": 64,
+        "YPos": 384
       },
       "Point2": {
-        "XPos": 80,
-        "YPos": 20
+        "XPos": 64,
+        "YPos": 192
       },
       "Type": 0,
       "Texture1": "/Resources/WallTextures/Wall_Plain_Green.png",
       "Texture2": "/Resources/WallTextures/Wall_Plain_Green.png"
     }
   ],
-  "props": [
-    {
-      "Rotation": 45,
-      "Coordinates": {
-        "XPos": -5,
-        "YPos": -100
-      },
-      "PropTexture": "/Resources/PropTextures/box.png"
-    },
-    {
-      "Rotation": 45,
-      "Coordinates": {
-        "XPos": 100,
-        "YPos": -10
-      },
-      "PropTexture": "/Resources/PropTextures/toilet.png"
-    }
-  ],
-  "npcs": [
-    {
-      "Type": 1,
-      "Coordinates": {
-        "XPos": 0,
-        "YPos": 0
-      },
-      "Rotation": 0,
-      "Texture": "/Resources/NPCTextures/BaldGuard.png"
-    },
-    {
-      "Type": 2,
-      "Coordinates": {
-        "XPos": 0,
-        "YPos": 0
-      },
-      "Rotation": 0,
-      "Texture": "/Resources/NPCTextures/Female.png"
-    }
-  ],
-  "pathPoints": [
-    {
-      "Id": 1,
-      "ConnectToPoint": 2,
-      "Coordinates": {
-        "XPos": -200,
-        "YPos": -200
-      }
-    },
-    {
-      "Id": 2,
-      "ConnectToPoint": 3,
-      "Coordinates": {
-        "XPos": -200,
-        "YPos": -100
-      }
-    },
-    {
-      "Id": 3,
-      "ConnectToPoint": 1,
-      "Coordinates": {
-        "XPos": -100,
-        "YPos": -100
-      }
-    }
-  ],
+  "props": [],
+  "npcs": [],
+  "pathPoints": [],
   "miscs": [],
   "floors": [
     [

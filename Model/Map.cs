@@ -56,8 +56,6 @@ namespace BobMapper.Model
             this.levelChapter = chapter;
             this.levelNumber = levelNumber;
             this.tileset = tileset;
-
-
         }
 
         public enum Chapter

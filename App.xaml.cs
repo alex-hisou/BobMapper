@@ -29,7 +29,8 @@ namespace BobMapper
         AddProp,
         AddNPC,
         AddPathPoint,
-        AddMisc
+        AddMisc,
+        ChangeFloor
     }
 
     internal static class TextureSources
@@ -51,6 +52,12 @@ namespace BobMapper
         {
             this.XPos = x;
             this.YPos = y;
+        }
+
+        public void SnapCoordinate()
+        {
+            XPos -= XPos % FloorSize;
+            YPos -= YPos % FloorSize;
         }
     }
 }
