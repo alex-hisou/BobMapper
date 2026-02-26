@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media.TextFormatting;
 using BobMapper.Properties;
 
 namespace BobMapper.Model
@@ -26,7 +28,21 @@ namespace BobMapper.Model
             Misc
         }
 
-        
+        public static ObservableCollection<ObservableCollection<Floor>> FlattenFloors(Floor[][] floors)
+        {
+            ObservableCollection<ObservableCollection<Floor>> flattenedArray = new ObservableCollection<ObservableCollection<Floor>>();
+            foreach (var row in floors)
+            {
+                var nestedCollection = new ObservableCollection<Floor>();
+                foreach (Floor floor in row)
+                {
+                    Floor newFloor = new Floor("/Resources/FloorTextures/Floor_JunkieTiles.png","");
+                    nestedCollection.Add(newFloor);
+                }
+                flattenedArray.Add(nestedCollection);
+            }
+            return flattenedArray;
+        }
 
         public static ResourceManager resourceManager = Resources.ResourceManager;
 
@@ -45,8 +61,27 @@ namespace BobMapper.Model
             Door,
             Paperthin
         }
-        public Coordinate Point1 { get; set; }
-        public Coordinate Point2 { get; set; }
+        private Coordinate point1;
+
+        public Coordinate Point1
+        {
+            get { return point1; }
+            set {
+                value.SnapCoordinate();
+                point1 = value;
+            }
+        }
+        private Coordinate point2;
+
+        public Coordinate Point2
+        {
+            get { return point2; }
+            set {
+                value.SnapCoordinate();
+                point2 = value;
+            }
+        }
+
         public WallType Type { get; set; }
 
         private string texture1;
@@ -196,13 +231,18 @@ namespace BobMapper.Model
 
         public Coordinate Coordinates { get; set; }
 
-
-        
+        [JsonConstructor]
         public PathPoint(Coordinate coordinates, int id, int connectToId)
         {
             Coordinates = coordinates;
             Id = id;
             ConnectToPoint = connectToId;
+        }
+
+        public PathPoint(Coordinate coordinates, int id)
+        {
+            Coordinates = coordinates;
+            Id = id;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -223,10 +263,26 @@ namespace BobMapper.Model
         }
     }
 
-    public class Floor
+    public class Floor : INotifyPropertyChanged
     {
-        public string Texture1 { get; set; }
-        public string Texture2 { get; set; }
+        private string texture1;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string Texture1
+        {
+            get { return texture1; }
+            set { texture1 = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture1))); }
+
+        }
+
+        private string texture2;
+        public string Texture2
+        {
+            get { return texture2; }
+            set { texture2 = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture2))); }
+
+        }
 
         public Floor(string texture1, string texture2)
         {

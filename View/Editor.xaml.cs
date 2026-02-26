@@ -29,6 +29,8 @@ namespace BobMapper
             DataContext = editorViewModel;
 
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight; //otherwise covers taskbar
+
+            
             
             //Map map = DataParse.LoadData();
         }
@@ -36,6 +38,25 @@ namespace BobMapper
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = Regex.IsMatch(e.Text, "[^0-9][^-]+");
+        }
+
+        private void ClickEmpty(object sender, MouseEventArgs e)
+        {
+            var mousePos = e.GetPosition(ScrollPlane);
+            int wholeX = Convert.ToInt32(mousePos.X);
+            int wholeY = Convert.ToInt32(mousePos.Y);
+            int cartesianFrameWidth = Convert.ToInt32(ScrollPlane.ActualWidth / 2);
+            int cartesianFrameHeight = Convert.ToInt32(ScrollPlane.ActualHeight / 2);
+            Coordinate placementPos = new Coordinate(wholeX - cartesianFrameWidth, cartesianFrameHeight - wholeY);
+            if (DataContext is EditorViewModel editorViewModel)
+            {
+                editorViewModel.ClickEmpty(placementPos);
+            }
+        }
+
+        private void ToolToggle(object sender)
+        {
+
         }
     }
 }
