@@ -85,7 +85,8 @@ namespace BobMapper.ViewModel
             CurrentMiscs = new ObservableCollection<Misc>(CurrentMap.miscs);
             CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors));
             JsonMapParse.SaveData(saveMap);
-            CurrentSelections.CurrentTextureSet = ["/Resources/WallTextures/Wall_Plain_Blue.png", "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/PropTextures/toilet.png", "/Resources/PropTextures/cactus.png"];
+            CurrentSelections.CurrentTextureSet = ["/Resources/WallTextures/Wall_Plain_Blue.png", "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/PropTextures/toilet.png", "/Resources/PropTextures/cactus.png",
+            "/Resources/FloorTextures/Floor_orange_base.png"];
             InitaializeTextureSchema();
         }
 
@@ -95,15 +96,16 @@ namespace BobMapper.ViewModel
             if (CurrentSelections.SelectedTool == Tools.None)
             {
                 CurrentSelections.SelectedTool = tool;
+                
             }
-            else { CurrentSelections.SelectedTool = Tools.None; }
+            else { CurrentSelections.SelectedTool = Tools.None;  }
         }
 
-        [RelayCommand]
-        public void ClickEmpty(object sender)
+        
+        public void ClickEmpty(Coordinate placementPos)
         {
-            //Put in code-behind
-            Point point = new Point(Mouse.GetPosition().X, Mouse.GetPosition().Y);
+            
+            //Point point = new Point(Mouse.GetPosition().X, Mouse.GetPosition().Y);
             switch (CurrentSelections.SelectedTool)
             {
                 case Tools.None:
@@ -115,23 +117,23 @@ namespace BobMapper.ViewModel
                 case Tools.Rotate:
                     break;
                 case Tools.AddWall:
-                    Wall wall = new Wall(new Coordinate(0, 0), new Coordinate(0, 0), Wall.WallType.Normal, CurrentSelections.SelectedTexture, CurrentSelections.SelectedTexture);
+                    Wall wall = new Wall(new Coordinate(0, 0), new Coordinate(64, 0), Wall.WallType.Normal, CurrentSelections.SelectedTexture, CurrentSelections.SelectedTexture);
                     CurrentWalls.Add(wall);
                     break;
                 case Tools.AddProp:
-                    Prop prop = new Prop(new Coordinate(0, 0), 0, CurrentSelections.SelectedTexture);
+                    Prop prop = new Prop(placementPos, 0, CurrentSelections.SelectedTexture);
                     CurrentProps.Add(prop);
                     break;
                 case Tools.AddNPC:
-                    NPC npc = new NPC(new Coordinate(0, 0), NPC.NPCType.BulkyCop, 0);
+                    NPC npc = new NPC(placementPos, NPC.NPCType.BulkyCop, 0);
                     CurrentNPCs.Add(npc);
                     break;
                 case Tools.AddPathPoint:
-                    PathPoint pathPoint = new PathPoint(new Coordinate(0, 0), 0);
+                    PathPoint pathPoint = new PathPoint(placementPos, 0);
                     CurrentPathPoints.Add(pathPoint);
                     break;
                 case Tools.AddMisc:
-                    Misc misc = new Misc(new Coordinate(0, 0), Misc.MiscObjects.Loot);
+                    Misc misc = new Misc(placementPos, Misc.MiscObjects.Loot);
                     CurrentMiscs.Add(misc);
                     break;
             }
@@ -146,6 +148,7 @@ namespace BobMapper.ViewModel
                 case ObjectType.Prop:
                     CurrentSelections.SelectedProp.PropTexture = CurrentSelections.SelectedTexture;
                     break;
+                
             }
         }
 
@@ -155,6 +158,11 @@ namespace BobMapper.ViewModel
             if(CurrentSelections.SelectedTool == Tools.Select)
             {
                 SelectObject(sender);
+            }
+            if(CurrentSelections.SelectedTool == Tools.ChangeFloor)
+            {
+                Floor floor = (Floor)sender;
+                floor.Texture1 = CurrentSelections.SelectedTexture;
             }
         }
 

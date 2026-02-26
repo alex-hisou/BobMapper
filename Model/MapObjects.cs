@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media.TextFormatting;
 using BobMapper.Properties;
 
 namespace BobMapper.Model
@@ -35,7 +36,7 @@ namespace BobMapper.Model
                 var nestedCollection = new ObservableCollection<Floor>();
                 foreach (Floor floor in row)
                 {
-                    Floor newFloor = new Floor("/Resources/FloorTextures/Floor_grass.png","");
+                    Floor newFloor = new Floor("/Resources/FloorTextures/Floor_JunkieTiles.png","");
                     nestedCollection.Add(newFloor);
                 }
                 flattenedArray.Add(nestedCollection);
@@ -262,10 +263,26 @@ namespace BobMapper.Model
         }
     }
 
-    public class Floor
+    public class Floor : INotifyPropertyChanged
     {
-        public string Texture1 { get; set; }
-        public string Texture2 { get; set; }
+        private string texture1;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string Texture1
+        {
+            get { return texture1; }
+            set { texture1 = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture1))); }
+
+        }
+
+        private string texture2;
+        public string Texture2
+        {
+            get { return texture2; }
+            set { texture2 = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture2))); }
+
+        }
 
         public Floor(string texture1, string texture2)
         {

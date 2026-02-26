@@ -206,13 +206,14 @@
             </StackPanel>
             <!-- BAD CANVAS CODE AHEAD -->
             <ScrollViewer HorizontalScrollBarVisibility="Visible" HorizontalContentAlignment="Center"
-                          VerticalContentAlignment="Center" Background="Gray" Focusable="False">
+                          VerticalContentAlignment="Center" Background="Gray" Focusable="False"
+                          PreviewMouseDown="ClickEmpty" x:Name="ScrollPlane">
                 <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Width="0" Height="0" 
                     RenderTransformOrigin="0.5,0.5">
                     <Canvas.RenderTransform>
                         <ScaleTransform ScaleY="-1"/>
                     </Canvas.RenderTransform>
-                    <!-- TODO: Set rotation origin to center -->
+                    <!-- Might have to be offset -->
                     <ItemsControl ItemsSource="{Binding CurrentFloors}" Canvas.Left="-384" Canvas.Top="-384">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -363,11 +364,6 @@
                     </ItemsControl>
                     <!-- TODO: Add Texture 2-->
                 </Canvas>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                        <i:InvokeCommandAction Command="{Binding ClickEmptyCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
             </ScrollViewer>
         </DockPanel>
 
