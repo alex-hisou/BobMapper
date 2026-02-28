@@ -52,13 +52,6 @@ namespace BobMapper.ViewModel
             get { return currentMap; }
             set { currentMap = value; }
         }
-
-        private void InitaializeTextureSchema()
-        {
-            //TODO: Look at the tileset and put all the textures in there
-            //For the texture selector, use linq
-            
-        }
         
 
         public EditorViewModel()
@@ -85,9 +78,7 @@ namespace BobMapper.ViewModel
             CurrentMiscs = new ObservableCollection<Misc>(CurrentMap.miscs);
             CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors));
             JsonMapParse.SaveData(saveMap);
-            CurrentSelections.CurrentTextureSet = ["/Resources/WallTextures/Wall_Plain_Blue.png", "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/PropTextures/toilet.png", "/Resources/PropTextures/cactus.png",
-            "/Resources/FloorTextures/Floor_orange_base.png"];
-            InitaializeTextureSchema();
+            CurrentSelections.InitializeCurrentTextureSet(CurrentMap.tileset);
         }
 
         [RelayCommand]

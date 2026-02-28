@@ -33,6 +33,15 @@ namespace BobMapper
         ChangeFloor
     }
 
+    public enum Tilesets
+    {
+        Suburbs,
+        Downtown,
+        Labs,
+        Strip,
+        Winter,
+        Camp
+    }
     internal static class TextureSources
     {
         internal static string FloorTextures = @"/Resources/FloorTextures/";

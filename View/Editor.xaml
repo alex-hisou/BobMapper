@@ -178,7 +178,7 @@
                             <Image Source="{Binding CurrentSelections.SelectedTexture}" Height="100" Width="100"/>
                             <ComboBox Width="150" Height="20" Margin="20">
                             </ComboBox>
-                            <ScrollViewer Width="300">
+                            <ScrollViewer Width="300" Height="440">
                                 <ItemsControl ItemsSource="{Binding CurrentSelections.CurrentTextureSet}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>

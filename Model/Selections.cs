@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BobMapper.Model;
+using Microsoft.Data.Sqlite;
 using static BobMapper.Model.MapObjects;
 
 namespace BobMapper.Model
@@ -107,6 +108,23 @@ namespace BobMapper.Model
                 selectedMisc = value;
                 OnPropertyChanged();
             }
+        }
+
+        public void InitializeCurrentTextureSet(Tilesets tileset)
+        {
+            List<string> temporaryTextureSet = new List<string>();
+            SqliteConnection textureSchemaConnection = new("Data Source=Data/TextureSchema.sqlite");
+            textureSchemaConnection.Open();
+            var selectTexturesCommand = textureSchemaConnection.CreateCommand();
+            selectTexturesCommand.CommandText = $"SELECT ResourceName FROM Textures WHERE Tilesets LIKE '%{(int)tileset}%'";
+            var reader = selectTexturesCommand.ExecuteReader();
+            while (reader.Read())
+            {
+                string textureName = reader.GetString(0);
+                temporaryTextureSet.Add(textureName);
+            }
+            textureSchemaConnection.Close();
+            CurrentTextureSet = temporaryTextureSet.ToArray();
         }
     }
 }
