@@ -113,9 +113,9 @@ namespace BobMapper.Model
         public void InitializeCurrentTextureSet(Tilesets tileset)
         {
             List<string> temporaryTextureSet = new List<string>();
-            SqliteConnection textureSchemaConnection = new("Data Source=Data/TextureSchema.sqlite");
-            textureSchemaConnection.Open();
-            var selectTexturesCommand = textureSchemaConnection.CreateCommand();
+            SqliteConnection textureManifestConnection = new("Data Source=Data/TextureManifest.sqlite");
+            textureManifestConnection.Open();
+            var selectTexturesCommand = textureManifestConnection.CreateCommand();
             selectTexturesCommand.CommandText = $"SELECT ResourceName FROM Textures WHERE Tilesets LIKE '%{(int)tileset}%'";
             var reader = selectTexturesCommand.ExecuteReader();
             while (reader.Read())
@@ -123,7 +123,7 @@ namespace BobMapper.Model
                 string textureName = reader.GetString(0);
                 temporaryTextureSet.Add(textureName);
             }
-            textureSchemaConnection.Close();
+            textureManifestConnection.Close();
             CurrentTextureSet = temporaryTextureSet.ToArray();
         }
     }

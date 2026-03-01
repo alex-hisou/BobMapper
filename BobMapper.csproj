@@ -29,6 +29,7 @@
     <Page Remove="Resources\Textures\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Data\TextureManifest.sqlite" />
     <None Remove="Model\TextureSchema.sqlite" />
     <None Remove="Resources\FloorTextures\Floor_Asphalt.png" />
     <None Remove="Resources\FloorTextures\Floor_AsphaltCorner.png" />
@@ -328,6 +329,12 @@
     <None Remove="Resources\LootTextures\Loot_Wallet.png" />
     <None Remove="Resources\LootTextures\Loot_WitheredPlant.png" />
     <None Remove="Resources\LootTextures\Loot_Yarn.png" />
+    <None Remove="Resources\MiscTextures\Disguise.png" />
+    <None Remove="Resources\MiscTextures\Key.png" />
+    <None Remove="Resources\MiscTextures\Lock.png" />
+    <None Remove="Resources\MiscTextures\LootGlare.png" />
+    <None Remove="Resources\MiscTextures\MainLoot.png" />
+    <None Remove="Resources\MiscTextures\SoundPoint.png" />
     <None Remove="Resources\NPCTextures\BaldGuard.png" />
     <None Remove="Resources\NPCTextures\Female.png" />
     <None Remove="Resources\NPCTextures\Guard.png" />
@@ -1274,6 +1281,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+    <Content Include="Data\TextureManifest.sqlite">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.3" />
@@ -1281,9 +1291,6 @@
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\TextureSchema.sqlite">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Resources\FloorTextures\Floor_Asphalt.png" />
     <Resource Include="Resources\FloorTextures\Floor_AsphaltCorner.png" />
     <Resource Include="Resources\FloorTextures\Floor_AsphaltCorner1.png" />
@@ -1582,6 +1589,12 @@
     <Resource Include="Resources\LootTextures\Loot_Wallet.png" />
     <Resource Include="Resources\LootTextures\Loot_WitheredPlant.png" />
     <Resource Include="Resources\LootTextures\Loot_Yarn.png" />
+    <Resource Include="Resources\MiscTextures\Disguise.png" />
+    <Resource Include="Resources\MiscTextures\Key.png" />
+    <Resource Include="Resources\MiscTextures\Lock.png" />
+    <Resource Include="Resources\MiscTextures\LootGlare.png" />
+    <Resource Include="Resources\MiscTextures\MainLoot.png" />
+    <Resource Include="Resources\MiscTextures\SoundPoint.png" />
     <Resource Include="Resources\NPCTextures\BaldGuard.png" />
     <Resource Include="Resources\NPCTextures\Female.png" />
     <Resource Include="Resources\NPCTextures\Guard.png" />

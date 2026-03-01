@@ -58,7 +58,6 @@ namespace BobMapper.Model
         public enum WallType
         {
             Normal,
-            Door,
             Paperthin
         }
         private Coordinate point1;
@@ -115,6 +114,37 @@ namespace BobMapper.Model
         }
     }
 
+    public class Door : IDoublePointObject, INotifyPropertyChanged
+    {
+
+        private Coordinate point1;
+        public Coordinate Point1
+        {
+            get { return point1; }
+            set { point1 = value; }
+        }
+        private Coordinate point2;
+        public Coordinate Point2
+        {
+            get { return point2; }
+            set { point2 = value; }
+        }
+        private string texture1;
+        public string Texture1
+        {
+            get { return texture1; }
+            set { texture1 = value; }
+        }
+        private string texture2;
+        public string Texture2
+        {
+            get { return texture2; }
+            set { texture2 = value; }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
+
     public class Prop : ISinglePointObject, INotifyPropertyChanged
     {
         private int rotation;
@@ -166,10 +196,10 @@ namespace BobMapper.Model
             set { rotation = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rotation))); }
         }
 
-        private string texture;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private string texture;
+        [JsonIgnore]
         public string Texture
         {
             get { return texture; }
@@ -290,7 +320,7 @@ namespace BobMapper.Model
         }
     }
 
-    public class Misc : ISinglePointObject
+    public class Misc : ISinglePointObject, INotifyPropertyChanged
     {
         public enum MiscObjects
         {
@@ -309,6 +339,17 @@ namespace BobMapper.Model
         {
             Coordinates = coordinates;
             Type = type;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private string texture;
+
+        [JsonIgnore]
+        public string Texture
+        {
+            get { return texture; }
+            set { texture = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture))); }
         }
 
         public void UpdatePos(Coordinate newCoordinate)

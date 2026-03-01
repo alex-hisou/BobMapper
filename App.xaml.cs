@@ -42,15 +42,6 @@ namespace BobMapper
         Winter,
         Camp
     }
-    internal static class TextureSources
-    {
-        internal static string FloorTextures = @"/Resources/FloorTextures/";
-        internal static string LootTextures = @"/Resources/LootTextures/";
-        internal static string NPCTextures = @"/Resources/NPCTextures/";
-        internal static string PropTextures = @"/Resources/PropTextures/";
-        internal static string SpecialWallTextures = @"/Resources/SpecialWallTextures/";
-        internal static string WallTextures = @"/Resources/WallTextures/";
-    }
     public class Coordinate
     {
         public const int FloorSize = 64;
