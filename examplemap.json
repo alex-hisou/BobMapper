@@ -6,12 +6,14 @@
   "walls": [
     {
       "Point1": {
-        "XPos": 64,
-        "YPos": -64
+        "YPos": -64,
+        "SnappedXPos": 1,
+        "SnappedYPos": -1
       },
       "Point2": {
-        "XPos": 64,
-        "YPos": 0
+        "YPos": 0,
+        "SnappedXPos": 1,
+        "SnappedYPos": 0
       },
       "Type": 0,
       "Texture1": "/Resources/WallTextures/Wall_Plain_Blue.png",
@@ -19,12 +21,14 @@
     },
     {
       "Point1": {
-        "XPos": 64,
-        "YPos": 384
+        "YPos": 256,
+        "SnappedXPos": 1,
+        "SnappedYPos": 4
       },
       "Point2": {
-        "XPos": 64,
-        "YPos": 192
+        "YPos": 128,
+        "SnappedXPos": 8,
+        "SnappedYPos": 2
       },
       "Type": 0,
       "Texture1": "/Resources/WallTextures/Wall_Plain_Green.png",
@@ -205,5 +209,5 @@
       null
     ]
   ],
-  "tileset": 1
+  "tileset": 2
 }

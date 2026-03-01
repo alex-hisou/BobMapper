@@ -60,23 +60,21 @@ namespace BobMapper.Model
             Normal,
             Paperthin
         }
-        private Coordinate point1;
+        private SnapCoordinate point1;
 
-        public Coordinate Point1
+        public SnapCoordinate Point1
         {
             get { return point1; }
             set {
-                value.SnapCoordinate();
                 point1 = value;
             }
         }
-        private Coordinate point2;
+        private SnapCoordinate point2;
 
-        public Coordinate Point2
+        public SnapCoordinate Point2
         {
             get { return point2; }
             set {
-                value.SnapCoordinate();
                 point2 = value;
             }
         }
@@ -104,7 +102,7 @@ namespace BobMapper.Model
             }
         }
 
-        public Wall(Coordinate point1, Coordinate point2, WallType type, string texture2, string texture1)
+        public Wall(SnapCoordinate point1, SnapCoordinate point2, WallType type, string texture2, string texture1)
         {
             Point1 = point1;
             Point2 = point2;
@@ -117,14 +115,14 @@ namespace BobMapper.Model
     public class Door : IDoublePointObject, INotifyPropertyChanged
     {
 
-        private Coordinate point1;
-        public Coordinate Point1
+        private SnapCoordinate point1;
+        public SnapCoordinate Point1
         {
             get { return point1; }
             set { point1 = value; }
         }
-        private Coordinate point2;
-        public Coordinate Point2
+        private SnapCoordinate point2;
+        public SnapCoordinate Point2
         {
             get { return point2; }
             set { point2 = value; }

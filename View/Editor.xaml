@@ -126,16 +126,16 @@
                                     <DataTemplate DataType="{x:Type model:Wall}">
                                         <WrapPanel Width="300">
                                             <Label Width="170">Point 1 - X Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Point1.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                              PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
                                             <Label Width="170">Point 1 - Y Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Point1.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                              PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
                                             <Label Width="170">Point 2 - X Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Point2.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                              PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
                                             <Label Width="170">Point 2 - Y Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Point2.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                              PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
                                             <Label Width="170">Left Texture</Label>
                                             <Image Source="{Binding Texture1}" MaxHeight="100" MaxWidth="100"/>
