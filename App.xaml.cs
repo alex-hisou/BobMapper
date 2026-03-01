@@ -33,14 +33,14 @@ namespace BobMapper
         ChangeFloor
     }
 
-    internal static class TextureSources
+    public enum Tilesets
     {
-        internal static string FloorTextures = @"/Resources/FloorTextures/";
-        internal static string LootTextures = @"/Resources/LootTextures/";
-        internal static string NPCTextures = @"/Resources/NPCTextures/";
-        internal static string PropTextures = @"/Resources/PropTextures/";
-        internal static string SpecialWallTextures = @"/Resources/SpecialWallTextures/";
-        internal static string WallTextures = @"/Resources/WallTextures/";
+        Suburbs,
+        Downtown,
+        Labs,
+        Strip,
+        Winter,
+        Camp
     }
     public class Coordinate
     {

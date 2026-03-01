@@ -29,6 +29,8 @@
     <Page Remove="Resources\Textures\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Data\TextureManifest.sqlite" />
+    <None Remove="Model\TextureSchema.sqlite" />
     <None Remove="Resources\FloorTextures\Floor_Asphalt.png" />
     <None Remove="Resources\FloorTextures\Floor_AsphaltCorner.png" />
     <None Remove="Resources\FloorTextures\Floor_AsphaltCorner1.png" />
@@ -327,6 +329,12 @@
     <None Remove="Resources\LootTextures\Loot_Wallet.png" />
     <None Remove="Resources\LootTextures\Loot_WitheredPlant.png" />
     <None Remove="Resources\LootTextures\Loot_Yarn.png" />
+    <None Remove="Resources\MiscTextures\Disguise.png" />
+    <None Remove="Resources\MiscTextures\Key.png" />
+    <None Remove="Resources\MiscTextures\Lock.png" />
+    <None Remove="Resources\MiscTextures\LootGlare.png" />
+    <None Remove="Resources\MiscTextures\MainLoot.png" />
+    <None Remove="Resources\MiscTextures\SoundPoint.png" />
     <None Remove="Resources\NPCTextures\BaldGuard.png" />
     <None Remove="Resources\NPCTextures\Female.png" />
     <None Remove="Resources\NPCTextures\Guard.png" />
@@ -1038,40 +1046,40 @@
     <None Remove="Resources\PropTextures\Winter_Snowman.png" />
     <None Remove="Resources\PropTextures\Winter_SnowmanBody.png" />
     <None Remove="Resources\PropTextures\Winter_SnowmanHead.png" />
-    <None Remove="Resources\SpecialWallTextures\DoorStrip.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_Blue.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_BrownWood.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_camp.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_Elevator.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_blue.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_booth.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_brown.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_church.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_corridor.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_elevator.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_exit.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_glass.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_hotel_a.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_kitchen.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_lobby.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_red.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_safe.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_storage.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_WC.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_white.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_indoor_window.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_Lab1.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_Lab2.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_Lab3.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_outdoor_blue.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_outdoor_design.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_plain.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_Store.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_White.png" />
-    <None Remove="Resources\SpecialWallTextures\Door_Yellow.png" />
-    <None Remove="Resources\SpecialWallTextures\Fence_White.png" />
-    <None Remove="Resources\SpecialWallTextures\Window.png" />
-    <None Remove="Resources\SpecialWallTextures\WindowTop.png" />
+    <None Remove="Resources\DoorTextures\DoorStrip.png" />
+    <None Remove="Resources\DoorTextures\Door_Blue.png" />
+    <None Remove="Resources\DoorTextures\Door_BrownWood.png" />
+    <None Remove="Resources\DoorTextures\Door_camp.png" />
+    <None Remove="Resources\DoorTextures\Door_Elevator.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_blue.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_booth.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_brown.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_church.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_corridor.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_elevator.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_exit.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_glass.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_hotel_a.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_kitchen.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_lobby.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_red.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_safe.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_storage.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_WC.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_white.png" />
+    <None Remove="Resources\DoorTextures\Door_indoor_window.png" />
+    <None Remove="Resources\DoorTextures\Door_Lab1.png" />
+    <None Remove="Resources\DoorTextures\Door_Lab2.png" />
+    <None Remove="Resources\DoorTextures\Door_Lab3.png" />
+    <None Remove="Resources\DoorTextures\Door_outdoor_blue.png" />
+    <None Remove="Resources\DoorTextures\Door_outdoor_design.png" />
+    <None Remove="Resources\DoorTextures\Door_plain.png" />
+    <None Remove="Resources\DoorTextures\Door_Store.png" />
+    <None Remove="Resources\DoorTextures\Door_White.png" />
+    <None Remove="Resources\DoorTextures\Door_Yellow.png" />
+    <None Remove="Resources\DoorTextures\Fence_White.png" />
+    <None Remove="Resources\DoorTextures\Window.png" />
+    <None Remove="Resources\DoorTextures\WindowTop.png" />
     <None Remove="Resources\UI\AddFloorTool.png" />
     <None Remove="Resources\UI\AddMiscTool.png" />
     <None Remove="Resources\UI\AddNPCTool.png" />
@@ -1273,11 +1281,13 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+    <Content Include="Data\TextureManifest.sqlite">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.3" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
-    <PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
@@ -1579,6 +1589,12 @@
     <Resource Include="Resources\LootTextures\Loot_Wallet.png" />
     <Resource Include="Resources\LootTextures\Loot_WitheredPlant.png" />
     <Resource Include="Resources\LootTextures\Loot_Yarn.png" />
+    <Resource Include="Resources\MiscTextures\Disguise.png" />
+    <Resource Include="Resources\MiscTextures\Key.png" />
+    <Resource Include="Resources\MiscTextures\Lock.png" />
+    <Resource Include="Resources\MiscTextures\LootGlare.png" />
+    <Resource Include="Resources\MiscTextures\MainLoot.png" />
+    <Resource Include="Resources\MiscTextures\SoundPoint.png" />
     <Resource Include="Resources\NPCTextures\BaldGuard.png" />
     <Resource Include="Resources\NPCTextures\Female.png" />
     <Resource Include="Resources\NPCTextures\Guard.png" />
@@ -2290,38 +2306,37 @@
     <Resource Include="Resources\PropTextures\Winter_Snowman.png" />
     <Resource Include="Resources\PropTextures\Winter_SnowmanBody.png" />
     <Resource Include="Resources\PropTextures\Winter_SnowmanHead.png" />
-    <Resource Include="Resources\SpecialWallTextures\DoorStrip.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_Blue.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_BrownWood.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_camp.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_Elevator.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_blue.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_booth.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_brown.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_church.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_corridor.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_elevator.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_exit.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_glass.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_hotel_a.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_kitchen.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_lobby.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_red.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_safe.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_storage.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_WC.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_white.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_indoor_window.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_Lab1.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_Lab2.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_Lab3.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_outdoor_blue.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_outdoor_design.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_plain.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_Store.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_White.png" />
-    <Resource Include="Resources\SpecialWallTextures\Door_Yellow.png" />
-    <Resource Include="Resources\SpecialWallTextures\Fence_White.png" />
+    <Resource Include="Resources\DoorTextures\DoorStrip.png" />
+    <Resource Include="Resources\DoorTextures\Door_Blue.png" />
+    <Resource Include="Resources\DoorTextures\Door_BrownWood.png" />
+    <Resource Include="Resources\DoorTextures\Door_camp.png" />
+    <Resource Include="Resources\DoorTextures\Door_Elevator.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_blue.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_booth.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_brown.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_church.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_corridor.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_elevator.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_exit.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_glass.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_hotel_a.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_kitchen.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_lobby.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_red.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_safe.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_storage.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_WC.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_white.png" />
+    <Resource Include="Resources\DoorTextures\Door_indoor_window.png" />
+    <Resource Include="Resources\DoorTextures\Door_Lab1.png" />
+    <Resource Include="Resources\DoorTextures\Door_Lab2.png" />
+    <Resource Include="Resources\DoorTextures\Door_Lab3.png" />
+    <Resource Include="Resources\DoorTextures\Door_outdoor_blue.png" />
+    <Resource Include="Resources\DoorTextures\Door_outdoor_design.png" />
+    <Resource Include="Resources\DoorTextures\Door_plain.png" />
+    <Resource Include="Resources\DoorTextures\Door_Store.png" />
+    <Resource Include="Resources\DoorTextures\Door_White.png" />
+    <Resource Include="Resources\DoorTextures\Door_Yellow.png" />
     <Resource Include="Resources\WallTextures\Window.png" />
     <Resource Include="Resources\WallTextures\WindowTop.png" />
     <Resource Include="Resources\UI\AddFloorTool.png" />

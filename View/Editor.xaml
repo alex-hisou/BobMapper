@@ -178,11 +178,11 @@
                             <Image Source="{Binding CurrentSelections.SelectedTexture}" Height="100" Width="100"/>
                             <ComboBox Width="150" Height="20" Margin="20">
                             </ComboBox>
-                            <ScrollViewer Width="300">
+                            <ScrollViewer Width="300" Height="740">
                                 <ItemsControl ItemsSource="{Binding CurrentSelections.CurrentTextureSet}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Image Source="{Binding}">
+                                            <Image Source="{Binding}" MaxHeight="100" MaxWidth="100" Margin="10">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="MouseLeftButtonDown">
                                                         <i:InvokeCommandAction Command="{Binding DataContext.SetTextureCommand, 
