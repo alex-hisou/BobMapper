@@ -19,8 +19,8 @@ namespace BobMapper.Model
 
     internal interface IDoublePointObject
     {
-        public Coordinate Point1 { get; set; }
-        public Coordinate Point2 { get; set; }
+        public SnapCoordinate Point1 { get; set; }
+        public SnapCoordinate Point2 { get; set; }
         public string Texture1 { get; set; }
         public string Texture2 { get; set; }
     }

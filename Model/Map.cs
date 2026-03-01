@@ -37,11 +37,11 @@ namespace BobMapper.Model
             {
                 floors[i] = new Floor[Height];
             }
-            Width *= Coordinate.FloorSize; 
-            Height *= Coordinate.FloorSize;
+            Width *= SnapCoordinate.FloorSize; 
+            Height *= SnapCoordinate.FloorSize;
 
             //FOR TESTING ONLY, DELETE LATER
-            tileset = Tilesets.Downtown;
+            tileset = Tilesets.Labs;
         }
 
 

@@ -60,8 +60,8 @@ namespace BobMapper.ViewModel
             Map saveMap = new Map(0);
             //saveMap.props.Add(new Prop(new Coordinate(-5, -100), 45, "/Resources/PropTextures/cactus.png"));
             //saveMap.props.Add(new Prop(new Coordinate(100, -10), 45, "/Resources/PropTextures/toilet.png"));
-            saveMap.walls.Add(new Wall(new Coordinate(100, -100), new Coordinate(100, 0), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Blue.png"));
-            saveMap.walls.Add(new Wall(new Coordinate(120, 400), new Coordinate(80, 200), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Green.png"));
+            saveMap.walls.Add(new Wall(new SnapCoordinate(1, -1), new SnapCoordinate(1, 0), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Blue.png"));
+            saveMap.walls.Add(new Wall(new SnapCoordinate(1, 4), new SnapCoordinate(8, 2), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Green.png"));
             //saveMap.npcs.Add(new NPC(new Coordinate(300, 0), NPC.NPCType.BaldCop, 0));
             //saveMap.npcs.Add(new NPC(new Coordinate(300, 300), NPC.NPCType.RedDressLady, 0));
             //PathPoint pathPoint1 = new(new Coordinate(-200, -200), 1, 2);
@@ -108,7 +108,7 @@ namespace BobMapper.ViewModel
                 case Tools.Rotate:
                     break;
                 case Tools.AddWall:
-                    Wall wall = new Wall(new Coordinate(0, 0), new Coordinate(64, 0), Wall.WallType.Normal, CurrentSelections.SelectedTexture, CurrentSelections.SelectedTexture);
+                    Wall wall = new Wall(new SnapCoordinate(0, 0), new SnapCoordinate(1, 0), Wall.WallType.Normal, CurrentSelections.SelectedTexture, CurrentSelections.SelectedTexture);
                     CurrentWalls.Add(wall);
                     break;
                 case Tools.AddProp:
