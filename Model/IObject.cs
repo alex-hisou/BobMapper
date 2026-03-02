@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static BobMapper.Model.Misc;
-using static BobMapper.Model.NPC;
-using static BobMapper.Model.Wall;
+using static BobMapper.Model.MapObjects.Misc;
+using static BobMapper.Model.MapObjects.NPC;
+using static BobMapper.Model.MapObjects.Wall;
 
 namespace BobMapper.Model
 {
     internal interface ISinglePointObject
     {
         Coordinate Coordinates { get; set; }
-
-        void UpdatePos(Coordinate newCoordinate);
         void DeleteObject();
     }
 
@@ -22,6 +20,5 @@ namespace BobMapper.Model
         public SnapCoordinate Point1 { get; set; }
         public SnapCoordinate Point2 { get; set; }
         public string Texture1 { get; set; }
-        public string Texture2 { get; set; }
     }
 }
