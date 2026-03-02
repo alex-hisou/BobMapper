@@ -143,6 +143,8 @@
                                             <Label Width="170">Right Texture</Label>
                                             <Image Source="{Binding Texture2}" MaxHeight="100" MaxWidth="100"/>
                                             <Label Content="{Binding Texture2}"/>
+                                            <Label Width="170">Wall Type: </Label>
+                                            <ComboBox ItemsSource="{Binding WallTypeValues}" SelectedItem="{Binding Type}"/>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ContentControl.Resources>
@@ -283,7 +285,7 @@
                     <ItemsControl ItemsSource="{Binding CurrentWalls}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type model:Wall}">
-                                <Line StrokeThickness="20" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
+                                <Line StrokeThickness="{Binding Width}" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
                                       X2="{Binding Point2.XPos}" Y2="{Binding Point2.YPos}" Fill="Beige" Stroke="Beige">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -303,14 +305,17 @@
                     <ItemsControl ItemsSource="{Binding CurrentNPCs}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type model:NPC}">
+                                <Canvas>
                                 <Image Source="{Binding Texture}" Width="auto" Height="auto" x:Name="img">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonDown">
                                             <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
-                                    RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}" />
+                                    RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Image>
+                                <Image Source="/Resources/MiscTextures/LootGlare.png" Visibility="{Binding AttachLoot}"/>
+                                </Canvas>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemContainerStyle>

@@ -5,7 +5,6 @@ using System.Resources;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using BobMapper.Model;
 using BobMapper.Properties;
 
 namespace BobMapper.Model
