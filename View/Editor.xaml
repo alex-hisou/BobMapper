@@ -6,14 +6,34 @@
         xmlns:local="clr-namespace:BobMapper"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:model="clr-namespace:BobMapper.Model"
+        xmlns:object="clr-namespace:BobMapper.Model.MapObjects"
         xmlns:vm="clr-namespace:BobMapper.ViewModel"
         xmlns:s="clr-namespace:System;assembly=netstandard"
+        xmlns:services="clr-namespace:BobMapper.Services"
         mc:Ignorable="d"
         Background="LightGray"
-        Title="Editor" Height="720" Width="1280" WindowState="Maximized" ResizeMode="NoResize">
+        Title="Editor" Height="720" Width="1280" WindowState="Maximized">
     <Window.DataContext>
         <vm:EditorViewModel></vm:EditorViewModel>
     </Window.DataContext>
+    <Window.Resources>
+        <ObjectDataProvider x:Key="Tools" ObjectType="{x:Type s:Enum}" MethodName="GetValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type Type="{x:Type local:Tools}"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="TextureTypes" ObjectType="{x:Type s:Enum}" MethodName="GetValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type Type="{x:Type local:Tools}"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="returnConnectX" ObjectType="{x:Type vm:EditorViewModel}" MethodName="PathConnectX">
+
+        </ObjectDataProvider>
+
+
+        <services:EnumBoolConverter x:Key="EnumBoolConvert"/>
+    </Window.Resources>
     <Grid>
         <DockPanel Background="SlateGray">
             <Menu DockPanel.Dock="Top" Width="auto" Height="20">
@@ -31,48 +51,57 @@
                 <MenuItem Header="Help"></MenuItem>
             </Menu>
             <Menu DockPanel.Dock="Left" Width="auto" Height="auto">
-                <MenuItem Header="Select" Command="{Binding SelectToolCommand}" CommandParameter="{x:Static local:Tools.Select}">
+                <MenuItem Header="Select" Name="SelectTool"
+                          Click="ToolToggle">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/SelectionTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Move" Command="{Binding SelectToolCommand}" CommandParameter="{x:Static local:Tools.Move}">
+                <MenuItem Header="Move" Name="MoveTool"
+                          Click="ToolToggle">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/MoveTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Rotate" Command="{Binding SelectToolCommand}" CommandParameter="{x:Static local:Tools.Rotate}">
+                <MenuItem Header="Rotate" Name="RotateTool"
+                          Click="ToolToggle">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/RotateTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Draw Wall" Command="{Binding SelectToolCommand}" CommandParameter="{x:Static local:Tools.AddWall}">
+                <MenuItem Header="Draw Wall" Name="AddWallTool"
+                          Click="ToolToggle">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddWallTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Place Prop" Command="{Binding SelectToolCommand}" CommandParameter="{x:Static local:Tools.AddProp}">
+                <MenuItem Header="Place Prop" Name="AddPropTool"
+                          Click="ToolToggle">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddPropTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Add NPC" Command="{Binding SelectToolCommand}" CommandParameter="{x:Static local:Tools.AddNPC}">
+                <MenuItem Header="Add NPC" Name="AddNPCTool"
+                          Click="ToolToggle">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddNPCTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Add Path" Command="{Binding SelectToolCommand}" CommandParameter="{x:Static local:Tools.AddPathPoint}">
+                <MenuItem Header="Add Path" Name="AddPathTool"
+                          Click="ToolToggle">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddPathTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Paint Floor" Command="{Binding SelectToolCommand}" CommandParameter="{x:Static local:Tools.ChangeFloor}">
+                <MenuItem Header="Paint Floor" Name="ChangeFloorTool"
+                          Click="ToolToggle">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddFloorTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Add Misc" Command="{Binding SelectToolCommand}" CommandParameter="{x:Static local:Tools.AddMisc}">
+                <MenuItem Header="Add Misc" Name="AddMiscTool"
+                          Click="ToolToggle">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddMiscTool.png"/>
                     </MenuItem.Icon>
@@ -95,7 +124,7 @@
                         <WrapPanel Orientation="Horizontal">
                             <ContentControl Content="{Binding CurrentSelections.SelectedProp}">
                                 <ContentControl.Resources>
-                                    <DataTemplate DataType="{x:Type model:Prop}">
+                                    <DataTemplate DataType="{x:Type object:Prop}">
                                         <WrapPanel Width="300">
                                             <Label Width="170">X Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Coordinates.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -123,7 +152,7 @@
                             </ContentControl>
                             <ContentControl Content="{Binding CurrentSelections.SelectedWall}">
                                 <ContentControl.Resources>
-                                    <DataTemplate DataType="{x:Type model:Wall}">
+                                    <DataTemplate DataType="{x:Type object:Wall}">
                                         <WrapPanel Width="300">
                                             <Label Width="170">Point 1 - X Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -151,7 +180,7 @@
                             </ContentControl>
                             <ContentControl Content="{Binding CurrentSelections.SelectedNPC}">
                                 <ContentControl.Resources>
-                                    <DataTemplate DataType="{x:Type model:NPC}">
+                                    <DataTemplate DataType="{x:Type object:NPC}">
                                         <WrapPanel Width="300">
                                             <Label Width="170">X Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Coordinates.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -164,6 +193,8 @@
                                             PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
                                             <Label Width="170">Asset</Label>
                                             <Image Source="{Binding Texture}" MaxHeight="100" MaxWidth="100"/>
+                                            <CheckBox Content="Has loot attached" Width="250" IsChecked="{Binding AttachLoot}"/>
+                                            <CheckBox Content="Has main loot attached" Width="250" IsChecked="{Binding AttachMainLoot}"/>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ContentControl.Resources>
@@ -178,7 +209,7 @@
                         <WrapPanel Orientation="Horizontal" Width="300">
                             <Label Width="170">Selected Texture</Label>
                             <Image Source="{Binding CurrentSelections.SelectedTexture}" Height="100" Width="100"/>
-                            <ComboBox Width="150" Height="20" Margin="20">
+                            <ComboBox Width="250" Height="20" Margin="20" ItemsSource="{Binding CurrentMap.TextureTypeValues}" SelectedItem="{Binding CurrentSelections.SelectedTextureType}">
                             </ComboBox>
                             <ScrollViewer Width="300" Height="740">
                                 <ItemsControl ItemsSource="{Binding CurrentSelections.CurrentTextureSet}">
@@ -216,12 +247,13 @@
                         <ScaleTransform ScaleY="-1"/>
                     </Canvas.RenderTransform>
                     <!-- Might have to be offset -->
+                    <!-- TODO: Add Texture 2-->
                     <ItemsControl ItemsSource="{Binding CurrentFloors}" Canvas.Left="-384" Canvas.Top="-384">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <ItemsControl ItemsSource="{Binding .}">
                                     <ItemsControl.ItemTemplate>
-                                        <DataTemplate DataType="{x:Type model:Floor}">
+                                        <DataTemplate DataType="{x:Type object:Floor}">
                                             <Image Source="{Binding Texture1}" Width="64" Height="64">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -253,7 +285,7 @@
                     </ItemsControl>
                     <ItemsControl ItemsSource="{Binding CurrentProps}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type model:Prop}">
+                            <DataTemplate DataType="{x:Type object:Prop}">
                                 <Image Source="{Binding PropTexture}" Width="auto" Height="auto" x:Name="img">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -284,7 +316,7 @@
                     </ItemsControl>
                     <ItemsControl ItemsSource="{Binding CurrentWalls}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type model:Wall}">
+                            <DataTemplate DataType="{x:Type object:Wall}">
                                 <Line StrokeThickness="{Binding Width}" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
                                       X2="{Binding Point2.XPos}" Y2="{Binding Point2.YPos}" Fill="Beige" Stroke="Beige">
                                     <i:Interaction.Triggers>
@@ -304,7 +336,7 @@
                     </ItemsControl>
                     <ItemsControl ItemsSource="{Binding CurrentNPCs}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type model:NPC}">
+                            <DataTemplate DataType="{x:Type object:NPC}">
                                 <Canvas>
                                 <Image Source="{Binding Texture}" Width="auto" Height="auto" x:Name="img">
                                     <i:Interaction.Triggers>
@@ -338,7 +370,7 @@
                     </ItemsControl>
                     <ItemsControl ItemsSource="{Binding CurrentPathPoints}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type model:PathPoint}">
+                            <DataTemplate DataType="{x:Type object:PathPoint}">
                                 <Canvas>
                                     <Ellipse Width="10" Height="10" Stroke="White" Fill="White">
                                         <i:Interaction.Triggers>
@@ -366,29 +398,46 @@
                                 <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
                             </Style>
                         </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas></Canvas>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
                     </ItemsControl>
-                    <!-- TODO: Add Texture 2-->
+                    
+                    <ItemsControl ItemsSource="{Binding CurrentMiscs}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type object:Misc}">
+                                <Canvas>
+                                    <Image Source="{Binding Texture}"/>
+                                </Canvas>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding Coordinates.XPos}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="{Binding Rotation}"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas></Canvas>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
                 </Canvas>
             </ScrollViewer>
         </DockPanel>
 
     </Grid>
 
-    <Window.Resources>
-        <ObjectDataProvider x:Key="Tools" ObjectType="{x:Type s:Enum}" MethodName="GetValues">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type Type="{x:Type local:Tools}"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-        <ObjectDataProvider x:Key="TextureTypes" ObjectType="{x:Type s:Enum}" MethodName="GetValues">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type Type="{x:Type local:Tools}"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-        <ObjectDataProvider x:Key="returnConnectX" ObjectType="{x:Type vm:EditorViewModel}" MethodName="PathConnectX">
-
-        </ObjectDataProvider>
-    </Window.Resources>
+    
 </Window>
 
     

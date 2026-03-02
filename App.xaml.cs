@@ -44,6 +44,16 @@ namespace BobMapper
         Winter,
         Camp
     }
+
+    public enum TextureType
+    {
+        Wall,
+        Prop,
+        Floor,
+        Loot,
+        Door
+    }
+
     public class Coordinate : ICoordinate
     {
         public int XPos {  get; set; }
@@ -71,9 +81,9 @@ namespace BobMapper
             set { xPos = value; OnPropertyChanged(nameof(XPos)); }
         }
 
-        [JsonIgnore]
+        
         private int yPos;
-
+        [JsonIgnore]
         public int YPos
         {
             get { return yPos; }
@@ -100,6 +110,14 @@ namespace BobMapper
             SnappedYPos = snappedYPos;
             XPos = snappedXPos * FloorSize;
             YPos = snappedYPos * FloorSize;
+        }
+
+        public static SnapCoordinate UnsnappedCoordinateFactory(int unsnappedXPos, int  unsnappedYPos)
+        {
+            int snappedXPos = (unsnappedXPos - (unsnappedXPos % FloorSize)) / FloorSize;
+            int snappedYPos = (unsnappedYPos - (unsnappedYPos % FloorSize)) / FloorSize;
+            SnapCoordinate SnapCoordinate = new SnapCoordinate(snappedXPos, snappedYPos);
+            return SnapCoordinate;
         }
 
         protected void OnPropertyChanged(string name)

@@ -6,6 +6,8 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using BobMapper.Properties;
+using BobMapper.Model;
+using BobMapper.Model.MapObjects;
 
 namespace BobMapper.Model
 {
@@ -27,8 +29,8 @@ namespace BobMapper.Model
 
         public Map(int inputHouseSize)
         {
-            Width = MapObjects.houseSizeSchema[inputHouseSize].XPos;
-            Height = MapObjects.houseSizeSchema[inputHouseSize].YPos;
+            Width = MapProperties.houseSizeSchema[inputHouseSize].XPos;
+            Height = MapProperties.houseSizeSchema[inputHouseSize].YPos;
             floors = new Floor[Width][];
             //System.Text.Json doesnt support multi-d arrays, which is why we do this terribleness
             //And Im too lazy to switch to newtonsoft
@@ -74,5 +76,7 @@ namespace BobMapper.Model
             Challenge
         }
         
+        public static Array TextureTypeValues => Enum.GetValues(typeof(TextureType));
+
     }
 }

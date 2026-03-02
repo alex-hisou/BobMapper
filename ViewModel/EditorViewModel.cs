@@ -15,8 +15,8 @@ using BobMapper.Model;
 using BobMapper.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using static BobMapper.Model.MapObjects;
-using static BobMapper.Model.Selections;
+using BobMapper.Model.MapObjects;
+using static BobMapper.Model.MapProperties;
 
 namespace BobMapper.ViewModel
 {
@@ -81,10 +81,10 @@ namespace BobMapper.ViewModel
             CurrentSelections.InitializeCurrentTextureSet(CurrentMap.tileset);
         }
 
-        [RelayCommand]
+        //[RelayCommand]
         public void SelectTool(Tools tool)
         {
-            if (CurrentSelections.SelectedTool == Tools.None)
+            if (CurrentSelections.SelectedTool != tool)
             {
                 CurrentSelections.SelectedTool = tool;
                 
@@ -108,7 +108,9 @@ namespace BobMapper.ViewModel
                 case Tools.Rotate:
                     break;
                 case Tools.AddWall:
-                    Wall wall = new Wall(new SnapCoordinate(0, 0), new SnapCoordinate(1, 0), Wall.WallType.Normal, CurrentSelections.SelectedTexture, CurrentSelections.SelectedTexture);
+                    SnapCoordinate snappedPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
+                    SnapCoordinate shiftedSnappedPlacementPos = new SnapCoordinate(snappedPlacementPos.SnappedXPos + 1, snappedPlacementPos.SnappedYPos);
+                    Wall wall = new Wall(snappedPlacementPos, shiftedSnappedPlacementPos, Wall.WallType.Normal, CurrentSelections.SelectedTexture, CurrentSelections.SelectedTexture);
                     CurrentWalls.Add(wall);
                     break;
                 case Tools.AddProp:
@@ -116,7 +118,7 @@ namespace BobMapper.ViewModel
                     CurrentProps.Add(prop);
                     break;
                 case Tools.AddNPC:
-                    NPC npc = new NPC(placementPos, NPC.NPCType.BulkyCop, 0);
+                    NPC npc = new NPC(placementPos, NPC.NPCType.BulkyCop, 0, false, false);
                     CurrentNPCs.Add(npc);
                     break;
                 case Tools.AddPathPoint:
@@ -150,7 +152,7 @@ namespace BobMapper.ViewModel
             {
                 SelectObject(sender);
             }
-            if(CurrentSelections.SelectedTool == Tools.ChangeFloor)
+            if(CurrentSelections.SelectedTool == Tools.ChangeFloor && sender is Floor)
             {
                 Floor floor = (Floor)sender;
                 floor.Texture1 = CurrentSelections.SelectedTexture;
