@@ -6,35 +6,29 @@
   "walls": [
     {
       "Point1": {
-        "YPos": -64,
         "SnappedXPos": 1,
         "SnappedYPos": -1
       },
       "Point2": {
-        "YPos": 0,
         "SnappedXPos": 1,
         "SnappedYPos": 0
       },
       "Type": 0,
       "Texture1": "/Resources/WallTextures/Wall_Plain_Blue.png",
-      "Texture2": "/Resources/WallTextures/Wall_Plain_Green.png",
-      "Width": 20
+      "Texture2": "/Resources/WallTextures/Wall_Plain_Green.png"
     },
     {
       "Point1": {
-        "YPos": 256,
         "SnappedXPos": 1,
         "SnappedYPos": 4
       },
       "Point2": {
-        "YPos": 128,
         "SnappedXPos": 8,
         "SnappedYPos": 2
       },
       "Type": 0,
       "Texture1": "/Resources/WallTextures/Wall_Plain_Green.png",
-      "Texture2": "/Resources/WallTextures/Wall_Plain_Green.png",
-      "Width": 20
+      "Texture2": "/Resources/WallTextures/Wall_Plain_Green.png"
     }
   ],
   "props": [],

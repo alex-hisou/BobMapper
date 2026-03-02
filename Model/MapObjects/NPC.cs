@@ -35,13 +35,25 @@ namespace BobMapper.Model.MapObjects
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AttachLoot))); } 
         }
 
-        public NPC(Coordinate coordinates, NPCType type, int rotation, bool attachLoot)
+        private bool attachMainLoot;
+        public bool AttachMainLoot
+        {
+            get { return attachMainLoot; }
+            set
+            {
+                attachMainLoot = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AttachMainLoot)));
+            }
+        }
+
+        public NPC(Coordinate coordinates, NPCType type, int rotation, bool attachLoot, bool attachMainLoot)
         {
             Coordinates = coordinates;
             Type = type;
             SetNPCType();
             Rotation = rotation;
             AttachLoot = attachLoot;
+            AttachMainLoot = attachMainLoot;
         }
 
         public void DeleteObject()

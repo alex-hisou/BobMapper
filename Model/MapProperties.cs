@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.TextFormatting;
 using BobMapper.Properties;
-using static BobMapper.Model.MapObjects.Wall;
+using BobMapper.Model.MapObjects;
+using System;
 
 namespace BobMapper.Model
 {
-    public static class MapObjects
+    public static class MapProperties
     {
         public enum ObjectType
         {
@@ -25,6 +26,7 @@ namespace BobMapper.Model
             Floor,
             Misc
         }
+
 
         public static ObservableCollection<ObservableCollection<Floor>> FlattenFloors(Floor[][] floors)
         {

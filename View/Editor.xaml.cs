@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using BobMapper.Model;
 using BobMapper.Services;
 using BobMapper.ViewModel;
-using static BobMapper.Model.MapObjects;
+using static BobMapper.Model.MapProperties;
 
 namespace BobMapper
 {
@@ -54,8 +54,44 @@ namespace BobMapper
             }
         }
 
-        private void ToolToggle(object sender)
+        private void ToolToggle(object sender, RoutedEventArgs e)
         {
+           //Worst way to do this btw
+            var vm = (EditorViewModel)DataContext;
+            MenuItem senderReference = (MenuItem)sender;
+            switch(senderReference.Name)
+            {
+                case "ChangeFloorTool":
+                    vm.SelectTool(Tools.ChangeFloor);
+                    break;
+                case "SelectTool":
+                    vm.SelectTool(Tools.Select);
+                    break;
+                case "MoveTool":
+                    vm.SelectTool(Tools.Move);
+                    break;
+                case "RotateTool":
+                    vm.SelectTool(Tools.Rotate);
+                    break;
+                case "AddWallTool":
+                    vm.SelectTool(Tools.AddWall);
+                    break;
+                case "AddPropTool":
+                    vm.SelectTool(Tools.AddProp);
+                    break;
+                case "AddNPCTool":
+                    vm.SelectTool(Tools.AddNPC);
+                    break;
+                case "AddPathTool":
+                    vm.SelectTool(Tools.AddPathPoint);
+                    break;
+                case "AddMiscTool":
+                    vm.SelectTool(Tools.AddMisc);
+                    break;
+                default:
+                    throw new Exception("YOU DONE FUCKED UP!!!!!1!!1!!!!!!!1!!1!!!!1");
+
+            }
 
         }
     }

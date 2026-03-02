@@ -6,7 +6,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
-using static BobMapper.Model.MapObjects;
+using BobMapper.Model.MapObjects;
+using static BobMapper.Model.MapProperties;
 
 namespace BobMapper.Model
 {
@@ -26,12 +27,22 @@ namespace BobMapper.Model
             set { selectedTexture = value; OnPropertyChanged(); }
         }
 
+        private TextureType selectedTextureType;
+
+        public TextureType SelectedTextureType
+        {
+            get { return selectedTextureType; }
+            set { selectedTextureType = value; OnPropertyChanged(); GetFilteredTextureSet(value, currentTileSet); }
+        }
+
+
         private string[] currentTextureSet;
         public string[] CurrentTextureSet
         {
             get { return currentTextureSet; }
             set { currentTextureSet = value; OnPropertyChanged(); }
         }
+
 
         private Tools selectedTool;
         public Tools SelectedTool
@@ -109,8 +120,11 @@ namespace BobMapper.Model
             }
         }
 
+        private Tilesets currentTileSet;
+
         public void InitializeCurrentTextureSet(Tilesets tileset)
         {
+            currentTileSet = tileset;
             List<string> temporaryTextureSet = new List<string>();
             SqliteConnection textureManifestConnection = new("Data Source=Data/TextureManifest.sqlite");
             textureManifestConnection.Open();
@@ -119,8 +133,25 @@ namespace BobMapper.Model
             var reader = selectTexturesCommand.ExecuteReader();
             while (reader.Read())
             {
-                string textureName = reader.GetString(0);
-                temporaryTextureSet.Add(textureName);
+                string ResourceName = reader.GetString(0);
+                temporaryTextureSet.Add(ResourceName);
+            }
+            textureManifestConnection.Close();
+            CurrentTextureSet = temporaryTextureSet.ToArray();
+        }
+
+        public void GetFilteredTextureSet(TextureType textureType, Tilesets tileset)
+        {
+            List<string> temporaryTextureSet = new List<string>();
+            SqliteConnection textureManifestConnection = new("Data Source=Data/TextureManifest.sqlite");
+            textureManifestConnection.Open();
+            var selectTexturesCommand = textureManifestConnection.CreateCommand();
+            selectTexturesCommand.CommandText = $"SELECT ResourceName FROM Textures WHERE Tilesets LIKE '%{(int)tileset}%' AND Type LIKE '%{(int)textureType}%'";
+            var reader = selectTexturesCommand.ExecuteReader();
+            while (reader.Read())
+            {
+                string ResourceName = reader.GetString(0);
+                temporaryTextureSet.Add(ResourceName);
             }
             textureManifestConnection.Close();
             CurrentTextureSet = temporaryTextureSet.ToArray();
