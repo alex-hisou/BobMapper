@@ -64,13 +64,14 @@ namespace BobMapper.ViewModel
             saveMap.walls.Add(new Wall(new SnapCoordinate(1, 4), new SnapCoordinate(8, 2), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Green.png"));
             //saveMap.npcs.Add(new NPC(new Coordinate(300, 0), NPC.NPCType.BaldCop, 0));
             //saveMap.npcs.Add(new NPC(new Coordinate(300, 300), NPC.NPCType.RedDressLady, 0));
-            //PathPoint pathPoint1 = new(new Coordinate(-200, -200), 1, 2);
-            //PathPoint pathPoint2 = new(new Coordinate(-200, -100), 2, 3);
+            PathPoint pathPoint1 = new(new Coordinate(-200, -200), 5, 1, 2);
+            PathPoint pathPoint2 = new(new Coordinate(-200, -100), 5, 2, 1);
             //PathPoint pathPoint3 = new(new Coordinate(-100, -100), 3, 1);
-            //saveMap.pathPoints.Add(pathPoint1);
-            //saveMap.pathPoints.Add(pathPoint2);
+            saveMap.pathPoints.Add(pathPoint1);
+            saveMap.pathPoints.Add(pathPoint2);
             //saveMap.pathPoints.Add(pathPoint3);
             CurrentMap = saveMap;
+            saveMap.AttachAllPathPointHandlers(); //Delete this later since the json parser calls it 
             CurrentProps = new ObservableCollection<Prop>(CurrentMap.props);
             CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls);
             CurrentNPCs = new ObservableCollection<NPC>(CurrentMap.npcs);
@@ -78,7 +79,7 @@ namespace BobMapper.ViewModel
             CurrentMiscs = new ObservableCollection<Misc>(CurrentMap.miscs);
             CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors));
             JsonMapParse.SaveData(saveMap);
-            CurrentSelections.InitializeCurrentTextureSet(CurrentMap.tileset);
+            CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMap.tileset);
         }
 
         //[RelayCommand]
@@ -99,14 +100,6 @@ namespace BobMapper.ViewModel
             //Point point = new Point(Mouse.GetPosition().X, Mouse.GetPosition().Y);
             switch (CurrentSelections.SelectedTool)
             {
-                case Tools.None:
-                    break;
-                case Tools.Select:
-                    break;
-                case Tools.Move:
-                    break;
-                case Tools.Rotate:
-                    break;
                 case Tools.AddWall:
                     SnapCoordinate snappedPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
                     SnapCoordinate shiftedSnappedPlacementPos = new SnapCoordinate(snappedPlacementPos.SnappedXPos + 1, snappedPlacementPos.SnappedYPos);
@@ -122,12 +115,14 @@ namespace BobMapper.ViewModel
                     CurrentNPCs.Add(npc);
                     break;
                 case Tools.AddPathPoint:
-                    PathPoint pathPoint = new PathPoint(placementPos, 0);
+                    PathPoint pathPoint = new PathPoint(placementPos, 0, 0);
                     CurrentPathPoints.Add(pathPoint);
                     break;
                 case Tools.AddMisc:
                     Misc misc = new Misc(placementPos, Misc.MiscObjects.Loot);
                     CurrentMiscs.Add(misc);
+                    break;
+                default:
                     break;
             }
         }
@@ -136,12 +131,19 @@ namespace BobMapper.ViewModel
         public void SetObjectTexture(object sender)
         {
             //SUUUUUUUUPER BAAAAAAAD!!!!!
-            switch (CurrentSelections.SelectedObjectType)
+            string parsedSender = (string)sender;
+            switch (parsedSender)
             {
-                case ObjectType.Prop:
+                case "PropTexture":
                     CurrentSelections.SelectedProp.PropTexture = CurrentSelections.SelectedTexture;
                     break;
-                
+                case "WallTexture1":
+                    CurrentSelections.SelectedWall.Texture1 = CurrentSelections.SelectedTexture;
+                    break;
+                case "WallTexture2":
+                    CurrentSelections.SelectedWall.Texture2 = CurrentSelections.SelectedTexture;
+                    break;
+
             }
         }
 
@@ -256,16 +258,5 @@ namespace BobMapper.ViewModel
             {typeof(Floor), 4},
             {typeof(Misc), 5}
         };
-
-        public int PathConnectX(object sender)
-        {
-            int x = 0;
-            return x;
-        }
-        public int PathConnectY(object sender)
-        {
-            int y = 0;
-            return y;
-        }
     }
 }

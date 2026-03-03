@@ -33,7 +33,28 @@
   ],
   "props": [],
   "npcs": [],
-  "pathPoints": [],
+  "pathPoints": [
+    {
+      "Id": 1,
+      "ConnectToId": 2,
+      "Duration": 5,
+      "Coordinates": {
+        "XPos": -200,
+        "YPos": -200
+      },
+      "AbsoluteLineConnectionCoordinates": null
+    },
+    {
+      "Id": 2,
+      "ConnectToId": 1,
+      "Duration": 5,
+      "Coordinates": {
+        "XPos": -200,
+        "YPos": -100
+      },
+      "AbsoluteLineConnectionCoordinates": null
+    }
+  ],
   "miscs": [],
   "floors": [
     [
@@ -205,5 +226,5 @@
       null
     ]
   ],
-  "tileset": 2
+  "tileset": 1
 }

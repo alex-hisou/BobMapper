@@ -47,6 +47,7 @@ namespace BobMapper
 
     public enum TextureType
     {
+        All = -1,
         Wall,
         Prop,
         Floor,
@@ -54,7 +55,7 @@ namespace BobMapper
         Door
     }
 
-    public class Coordinate : ICoordinate
+    public class Coordinate : ICoordinate, INotifyPropertyChanged
     {
         public int XPos {  get; set; }
         public int YPos { get; set; }
@@ -64,6 +65,8 @@ namespace BobMapper
             this.XPos = x;
             this.YPos = y;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 
     public class SnapCoordinate : ICoordinate, INotifyPropertyChanged

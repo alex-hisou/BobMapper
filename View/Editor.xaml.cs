@@ -30,8 +30,6 @@ namespace BobMapper
 
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight; //otherwise covers taskbar
 
-            
-            
             //Map map = DataParse.LoadData();
         }
 
@@ -56,43 +54,63 @@ namespace BobMapper
 
         private void ToolToggle(object sender, RoutedEventArgs e)
         {
-           //Worst way to do this btw
+           //Fuck this code, worst way to do this
             var vm = (EditorViewModel)DataContext;
             MenuItem senderReference = (MenuItem)sender;
-            switch(senderReference.Name)
+            ToolDrawer.Items.OfType<MenuItem>().ToList().ForEach(x => x.Background = ToolDrawer.Background);
+            switch (senderReference.Name)
             {
-                case "ChangeFloorTool":
-                    vm.SelectTool(Tools.ChangeFloor);
-                    break;
                 case "SelectTool":
                     vm.SelectTool(Tools.Select);
+                    if(vm.CurrentSelections.SelectedTool == Tools.Select)
+                    { SelectTool.Background = Brushes.DarkGray; }
                     break;
                 case "MoveTool":
                     vm.SelectTool(Tools.Move);
+                    if(vm.CurrentSelections.SelectedTool == Tools.Move)
+                    { MoveTool.Background = Brushes.DarkGray; }
                     break;
                 case "RotateTool":
                     vm.SelectTool(Tools.Rotate);
+                    if(vm.CurrentSelections.SelectedTool == Tools.Rotate)
+                    { RotateTool.Background = Brushes.DarkGray; }
                     break;
                 case "AddWallTool":
                     vm.SelectTool(Tools.AddWall);
+                    if(vm.CurrentSelections.SelectedTool == Tools.AddWall)
+                    { AddWallTool.Background = Brushes.DarkGray; }
                     break;
                 case "AddPropTool":
                     vm.SelectTool(Tools.AddProp);
+                    if(vm.CurrentSelections.SelectedTool == Tools.AddProp)
+                    { AddPropTool.Background = Brushes.DarkGray; }
                     break;
                 case "AddNPCTool":
                     vm.SelectTool(Tools.AddNPC);
+                    if(vm.CurrentSelections.SelectedTool == Tools.AddNPC)
+                    { AddNPCTool.Background = Brushes.DarkGray; }
                     break;
                 case "AddPathTool":
                     vm.SelectTool(Tools.AddPathPoint);
+                    if(vm.CurrentSelections.SelectedTool == Tools.AddPathPoint)
+                    { AddPathTool.Background = Brushes.DarkGray; }
+                    break;
+                case "ChangeFloorTool":
+                    vm.SelectTool(Tools.ChangeFloor);
+                    if(vm.CurrentSelections.SelectedTool == Tools.ChangeFloor)
+                    { ChangeFloorTool.Background = Brushes.DarkGray; }
                     break;
                 case "AddMiscTool":
                     vm.SelectTool(Tools.AddMisc);
+                    if(vm.CurrentSelections.SelectedTool == Tools.AddMisc)
+                    { AddMiscTool.Background = Brushes.DarkGray; }
                     break;
                 default:
                     throw new Exception("YOU DONE FUCKED UP!!!!!1!!1!!!!!!!1!!1!!!!1");
 
             }
-
         }
+
+
     }
 }

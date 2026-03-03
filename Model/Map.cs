@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using BobMapper.Properties;
 using BobMapper.Model;
 using BobMapper.Model.MapObjects;
+using System.Media;
 
 namespace BobMapper.Model
 {
@@ -40,12 +41,26 @@ namespace BobMapper.Model
             }
             Width *= SnapCoordinate.FloorSize; 
             Height *= SnapCoordinate.FloorSize;
-
             //FOR TESTING ONLY, DELETE LATER
-            tileset = Tilesets.Labs;
+            tileset = Tilesets.Downtown;
         }
 
+        internal void AttachAllPathPointHandlers()
+        {
+            pathPoints.ForEach(x => x.ConnectionPointChanged += FillPathPointConnectCoordinate);
+        }
 
+        public void FillPathPointConnectCoordinate(object sender, EventArgs e)
+        {
+            PathPoint SelectedPathPoint = (PathPoint)sender;
+            if (pathPoints.Any(x => x.Id == SelectedPathPoint.ConnectToId))
+            {
+                Coordinate ConnectionCoordinate = pathPoints.FirstOrDefault(x => x.Id == SelectedPathPoint.ConnectToId).Coordinates;
+                SelectedPathPoint.AbsoluteLineConnectionCoordinates = ConnectionCoordinate;
+            }
+            else { SelectedPathPoint.LineConnectionCoordinate = SelectedPathPoint.Coordinates; SystemSounds.Exclamation.Play(); }
+
+        }
 
 
         [JsonConstructor] //Use only for initialization from json. Otherwise write properties directly using the no param constructor above

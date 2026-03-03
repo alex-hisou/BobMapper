@@ -122,31 +122,20 @@ namespace BobMapper.Model
 
         private Tilesets currentTileSet;
 
-        public void InitializeCurrentTextureSet(Tilesets tileset)
-        {
-            currentTileSet = tileset;
-            List<string> temporaryTextureSet = new List<string>();
-            SqliteConnection textureManifestConnection = new("Data Source=Data/TextureManifest.sqlite");
-            textureManifestConnection.Open();
-            var selectTexturesCommand = textureManifestConnection.CreateCommand();
-            selectTexturesCommand.CommandText = $"SELECT ResourceName FROM Textures WHERE Tilesets LIKE '%{(int)tileset}%'";
-            var reader = selectTexturesCommand.ExecuteReader();
-            while (reader.Read())
-            {
-                string ResourceName = reader.GetString(0);
-                temporaryTextureSet.Add(ResourceName);
-            }
-            textureManifestConnection.Close();
-            CurrentTextureSet = temporaryTextureSet.ToArray();
-        }
-
         public void GetFilteredTextureSet(TextureType textureType, Tilesets tileset)
         {
             List<string> temporaryTextureSet = new List<string>();
             SqliteConnection textureManifestConnection = new("Data Source=Data/TextureManifest.sqlite");
             textureManifestConnection.Open();
             var selectTexturesCommand = textureManifestConnection.CreateCommand();
-            selectTexturesCommand.CommandText = $"SELECT ResourceName FROM Textures WHERE Tilesets LIKE '%{(int)tileset}%' AND Type LIKE '%{(int)textureType}%'";
+            if (textureType.Equals(TextureType.All))
+            {
+                selectTexturesCommand.CommandText = $"SELECT ResourceName FROM Textures WHERE Tilesets LIKE '%{(int)tileset}%'";
+            }
+            else
+            {
+                selectTexturesCommand.CommandText = $"SELECT ResourceName FROM Textures WHERE Tilesets LIKE '%{(int)tileset}%' AND Type LIKE '%{(int)textureType}%'";
+            }
             var reader = selectTexturesCommand.ExecuteReader();
             while (reader.Read())
             {
