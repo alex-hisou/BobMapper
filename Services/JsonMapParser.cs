@@ -18,6 +18,7 @@ namespace BobMapper.Services
         {
             var jsonData = File.ReadAllText(saveFile.ToString());
             Map map = JsonSerializer.Deserialize<Map>(jsonData, jsonSerializerOptions);
+            map.AttachAllPathPointHandlers();
             return map;
         }
 

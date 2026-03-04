@@ -32,7 +32,8 @@ namespace BobMapper
         AddNPC,
         AddPathPoint,
         AddMisc,
-        ChangeFloor
+        ChangeFloor,
+        AddDoor
     }
 
     public enum Tilesets
@@ -47,6 +48,7 @@ namespace BobMapper
 
     public enum TextureType
     {
+        All = -1,
         Wall,
         Prop,
         Floor,

@@ -7,19 +7,6 @@
     {
       "Point1": {
         "SnappedXPos": 1,
-        "SnappedYPos": -1
-      },
-      "Point2": {
-        "SnappedXPos": 1,
-        "SnappedYPos": 0
-      },
-      "Type": 0,
-      "Texture1": "/Resources/WallTextures/Wall_Plain_Blue.png",
-      "Texture2": "/Resources/WallTextures/Wall_Plain_Green.png"
-    },
-    {
-      "Point1": {
-        "SnappedXPos": 1,
         "SnappedYPos": 4
       },
       "Point2": {
@@ -31,9 +18,43 @@
       "Texture2": "/Resources/WallTextures/Wall_Plain_Green.png"
     }
   ],
+  "doors": [
+    {
+      "Point1": {
+        "SnappedXPos": 1,
+        "SnappedYPos": -1
+      },
+      "Point2": {
+        "SnappedXPos": 1,
+        "SnappedYPos": 0
+      },
+      "Texture1": "/Resources/WallTextures/Wall_Plain_Blue.png"
+    }
+  ],
   "props": [],
   "npcs": [],
-  "pathPoints": [],
+  "pathPoints": [
+    {
+      "Id": 1,
+      "ConnectToId": 2,
+      "Duration": 5,
+      "Coordinates": {
+        "XPos": -200,
+        "YPos": -200
+      },
+      "AbsoluteLineConnectionCoordinates": null
+    },
+    {
+      "Id": 2,
+      "ConnectToId": 1,
+      "Duration": 5,
+      "Coordinates": {
+        "XPos": -200,
+        "YPos": -100
+      },
+      "AbsoluteLineConnectionCoordinates": null
+    }
+  ],
   "miscs": [],
   "floors": [
     [
@@ -205,5 +226,5 @@
       null
     ]
   ],
-  "tileset": 2
+  "tileset": 1
 }

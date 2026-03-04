@@ -10,6 +10,7 @@
         xmlns:vm="clr-namespace:BobMapper.ViewModel"
         xmlns:s="clr-namespace:System;assembly=netstandard"
         xmlns:services="clr-namespace:BobMapper.Services"
+        xmlns:ctrls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
         mc:Ignorable="d"
         Background="LightGray"
         Title="Editor" Height="720" Width="1280" WindowState="Maximized">
@@ -27,13 +28,12 @@
                 <x:Type Type="{x:Type local:Tools}"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="returnConnectX" ObjectType="{x:Type vm:EditorViewModel}" MethodName="PathConnectX">
-
-        </ObjectDataProvider>
-
-
         <services:EnumBoolConverter x:Key="EnumBoolConvert"/>
+        <ctrls:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="Delete" Command="{Binding DeleteObjectCommand}"/>
+    </Window.InputBindings>
     <Grid>
         <DockPanel Background="SlateGray">
             <Menu DockPanel.Dock="Top" Width="auto" Height="20">
@@ -50,7 +50,7 @@
                 <MenuItem Header="Compile"></MenuItem>
                 <MenuItem Header="Help"></MenuItem>
             </Menu>
-            <Menu DockPanel.Dock="Left" Width="auto" Height="auto">
+            <Menu DockPanel.Dock="Left" Width="auto" Height="auto" Name="ToolDrawer">
                 <MenuItem Header="Select" Name="SelectTool"
                           Click="ToolToggle">
                     <MenuItem.Icon>
@@ -106,6 +106,12 @@
                         <Image Source="/Resources/UI/AddMiscTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="Add Door" Name="AddDoorTool"
+                    Click="ToolToggle">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/UI/AddMiscTool.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Menu.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel Orientation="Vertical"/>
@@ -142,7 +148,7 @@
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="Click">
                                                         <i:InvokeCommandAction Command="{Binding DataContext.SetObjectTextureCommand, 
-                                                        RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="{Binding}" />
+                                                        RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="PropTexture" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
                                             </Button>
@@ -150,9 +156,9 @@
                                     </DataTemplate>
                                 </ContentControl.Resources>
                             </ContentControl>
-                            <ContentControl Content="{Binding CurrentSelections.SelectedWall}">
+                            <ContentControl Content="{Binding CurrentSelections.SelectedDoor}">
                                 <ContentControl.Resources>
-                                    <DataTemplate DataType="{x:Type object:Wall}">
+                                    <DataTemplate DataType="{x:Type object:Door}">
                                         <WrapPanel Width="300">
                                             <Label Width="170">Point 1 - X Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -166,13 +172,60 @@
                                             <Label Width="170">Point 2 - Y Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                              PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Texture</Label>
+                                            <Image Source="{Binding Texture1}" MaxHeight="100" MaxWidth="100"/>
+                                            <Button Content="Set to selected asset">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.SetObjectTextureCommand, 
+                                                            RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="DoorTexture" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+                                            <Label Content="{Binding Texture1}"/>
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ContentControl.Resources>
+                            </ContentControl>
+                            <ContentControl Content="{Binding CurrentSelections.SelectedWall}">
+                                <ContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type object:Wall}">
+                                        <WrapPanel Width="300">
+                                            <Label Width="170">Point 1 - X Coordinate</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Point 1 - Y Coordinate</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Point 2 - X Coordinate</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Point 2 - Y Coordinate</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
                                             <Label Width="170">Left Texture</Label>
                                             <Image Source="{Binding Texture1}" MaxHeight="100" MaxWidth="100"/>
+                                            <Button Content="Set to selected asset">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.SetObjectTextureCommand, 
+                                                        RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="WallTexture1" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
                                             <Label Content="{Binding Texture1}"/>
                                             <Label Width="170">Right Texture</Label>
                                             <Image Source="{Binding Texture2}" MaxHeight="100" MaxWidth="100"/>
+                                            <Button Content="Set to selected asset">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.SetObjectTextureCommand, 
+                                                            RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="WallTexture2" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
                                             <Label Content="{Binding Texture2}"/>
-                                            <Label Width="170">Wall Type: </Label>
+                                            <Label Width="170">Wall Type:</Label>
                                             <ComboBox ItemsSource="{Binding WallTypeValues}" SelectedItem="{Binding Type}"/>
                                         </WrapPanel>
                                     </DataTemplate>
@@ -199,6 +252,32 @@
                                     </DataTemplate>
                                 </ContentControl.Resources>
                             </ContentControl>
+                            <ContentControl Content="{Binding CurrentSelections.SelectedPathPoint}">
+                                <ContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type object:PathPoint}">
+                                        <WrapPanel Width="300">
+                                            <Label Width="170">Path point Id</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Next path point Id</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding ConnectToId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">X Coordinate</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Y Coordinate</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Rotation</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Duration</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Duration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ContentControl.Resources>
+                            </ContentControl>
                         </WrapPanel>
                     </Expander>
                     <Label>Properties</Label>
@@ -208,7 +287,9 @@
                     <Expander IsExpanded="True">
                         <WrapPanel Orientation="Horizontal" Width="300">
                             <Label Width="170">Selected Texture</Label>
-                            <Image Source="{Binding CurrentSelections.SelectedTexture}" Height="100" Width="100"/>
+                            <Border BorderBrush="Black" BorderThickness="1">
+                                <Image Source="{Binding CurrentSelections.SelectedTexture}" Height="100" Width="100"/>
+                            </Border>
                             <ComboBox Width="250" Height="20" Margin="20" ItemsSource="{Binding CurrentMap.TextureTypeValues}" SelectedItem="{Binding CurrentSelections.SelectedTextureType}">
                             </ComboBox>
                             <ScrollViewer Width="300" Height="740">
@@ -334,6 +415,26 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
+                    <ItemsControl ItemsSource="{Binding CurrentDoors}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type object:Door}">
+                                <Line StrokeThickness="10" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
+                                X2="{Binding Point2.XPos}" Y2="{Binding Point2.YPos}" Fill="Brown" Stroke="Brown">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                            RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Line>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas></Canvas>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
                     <ItemsControl ItemsSource="{Binding CurrentNPCs}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:NPC}">
@@ -346,7 +447,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Image>
-                                <Image Source="/Resources/MiscTextures/LootGlare.png" Visibility="{Binding AttachLoot}"/>
+                                <Image Source="/Resources/MiscTextures/LootGlare.png" Visibility="{Binding AttachLoot, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                 </Canvas>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -371,7 +472,14 @@
                     <ItemsControl ItemsSource="{Binding CurrentPathPoints}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:PathPoint}">
-                                <Canvas>
+                                <Canvas x:Name="InnerCanvas">
+                                    <Line StrokeDashArray="4 2" StrokeThickness="2" Stroke="White"
+                                          X1="0" 
+                                          Y1="0"
+                                          X2="{Binding LineConnectionCoordinate.XPos, UpdateSourceTrigger=PropertyChanged}" 
+                                          Y2="{Binding LineConnectionCoordinate.YPos, UpdateSourceTrigger=PropertyChanged}">
+                                    </Line>
+                                    <Label Content="{Binding Id}" Foreground="Blue"/>
                                     <Ellipse Width="10" Height="10" Stroke="White" Fill="White">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -380,15 +488,6 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Ellipse>
-                                    <Line StrokeDashArray="4 2" StrokeThickness="2" Stroke="White"
-                                          X1="{Binding Coordinates.XPos}" Y1="{Binding Coordinates.YPos}">
-                                        <Line.X2>
-                                            <Binding/>
-                                        </Line.X2>
-                                        <Line.Y2>
-                                            <Binding/>
-                                        </Line.Y2>
-                                    </Line>
                                 </Canvas>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -404,7 +503,6 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
-                    
                     <ItemsControl ItemsSource="{Binding CurrentMiscs}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:Misc}">

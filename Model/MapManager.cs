@@ -14,7 +14,7 @@ using System;
 
 namespace BobMapper.Model
 {
-    public static class MapProperties
+    public static class MapManager
     {
         public enum ObjectType
         {
@@ -24,7 +24,8 @@ namespace BobMapper.Model
             NPC,
             PathPoint,
             Floor,
-            Misc
+            Misc,
+            Door
         }
 
 
