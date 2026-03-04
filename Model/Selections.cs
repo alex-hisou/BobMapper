@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using BobMapper.Model.MapObjects;
-using static BobMapper.Model.MapProperties;
+using static BobMapper.Model.MapManager;
 
 namespace BobMapper.Model
 {
@@ -102,6 +102,17 @@ namespace BobMapper.Model
                 OnPropertyChanged();
             }
         }
+
+        private Door selectedDoor;
+
+        public Door SelectedDoor
+        {
+            get { return selectedDoor; }
+            set { selectedDoor = value;
+                OnPropertyChanged();
+            }
+        }
+
         private Misc selectedMisc;
 
         public event PropertyChangedEventHandler PropertyChanged;

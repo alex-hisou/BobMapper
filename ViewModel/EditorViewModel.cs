@@ -16,7 +16,7 @@ using BobMapper.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using BobMapper.Model.MapObjects;
-using static BobMapper.Model.MapProperties;
+using static BobMapper.Model.MapManager;
 
 namespace BobMapper.ViewModel
 {
@@ -44,6 +44,9 @@ namespace BobMapper.ViewModel
         public ObservableCollection<ObservableCollection<Floor>> CurrentFloors { get => currentFloors; set => currentFloors = value; }
         private ObservableCollection<ObservableCollection<Floor>> currentFloors;
 
+        public ObservableCollection<Door> CurrentDoors { get => currentDoors; set => currentDoors = value; }
+        private ObservableCollection<Door> currentDoors;
+
 
         private Map currentMap;
 
@@ -60,7 +63,7 @@ namespace BobMapper.ViewModel
             Map saveMap = new Map(0);
             //saveMap.props.Add(new Prop(new Coordinate(-5, -100), 45, "/Resources/PropTextures/cactus.png"));
             //saveMap.props.Add(new Prop(new Coordinate(100, -10), 45, "/Resources/PropTextures/toilet.png"));
-            saveMap.walls.Add(new Wall(new SnapCoordinate(1, -1), new SnapCoordinate(1, 0), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Blue.png"));
+            saveMap.doors.Add(new Door(new SnapCoordinate(1, -1), new SnapCoordinate(1, 0), "/Resources/WallTextures/Wall_Plain_Blue.png"));
             saveMap.walls.Add(new Wall(new SnapCoordinate(1, 4), new SnapCoordinate(8, 2), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Green.png"));
             //saveMap.npcs.Add(new NPC(new Coordinate(300, 0), NPC.NPCType.BaldCop, 0));
             //saveMap.npcs.Add(new NPC(new Coordinate(300, 300), NPC.NPCType.RedDressLady, 0));
@@ -78,8 +81,10 @@ namespace BobMapper.ViewModel
             CurrentPathPoints = new ObservableCollection<PathPoint>(CurrentMap.pathPoints);
             CurrentMiscs = new ObservableCollection<Misc>(CurrentMap.miscs);
             CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors));
+            CurrentDoors = new ObservableCollection<Door>(CurrentMap.doors);
             JsonMapParse.SaveData(saveMap);
             CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMap.tileset);
+            CurrentSelections.SelectedTextureType = TextureType.All;
         }
 
         //[RelayCommand]
@@ -96,8 +101,6 @@ namespace BobMapper.ViewModel
         
         public void ClickEmpty(Coordinate placementPos)
         {
-            
-            //Point point = new Point(Mouse.GetPosition().X, Mouse.GetPosition().Y);
             switch (CurrentSelections.SelectedTool)
             {
                 case Tools.AddWall:
@@ -122,6 +125,13 @@ namespace BobMapper.ViewModel
                     Misc misc = new Misc(placementPos, Misc.MiscObjects.Loot);
                     CurrentMiscs.Add(misc);
                     break;
+                case Tools.AddDoor:
+                    SnapCoordinate snappedDoorPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
+                    SnapCoordinate shiftedSnappedDoorPlacementPos = new SnapCoordinate(snappedDoorPlacementPos.SnappedXPos + 1, snappedDoorPlacementPos.SnappedYPos);
+                    Door door = new Door(snappedDoorPlacementPos, shiftedSnappedDoorPlacementPos, CurrentSelections.SelectedTexture);
+                    CurrentDoors.Add(door);
+                    break;
+
                 default:
                     break;
             }
@@ -142,6 +152,9 @@ namespace BobMapper.ViewModel
                     break;
                 case "WallTexture2":
                     CurrentSelections.SelectedWall.Texture2 = CurrentSelections.SelectedTexture;
+                    break;
+                case "DoorTexture":
+                    CurrentSelections.SelectedDoor.Texture1 = CurrentSelections.SelectedTexture; 
                     break;
 
             }
@@ -195,6 +208,11 @@ namespace BobMapper.ViewModel
                         CurrentSelections.SelectedMisc = null;
                         break;
                     }
+                case ObjectType.Door:
+                    {
+                        CurrentSelections.SelectedDoor = null;
+                        break;
+                    }
             }
             CurrentSelections.SelectedObjectType = ObjectType.None;
         }
@@ -210,53 +228,116 @@ namespace BobMapper.ViewModel
             //Not the best code, but this will do
             ResetSelection();
             int selectedObjectIndex;
+            CurrentSelections.SelectedObjectType = TypeSchema[sender.GetType()];
             switch (TypeSchema[sender.GetType()])
             {
-                case 0: //Wall
+                case ObjectType.Wall: 
                     selectedObjectIndex = CurrentWalls.IndexOf((Wall)sender);
                     CurrentSelections.SelectedWall = CurrentWalls[selectedObjectIndex];
-                    CurrentSelections.SelectedObjectType = ObjectType.Wall;
                     break;
-                case 1: //Prop
+                case ObjectType.Prop: //Prop
                     selectedObjectIndex = CurrentProps.IndexOf((Prop)sender);
                     CurrentSelections.SelectedProp = CurrentProps[selectedObjectIndex];
-                    CurrentSelections.SelectedObjectType = ObjectType.Prop;
                     break;
-                case 2: //NPC
+                case ObjectType.NPC: //NPC
                     selectedObjectIndex = CurrentNPCs.IndexOf((NPC)sender);
                     CurrentSelections.SelectedNPC = CurrentNPCs[selectedObjectIndex];
-                    CurrentSelections.SelectedObjectType = ObjectType.NPC;
                     break;
-                case 3: //PathPoint
+                case ObjectType.PathPoint: //PathPoint
                     selectedObjectIndex = CurrentPathPoints.IndexOf((PathPoint)sender);
                     CurrentSelections.SelectedPathPoint = CurrentPathPoints[selectedObjectIndex];
-                    CurrentSelections.SelectedObjectType = ObjectType.PathPoint;
                     break;
-                case 4: //Floor TODO: Implement
+                case ObjectType.Floor: //Floor TODO: Implement
                     /*
                     selectedObjectIndex = CurrentFloors.IndexOf((Floor)sender);
                     SelectedFloor = CurrentFloors[selectedObjectIndex];
                     selectedObjectType = ObjectType.Floor;
                     */
                     break;
-                case 5: //Misc
+                case ObjectType.Misc: //Misc
                     selectedObjectIndex = CurrentMiscs.IndexOf((Misc)sender);
                     CurrentSelections.SelectedMisc = CurrentMiscs[selectedObjectIndex];
-                    CurrentSelections.SelectedObjectType = ObjectType.Misc;
+                    break;
+                case ObjectType.Door: 
+                    selectedObjectIndex = CurrentDoors.IndexOf((Door)sender);
+                    CurrentSelections.SelectedDoor = CurrentDoors[selectedObjectIndex];
                     break;
                 default:
                     throw new Exception("Invalid object type");
             }
         }
 
-        private Dictionary<Type, int> TypeSchema = new Dictionary<Type, int>()
+        [RelayCommand]
+        public void DeleteObject()
         {
-            {typeof(Wall), 0},
-            {typeof(Prop), 1},
-            {typeof(NPC), 2},
-            {typeof(PathPoint), 3},
-            {typeof(Floor), 4},
-            {typeof(Misc), 5}
+            int toDeleteId;
+            switch (CurrentSelections.SelectedObjectType)
+            {
+                case ObjectType.Wall:
+                    {
+                        toDeleteId = CurrentWalls.IndexOf(CurrentSelections.SelectedWall);
+                        CurrentSelections.SelectedWall = null;
+                        CurrentWalls.RemoveAt(toDeleteId);
+                        break;
+                    }
+                case ObjectType.Prop:
+                    {
+                        toDeleteId = CurrentProps.IndexOf(CurrentSelections.SelectedProp);
+                        CurrentSelections.SelectedProp = null;
+                        CurrentProps.RemoveAt(toDeleteId);
+                        break;
+                    }
+                case ObjectType.NPC:
+                    {
+                        toDeleteId = CurrentNPCs.IndexOf(CurrentSelections.SelectedNPC);
+                        CurrentSelections.SelectedNPC = null;
+                        CurrentNPCs.RemoveAt(toDeleteId);
+                        break;
+                    }
+                case ObjectType.PathPoint:
+                    {
+                        toDeleteId = CurrentPathPoints.IndexOf(CurrentSelections.SelectedPathPoint);
+                        CurrentSelections.SelectedPathPoint = null;
+                        CurrentPathPoints.RemoveAt(toDeleteId);
+                        break;
+                    }
+                case ObjectType.Misc:
+                    {
+                        toDeleteId = CurrentMiscs.IndexOf(CurrentSelections.SelectedMisc);
+                        CurrentSelections.SelectedMisc = null;
+                        CurrentMiscs.RemoveAt(toDeleteId);
+                        break;
+                    }
+                case ObjectType.Door:
+                    {
+                        toDeleteId = CurrentDoors.IndexOf(CurrentSelections.SelectedDoor);
+                        CurrentSelections.SelectedDoor = null;
+                        CurrentDoors.RemoveAt(toDeleteId);
+                        break;
+                    }
+                default:
+                    {
+                        return;
+                    }
+            }
+            CurrentSelections.SelectedObjectType = ObjectType.None;
+        }
+
+        /* internal object ReturnSelectedObject()
+        {
+
+        }
+        */
+
+        private Dictionary<Type, ObjectType> TypeSchema = new Dictionary<Type, ObjectType>()
+        {
+            {typeof(Wall), ObjectType.Wall},
+            {typeof(Prop), ObjectType.Prop},
+            {typeof(NPC), ObjectType.NPC},
+            {typeof(PathPoint), ObjectType.PathPoint},
+            {typeof(Floor), ObjectType.Floor},
+            {typeof(Misc), ObjectType.Misc},
+            {typeof(Door), ObjectType.Door }
         };
     }
 }

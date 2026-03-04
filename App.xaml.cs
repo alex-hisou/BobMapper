@@ -32,7 +32,8 @@ namespace BobMapper
         AddNPC,
         AddPathPoint,
         AddMisc,
-        ChangeFloor
+        ChangeFloor,
+        AddDoor
     }
 
     public enum Tilesets
@@ -55,7 +56,7 @@ namespace BobMapper
         Door
     }
 
-    public class Coordinate : ICoordinate, INotifyPropertyChanged
+    public class Coordinate : ICoordinate
     {
         public int XPos {  get; set; }
         public int YPos { get; set; }
@@ -65,8 +66,6 @@ namespace BobMapper
             this.XPos = x;
             this.YPos = y;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 
     public class SnapCoordinate : ICoordinate, INotifyPropertyChanged

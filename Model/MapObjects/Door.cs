@@ -21,7 +21,9 @@ namespace BobMapper.Model.MapObjects
         public string Texture1
         {
             get { return texture1; }
-            set { texture1 = value; }
+            set { texture1 = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture1)));
+            }
         }
 
         public Door(SnapCoordinate point1, SnapCoordinate point2, string texture1)

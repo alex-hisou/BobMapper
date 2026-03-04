@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using BobMapper.Model;
 using BobMapper.Services;
 using BobMapper.ViewModel;
-using static BobMapper.Model.MapProperties;
+using static BobMapper.Model.MapManager;
 
 namespace BobMapper
 {
@@ -104,6 +104,11 @@ namespace BobMapper
                     vm.SelectTool(Tools.AddMisc);
                     if(vm.CurrentSelections.SelectedTool == Tools.AddMisc)
                     { AddMiscTool.Background = Brushes.DarkGray; }
+                    break;
+                case "AddDoorTool":
+                    vm.SelectTool(Tools.AddDoor);
+                    if(vm.CurrentSelections.SelectedTool== Tools.AddDoor)
+                    { AddDoorTool.Background = Brushes.DarkGray; }
                     break;
                 default:
                     throw new Exception("YOU DONE FUCKED UP!!!!!1!!1!!!!!!!1!!1!!!!1");

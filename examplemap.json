@@ -7,19 +7,6 @@
     {
       "Point1": {
         "SnappedXPos": 1,
-        "SnappedYPos": -1
-      },
-      "Point2": {
-        "SnappedXPos": 1,
-        "SnappedYPos": 0
-      },
-      "Type": 0,
-      "Texture1": "/Resources/WallTextures/Wall_Plain_Blue.png",
-      "Texture2": "/Resources/WallTextures/Wall_Plain_Green.png"
-    },
-    {
-      "Point1": {
-        "SnappedXPos": 1,
         "SnappedYPos": 4
       },
       "Point2": {
@@ -29,6 +16,19 @@
       "Type": 0,
       "Texture1": "/Resources/WallTextures/Wall_Plain_Green.png",
       "Texture2": "/Resources/WallTextures/Wall_Plain_Green.png"
+    }
+  ],
+  "doors": [
+    {
+      "Point1": {
+        "SnappedXPos": 1,
+        "SnappedYPos": -1
+      },
+      "Point2": {
+        "SnappedXPos": 1,
+        "SnappedYPos": 0
+      },
+      "Texture1": "/Resources/WallTextures/Wall_Plain_Blue.png"
     }
   ],
   "props": [],
