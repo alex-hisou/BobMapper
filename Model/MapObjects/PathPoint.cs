@@ -47,7 +47,7 @@ namespace BobMapper.Model.MapObjects
         }
 
         private Coordinate absoluteLineConnectionCoordinate;
-
+        [JsonIgnore]
         public Coordinate AbsoluteLineConnectionCoordinates
         {
             get { return absoluteLineConnectionCoordinate; }
@@ -56,7 +56,7 @@ namespace BobMapper.Model.MapObjects
 
 
         [JsonConstructor]
-        public PathPoint(Coordinate coordinates, int duration, int id, int connectToId)
+        public PathPoint(Coordinate coordinates, int duration, int id, int? connectToId)
         {
             Coordinates = coordinates;
             Id = id;

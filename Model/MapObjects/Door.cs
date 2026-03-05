@@ -26,11 +26,29 @@ namespace BobMapper.Model.MapObjects
             }
         }
 
-        public Door(SnapCoordinate point1, SnapCoordinate point2, string texture1)
+        private bool locked;
+        public bool Locked
+        {
+            get { return locked; }
+            set { locked = value; }
+        }
+
+        private bool permLocked;
+        public bool PermLocked
+        {
+            get { return permLocked; }
+            set { permLocked = value; }
+        }
+
+
+
+        public Door(SnapCoordinate point1, SnapCoordinate point2, string texture1, bool locked, bool permlocked)
         {
             Point1 = point1;
             Point2 = point2;
             Texture1 = texture1;
+            Locked = locked;
+            PermLocked = permlocked;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

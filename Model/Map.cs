@@ -27,8 +27,6 @@ namespace BobMapper.Model
         public Floor[][] floors;
         public Tilesets tileset;
 
-        
-
         public Map(int inputHouseSize)
         {
             Width = MapManager.houseSizeSchema[inputHouseSize].XPos;
@@ -65,7 +63,7 @@ namespace BobMapper.Model
 
 
         [JsonConstructor] //Use only for initialization from json. Otherwise write properties directly using the no param constructor above
-        public Map(int inputHouseSize, List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, Floor[][] floors, Chapter chapter, int levelNumber, Tilesets tileset, List<Door> doors)
+        public Map(List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, Floor[][] floors, Chapter levelChapter, int levelNumber, Tilesets tileset, List<Door> doors, int Width, int Height)
         {
             this.walls = walls;
             this.props = props;
@@ -73,10 +71,12 @@ namespace BobMapper.Model
             this.pathPoints = pathPoints;
             this.miscs = miscs;
             this.floors = floors;
-            this.levelChapter = chapter;
+            this.levelChapter = levelChapter;
             this.levelNumber = levelNumber;
             this.tileset = tileset;
             this.doors = doors;
+            this.Width = Width;
+            this.Height = Height;
         }
 
         public enum Chapter
