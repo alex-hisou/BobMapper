@@ -23,11 +23,11 @@ namespace BobMapper.Model.MapObjects
         }
 
 
-        public Prop(Coordinate coordinates, int rotation, string propTextureName)
+        public Prop(Coordinate coordinates, int rotation, string propTexture)
         {
             Coordinates = coordinates;
             Rotation = rotation;
-            PropTexture = propTextureName;
+            PropTexture = propTexture;
         }
 
         public void DeleteObject()

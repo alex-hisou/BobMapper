@@ -17,6 +17,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using BobMapper.Model.MapObjects;
 using static BobMapper.Model.MapManager;
+using System.IO;
 
 namespace BobMapper.ViewModel
 {
@@ -28,6 +29,14 @@ namespace BobMapper.ViewModel
         {
             get { return currentSelections; }
             set { currentSelections = value; }
+        }
+
+        private string fileName;
+
+        public string FileName
+        {
+            get { return fileName; }
+            set { fileName = value; }
         }
 
 
@@ -43,7 +52,6 @@ namespace BobMapper.ViewModel
         private ObservableCollection<Misc> currentMiscs;
         public ObservableCollection<ObservableCollection<Floor>> CurrentFloors { get => currentFloors; set => currentFloors = value; }
         private ObservableCollection<ObservableCollection<Floor>> currentFloors;
-
         public ObservableCollection<Door> CurrentDoors { get => currentDoors; set => currentDoors = value; }
         private ObservableCollection<Door> currentDoors;
 
@@ -57,24 +65,11 @@ namespace BobMapper.ViewModel
         }
         
 
-        public EditorViewModel()
+        public EditorViewModel(string filename)
         {
+            FileName = filename;
+            CurrentMap = JsonMapParse.LoadData(filename);
             CurrentSelections = new Selections();
-            Map saveMap = new Map(0);
-            //saveMap.props.Add(new Prop(new Coordinate(-5, -100), 45, "/Resources/PropTextures/cactus.png"));
-            //saveMap.props.Add(new Prop(new Coordinate(100, -10), 45, "/Resources/PropTextures/toilet.png"));
-            saveMap.doors.Add(new Door(new SnapCoordinate(1, -1), new SnapCoordinate(1, 0), "/Resources/WallTextures/Wall_Plain_Blue.png"));
-            saveMap.walls.Add(new Wall(new SnapCoordinate(1, 4), new SnapCoordinate(8, 2), Wall.WallType.Normal, "/Resources/WallTextures/Wall_Plain_Green.png", "/Resources/WallTextures/Wall_Plain_Green.png"));
-            //saveMap.npcs.Add(new NPC(new Coordinate(300, 0), NPC.NPCType.BaldCop, 0));
-            //saveMap.npcs.Add(new NPC(new Coordinate(300, 300), NPC.NPCType.RedDressLady, 0));
-            PathPoint pathPoint1 = new(new Coordinate(-200, -200), 5, 1, 2);
-            PathPoint pathPoint2 = new(new Coordinate(-200, -100), 5, 2, 1);
-            //PathPoint pathPoint3 = new(new Coordinate(-100, -100), 3, 1);
-            saveMap.pathPoints.Add(pathPoint1);
-            saveMap.pathPoints.Add(pathPoint2);
-            //saveMap.pathPoints.Add(pathPoint3);
-            CurrentMap = saveMap;
-            saveMap.AttachAllPathPointHandlers(); //Delete this later since the json parser calls it 
             CurrentProps = new ObservableCollection<Prop>(CurrentMap.props);
             CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls);
             CurrentNPCs = new ObservableCollection<NPC>(CurrentMap.npcs);
@@ -82,7 +77,6 @@ namespace BobMapper.ViewModel
             CurrentMiscs = new ObservableCollection<Misc>(CurrentMap.miscs);
             CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors));
             CurrentDoors = new ObservableCollection<Door>(CurrentMap.doors);
-            JsonMapParse.SaveData(saveMap);
             CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMap.tileset);
             CurrentSelections.SelectedTextureType = TextureType.All;
         }
@@ -128,7 +122,7 @@ namespace BobMapper.ViewModel
                 case Tools.AddDoor:
                     SnapCoordinate snappedDoorPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
                     SnapCoordinate shiftedSnappedDoorPlacementPos = new SnapCoordinate(snappedDoorPlacementPos.SnappedXPos + 1, snappedDoorPlacementPos.SnappedYPos);
-                    Door door = new Door(snappedDoorPlacementPos, shiftedSnappedDoorPlacementPos, CurrentSelections.SelectedTexture);
+                    Door door = new Door(snappedDoorPlacementPos, shiftedSnappedDoorPlacementPos, CurrentSelections.SelectedTexture, false, false);
                     CurrentDoors.Add(door);
                     break;
 
@@ -339,5 +333,24 @@ namespace BobMapper.ViewModel
             {typeof(Misc), ObjectType.Misc},
             {typeof(Door), ObjectType.Door }
         };
+
+        [RelayCommand]
+        internal void Save(bool saveNewFile)
+        {
+            CurrentMap.walls = CurrentWalls.ToList();
+            CurrentMap.doors = CurrentDoors.ToList();
+            CurrentMap.props = CurrentProps.ToList();
+            CurrentMap.pathPoints = CurrentPathPoints.ToList();
+            CurrentMap.npcs = CurrentNPCs.ToList();
+            CurrentMap.miscs = CurrentMiscs.ToList();
+            if(saveNewFile)
+            {
+
+            }
+            else
+            {
+                JsonMapParse.SaveData(CurrentMap, FileName);
+            }
+        }
     }
 }

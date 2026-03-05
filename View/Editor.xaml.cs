@@ -21,11 +21,11 @@ namespace BobMapper
 {
     public partial class Editor : Window
     {
-        public Editor()
+        public Editor(string filename)
         {
             InitializeComponent();
 
-            var editorViewModel = new EditorViewModel();
+            var editorViewModel = new EditorViewModel(filename);
             DataContext = editorViewModel;
 
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight; //otherwise covers taskbar

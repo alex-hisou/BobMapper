@@ -61,10 +61,10 @@ namespace BobMapper
         public int XPos {  get; set; }
         public int YPos { get; set; }
 
-        public Coordinate(int x, int y)
+        public Coordinate(int XPos, int YPos)
         {
-            this.XPos = x;
-            this.YPos = y;
+            this.XPos = XPos;
+            this.YPos = YPos;
         }
     }
 
