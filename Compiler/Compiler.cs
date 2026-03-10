@@ -65,12 +65,28 @@ namespace BobMapper.Compiler
                 {
                     case Wall.WallType.Normal:
                         byteWall[0] = 0x33;
+                        byteWall[1] = 0x00;
                         break;
                     case Wall.WallType.Paperthin:
                         byteWall[0] = 0x31;
                         byteWall[1] = 0x33;
                         break;
                 }
+                byteWall[2] = 0x00;
+                byteWall[3] = 0x00;
+                CompiledCoordinate compiledPoint1 = new(wall.Point1, false);
+                byteWall[4] = compiledPoint1.CompiledX[0];
+                byteWall[5] = compiledPoint1.CompiledX[1];
+                byteWall[6] = compiledPoint1.CompiledY[0];
+                byteWall[7] = compiledPoint1.CompiledY[1];
+                CompiledCoordinate compiledPoint2 = new(wall.Point2, false);
+                byteWall[8] = compiledPoint2.CompiledX[0];
+                byteWall[9] = compiledPoint2.CompiledX[1];
+                byteWall[10] = compiledPoint2.CompiledY[0];
+                byteWall[11] = compiledPoint2.CompiledY[1];
+                Encoding.ASCII.GetBytes(wall.Texture1, 0, wall.Texture1.Length, byteWall, 12);
+                Encoding.ASCII.GetBytes(wall.Texture2, 0, wall.Texture2.Length, byteWall, 44);
+                byteWalls.AddRange(byteWall);
 
             }
             return byteWalls;
@@ -78,7 +94,26 @@ namespace BobMapper.Compiler
 
         private List<byte> DoorsAsBytes(List<Door> doors)
         {
-
+            List<byte> byteDoors = new List<byte>();
+            foreach (Door door in doors)
+            {
+                byte[] byteDoor = new byte[45];
+                byteDoor[0] = 0x34;
+                Array.Fill<byte>(byteDoor, 0x00, 1, 3);
+                CompiledCoordinate compiledPoint1 = new(door.Point1, false);
+                byteDoor[4] = compiledPoint1.CompiledX[0];
+                byteDoor[5] = compiledPoint1.CompiledX[1];
+                byteDoor[6] = compiledPoint1.CompiledY[0];
+                byteDoor[7] = compiledPoint1.CompiledY[1];
+                CompiledCoordinate compiledPoint2 = new(door.Point2, false);
+                byteDoor[8] = compiledPoint2.CompiledX[0];
+                byteDoor[9] = compiledPoint2.CompiledX[1];
+                byteDoor[10] = compiledPoint2.CompiledY[0];
+                byteDoor[11] = compiledPoint2.CompiledY[1];
+                Encoding.ASCII.GetBytes(door.Texture1, 0, door.Texture1.Length, byteDoor, 12);
+                byteDoors.AddRange(byteDoor);
+            }
+            return byteDoors;
         }
     }
 }
