@@ -40,8 +40,6 @@ namespace BobMapper.Model.MapObjects
             set { permLocked = value; }
         }
 
-
-
         public Door(SnapCoordinate point1, SnapCoordinate point2, string texture1, bool locked, bool permlocked)
         {
             Point1 = point1;
@@ -52,5 +50,6 @@ namespace BobMapper.Model.MapObjects
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
     }
 }
