@@ -12,10 +12,17 @@ namespace BobMapper.Compiler
         internal byte[] CompiledY;
         internal CompiledCoordinate(Coordinate coordinate, bool startsFrom64) 
         {
-            short convertedX = Convert.ToInt16(coordinate.XPos);
-            short convertedY = Convert.ToInt16(coordinate.YPos);
-            CompiledX = BitConverter.GetBytes(convertedX);
-            CompiledY = BitConverter.GetBytes(convertedY);
+            if(startsFrom64)
+            {
+                
+            }
+            else
+            {
+                short convertedX = Convert.ToInt16(coordinate.XPos);
+                short convertedY = Convert.ToInt16(coordinate.YPos);
+                CompiledX = BitConverter.GetBytes(convertedX);
+                CompiledY = BitConverter.GetBytes(convertedY);
+            }
         }
 
         internal CompiledCoordinate(SnapCoordinate coordinate, bool startsFrom64)
@@ -26,4 +33,6 @@ namespace BobMapper.Compiler
             CompiledY = BitConverter.GetBytes(convertedY);
         }
     }
+
+
 }

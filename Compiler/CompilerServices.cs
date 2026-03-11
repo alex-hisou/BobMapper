@@ -8,6 +8,6 @@ namespace BobMapper.Compiler
 {
     internal static class CompilerServices
     {
-
+        
     }
 }
