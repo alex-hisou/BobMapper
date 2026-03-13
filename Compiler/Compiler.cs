@@ -11,6 +11,7 @@ namespace BobMapper.Compiler
     internal class Compiler
     {
         private List<byte> output;
+        private List<QueuedLocator> locatorQueue;
         internal void Compile(Map map)
         {
             byte[] fileHeader = [0x01, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00];
@@ -75,12 +76,12 @@ namespace BobMapper.Compiler
                 }
                 currentByteWall[2] = 0x00;
                 currentByteWall[3] = 0x00;
-                CompiledCoordinate compiledPoint1 = new(wall.Point1, false);
+                CompiledCoordinate compiledPoint1 = new(wall.Point1);
                 currentByteWall[4] = compiledPoint1.CompiledX[0];
                 currentByteWall[5] = compiledPoint1.CompiledX[1];
                 currentByteWall[6] = compiledPoint1.CompiledY[0];
                 currentByteWall[7] = compiledPoint1.CompiledY[1];
-                CompiledCoordinate compiledPoint2 = new(wall.Point2, false);
+                CompiledCoordinate compiledPoint2 = new(wall.Point2);
                 currentByteWall[8] = compiledPoint2.CompiledX[0];
                 currentByteWall[9] = compiledPoint2.CompiledX[1];
                 currentByteWall[10] = compiledPoint2.CompiledY[0];
@@ -101,18 +102,29 @@ namespace BobMapper.Compiler
                 byte[] currentByteDoor = new byte[45];
                 currentByteDoor[0] = 0x34;
                 Array.Fill<byte>(currentByteDoor, 0x00, 1, 3);
-                CompiledCoordinate compiledPoint1 = new(door.Point1, false);
+                CompiledCoordinate compiledPoint1 = new(door.Point1);
                 currentByteDoor[4] = compiledPoint1.CompiledX[0];
                 currentByteDoor[5] = compiledPoint1.CompiledX[1];
                 currentByteDoor[6] = compiledPoint1.CompiledY[0];
                 currentByteDoor[7] = compiledPoint1.CompiledY[1];
-                CompiledCoordinate compiledPoint2 = new(door.Point2, false);
+                CompiledCoordinate compiledPoint2 = new(door.Point2);
                 currentByteDoor[8] = compiledPoint2.CompiledX[0];
                 currentByteDoor[9] = compiledPoint2.CompiledX[1];
                 currentByteDoor[10] = compiledPoint2.CompiledY[0];
                 currentByteDoor[11] = compiledPoint2.CompiledY[1];
                 Encoding.ASCII.GetBytes(door.Texture1, 0, door.Texture1.Length, currentByteDoor, 12);
                 byteDoors.AddRange(currentByteDoor);
+                if(door.Locked)
+                {
+                    //TODO: Write SnapCoordinateConverter
+                    QueuedLocator additionalLocator = new(QueuedLocator.LocatorTypes.Lock, door.Point1);
+                    locatorQueue.Add(additionalLocator);
+                }
+                if(door.PermLocked)
+                {
+                    QueuedLocator additionalLocator = new(QueuedLocator.LocatorTypes.PermanentLock, door.Point1);
+                    locatorQueue.Add(additionalLocator);
+                }
             }
             return byteDoors;
         }
@@ -126,8 +138,15 @@ namespace BobMapper.Compiler
                 currentByteProp[0] = 0x35;
                 Array.Fill<byte>(currentByteProp, 0x00, 1, 3);
                 Encoding.ASCII.GetBytes(prop.PropTexture, 0, prop.PropTexture.Length, currentByteProp, 4);
-
+                _64CompiledCoordinate compiledCoordinate = new(prop.Coordinates, prop.Rotation);
+                currentByteProp[38] = compiledCoordinate.CompiledX[0];
+                currentByteProp[39] = compiledCoordinate.CompiledX[1];
+                currentByteProp[42] = compiledCoordinate.CompiledY[0];
+                currentByteProp[43] = compiledCoordinate.CompiledY[1];
+                currentByteProp[47] = compiledCoordinate.CompiledRotation;
+                byteProps.AddRange(currentByteProp);
             }
+            return byteProps;
         }
     }
 }
