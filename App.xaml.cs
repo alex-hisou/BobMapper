@@ -66,6 +66,8 @@ namespace BobMapper
             this.XPos = XPos;
             this.YPos = YPos;
         }
+
+        
     }
 
     public class SnapCoordinate : ICoordinate, INotifyPropertyChanged
@@ -83,7 +85,7 @@ namespace BobMapper
             set { xPos = value; OnPropertyChanged(nameof(XPos)); }
         }
 
-        
+
         private int yPos;
         [JsonIgnore]
         public int YPos
@@ -114,12 +116,18 @@ namespace BobMapper
             YPos = snappedYPos * FloorSize;
         }
 
-        public static SnapCoordinate UnsnappedCoordinateFactory(int unsnappedXPos, int  unsnappedYPos)
+        public static SnapCoordinate UnsnappedCoordinateFactory(int unsnappedXPos, int unsnappedYPos)
         {
             int snappedXPos = (unsnappedXPos - (unsnappedXPos % FloorSize)) / FloorSize;
             int snappedYPos = (unsnappedYPos - (unsnappedYPos % FloorSize)) / FloorSize;
             SnapCoordinate SnapCoordinate = new SnapCoordinate(snappedXPos, snappedYPos);
             return SnapCoordinate;
+        }
+
+        public static explicit operator Coordinate(SnapCoordinate snapCoordinate)
+        {
+            Coordinate coordinate = new Coordinate(snapCoordinate.SnappedXPos, snapCoordinate.SnappedYPos);
+            return coordinate;
         }
 
         protected void OnPropertyChanged(string name)
