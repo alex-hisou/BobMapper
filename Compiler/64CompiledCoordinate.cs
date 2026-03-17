@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BobMapper.Compiler
 {
@@ -17,12 +13,31 @@ namespace BobMapper.Compiler
         public _64CompiledCoordinate(Coordinate coordinates, int rotation)
         {
             CompiledRotation = GetCompiledRotation(rotation);
-
+            CompiledX = Get64CompiledCoordinate(coordinates.XPos);
+            CompiledY = Get64CompiledCoordinate(coordinates.YPos);
         }
 
         private byte GetCompiledRotation(int rotation)
         {
+            //TODO: Test rotation range
+            return (byte)0;
+        }
 
+        private byte[] Get64CompiledCoordinate(int anyCoordinate)
+        {
+            //Voodoo magic code, don't look too deep into it
+            byte[] compiled64coordinate = new byte[2];
+            compiled64coordinate[0] = (byte)Math.Abs(anyCoordinate % 256);
+            int virtualQuadrant = anyCoordinate / 256;
+            int preProcessedQuadrant = Math.Abs(virtualQuadrant);
+            //Converts normal quadrant into a power-of-2 quadrant the game uses
+            preProcessedQuadrant = Convert.ToInt32(Math.Floor(Math.Log2(preProcessedQuadrant)));
+
+            //the lowest quadrants from which the game starts counting, -65 for negative coordinates, 63 for positive
+            int compiledQuadrant = anyCoordinate < 0 ? -65 : 63; 
+            compiledQuadrant += preProcessedQuadrant;
+            compiled64coordinate[1] = (byte)compiledQuadrant;
+            return compiled64coordinate;
         }
     }
 }

@@ -26,6 +26,7 @@ namespace BobMapper.Compiler
             output.AddRange(LootTexturesAsBytes(loots));
             output.AddRange(Level_v2(map.Width, map.Height));
             output.AddRange(NPCsAsBytes(map.npcs));
+            output.AddRange(PathPointsAsBytes(map.pathPoints));
         }
 
         private List<byte> CablesAsBytes()
@@ -200,7 +201,13 @@ namespace BobMapper.Compiler
                 byte[] currentByteNPC = new byte[76];
             }
 
-            return byteNPCs;
+            
+        }
+
+        private List<byte> PathPointsAsBytes(List<PathPoint> pathPoints)
+        {
+            List<byte> bytePathPoints = new List<byte>();
+
         }
 
     }
