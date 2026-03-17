@@ -19,21 +19,29 @@ namespace BobMapper.Model.MapObjects
 
         public Coordinate Coordinates { get; set; }
 
-        public Misc(Coordinate coordinates, MiscObjects type)
+        public Misc(Coordinate coordinates, MiscObjects type, int rotation)
         {
             Coordinates = coordinates;
             Type = type;
+            Rotation = rotation;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         private string texture;
 
-        [JsonIgnore]
         public string Texture
         {
             get { return texture; }
             set { texture = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture))); }
+        }
+
+        private int rotation;
+
+        public int Rotation
+        {
+            get { return rotation; }
+            set { rotation = value; }
         }
 
         public void DeleteObject()

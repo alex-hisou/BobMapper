@@ -21,6 +21,12 @@ namespace BobMapper.Compiler
             output.AddRange(WallsAsBytes(map.walls));
             output.AddRange(DoorsAsBytes(map.doors));
             output.AddRange(PropsAsBytes(map.props));
+            List<Misc> loots = new List<Misc>();
+            loots = map.miscs.Where(x => x.Type == Misc.MiscObjects.Loot).ToList();
+            output.AddRange(LootTexturesAsBytes(loots));
+            output.AddRange(Level_v2(map.Width, map.Height));
+            output.AddRange(NPCsAsBytes(map.npcs));
+            output.AddRange(PathPointsAsBytes(map.pathPoints));
         }
 
         private List<byte> CablesAsBytes()
@@ -117,12 +123,12 @@ namespace BobMapper.Compiler
                 if(door.Locked)
                 {
                     //TODO: Write SnapCoordinateConverter
-                    QueuedLocator additionalLocator = new(QueuedLocator.LocatorTypes.Lock, door.Point1);
+                    QueuedLocator additionalLocator = new(QueuedLocator.LocatorTypes.Lock, (Coordinate)door.Point1);
                     locatorQueue.Add(additionalLocator);
                 }
                 if(door.PermLocked)
                 {
-                    QueuedLocator additionalLocator = new(QueuedLocator.LocatorTypes.PermanentLock, door.Point1);
+                    QueuedLocator additionalLocator = new(QueuedLocator.LocatorTypes.PermanentLock, (Coordinate)door.Point1);
                     locatorQueue.Add(additionalLocator);
                 }
             }
@@ -148,5 +154,61 @@ namespace BobMapper.Compiler
             }
             return byteProps;
         }
+
+        private List<byte> LootTexturesAsBytes(List<Misc> loots)
+        {
+            List<byte> byteLootTextures = new List<byte>();
+            foreach(Misc loot in loots)
+            {
+                byte[] currentLootTexture = new byte[48];
+                currentLootTexture[0] = 0x35;
+                Array.Fill<byte>(currentLootTexture, 0x00, 1, 3);
+                Encoding.ASCII.GetBytes(loot.Texture, 0, loot.Texture.Length, currentLootTexture, 4);
+                _64CompiledCoordinate compiledCoordinate = new(loot.Coordinates, loot.Rotation);
+                currentLootTexture[38] = compiledCoordinate.CompiledX[0];
+                currentLootTexture[39] = compiledCoordinate.CompiledX[1];
+                currentLootTexture[42] = compiledCoordinate.CompiledY[0];
+                currentLootTexture[43] = compiledCoordinate.CompiledY[1];
+                currentLootTexture[47] = compiledCoordinate.CompiledRotation;
+                byteLootTextures.AddRange(currentLootTexture);
+            }
+            return byteLootTextures;
+        }
+
+        private byte[] Level_v2(int width, int  height)
+        {
+            byte[] level_v2 = new byte[33];
+            level_v2[0] = 0x08;
+            Encoding.ASCII.GetBytes("Level_v2", 0, level_v2.Length, level_v2, 4);
+            level_v2[12] = 0x14; //no idea why, but its needed
+            level_v2[16] = Convert.ToByte(width);
+            level_v2[20] = Convert.ToByte(height);
+            level_v2[24] = 0x01; //Mystery byte
+            level_v2[32] = 0x01;
+            return level_v2;
+        }
+
+        private List<byte> NPCsAsBytes(List<NPC> npcs)
+        {
+            List<byte> byteNPCs = new List<byte>();
+            byteNPCs.AddRange([0x0B, 0x00, 0x00, 0x00]);
+            byte[] locators_v3 = Encoding.ASCII.GetBytes("Locators_v3");
+            byteNPCs.AddRange(locators_v3);
+            //First two - Mystery bytes
+            byteNPCs.AddRange([0xD4, 0x06, 0x00, 0x00]);
+            foreach (NPC npc in npcs)
+            {
+                byte[] currentByteNPC = new byte[76];
+            }
+
+            
+        }
+
+        private List<byte> PathPointsAsBytes(List<PathPoint> pathPoints)
+        {
+            List<byte> bytePathPoints = new List<byte>();
+
+        }
+
     }
 }

@@ -10,14 +10,7 @@ namespace BobMapper.Compiler
     {
         internal byte[] CompiledX;
         internal byte[] CompiledY;
-        internal CompiledCoordinate(Coordinate coordinate)
-        {
-            short convertedX = Convert.ToInt16(coordinate.XPos);
-            short convertedY = Convert.ToInt16(coordinate.YPos);
-            CompiledX = BitConverter.GetBytes(convertedX);
-            CompiledY = BitConverter.GetBytes(convertedY);
-        }
-
+        
         internal CompiledCoordinate(SnapCoordinate coordinate)
         {
             short convertedX = Convert.ToInt16(coordinate.XPos);
