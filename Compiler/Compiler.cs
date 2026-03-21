@@ -196,17 +196,42 @@ namespace BobMapper.Compiler
             byteNPCs.AddRange(locators_v3);
             //First two - Mystery bytes
             byteNPCs.AddRange([0xD4, 0x06, 0x00, 0x00]);
-            foreach (NPC npc in npcs)
+            for (int i = 0; i < npcs.Count; i++)
             {
                 byte[] currentByteNPC = new byte[76];
+                NPC npc = npcs[i];
+                _64CompiledCoordinate npcCompiledCoordinate = new _64CompiledCoordinate(npc.Coordinates, npc.Rotation);
+                currentByteNPC[2] = npcCompiledCoordinate.CompiledX[0];
+                currentByteNPC[3] = npcCompiledCoordinate.CompiledX[1];
+                currentByteNPC[6] = npcCompiledCoordinate.CompiledY[0];
+                currentByteNPC[7] = npcCompiledCoordinate.CompiledY[1];
+                currentByteNPC[15] = npcCompiledCoordinate.CompiledRotation;
+                currentByteNPC[16] = 0x01;
+                currentByteNPC[20] = Convert.ToByte(i);
+                currentByteNPC[60] = Convert.ToByte((int)npc.Type);
+                if(npc.AttachLoot)
+                {
+                    QueuedLocator queueAttachLoot = new QueuedLocator(QueuedLocator.LocatorTypes.Loot, npc.Coordinates);
+                    locatorQueue.Add(queueAttachLoot);
+                }
+                if(npc.AttachMainLoot)
+                {
+                    QueuedLocator queueAttachMainLoot = new QueuedLocator(QueuedLocator.LocatorTypes.MainLoot, npc.Coordinates);
+                    locatorQueue.Add(queueAttachMainLoot);
+                }
+                byteNPCs.AddRange(currentByteNPC);
             }
-
-            
+            return byteNPCs;
         }
 
         private List<byte> PathPointsAsBytes(List<PathPoint> pathPoints)
         {
             List<byte> bytePathPoints = new List<byte>();
+            foreach (PathPoint point in pathPoints)
+            {
+                byte[] currentBytePathPoint = new byte[76];
+
+            }
 
         }
 
