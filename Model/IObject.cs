@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static BobMapper.Model.MapObjects.Misc;
-using static BobMapper.Model.MapObjects.NPC;
-using static BobMapper.Model.MapObjects.Wall;
 
 namespace BobMapper.Model
 {
     internal interface ISinglePointObject
     {
         Coordinate Coordinates { get; set; }
-        void DeleteObject();
+        
     }
 
     internal interface IDoublePointObject

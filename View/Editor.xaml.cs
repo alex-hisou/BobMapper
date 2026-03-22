@@ -110,6 +110,11 @@ namespace BobMapper
                     if(vm.CurrentSelections.SelectedTool== Tools.AddDoor)
                     { AddDoorTool.Background = Brushes.DarkGray; }
                     break;
+                case "AddLootTool":
+                    vm.SelectTool(Tools.AddLoot);
+                    if(vm.CurrentSelections.SelectedTool == Tools.AddLoot)
+                    { AddLootTool.Background = Brushes.DarkGray;  }
+                    break;
                 default:
                     throw new Exception("YOU DONE FUCKED UP!!!!!1!!1!!!!!!!1!!1!!!!1");
 
