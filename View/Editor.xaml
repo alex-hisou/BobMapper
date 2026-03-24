@@ -118,6 +118,12 @@
                         <Image Source="/Resources/UI/AddMiscTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="Add Loot" Name="AddLootTool"
+                     Click="ToolToggle">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/UI/AddMiscTool.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Menu.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel Orientation="Vertical"/>
@@ -155,6 +161,34 @@
                                                     <i:EventTrigger EventName="Click">
                                                         <i:InvokeCommandAction Command="{Binding DataContext.SetObjectTextureCommand, 
                                                         RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="PropTexture" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ContentControl.Resources>
+                            </ContentControl>
+                            <ContentControl Content="{Binding CurrentSelections.SelectedLoot}">
+                                <ContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type object:Loot}">
+                                        <WrapPanel Width="300">
+                                            <Label Width="170">X Coordinate</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Y Coordinate</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Rotation</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Asset</Label>
+                                            <Image Source="{Binding Texture}" MaxHeight="100" MaxWidth="100"/>
+                                            <Label Content="{Binding Texture}"/>
+                                            <Button Content="Set to selected asset">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.SetObjectTextureCommand, 
+                                                           RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="LootTexture" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
                                             </Button>
@@ -383,6 +417,40 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Image>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding Coordinates.XPos}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="{Binding Rotation}"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas></Canvas>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <ItemsControl ItemsSource="{Binding CurrentLoots}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type object:Loot}">
+                                <Canvas>
+                                <Image Source="{Binding Texture}" Width="auto" Height="auto" x:Name="img">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Image>
+                                <Image Source="/Resources/MiscTextures/LootGlare.png" IsHitTestVisible="False"/>
+                                </Canvas>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemContainerStyle>

@@ -76,10 +76,5 @@ namespace BobMapper.Model.MapObjects
 
         public event EventHandler ConnectionPointChanged;
 
-
-        public void DeleteObject()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

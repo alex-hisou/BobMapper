@@ -21,9 +21,8 @@ namespace BobMapper.Compiler
             output.AddRange(WallsAsBytes(map.walls));
             output.AddRange(DoorsAsBytes(map.doors));
             output.AddRange(PropsAsBytes(map.props));
-            List<Misc> loots = new List<Misc>();
-            loots = map.miscs.Where(x => x.Type == Misc.MiscObjects.Loot).ToList();
-            output.AddRange(LootTexturesAsBytes(loots));
+            //TODO: Implement Loot texture as bytes and queue every one as locators
+            output.AddRange(LootTexturesAsBytes(map.loots));
             output.AddRange(Level_v2(map.Width, map.Height));
             output.AddRange(NPCsAsBytes(map.npcs));
             output.AddRange(PathPointsAsBytes(map.pathPoints));
@@ -155,10 +154,10 @@ namespace BobMapper.Compiler
             return byteProps;
         }
 
-        private List<byte> LootTexturesAsBytes(List<Misc> loots)
+        private List<byte> LootTexturesAsBytes(List<Loot> loots)
         {
             List<byte> byteLootTextures = new List<byte>();
-            foreach(Misc loot in loots)
+            foreach(Loot loot in loots)
             {
                 byte[] currentLootTexture = new byte[48];
                 currentLootTexture[0] = 0x35;
@@ -232,7 +231,7 @@ namespace BobMapper.Compiler
                 byte[] currentBytePathPoint = new byte[76];
 
             }
-
+            return bytePathPoints;
         }
 
     }

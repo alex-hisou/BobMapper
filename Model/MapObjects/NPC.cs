@@ -50,7 +50,7 @@ namespace BobMapper.Model.MapObjects
         {
             Coordinates = coordinates;
             Type = type;
-            SetNPCType();
+            SetNPCTexture();
             Rotation = rotation;
             AttachLoot = attachLoot;
             AttachMainLoot = attachMainLoot;
@@ -61,7 +61,7 @@ namespace BobMapper.Model.MapObjects
             throw new NotImplementedException();
         }
 
-        private void SetNPCType() //Why are we still here? Just to suffer.
+        private void SetNPCTexture() //Why are we still here? Just to suffer.
         {
             switch (Type)
             {

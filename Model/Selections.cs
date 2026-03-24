@@ -131,6 +131,15 @@ namespace BobMapper.Model
             }
         }
 
+        private Loot selectedLoot;
+
+        public Loot SelectedLoot
+        {
+            get { return selectedLoot; }
+            set { selectedLoot = value; OnPropertyChanged(); }
+        }
+
+
         private Tilesets currentTileSet;
 
         public void GetFilteredTextureSet(TextureType textureType, Tilesets tileset)

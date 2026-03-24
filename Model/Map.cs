@@ -24,6 +24,7 @@ namespace BobMapper.Model
         public List<NPC> npcs = new List<NPC>();
         public List<PathPoint> pathPoints = new List<PathPoint>();
         public List<Misc> miscs = new List<Misc>();
+        public List<Loot> loots = new List<Loot>();
         public Floor[][] floors;
         public Tilesets tileset;
 
@@ -63,13 +64,14 @@ namespace BobMapper.Model
 
 
         [JsonConstructor] //Use only for initialization from json. Otherwise write properties directly using the no param constructor above
-        public Map(List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, Floor[][] floors, Chapter levelChapter, int levelNumber, Tilesets tileset, List<Door> doors, int Width, int Height)
+        public Map(List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, List<Loot> loots, Floor[][] floors, Chapter levelChapter, int levelNumber, Tilesets tileset, List<Door> doors, int Width, int Height)
         {
             this.walls = walls;
             this.props = props;
             this.npcs = npcs;
             this.pathPoints = pathPoints;
             this.miscs = miscs;
+            this.loots = loots;
             this.floors = floors;
             this.levelChapter = levelChapter;
             this.levelNumber = levelNumber;

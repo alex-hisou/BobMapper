@@ -54,6 +54,8 @@ namespace BobMapper.ViewModel
         private ObservableCollection<ObservableCollection<Floor>> currentFloors;
         public ObservableCollection<Door> CurrentDoors { get => currentDoors; set => currentDoors = value; }
         private ObservableCollection<Door> currentDoors;
+        public ObservableCollection<Loot> CurrentLoots { get => currentLoots; set => currentLoots = value; }
+        private ObservableCollection<Loot> currentLoots;
 
 
         private Map currentMap;
@@ -77,6 +79,7 @@ namespace BobMapper.ViewModel
             CurrentMiscs = new ObservableCollection<Misc>(CurrentMap.miscs);
             CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors));
             CurrentDoors = new ObservableCollection<Door>(CurrentMap.doors);
+            CurrentLoots = new ObservableCollection<Loot>(CurrentMap.loots);
             CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMap.tileset);
             CurrentSelections.SelectedTextureType = TextureType.All;
         }
@@ -116,7 +119,7 @@ namespace BobMapper.ViewModel
                     CurrentPathPoints.Add(pathPoint);
                     break;
                 case Tools.AddMisc:
-                    Misc misc = new Misc(placementPos, Misc.MiscObjects.Loot);
+                    Misc misc = new Misc(placementPos, Misc.MiscObjects.Key, 0);
                     CurrentMiscs.Add(misc);
                     break;
                 case Tools.AddDoor:
@@ -125,7 +128,10 @@ namespace BobMapper.ViewModel
                     Door door = new Door(snappedDoorPlacementPos, shiftedSnappedDoorPlacementPos, CurrentSelections.SelectedTexture, false, false);
                     CurrentDoors.Add(door);
                     break;
-
+                case Tools.AddLoot:
+                    Loot loot = new Loot(CurrentSelections.SelectedTexture, placementPos, 0);
+                    CurrentLoots.Add(loot);
+                    break;
                 default:
                     break;
             }
@@ -140,6 +146,9 @@ namespace BobMapper.ViewModel
             {
                 case "PropTexture":
                     CurrentSelections.SelectedProp.PropTexture = CurrentSelections.SelectedTexture;
+                    break;
+                case "LootTexture":
+                    CurrentSelections.SelectedLoot.Texture = CurrentSelections.SelectedTexture;
                     break;
                 case "WallTexture1":
                     CurrentSelections.SelectedWall.Texture1 = CurrentSelections.SelectedTexture;
@@ -207,6 +216,11 @@ namespace BobMapper.ViewModel
                         CurrentSelections.SelectedDoor = null;
                         break;
                     }
+                case ObjectType.Loot:
+                    {
+                        CurrentSelections.SelectedLoot = null;
+                        break;
+                    }
             }
             CurrentSelections.SelectedObjectType = ObjectType.None;
         }
@@ -255,6 +269,10 @@ namespace BobMapper.ViewModel
                 case ObjectType.Door: 
                     selectedObjectIndex = CurrentDoors.IndexOf((Door)sender);
                     CurrentSelections.SelectedDoor = CurrentDoors[selectedObjectIndex];
+                    break;
+                case ObjectType.Loot:
+                    selectedObjectIndex = CurrentLoots.IndexOf((Loot)sender);
+                    CurrentSelections.SelectedLoot = CurrentLoots[selectedObjectIndex];
                     break;
                 default:
                     throw new Exception("Invalid object type");
@@ -309,6 +327,13 @@ namespace BobMapper.ViewModel
                         CurrentDoors.RemoveAt(toDeleteId);
                         break;
                     }
+                case ObjectType.Loot:
+                    {
+                        toDeleteId = CurrentLoots.IndexOf(CurrentSelections.SelectedLoot);
+                        CurrentSelections.SelectedLoot = null;
+                        CurrentLoots.RemoveAt(toDeleteId); 
+                        break;
+                    }
                 default:
                     {
                         return;
@@ -331,7 +356,8 @@ namespace BobMapper.ViewModel
             {typeof(PathPoint), ObjectType.PathPoint},
             {typeof(Floor), ObjectType.Floor},
             {typeof(Misc), ObjectType.Misc},
-            {typeof(Door), ObjectType.Door }
+            {typeof(Door), ObjectType.Door },
+            {typeof(Loot), ObjectType.Loot }
         };
 
         [RelayCommand]
@@ -343,6 +369,7 @@ namespace BobMapper.ViewModel
             CurrentMap.pathPoints = CurrentPathPoints.ToList();
             CurrentMap.npcs = CurrentNPCs.ToList();
             CurrentMap.miscs = CurrentMiscs.ToList();
+            CurrentMap.loots = CurrentLoots.ToList();
             if(saveNewFile)
             {
 

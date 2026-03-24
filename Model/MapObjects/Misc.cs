@@ -8,7 +8,7 @@ namespace BobMapper.Model.MapObjects
     {
         public enum MiscObjects
         {
-            Loot = 6,
+            Spawn = 2,
             MainLoot = 7,
             Key = 8,
             DisguisePoint = 11,
@@ -23,12 +23,44 @@ namespace BobMapper.Model.MapObjects
         {
             Coordinates = coordinates;
             Type = type;
+            SetMiscTexture();
             Rotation = rotation;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         private string texture;
+
+        private void SetMiscTexture()
+        {
+            switch(Type)
+            {
+                case MiscObjects.Spawn:
+                    Texture = "/Resources/MiscTextures/BobSpawn.png";
+                    break;
+                case MiscObjects.Key:
+                    Texture = "/Resources/MiscTextures/Key.png";
+                    break;
+                case MiscObjects.DisguisePoint:
+                    Texture = "/Resources/MiscTextures/DisguisePoint.png";
+                    break;
+                case MiscObjects.MainLoot:
+                    Texture = "/Resources/MiscTextures/MainLoot.png";
+                    break;
+                case MiscObjects.SoundPoint:
+                    Texture = "/Resources/MiscTextures/SoundPoint.png";
+                    break;
+            }
+        }
+
+        [JsonConstructor]
+        public Misc(Coordinate coordinates, string texture, MiscObjects type, int rotation)
+        {
+            Coordinates = coordinates;
+            Texture = texture;
+            Type = type;
+            Rotation = rotation;
+        }
 
         public string Texture
         {
@@ -42,11 +74,6 @@ namespace BobMapper.Model.MapObjects
         {
             get { return rotation; }
             set { rotation = value; }
-        }
-
-        public void DeleteObject()
-        {
-            throw new NotImplementedException();
         }
     }
 }

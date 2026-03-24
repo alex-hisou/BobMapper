@@ -25,7 +25,8 @@ namespace BobMapper.Model
             PathPoint,
             Floor,
             Misc,
-            Door
+            Door,
+            Loot
         }
 
 

@@ -18,10 +18,10 @@ namespace BobMapper.Compiler
 
         internal enum LocatorTypes
         {
-            Lock,
-            Loot,
-            PermanentLock,
-            MainLoot
+            Lock = 9,
+            Loot = 6,
+            PermanentLock = 13,
+            MainLoot = 7
         }
     }
 }
