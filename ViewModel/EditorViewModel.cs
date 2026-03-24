@@ -129,7 +129,7 @@ namespace BobMapper.ViewModel
                     CurrentDoors.Add(door);
                     break;
                 case Tools.AddLoot:
-                    Loot loot = new Loot(CurrentSelections.SelectedTexture, placementPos, false, 0);
+                    Loot loot = new Loot(CurrentSelections.SelectedTexture, placementPos, 0);
                     CurrentLoots.Add(loot);
                     break;
                 default:
@@ -146,6 +146,9 @@ namespace BobMapper.ViewModel
             {
                 case "PropTexture":
                     CurrentSelections.SelectedProp.PropTexture = CurrentSelections.SelectedTexture;
+                    break;
+                case "LootTexture":
+                    CurrentSelections.SelectedLoot.Texture = CurrentSelections.SelectedTexture;
                     break;
                 case "WallTexture1":
                     CurrentSelections.SelectedWall.Texture1 = CurrentSelections.SelectedTexture;
@@ -211,6 +214,11 @@ namespace BobMapper.ViewModel
                 case ObjectType.Door:
                     {
                         CurrentSelections.SelectedDoor = null;
+                        break;
+                    }
+                case ObjectType.Loot:
+                    {
+                        CurrentSelections.SelectedLoot = null;
                         break;
                     }
             }
@@ -348,7 +356,8 @@ namespace BobMapper.ViewModel
             {typeof(PathPoint), ObjectType.PathPoint},
             {typeof(Floor), ObjectType.Floor},
             {typeof(Misc), ObjectType.Misc},
-            {typeof(Door), ObjectType.Door }
+            {typeof(Door), ObjectType.Door },
+            {typeof(Loot), ObjectType.Loot }
         };
 
         [RelayCommand]

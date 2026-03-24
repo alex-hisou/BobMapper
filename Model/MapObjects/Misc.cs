@@ -9,6 +9,7 @@ namespace BobMapper.Model.MapObjects
         public enum MiscObjects
         {
             Spawn = 2,
+            MainLoot = 7,
             Key = 8,
             DisguisePoint = 11,
             SoundPoint = 12,
@@ -42,6 +43,9 @@ namespace BobMapper.Model.MapObjects
                     break;
                 case MiscObjects.DisguisePoint:
                     Texture = "/Resources/MiscTextures/DisguisePoint.png";
+                    break;
+                case MiscObjects.MainLoot:
+                    Texture = "/Resources/MiscTextures/MainLoot.png";
                     break;
                 case MiscObjects.SoundPoint:
                     Texture = "/Resources/MiscTextures/SoundPoint.png";

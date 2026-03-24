@@ -168,6 +168,34 @@
                                     </DataTemplate>
                                 </ContentControl.Resources>
                             </ContentControl>
+                            <ContentControl Content="{Binding CurrentSelections.SelectedLoot}">
+                                <ContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type object:Loot}">
+                                        <WrapPanel Width="300">
+                                            <Label Width="170">X Coordinate</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Y Coordinate</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Rotation</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Asset</Label>
+                                            <Image Source="{Binding Texture}" MaxHeight="100" MaxWidth="100"/>
+                                            <Label Content="{Binding Texture}"/>
+                                            <Button Content="Set to selected asset">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.SetObjectTextureCommand, 
+                                                           RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="LootTexture" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ContentControl.Resources>
+                            </ContentControl>
                             <ContentControl Content="{Binding CurrentSelections.SelectedDoor}">
                                 <ContentControl.Resources>
                                     <DataTemplate DataType="{x:Type object:Door}">
@@ -412,14 +440,17 @@
                     <ItemsControl ItemsSource="{Binding CurrentLoots}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:Loot}">
-                                <Image Source="{Binding PropTexture}" Width="auto" Height="auto" x:Name="img">
+                                <Canvas>
+                                <Image Source="{Binding Texture}" Width="auto" Height="auto" x:Name="img">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonDown">
                                             <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
-                                RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}" />
+                                RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Image>
+                                <Image Source="/Resources/MiscTextures/LootGlare.png" IsHitTestVisible="False"/>
+                                </Canvas>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemContainerStyle>

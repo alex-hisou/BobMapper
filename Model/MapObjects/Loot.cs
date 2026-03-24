@@ -20,14 +20,6 @@ namespace BobMapper.Model.MapObjects
             set { texture = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture))); }
         }
 
-        private bool isMain;
-
-        public bool IsMain
-        {
-            get { return isMain; }
-            set { isMain = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMain))); }
-        }
-
         private int rotation;
 
         public int Rotation
@@ -37,11 +29,10 @@ namespace BobMapper.Model.MapObjects
         }
 
 
-        public Loot(string texture, Coordinate coordinates, bool isMain, int rotation)
+        public Loot(string texture, Coordinate coordinates, int rotation)
         {
             Coordinates = coordinates;
             Texture = texture;
-            IsMain = isMain;
             Rotation = rotation;
         }
 

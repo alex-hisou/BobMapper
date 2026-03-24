@@ -231,7 +231,7 @@ namespace BobMapper.Compiler
                 byte[] currentBytePathPoint = new byte[76];
 
             }
-
+            return bytePathPoints;
         }
 
     }
