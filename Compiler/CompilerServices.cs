@@ -9,7 +9,10 @@ namespace BobMapper.Compiler
 {
     internal static class CompilerServices
     {
-        
+        internal static int[] GetConnectFromIds(List<PathPoint> pathPoints)
+        {
+
+        }
 
 
     }

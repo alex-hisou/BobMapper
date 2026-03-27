@@ -26,6 +26,7 @@ namespace BobMapper.Compiler
             output.AddRange(Level_v2(map.Width, map.Height));
             output.AddRange(NPCsAsBytes(map.npcs));
             output.AddRange(PathPointsAsBytes(map.pathPoints));
+            output.AddRange(MiscsAsBytes(map.miscs));
         }
 
         private List<byte> CablesAsBytes()
@@ -106,7 +107,6 @@ namespace BobMapper.Compiler
             {
                 byte[] currentByteDoor = new byte[45];
                 currentByteDoor[0] = 0x34;
-                Array.Fill<byte>(currentByteDoor, 0x00, 1, 3);
                 CompiledCoordinate compiledPoint1 = new(door.Point1);
                 currentByteDoor[4] = compiledPoint1.CompiledX[0];
                 currentByteDoor[5] = compiledPoint1.CompiledX[1];
@@ -141,7 +141,6 @@ namespace BobMapper.Compiler
             {
                 byte[] currentByteProp = new byte[48];
                 currentByteProp[0] = 0x35;
-                Array.Fill<byte>(currentByteProp, 0x00, 1, 3);
                 Encoding.ASCII.GetBytes(prop.PropTexture, 0, prop.PropTexture.Length, currentByteProp, 4);
                 _64CompiledCoordinate compiledCoordinate = new(prop.Coordinates, prop.Rotation);
                 currentByteProp[38] = compiledCoordinate.CompiledX[0];
@@ -161,7 +160,6 @@ namespace BobMapper.Compiler
             {
                 byte[] currentLootTexture = new byte[48];
                 currentLootTexture[0] = 0x35;
-                Array.Fill<byte>(currentLootTexture, 0x00, 1, 3);
                 Encoding.ASCII.GetBytes(loot.Texture, 0, loot.Texture.Length, currentLootTexture, 4);
                 _64CompiledCoordinate compiledCoordinate = new(loot.Coordinates, loot.Rotation);
                 currentLootTexture[38] = compiledCoordinate.CompiledX[0];
@@ -226,13 +224,41 @@ namespace BobMapper.Compiler
         private List<byte> PathPointsAsBytes(List<PathPoint> pathPoints)
         {
             List<byte> bytePathPoints = new List<byte>();
-            foreach (PathPoint point in pathPoints)
+            int[] connectFromIds = CompilerServices.GetConnectFromIds(pathPoints);
+            for(int i = 0; i < pathPoints.Count; i++)
             {
                 byte[] currentBytePathPoint = new byte[76];
-
+                PathPoint point = pathPoints[i];
+                _64CompiledCoordinate pathPointCompileCoordinate = new(point.Coordinates, point.Rotation);
+                currentBytePathPoint[1] = pathPointCompileCoordinate.CompiledX[0];
+                currentBytePathPoint[2] = pathPointCompileCoordinate.CompiledX[1];
+                currentBytePathPoint[5] = pathPointCompileCoordinate.CompiledY[0];
+                currentBytePathPoint[6] = pathPointCompileCoordinate.CompiledY[1];
+                currentBytePathPoint[14] = pathPointCompileCoordinate.CompiledRotation;
+                currentBytePathPoint[15] = 0x05;
+                currentBytePathPoint[19] = Convert.ToByte(point.Id);
+                currentBytePathPoint[55] = Convert.ToByte(connectFromIds[i]);
+                currentBytePathPoint[59] = Convert.ToByte(point.Duration);
+                currentBytePathPoint[63] = Convert.ToByte(point.ConnectToId);
             }
             return bytePathPoints;
         }
 
+        private List<byte> MiscsAsBytes(List<Misc> miscs)
+        {
+            List<byte> byteMiscs = new List<byte>();
+            foreach (Misc misc in miscs)
+            {
+                byte[] currentByteMisc = new byte[76];
+                _64CompiledCoordinate miscCompiledCoordinate = new(misc.Coordinates, misc.Rotation);
+                currentByteMisc[2] = miscCompiledCoordinate.CompiledX[0];
+                currentByteMisc[3] = miscCompiledCoordinate.CompiledX[1];
+                currentByteMisc[6] = miscCompiledCoordinate.CompiledY[0];
+                currentByteMisc[7] = miscCompiledCoordinate.CompiledY[1];
+                currentByteMisc[15] = miscCompiledCoordinate.CompiledRotation;
+                currentByteMisc[16] = Convert.ToByte((int)misc.Type);
+
+            }
+        }
     }
 }
