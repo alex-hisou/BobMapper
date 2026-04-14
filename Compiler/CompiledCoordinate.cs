@@ -8,15 +8,19 @@ namespace BobMapper.Compiler
 {
     internal class CompiledCoordinate
     {
-        internal byte[] CompiledX;
-        internal byte[] CompiledY;
+        internal byte[] CompiledBytes;
         
         internal CompiledCoordinate(SnapCoordinate coordinate)
         {
             short convertedX = Convert.ToInt16(coordinate.XPos);
             short convertedY = Convert.ToInt16(coordinate.YPos);
-            CompiledX = BitConverter.GetBytes(convertedX);
-            CompiledY = BitConverter.GetBytes(convertedY);
+            byte[] CompiledX = BitConverter.GetBytes(convertedX);
+            byte[] CompiledY = BitConverter.GetBytes(convertedY);
+            CompiledBytes = new byte[4];
+            CompiledBytes[0] = CompiledX[0];
+            CompiledBytes[1] = CompiledX[1];
+            CompiledBytes[2] = CompiledY[0];
+            CompiledBytes[3] = CompiledY[1];
         }
     }
 
