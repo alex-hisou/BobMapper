@@ -9,9 +9,15 @@ namespace BobMapper.Compiler
 {
     internal static class CompilerServices
     {
+
         internal static int[] GetConnectFromIds(List<PathPoint> pathPoints)
         {
-
+            int[] connectFromIds = new int[pathPoints.Count];
+            for (int i = 0; i < connectFromIds.Length; i++)
+            {
+                connectFromIds[i] = pathPoints.First(x => x.ConnectToId == pathPoints[i].Id).Id;
+            }
+            return connectFromIds;
         }
 
 

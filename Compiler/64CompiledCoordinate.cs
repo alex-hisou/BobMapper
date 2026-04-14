@@ -4,17 +4,21 @@ namespace BobMapper.Compiler
 {
     internal class _64CompiledCoordinate
     { 
-        
-        internal byte[] CompiledX { get; set; }
-        internal byte[] CompiledY { get; set; }
 
-        internal byte CompiledRotation { get; set; }
+        internal byte[] CompiledBytes { get; set; }
 
         public _64CompiledCoordinate(Coordinate coordinates, int rotation)
         {
-            CompiledRotation = GetCompiledRotation(rotation);
-            CompiledX = Get64CompiledCoordinate(coordinates.XPos);
-            CompiledY = Get64CompiledCoordinate(coordinates.YPos);
+            byte[] compiledX = Get64CompiledCoordinate(coordinates.XPos);
+            byte[] compiledY = Get64CompiledCoordinate(coordinates.YPos);
+            byte compiledRotation = GetCompiledRotation(rotation);
+            CompiledBytes = new byte[14];
+            CompiledBytes[0] = compiledX[0];
+            CompiledBytes[1] = compiledX[1];
+            CompiledBytes[4] = compiledY[0];
+            CompiledBytes[5] = compiledY[1];
+            CompiledBytes[13] = compiledRotation;
+
         }
 
         private byte GetCompiledRotation(int rotation)
