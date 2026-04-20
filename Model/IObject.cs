@@ -17,5 +17,7 @@ namespace BobMapper.Model
         public SnapCoordinate Point1 { get; set; }
         public SnapCoordinate Point2 { get; set; }
         public string Texture1 { get; set; }
+
+        public string InternalTexture1 { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
+using BobMapper.Services;
 
 namespace BobMapper.Model.MapObjects
 {
@@ -21,9 +23,17 @@ namespace BobMapper.Model.MapObjects
         public string Texture1
         {
             get { return texture1; }
-            set { texture1 = value;
+            set { texture1 = value; InternalTexture1 = InternalNameSevice.GetInternalName(value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture1)));
             }
+        }
+
+        private string internalTexture1;
+        [JsonIgnore]
+        public string InternalTexture1
+        {
+            get { return internalTexture1; }
+            set { internalTexture1 = value; }
         }
 
         private bool locked;
