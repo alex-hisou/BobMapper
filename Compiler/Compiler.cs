@@ -50,10 +50,10 @@ namespace BobMapper.Compiler
                 foreach(Floor floor in floorRow)
                 {
                     byte[] byteTexture1 = new byte[24];
-                    Encoding.ASCII.GetBytes(floor.Texture1, 0, floor.Texture1.Length, byteTexture1, 0);
+                    Encoding.ASCII.GetBytes(floor.InternalTexture1, 0, floor.InternalTexture1.Length, byteTexture1, 0);
                     byteFloors.AddRange(byteTexture1);
                     byte[] byteTexture2 = new byte[24];
-                    Encoding.ASCII.GetBytes(floor.Texture2, 0, floor.Texture2.Length, byteTexture1, 0);
+                    Encoding.ASCII.GetBytes(floor.InternalTexture2, 0, floor.InternalTexture2.Length, byteTexture1, 0);
                     byteFloors.AddRange(byteTexture2);
                 }
             }
