@@ -39,7 +39,7 @@ namespace BobMapper.Compiler.WriteSteps
             {
                 byte[] currentByteNPC = new byte[76];
                 NPC npc = npcs[i];
-                _64CompiledCoordinate npcCompiledCoordinate = new _64CompiledCoordinate(npc.Coordinates, npc.Rotation);
+                BFloatCoordinate npcCompiledCoordinate = new BFloatCoordinate(npc.Coordinates, npc.Rotation);
                 Array.Copy(npcCompiledCoordinate.CompiledBytes, 0, currentByteNPC, 2, 14);
                 currentByteNPC[16] = 0x01; //NPC Header
                 currentByteNPC[20] = Convert.ToByte(i);
@@ -67,7 +67,7 @@ namespace BobMapper.Compiler.WriteSteps
             {
                 byte[] currentBytePathPoint = new byte[76];
                 PathPoint point = pathPoints[i];
-                _64CompiledCoordinate pathPointCompileCoordinate = new(point.Coordinates, point.Rotation);
+                BFloatCoordinate pathPointCompileCoordinate = new(point.Coordinates, point.Rotation);
                 Array.Copy(pathPointCompileCoordinate.CompiledBytes, 0, currentBytePathPoint, 1, 14);
                 currentBytePathPoint[15] = 0x05; //Path Point Header
                 currentBytePathPoint[19] = Convert.ToByte(point.Id);
@@ -85,7 +85,7 @@ namespace BobMapper.Compiler.WriteSteps
             foreach (Misc misc in miscs)
             {
                 byte[] currentByteMisc = new byte[76];
-                _64CompiledCoordinate miscCompiledCoordinate = new(misc.Coordinates, misc.Rotation);
+                BFloatCoordinate miscCompiledCoordinate = new(misc.Coordinates, misc.Rotation);
                 Array.Copy(miscCompiledCoordinate.CompiledBytes, 0, currentByteMisc, 2, 14);
                 currentByteMisc[16] = Convert.ToByte((int)misc.Type); //Hacky way to get header from enum value
                 //TODO: Check if any other params exist for the different types of miscs
@@ -101,7 +101,7 @@ namespace BobMapper.Compiler.WriteSteps
             foreach (QueuedLocator locator in Compiler.locatorQueue)
             {
                 byte[] currentByteLocator = new byte[76];
-                _64CompiledCoordinate locatorCompiledCoordinate = new(locator.Coordinates, locator.Rotation);
+                BFloatCoordinate locatorCompiledCoordinate = new(locator.Coordinates, locator.Rotation);
                 Array.Copy(locatorCompiledCoordinate.CompiledBytes, 0, currentByteLocator, 2, 14);
                 currentByteLocator[16] = Convert.ToByte((int)locator.LocatorType);
                 //Same thing here
