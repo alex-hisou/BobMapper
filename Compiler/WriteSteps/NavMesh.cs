@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BobMapper.Model.MapObjects;
+using UltimateOrb;
 
 namespace BobMapper.Compiler.WriteSteps
 {
@@ -16,9 +17,34 @@ namespace BobMapper.Compiler.WriteSteps
             navMeshOutput.AddRange([0x08, 0x00, 0x00, 0x00]); //SECTION HEAD
             byte[] navigationMeshLabel = Encoding.ASCII.GetBytes("NavigationMesh");
             navMeshOutput.AddRange(navigationMeshLabel);
-            int navmeshSize = (width + height) + 1;
+            //TODO: Add all the mysterious stuff and make sure this code works with rectangular maps
+            List<byte> navMeshByteBuffer = NavMeshAsBytes(width, height, walls);
             
 
+        }
+
+        private List<byte> NavMeshAsBytes(int width, int height, List<Wall> walls)
+        {
+            List<byte> navMeshBytes = new List<byte>();
+            float startCoord = (float)width / -2;
+            float endCoord = (float)width / 2;
+            float currentCoord1 = startCoord;
+            int index = 0;
+            while (currentCoord1 <= endCoord)
+            {
+                float currentCoord2 = (float)height / -2;
+                float endCoord2 = height / 2;
+                while (currentCoord2 <= endCoord2)
+                {
+                    byte[] navNode = new byte[26];
+                    navNode[0] = 0x01;
+                    byte[] idAsBytes = BitConverter.GetBytes(index);
+                    Array.Copy(idAsBytes, 0, navNode, 22, 4);
+                    navMeshBytes.AddRange(navNode);
+                }
+                currentCoord1 -= 0.5f;
+            }
+            return navMeshBytes;
         }
 
         private bool DoesIntersect(NavLine navLine, List<Wall> walls)

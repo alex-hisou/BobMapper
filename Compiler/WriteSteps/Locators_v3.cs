@@ -39,8 +39,8 @@ namespace BobMapper.Compiler.WriteSteps
             {
                 byte[] currentByteNPC = new byte[76];
                 NPC npc = npcs[i];
-                BFloatCoordinate npcCompiledCoordinate = new BFloatCoordinate(npc.Coordinates, npc.Rotation);
-                Array.Copy(npcCompiledCoordinate.CompiledBytes, 0, currentByteNPC, 2, 14);
+                FloatCoordinate npcCompiledCoordinate = new FloatCoordinate(npc.Coordinates, npc.Rotation);
+                Array.Copy(npcCompiledCoordinate.CompiledBytes, 0, currentByteNPC, 0, 16);
                 currentByteNPC[16] = 0x01; //NPC Header
                 currentByteNPC[20] = Convert.ToByte(i);
                 currentByteNPC[60] = Convert.ToByte((int)npc.Type);
@@ -67,7 +67,8 @@ namespace BobMapper.Compiler.WriteSteps
             {
                 byte[] currentBytePathPoint = new byte[76];
                 PathPoint point = pathPoints[i];
-                BFloatCoordinate pathPointCompileCoordinate = new(point.Coordinates, point.Rotation);
+                //TODO: What the fuck?
+                FloatCoordinate pathPointCompileCoordinate = new(point.Coordinates, point.Rotation);
                 Array.Copy(pathPointCompileCoordinate.CompiledBytes, 0, currentBytePathPoint, 1, 14);
                 currentBytePathPoint[15] = 0x05; //Path Point Header
                 currentBytePathPoint[19] = Convert.ToByte(point.Id);
@@ -85,8 +86,8 @@ namespace BobMapper.Compiler.WriteSteps
             foreach (Misc misc in miscs)
             {
                 byte[] currentByteMisc = new byte[76];
-                BFloatCoordinate miscCompiledCoordinate = new(misc.Coordinates, misc.Rotation);
-                Array.Copy(miscCompiledCoordinate.CompiledBytes, 0, currentByteMisc, 2, 14);
+                FloatCoordinate miscCompiledCoordinate = new(misc.Coordinates, misc.Rotation);
+                Array.Copy(miscCompiledCoordinate.CompiledBytes, 0, currentByteMisc, 0, 16);
                 currentByteMisc[16] = Convert.ToByte((int)misc.Type); //Hacky way to get header from enum value
                 //TODO: Check if any other params exist for the different types of miscs
                 byteMiscs.AddRange(currentByteMisc);
@@ -101,8 +102,8 @@ namespace BobMapper.Compiler.WriteSteps
             foreach (QueuedLocator locator in Compiler.locatorQueue)
             {
                 byte[] currentByteLocator = new byte[76];
-                BFloatCoordinate locatorCompiledCoordinate = new(locator.Coordinates, locator.Rotation);
-                Array.Copy(locatorCompiledCoordinate.CompiledBytes, 0, currentByteLocator, 2, 14);
+                FloatCoordinate locatorCompiledCoordinate = new(locator.Coordinates, locator.Rotation);
+                Array.Copy(locatorCompiledCoordinate.CompiledBytes, 0, currentByteLocator, 0, 16);
                 currentByteLocator[16] = Convert.ToByte((int)locator.LocatorType);
                 //Same thing here
                 byteLocators.AddRange(currentByteLocator);
