@@ -57,7 +57,7 @@ namespace BobMapper
         Door
     }
 
-    public class Coordinate : ICoordinate
+    public class Coordinate
     {
         public int XPos {  get; set; }
         public int YPos { get; set; }
@@ -71,8 +71,9 @@ namespace BobMapper
         
     }
 
-    public class SnapCoordinate : ICoordinate, INotifyPropertyChanged
+    public class SnapCoordinate : INotifyPropertyChanged
     {
+        //ABHORRENT PATCHWORK AHEAD
         public event PropertyChangedEventHandler PropertyChanged;
         [JsonIgnore]
         public const int FloorSize = 64;
@@ -95,26 +96,28 @@ namespace BobMapper
             set { yPos = value; OnPropertyChanged(nameof(yPos)); }
         }
 
-        private int snappedXPos;
-        public int SnappedXPos
+        private float snappedXPos;
+        public float SnappedXPos
         {
             get { return snappedXPos; }
-            set { snappedXPos = value; XPos = value * FloorSize; }
+            set { snappedXPos = value;
+                float floatValue = value * 2 * FloorSize;
+                XPos = Convert.ToInt32(floatValue); }
         }
-        private int snappedYPos;
-        public int SnappedYPos
+        private float snappedYPos;
+        public float SnappedYPos
         {
             get { return snappedYPos; }
-            set { snappedYPos = value; YPos = value * FloorSize; }
+            set { snappedYPos = value;
+                float floatValue = value * 2 * FloorSize;
+                YPos = Convert.ToInt32(floatValue); }
         }
 
 
-        public SnapCoordinate(int snappedXPos, int snappedYPos)
+        public SnapCoordinate(float snappedXPos, float snappedYPos)
         {
             SnappedXPos = snappedXPos;
             SnappedYPos = snappedYPos;
-            XPos = snappedXPos * FloorSize;
-            YPos = snappedYPos * FloorSize;
         }
 
         public static SnapCoordinate UnsnappedCoordinateFactory(int unsnappedXPos, int unsnappedYPos)
@@ -127,7 +130,7 @@ namespace BobMapper
 
         public static explicit operator Coordinate(SnapCoordinate snapCoordinate)
         {
-            Coordinate coordinate = new Coordinate(snapCoordinate.SnappedXPos, snapCoordinate.SnappedYPos);
+            Coordinate coordinate = new Coordinate(Convert.ToInt32(snapCoordinate.SnappedXPos), Convert.ToInt32(snapCoordinate.SnappedYPos));
             return coordinate;
         }
 
@@ -135,11 +138,5 @@ namespace BobMapper
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-    }
-
-    public interface ICoordinate 
-    {
-        public int XPos { get; set; }
-        public int YPos { get; set; }
     }
 }
