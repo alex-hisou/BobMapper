@@ -19,7 +19,7 @@ namespace BobMapper.Compiler
         {
             byte[] fileHeader = [0x01, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00];
             output.AddRange(fileHeader);
-            output.AddRange(CablesAsBytes());
+            //output.AddRange(CablesAsBytes());
             output.AddRange(FloorAsBytes(map.floors));
 
             Items_v4 items_V4 = new(map.walls, map.doors, map.props, map.loots);

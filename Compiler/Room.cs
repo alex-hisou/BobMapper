@@ -44,7 +44,7 @@ namespace BobMapper.Compiler
             {
                 return rooms;
             }
-            for (int i = 1; i <= polygons.Count; i++)
+            for (int i = 2; i <= polygons.Count + 1; i++)
             {
                 Room room = new Room(i, polygons[i]);
                 rooms.Add(room);
@@ -59,7 +59,7 @@ namespace BobMapper.Compiler
             Room? room = rooms.FirstOrDefault(x => x.Area.Covers(point));
             if(room == null)
             {
-                return 0;
+                return 1;
             }
             return room.Id;
         }

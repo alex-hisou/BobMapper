@@ -10,6 +10,7 @@ namespace BobMapper.Compiler.WriteSteps
     internal class NavMesh
     {
         internal List<byte> navMeshOutput;
+        private const int navNodeLength = 26; 
         internal NavMesh(int width, int height, List<Wall> walls, List<Door> doors, List<Prop> props) 
         {
             navMeshOutput = new List<byte>();
@@ -18,27 +19,36 @@ namespace BobMapper.Compiler.WriteSteps
             navMeshOutput.AddRange(navigationMeshLabel);
             //TODO: Add all the mysterious stuff and make sure this code works with rectangular maps
             List<byte> navMeshByteBuffer = NavMeshAsBytes(width, height, walls, doors, props);
-            
+            navMeshOutput.AddRange(BitConverter.GetBytes(navMeshByteBuffer.Count));
+            navMeshOutput.AddRange(BitConverter.GetBytes(navMeshByteBuffer.Count / navNodeLength));
+            navMeshOutput.AddRange(navMeshByteBuffer);
 
         }
 
         private List<byte> NavMeshAsBytes(int width, int height, List<Wall> walls, List<Door> doors, List<Prop> props)
         {
             List<byte> navMeshBytes = new List<byte>();
+            List<Room> rooms = Room.GenerateRooms(walls, doors);
             //Maybe swap width and height?
-            float startY = (float)width / -2;
-            float endY = (float)width / 2;
+            float startY = (float)height / -2;
+            float endY = (float)height / 2;
             float currentY = startY;
             int index = 0;
             while (currentY <= endY)
             {
-                float currentX = (float)height / -2;
-                float endX = height / 2;
+                float currentX = (float)width / -2;
+                float endX = width / 2;
                 while (currentX <= endX)
                 {
-                    byte[] navNodeBytes = new byte[26];
+                    byte[] navNodeBytes = new byte[navNodeLength];
                     navNodeBytes[0] = 0x01;
+                    byte[] xBytes = BitConverter.GetBytes(currentX);
+                    Array.Copy(xBytes, 0, navNodeBytes, 2, xBytes.Length);
+                    byte[] yBytes = BitConverter.GetBytes(currentY);
+                    Array.Copy(yBytes, 0, navNodeBytes, 6, yBytes.Length);
                     SnapCoordinate navNodePos = new(currentX, currentY);
+                    byte[] navNodeVariables = NavNodeVariables(navNodePos, walls, doors, props, rooms);
+                    Array.Copy(navNodeVariables, 0, navNodeBytes, 10, navNodeVariables.Length);
                     byte[] idAsBytes = BitConverter.GetBytes(index);
                     Array.Copy(idAsBytes, 0, navNodeBytes, 22, 4);
                     navMeshBytes.AddRange(navNodeBytes);
@@ -51,7 +61,7 @@ namespace BobMapper.Compiler.WriteSteps
 
         private byte[] NavNodeVariables(SnapCoordinate navNodePos,List<Wall> walls, List<Door> doors, List<Prop> props, List<Room> rooms)
         {
-            byte roomId = 0;
+            byte roomId = 1; //outside default
             byte objectCollision = 0;
             bool isWalkable = true;
             byte lockedByDefault = 0;
@@ -61,7 +71,7 @@ namespace BobMapper.Compiler.WriteSteps
                 {
                     objectCollision = 3;
                     isWalkable = false;
-                    return VariablesAsBytes();
+                    return VariablesAsBytes(roomId, objectCollision, isWalkable, lockedByDefault);
                 }
             }
             foreach (Door door in doors)
@@ -69,21 +79,26 @@ namespace BobMapper.Compiler.WriteSteps
                 if(isPointOnLine(door.Point1, door.Point2, navNodePos))
                 {
                     objectCollision = 1;
-                    if(door.Locked)
+                    if(door.Locked || door.PermLocked)
                     {
                         lockedByDefault = 10;
                     }
-                    return VariablesAsBytes();
+                    return VariablesAsBytes(roomId, objectCollision, isWalkable, lockedByDefault);
                 }
             }
             int intRoomId = Room.GetPointRoomId(navNodePos.SnappedXPos, navNodePos.SnappedYPos, rooms);
             roomId = Convert.ToByte(intRoomId);
-            return VariablesAsBytes();
+            return VariablesAsBytes(roomId, objectCollision, isWalkable, lockedByDefault);
         }
 
-        private byte[] VariablesAsBytes()
+        private byte[] VariablesAsBytes(byte roomId, byte objectCollision, bool isWalkable, byte lockedByDefault)
         {
-
+            byte[] variablesAsBytes = new byte[12];
+            variablesAsBytes[4] = roomId;
+            variablesAsBytes[6] = objectCollision;
+            variablesAsBytes[8] = Convert.ToByte(isWalkable);
+            variablesAsBytes[10] = lockedByDefault;
+            return variablesAsBytes;
         }
 
         private bool isPointOnLine(SnapCoordinate linePoint1, SnapCoordinate linePoint2, SnapCoordinate inputPoint)
