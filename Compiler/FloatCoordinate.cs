@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Documents;
 using System.Numerics;
-using UltimateOrb;
 using System.Runtime.CompilerServices;
 
 namespace BobMapper.Compiler

@@ -36,11 +36,12 @@ namespace BobMapper.Compiler.WriteSteps
                 float endX = height / 2;
                 while (currentX <= endX)
                 {
-                    byte[] navNode = new byte[26];
-                    navNode[0] = 0x01;
+                    byte[] navNodeBytes = new byte[26];
+                    navNodeBytes[0] = 0x01;
+                    SnapCoordinate navNodePos = new(currentX, currentY);
                     byte[] idAsBytes = BitConverter.GetBytes(index);
-                    Array.Copy(idAsBytes, 0, navNode, 22, 4);
-                    navMeshBytes.AddRange(navNode);
+                    Array.Copy(idAsBytes, 0, navNodeBytes, 22, 4);
+                    navMeshBytes.AddRange(navNodeBytes);
                     currentX += 0.5f;
                 }
                 currentY += 0.5f;
@@ -48,31 +49,58 @@ namespace BobMapper.Compiler.WriteSteps
             return navMeshBytes;
         }
 
-        private byte[] NavNodeVariablesAsBytes(List<Wall> walls, List<Door> doors, List<Prop> props)
+        private byte[] NavNodeVariables(SnapCoordinate navNodePos,List<Wall> walls, List<Door> doors, List<Prop> props, List<Room> rooms)
         {
-            byte[] NodeVariablesAsBytes = new byte[99999999];
+            byte roomId = 0;
+            byte objectCollision = 0;
+            bool isWalkable = true;
+            byte lockedByDefault = 0;
             foreach (Wall wall in walls)
             {
-
+                if(isPointOnLine(wall.Point1, wall.Point2, navNodePos))
+                {
+                    objectCollision = 3;
+                    isWalkable = false;
+                    return VariablesAsBytes();
+                }
             }
             foreach (Door door in doors)
             {
-
+                if(isPointOnLine(door.Point1, door.Point2, navNodePos))
+                {
+                    objectCollision = 1;
+                    if(door.Locked)
+                    {
+                        lockedByDefault = 10;
+                    }
+                    return VariablesAsBytes();
+                }
             }
-
-            //check wall, door or prop collisions and their respective properties and early return them
-            //check room id and return
-            return NodeVariablesAsBytes;
+            int intRoomId = Room.GetPointRoomId(navNodePos.SnappedXPos, navNodePos.SnappedYPos, rooms);
+            roomId = Convert.ToByte(intRoomId);
+            return VariablesAsBytes();
         }
 
-        private bool isPointOnLine()
+        private byte[] VariablesAsBytes()
         {
 
         }
 
-        private float Distance(Coordinate point1, Coordinate point2)
+        private bool isPointOnLine(SnapCoordinate linePoint1, SnapCoordinate linePoint2, SnapCoordinate inputPoint)
         {
-            
+            //a b line c point
+            float distance1 = Distance(linePoint1.SnappedXPos, linePoint1.SnappedYPos, inputPoint.SnappedXPos, inputPoint.SnappedYPos);
+            float distance2 = Distance(linePoint2.SnappedXPos, linePoint2.SnappedYPos, inputPoint.SnappedXPos, inputPoint.SnappedYPos);
+            float distance3 = Distance(linePoint1.SnappedXPos, linePoint1.SnappedYPos, linePoint2.SnappedXPos, linePoint2.SnappedYPos);
+            return distance1 + distance2 == distance3;
+        }
+
+        private float Distance(float point1X, float point1Y, float point2X, float point2Y)
+        {
+            double part1 = Math.Pow((point1X - point2X), 2);
+            double part2 = Math.Pow((point1Y - point2Y), 2);
+            double sqrt = Math.Sqrt(part1 + part2);
+            return (float)sqrt;
         }
     }
 }
