@@ -26,9 +26,8 @@ namespace BobMapper.Compiler.WriteSteps
                 .. LootTexturesAsBytes(loots),
             ];
             //This gets written before the buffer due to the section length bytes
-            short sectionLength = Convert.ToInt16(objectByteBuffer.Count);
+            int sectionLength = Convert.ToInt32(objectByteBuffer.Count);
             itemsOutput.AddRange(BitConverter.GetBytes(sectionLength));
-            itemsOutput.AddRange([0x00, 0x00]);
 
             itemsOutput.AddRange(objectByteBuffer);
         }
@@ -115,6 +114,7 @@ namespace BobMapper.Compiler.WriteSteps
                 FloatCoordinate compiledCoordinate = new(loot.Coordinates, loot.Rotation);
                 Array.Copy(compiledCoordinate.CompiledBytes, 0, currentLootTexture, 36, 16);
                 QueuedLocator queuedLocatorLoot = new(QueuedLocator.LocatorTypes.Loot, loot.Coordinates);
+                Compiler.locatorQueue.Add(queuedLocatorLoot);
                 byteLootTextures.AddRange(currentLootTexture);
             }
             return byteLootTextures;

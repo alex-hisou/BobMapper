@@ -116,7 +116,7 @@ namespace BobMapper
                     { AddLootTool.Background = Brushes.DarkGray;  }
                     break;
                 default:
-                    throw new Exception("YOU DONE FUCKED UP!!!!!1!!1!!!!!!!1!!1!!!!1");
+                    throw new Exception("Invalid tool selection");
 
             }
         }

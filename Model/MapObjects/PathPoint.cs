@@ -17,6 +17,14 @@ namespace BobMapper.Model.MapObjects
             set { connectToId = value; ConnectionPointChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ConnectToId))); }
         }
 
+        private int rotation;
+
+        public int Rotation
+        {
+            get { return rotation; }
+            set { rotation = value; }
+        }
+
         public int Duration { get; set; }
 
         private Coordinate coordinates;

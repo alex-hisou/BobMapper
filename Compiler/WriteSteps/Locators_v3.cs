@@ -26,7 +26,7 @@ namespace BobMapper.Compiler.WriteSteps
                 .. MiscsAsBytes(miscs),
                 .. AddLocatorQueueAsBytes(),
             ];
-            locatorsOutput.AddRange([0xD4, 0x06, 0x00, 0x00]);
+            locatorsOutput.AddRange(BitConverter.GetBytes(locatorByteBuffer.Count));
             locatorsOutput.AddRange([0x00, 0x00]);
 
             locatorsOutput.AddRange(locatorByteBuffer);

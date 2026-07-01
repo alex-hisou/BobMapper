@@ -10,6 +10,8 @@ namespace BobMapper.Compiler
     {
         internal LocatorTypes LocatorType { get; set; }
         internal Coordinate Coordinates { get; set; }
+
+        internal int Rotation { get; set; }
         internal QueuedLocator(LocatorTypes locatorType, Coordinate coordinate) 
         {
             LocatorType = locatorType;
