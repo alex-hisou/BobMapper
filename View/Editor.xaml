@@ -50,9 +50,10 @@
                 <MenuItem Header="Edit"></MenuItem>
                 <MenuItem Header="Tools"></MenuItem>
                 <MenuItem Header="Compile">
-                    <MenuItem Header="Compile"></MenuItem>
+                    <MenuItem Header="Compile" Command="{Binding CompileCommand}"></MenuItem>
                     <MenuItem Header="Compile to"></MenuItem>
                     <MenuItem Header="Inject"></MenuItem>
+                    <MenuItem Header="Inject and Play"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Help"></MenuItem>
             </Menu>
@@ -192,6 +193,29 @@
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
                                             </Button>
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ContentControl.Resources>
+                            </ContentControl>
+                            <ContentControl Content="{Binding CurrentSelections.SelectedMisc}">
+                                <ContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type object:Misc}">
+                                        <WrapPanel Width="300">
+                                            <Label Width="170">X Coordinate</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.XPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Y Coordinate</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.YPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Rotation</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <Label Width="170">Type</Label>
+                                            <Image Source="{Binding Texture}" MaxHeight="100" MaxWidth="100"/>
+                                            <Label Content="Type"/>
+                                            <ComboBox SelectedItem="{Binding Type}" ItemsSource="{Binding MiscTypeValues}">
+                                                
+                                            </ComboBox>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ContentControl.Resources>
@@ -583,7 +607,14 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:Misc}">
                                 <Canvas>
-                                    <Image Source="{Binding Texture}"/>
+                                    <Image Source="{Binding Texture}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                    RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Image>
                                 </Canvas>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

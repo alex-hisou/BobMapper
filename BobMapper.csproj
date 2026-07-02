@@ -329,7 +329,9 @@
     <None Remove="Resources\LootTextures\Loot_Wallet.png" />
     <None Remove="Resources\LootTextures\Loot_WitheredPlant.png" />
     <None Remove="Resources\LootTextures\Loot_Yarn.png" />
+    <None Remove="Resources\MiscTextures\BobSpawn.png" />
     <None Remove="Resources\MiscTextures\Disguise.png" />
+    <None Remove="Resources\MiscTextures\DisguisePoint.png" />
     <None Remove="Resources\MiscTextures\Key.png" />
     <None Remove="Resources\MiscTextures\Lock.png" />
     <None Remove="Resources\MiscTextures\LootGlare.png" />
@@ -1590,7 +1592,12 @@
     <Resource Include="Resources\LootTextures\Loot_Wallet.png" />
     <Resource Include="Resources\LootTextures\Loot_WitheredPlant.png" />
     <Resource Include="Resources\LootTextures\Loot_Yarn.png" />
-    <Resource Include="Resources\MiscTextures\Disguise.png" />
+    <Resource Include="Resources\MiscTextures\BobSpawn.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\MiscTextures\DisguisePoint.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\MiscTextures\Key.png" />
     <Resource Include="Resources\MiscTextures\Lock.png" />
     <Resource Include="Resources\MiscTextures\LootGlare.png" />

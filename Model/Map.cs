@@ -42,7 +42,7 @@ namespace BobMapper.Model
             Width *= SnapCoordinate.FloorSize; 
             Height *= SnapCoordinate.FloorSize;
             //FOR TESTING ONLY, DELETE LATER
-            tileset = Tilesets.Downtown;
+            tileset = Tilesets.Labs;
         }
 
         internal void AttachAllPathPointHandlers()

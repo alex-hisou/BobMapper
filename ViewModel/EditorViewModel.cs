@@ -370,6 +370,7 @@ namespace BobMapper.ViewModel
             CurrentMap.npcs = CurrentNPCs.ToList();
             CurrentMap.miscs = CurrentMiscs.ToList();
             CurrentMap.loots = CurrentLoots.ToList();
+            CurrentMap.floors = SaveFloor();
             if(saveNewFile)
             {
 
@@ -378,6 +379,37 @@ namespace BobMapper.ViewModel
             {
                 JsonMapParse.SaveData(CurrentMap, FileName);
             }
+        }
+
+        private Floor[][] SaveFloor()
+        {
+            Floor[][] jaggedFloor = new Floor[CurrentFloors.Count][];
+            for (int i = 0; i < CurrentFloors.Count; i++)
+            {
+                var currentColumn = CurrentFloors[i];
+                Floor[] floorRow = new Floor[currentColumn.Count];
+                for (int j = 0; j < currentColumn.Count; j++)
+                {
+                    floorRow[j] = currentColumn[j];
+                }
+                jaggedFloor[i] = floorRow;
+            }
+            return jaggedFloor;
+        }
+
+        [RelayCommand]
+        internal void Compile()
+        {
+            CurrentMap.floors = SaveFloor();
+            FileDialogService fileDialogService = new FileDialogService();
+            string filePath = fileDialogService.SaveFileDialog("Compiled map (*.lev)|*.lev", ".lev");
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return;
+            }
+            Compiler.Compiler compiler = new Compiler.Compiler();
+            compiler.Compile(CurrentMap);
+            File.WriteAllBytes(filePath, Compiler.Compiler.output.ToArray());
         }
     }
 }

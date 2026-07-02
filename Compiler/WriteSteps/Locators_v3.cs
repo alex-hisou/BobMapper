@@ -11,6 +11,7 @@ namespace BobMapper.Compiler.WriteSteps
     internal class Locators_v3
     {
         internal List<byte> locatorsOutput;
+        private int currentLocatorId = 1;
 
         internal Locators_v3(List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs)
         {
@@ -27,7 +28,6 @@ namespace BobMapper.Compiler.WriteSteps
                 .. AddLocatorQueueAsBytes(),
             ];
             locatorsOutput.AddRange(BitConverter.GetBytes(locatorByteBuffer.Count));
-            locatorsOutput.AddRange([0x00, 0x00]);
 
             locatorsOutput.AddRange(locatorByteBuffer);
         }
@@ -42,7 +42,7 @@ namespace BobMapper.Compiler.WriteSteps
                 FloatCoordinate npcCompiledCoordinate = new FloatCoordinate(npc.Coordinates, npc.Rotation);
                 Array.Copy(npcCompiledCoordinate.CompiledBytes, 0, currentByteNPC, 0, 16);
                 currentByteNPC[16] = 0x01; //NPC Header
-                currentByteNPC[20] = Convert.ToByte(i);
+                currentByteNPC[20] = Convert.ToByte(currentLocatorId);
                 currentByteNPC[60] = Convert.ToByte((int)npc.Type);
                 if (npc.AttachLoot)
                 {
@@ -55,6 +55,7 @@ namespace BobMapper.Compiler.WriteSteps
                     Compiler.locatorQueue.Add(queueAttachMainLoot);
                 }
                 byteNPCs.AddRange(currentByteNPC);
+                currentLocatorId++;
             }
             return byteNPCs;
         }
@@ -71,11 +72,12 @@ namespace BobMapper.Compiler.WriteSteps
                 FloatCoordinate pathPointCompileCoordinate = new(point.Coordinates, point.Rotation);
                 Array.Copy(pathPointCompileCoordinate.CompiledBytes, 0, currentBytePathPoint, 1, 14);
                 currentBytePathPoint[15] = 0x05; //Path Point Header
-                currentBytePathPoint[19] = Convert.ToByte(point.Id);
+                currentBytePathPoint[19] = Convert.ToByte(currentLocatorId);
                 currentBytePathPoint[55] = Convert.ToByte(connectFromIds[i]);
                 currentBytePathPoint[59] = Convert.ToByte(point.Duration);
                 currentBytePathPoint[63] = Convert.ToByte(point.ConnectToId);
                 bytePathPoints.AddRange(currentBytePathPoint);
+                currentLocatorId++;
             }
             return bytePathPoints;
         }
@@ -83,15 +85,17 @@ namespace BobMapper.Compiler.WriteSteps
         private List<byte> MiscsAsBytes(List<Misc> miscs)
         {
             List<byte> byteMiscs = new List<byte>();
-            foreach (Misc misc in miscs)
+            for (int i = 0; i < miscs.Count; i++)
             {
+                Misc misc = miscs[i];
                 byte[] currentByteMisc = new byte[76];
                 FloatCoordinate miscCompiledCoordinate = new(misc.Coordinates, misc.Rotation);
                 Array.Copy(miscCompiledCoordinate.CompiledBytes, 0, currentByteMisc, 0, 16);
                 currentByteMisc[16] = Convert.ToByte((int)misc.Type); //Hacky way to get header from enum value
+                Array.Copy(BitConverter.GetBytes(currentLocatorId), 0, currentByteMisc, 20, 4);
                 //TODO: Check if any other params exist for the different types of miscs
                 byteMiscs.AddRange(currentByteMisc);
-
+                currentLocatorId++;
             }
             return byteMiscs;
         }
@@ -99,14 +103,17 @@ namespace BobMapper.Compiler.WriteSteps
         private List<byte> AddLocatorQueueAsBytes()
         {
             List<byte> byteLocators = new List<byte>();
-            foreach (QueuedLocator locator in Compiler.locatorQueue)
+            for (int i = 0; i < Compiler.locatorQueue.Count; i++)
             {
+                QueuedLocator locator = Compiler.locatorQueue[i];
                 byte[] currentByteLocator = new byte[76];
                 FloatCoordinate locatorCompiledCoordinate = new(locator.Coordinates, locator.Rotation);
                 Array.Copy(locatorCompiledCoordinate.CompiledBytes, 0, currentByteLocator, 0, 16);
                 currentByteLocator[16] = Convert.ToByte((int)locator.LocatorType);
+                Array.Copy(BitConverter.GetBytes(currentLocatorId), 0, currentByteLocator, 20, 4);
                 //Same thing here
                 byteLocators.AddRange(currentByteLocator);
+                currentLocatorId++;
             }
             return byteLocators;
         }
