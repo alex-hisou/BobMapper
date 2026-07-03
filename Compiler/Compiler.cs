@@ -46,7 +46,7 @@ namespace BobMapper.Compiler
         private List<byte> FloorAsBytes(Floor[][] floors)
         {
             List<byte> byteFloors = new List<byte>();
-            byte[] floors_v3 = Encoding.ASCII.GetBytes("Floors_v3");
+            byte[] floors_v3 = Encoding.ASCII.GetBytes("Floor_v3");
             byteFloors.AddRange(floors_v3);
             
             List<byte> floorByteBuffer = new List<byte>();

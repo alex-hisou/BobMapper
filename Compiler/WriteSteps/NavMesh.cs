@@ -14,7 +14,7 @@ namespace BobMapper.Compiler.WriteSteps
         internal NavMesh(int width, int height, List<Wall> walls, List<Door> doors, List<Prop> props) 
         {
             navMeshOutput = new List<byte>();
-            navMeshOutput.AddRange([0x08, 0x00, 0x00, 0x00]); //SECTION HEAD
+            navMeshOutput.AddRange([0x0E, 0x00, 0x00, 0x00]); //SECTION HEAD
             byte[] navigationMeshLabel = Encoding.ASCII.GetBytes("NavigationMesh");
             navMeshOutput.AddRange(navigationMeshLabel);
             //TODO: Add all the mysterious stuff and make sure this code works with rectangular maps
