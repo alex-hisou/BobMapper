@@ -33,12 +33,20 @@ namespace BobMapper.Model
         public static ObservableCollection<ObservableCollection<Floor>> FlattenFloors(Floor[][] floors)
         {
             ObservableCollection<ObservableCollection<Floor>> flattenedArray = new ObservableCollection<ObservableCollection<Floor>>();
-            foreach (var row in floors)
+            for (int i = 0; i < floors.Length; i++)
             {
                 var nestedCollection = new ObservableCollection<Floor>();
-                foreach (Floor floor in row)
+                for (int j = 0; j < floors[i].Length; j++)
                 {
-                    Floor newFloor = new Floor("/Resources/FloorTextures/Floor_JunkieTiles.png","");
+                    Floor newFloor = floors[i][j];
+                    if (string.IsNullOrEmpty(newFloor.InternalTexture1))
+                    {
+                        newFloor.InternalTexture1 = "/Resources/FloorTextures/Floor_JunkieTiles.png";
+                    }
+                    if (string.IsNullOrEmpty(newFloor.InternalTexture2))
+                    {
+                        newFloor.InternalTexture2 = "/Resources/FloorTextures/Floor_JunkieTiles.png";
+                    }
                     nestedCollection.Add(newFloor);
                 }
                 flattenedArray.Add(nestedCollection);

@@ -32,20 +32,16 @@ namespace BobMapper
 
         private void NewMod_Click(object sender, RoutedEventArgs e)
         {
-            // Configure save file dialog box
             var dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.FileName = "Map"; // Default file name
-            dialog.DefaultExt = ".json"; // Default file extension
-            dialog.Filter = "BobMapper Json Files (.json)|*.json"; // Filter files by extension
+            dialog.FileName = "Map"; 
+            dialog.DefaultExt = ".json"; 
+            dialog.Filter = "BobMapper Json Files (.json)|*.json"; 
 
-            // Show save file dialog box
             bool? result = dialog.ShowDialog();
             string filename;
 
-            // Process save file dialog box results
             if (result == true)
             {
-                // Save document
                 filename = dialog.FileName;
             }
             else { return; }
@@ -59,11 +55,9 @@ namespace BobMapper
 
         private void LoadMod_Click(object sender, RoutedEventArgs e)
         {
-            // Configure open file dialog box
             var dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.FileName = "Map"; // Default file name
-            dialog.DefaultExt = ".json"; // Default file extension
-            dialog.Filter = "BobMapper Json Files (.json)|*.json"; // Filter files by extension
+            dialog.DefaultExt = ".json"; 
+            dialog.Filter = "BobMapper Json Files (.json)|*.json"; 
 
             // Show open file dialog box
             bool? result = dialog.ShowDialog();

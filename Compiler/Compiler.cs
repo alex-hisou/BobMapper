@@ -11,10 +11,8 @@ namespace BobMapper.Compiler
 {
     internal class Compiler
     {
-        internal static List<byte> output;
-        internal static List<QueuedLocator> locatorQueue;
-
-        //
+        internal static List<byte> output = new List<byte>();
+        internal static List<QueuedLocator> locatorQueue = new List<QueuedLocator>();
         internal void Compile(Map map)
         {
             byte[] fileHeader = [0x01, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00];
@@ -25,9 +23,18 @@ namespace BobMapper.Compiler
             Items_v4 items_V4 = new(map.walls, map.doors, map.props, map.loots);
             output.AddRange(items_V4.itemsOutput);
 
-            output.AddRange(Level_v2(map.Width, map.Height));
+            output.AddRange(Level_v2(map.Width / SnapCoordinate.FloorSize, map.Height / SnapCoordinate.FloorSize));
+
             Locators_v3 locators_V3 = new(map.npcs, map.pathPoints, map.miscs);
             output.AddRange(locators_V3.locatorsOutput);
+
+            NavMesh navMesh = new NavMesh(map.Width / SnapCoordinate.FloorSize, map.Height / SnapCoordinate.FloorSize, map.walls, map.doors, map.props);
+            output.AddRange(navMesh.navMeshOutput);
+
+            output.AddRange(RoomGeometry());
+            output.AddRange(Zones());
+
+
         }
 
         private List<byte> CablesAsBytes()
@@ -39,40 +46,72 @@ namespace BobMapper.Compiler
         private List<byte> FloorAsBytes(Floor[][] floors)
         {
             List<byte> byteFloors = new List<byte>();
-            byte[] floors_v3 = Encoding.ASCII.GetBytes("Floors_v3");
+            byte[] floors_v3 = Encoding.ASCII.GetBytes("Floor_v3");
             byteFloors.AddRange(floors_v3);
-            byteFloors.AddRange([0x00, 0x00]);
-            byte width = Convert.ToByte(floors[0].Length);
-            byte height = Convert.ToByte(floors.Length);
-            byteFloors.AddRange([height, 0x00, 0x00, 0x00, width, 0x00, 0x00, 0x00]);
-            foreach(var floorRow in floors)
+            
+            List<byte> floorByteBuffer = new List<byte>();
+            byte[] byteWidth = BitConverter.GetBytes(floors[0].Length);
+            byte[] byteHeight = BitConverter.GetBytes(floors.Length);
+            floorByteBuffer.AddRange(byteWidth);
+            floorByteBuffer.AddRange(byteHeight);
+            foreach (var floorRow in floors)
             {
                 foreach(Floor floor in floorRow)
                 {
                     byte[] byteTexture1 = new byte[24];
                     Encoding.ASCII.GetBytes(floor.InternalTexture1, 0, floor.InternalTexture1.Length, byteTexture1, 0);
-                    byteFloors.AddRange(byteTexture1);
-                    byte[] byteTexture2 = new byte[24];
-                    Encoding.ASCII.GetBytes(floor.InternalTexture2, 0, floor.InternalTexture2.Length, byteTexture1, 0);
-                    byteFloors.AddRange(byteTexture2);
+                    floorByteBuffer.AddRange(byteTexture1);
+                    //TODO: Make Texture2 work
+                    byte[] byteTexture2 = new byte[26];
+                    Encoding.ASCII.GetBytes(floor.InternalTexture1, 0, floor.InternalTexture1.Length, byteTexture2, 0);
+                    byteTexture2[25] = 0x01;
+                    floorByteBuffer.AddRange(byteTexture2);
                 }
             }
+            byteFloors.AddRange(BitConverter.GetBytes(floorByteBuffer.Count));
+            byteFloors.AddRange(floorByteBuffer);
             return byteFloors;
         }
-        //TODO: Double check EVERYTHING once done
         
 
         private byte[] Level_v2(int width, int  height)
         {
-            byte[] level_v2 = new byte[33];
+            byte[] level_v2 = new byte[36];
             level_v2[0] = 0x08;
-            Encoding.ASCII.GetBytes("Level_v2", 0, level_v2.Length, level_v2, 4);
-            level_v2[12] = 0x14; //no idea why, but its needed
+            string level_v2Text = "Level_v2";
+            byte[] level_v2TextBytes = Encoding.ASCII.GetBytes(level_v2Text, 0, level_v2Text.Length);
+            Array.Copy(level_v2TextBytes, 0, level_v2, 4, level_v2TextBytes.Length);
+            level_v2[12] = 0x14; //buffer length
             level_v2[16] = Convert.ToByte(width);
             level_v2[20] = Convert.ToByte(height);
-            level_v2[24] = 0x01; //Mystery byte
+            //level_v2[24] = 0x01; //Mystery byte
             level_v2[32] = 0x01;
             return level_v2;
+        }
+
+        private List<byte> RoomGeometry()
+        {
+            List<byte> roomGeometry = new List<byte>();
+            roomGeometry.AddRange([0x0C, 0x00, 0x00, 0x00]); //SECTION HEAD
+            byte[] roomGeometryText = Encoding.ASCII.GetBytes("RoomGeometry");
+            roomGeometry.AddRange(roomGeometryText);
+            byte[] emptyContent = new byte[7012]; //bullshit number
+            roomGeometry.AddRange(BitConverter.GetBytes(emptyContent.Length));
+            roomGeometry.AddRange(emptyContent);
+            return roomGeometry;
+        }
+
+        private List<byte> Zones()
+        {
+            //TODO: Figure out the purpose of this section
+            List<byte> zones = new List<byte>();
+            zones.AddRange([0x0C, 0x00, 0x00, 0x00]); //SECTION HEAD
+            byte[] zonesText = Encoding.ASCII.GetBytes("Zones");
+            zones.AddRange(zonesText);
+            byte[] emptyContent = new byte[4]; 
+            //zones.AddRange(BitConverter.GetBytes(emptyContent.Length));
+            zones.AddRange(emptyContent);
+            return zones;
         }
 
         

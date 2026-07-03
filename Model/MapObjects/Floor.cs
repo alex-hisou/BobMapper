@@ -10,6 +10,8 @@ namespace BobMapper.Model.MapObjects
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+
+        
         public string Texture1
         {
             get { return texture1; }
@@ -19,6 +21,7 @@ namespace BobMapper.Model.MapObjects
         }
 
         private string internalTexture1;
+
         [JsonIgnore]
         public string InternalTexture1
         {
@@ -27,6 +30,7 @@ namespace BobMapper.Model.MapObjects
         }
 
         private string texture2;
+        
         public string Texture2
         {
             get { return texture2; }
@@ -47,5 +51,6 @@ namespace BobMapper.Model.MapObjects
         {
             Texture1 = texture1; Texture2 = texture2;
         }
+
     }
 }

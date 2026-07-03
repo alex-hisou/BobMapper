@@ -27,5 +27,24 @@ namespace BobMapper.Services
             }
             return internalName;
         }
+
+        internal static string GetResourceName(string internalName)
+        {
+            SqliteConnection textureConnection = new("Data Source=Data/TextureManifest.sqlite");
+            textureConnection.Open();
+            var selectTexturesCommand = textureConnection.CreateCommand();
+            selectTexturesCommand.CommandText = $"SELECT ResourceName FROM Textures WHERE InternalName LIKE '%{internalName}%'";
+            string resourceName = null;
+            var reader = selectTexturesCommand.ExecuteReader();
+            while (reader.Read())
+            {
+                resourceName = reader.GetString(0);
+            }
+            if (resourceName == null)
+            {
+                throw new Exception("Texture not found");
+            }
+            return resourceName;
+        }
     }
 }

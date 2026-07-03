@@ -101,7 +101,7 @@ namespace BobMapper
         {
             get { return snappedXPos; }
             set { snappedXPos = value;
-                float floatValue = value * 2 * FloorSize;
+                float floatValue = value * FloorSize;
                 XPos = Convert.ToInt32(floatValue); }
         }
         private float snappedYPos;
@@ -109,7 +109,7 @@ namespace BobMapper
         {
             get { return snappedYPos; }
             set { snappedYPos = value;
-                float floatValue = value * 2 * FloorSize;
+                float floatValue = value * FloorSize;
                 YPos = Convert.ToInt32(floatValue); }
         }
 
@@ -120,10 +120,10 @@ namespace BobMapper
             SnappedYPos = snappedYPos;
         }
 
-        public static SnapCoordinate UnsnappedCoordinateFactory(int unsnappedXPos, int unsnappedYPos)
+        public static SnapCoordinate UnsnappedCoordinateFactory(float unsnappedXPos, float unsnappedYPos)
         {
-            int snappedXPos = (unsnappedXPos - (unsnappedXPos % FloorSize)) / FloorSize;
-            int snappedYPos = (unsnappedYPos - (unsnappedYPos % FloorSize)) / FloorSize;
+            float snappedXPos = (unsnappedXPos - (unsnappedXPos % FloorSize)) / FloorSize;
+            float snappedYPos = (unsnappedYPos - (unsnappedYPos % FloorSize)) / FloorSize;
             SnapCoordinate SnapCoordinate = new SnapCoordinate(snappedXPos, snappedYPos);
             return SnapCoordinate;
         }

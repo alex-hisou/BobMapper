@@ -14,13 +14,14 @@ namespace BobMapper.Compiler.WriteSteps
         internal NavMesh(int width, int height, List<Wall> walls, List<Door> doors, List<Prop> props) 
         {
             navMeshOutput = new List<byte>();
-            navMeshOutput.AddRange([0x08, 0x00, 0x00, 0x00]); //SECTION HEAD
+            navMeshOutput.AddRange([0x0E, 0x00, 0x00, 0x00]); //SECTION HEAD
             byte[] navigationMeshLabel = Encoding.ASCII.GetBytes("NavigationMesh");
             navMeshOutput.AddRange(navigationMeshLabel);
             //TODO: Add all the mysterious stuff and make sure this code works with rectangular maps
             List<byte> navMeshByteBuffer = NavMeshAsBytes(width, height, walls, doors, props);
-            navMeshOutput.AddRange(BitConverter.GetBytes(navMeshByteBuffer.Count));
+            navMeshOutput.AddRange(BitConverter.GetBytes(navMeshByteBuffer.Count + 8)); //Add 8 bytes due to the order of steps
             navMeshOutput.AddRange(BitConverter.GetBytes(navMeshByteBuffer.Count / navNodeLength));
+            navMeshOutput.AddRange(BitConverter.GetBytes((int)56)); //Dafuq?!?!?!
             navMeshOutput.AddRange(navMeshByteBuffer);
 
         }
@@ -53,6 +54,7 @@ namespace BobMapper.Compiler.WriteSteps
                     Array.Copy(idAsBytes, 0, navNodeBytes, 22, 4);
                     navMeshBytes.AddRange(navNodeBytes);
                     currentX += 0.5f;
+                    index++;
                 }
                 currentY += 0.5f;
             }
@@ -63,15 +65,16 @@ namespace BobMapper.Compiler.WriteSteps
         {
             byte roomId = 1; //outside default
             byte objectCollision = 0;
-            bool isWalkable = true;
+            bool isNonWalkable = false;
             byte lockedByDefault = 0;
             foreach (Wall wall in walls)
             {
                 if(isPointOnLine(wall.Point1, wall.Point2, navNodePos))
                 {
                     objectCollision = 3;
-                    isWalkable = false;
-                    return VariablesAsBytes(roomId, objectCollision, isWalkable, lockedByDefault);
+                    isNonWalkable = true;
+                    roomId = 0;
+                    return VariablesAsBytes(roomId, objectCollision, isNonWalkable, lockedByDefault);
                 }
             }
             foreach (Door door in doors)
@@ -83,12 +86,13 @@ namespace BobMapper.Compiler.WriteSteps
                     {
                         lockedByDefault = 10;
                     }
-                    return VariablesAsBytes(roomId, objectCollision, isWalkable, lockedByDefault);
+                    roomId = 0;
+                    return VariablesAsBytes(roomId, objectCollision, isNonWalkable, lockedByDefault);
                 }
             }
             int intRoomId = Room.GetPointRoomId(navNodePos.SnappedXPos, navNodePos.SnappedYPos, rooms);
             roomId = Convert.ToByte(intRoomId);
-            return VariablesAsBytes(roomId, objectCollision, isWalkable, lockedByDefault);
+            return VariablesAsBytes(roomId, objectCollision, isNonWalkable, lockedByDefault);
         }
 
         private byte[] VariablesAsBytes(byte roomId, byte objectCollision, bool isWalkable, byte lockedByDefault)
