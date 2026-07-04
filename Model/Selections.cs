@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using BobMapper.Model.MapObjects;
 using static BobMapper.Model.MapManager;
+using BobMapper.Services;
 
 namespace BobMapper.Model
 {
@@ -20,11 +21,21 @@ namespace BobMapper.Model
             get { return selectedObjectType; }
             set { selectedObjectType = value; }
         }
+
+        private string selectedInternalTexture;
+
+        public string SelectedInternalTexture
+        {
+            get { return selectedInternalTexture; }
+            set { selectedInternalTexture = value; }
+        }
+
         private string selectedTexture;
         public string SelectedTexture
         {
             get { return selectedTexture; }
-            set { selectedTexture = value; OnPropertyChanged(); }
+            set { selectedTexture = value; OnPropertyChanged();
+                SelectedInternalTexture = InternalNameSevice.GetInternalName(value); }
         }
 
         private TextureType selectedTextureType;

@@ -31,6 +31,8 @@
   <ItemGroup>
     <None Remove="Data\TextureManifest.sqlite" />
     <None Remove="Model\TextureSchema.sqlite" />
+    <None Remove="Resources\Backgrounds\BackgroundDownTown1.png" />
+    <None Remove="Resources\Backgrounds\BackgroundDownTown2.png" />
     <None Remove="Resources\FloorTextures\Floor_Asphalt.png" />
     <None Remove="Resources\FloorTextures\Floor_AsphaltCorner.png" />
     <None Remove="Resources\FloorTextures\Floor_AsphaltCorner1.png" />
@@ -1294,6 +1296,12 @@
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Backgrounds\BackgroundDownTown1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Backgrounds\BackgroundDownTown2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\FloorTextures\Floor_Asphalt.png" />
     <Resource Include="Resources\FloorTextures\Floor_AsphaltCorner.png" />
     <Resource Include="Resources\FloorTextures\Floor_AsphaltCorner1.png" />

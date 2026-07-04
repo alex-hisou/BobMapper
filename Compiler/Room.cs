@@ -27,15 +27,15 @@ namespace BobMapper.Compiler
             var polygonizer = new Polygonizer();
             foreach (Wall wall in walls)
             {
-                NetTopologySuite.Geometries.Coordinate point1 = new(wall.Point1.XPos, wall.Point1.YPos);
-                NetTopologySuite.Geometries.Coordinate point2 = new(wall.Point2.XPos, wall.Point2.YPos);
+                NetTopologySuite.Geometries.Coordinate point1 = new(wall.Point1.SnappedXPos, wall.Point1.SnappedYPos);
+                NetTopologySuite.Geometries.Coordinate point2 = new(wall.Point2.SnappedXPos, wall.Point2.SnappedYPos);
                 LineString lineString = new LineString(new[] { point1, point2 });
                 polygonizer.Add(lineString);
             }
             foreach (Door door in doors)
             {
-                NetTopologySuite.Geometries.Coordinate point1 = new(door.Point1.XPos, door.Point1.YPos);
-                NetTopologySuite.Geometries.Coordinate point2 = new(door.Point2.XPos, door.Point2.YPos);
+                NetTopologySuite.Geometries.Coordinate point1 = new(door.Point1.SnappedXPos, door.Point1.SnappedYPos);
+                NetTopologySuite.Geometries.Coordinate point2 = new(door.Point2.SnappedXPos, door.Point2.SnappedYPos);
                 LineString lineString = new LineString(new[] { point1, point2 });
                 polygonizer.Add(lineString);
             }
@@ -46,7 +46,7 @@ namespace BobMapper.Compiler
             }
             for (int i = 2; i <= polygons.Count + 1; i++)
             {
-                Room room = new Room(i, polygons[i]);
+                Room room = new Room(i, polygons[i - 2]);
                 rooms.Add(room);
             }
             return rooms;
@@ -56,7 +56,7 @@ namespace BobMapper.Compiler
         {
             //This gets run after we know a point is not on a wall or a door, so a wall check is not needed
             Point point = new(x, y);
-            Room? room = rooms.FirstOrDefault(x => x.Area.Covers(point));
+            Room room = rooms.FirstOrDefault(x => x.Area.Covers(point));
             if(room == null)
             {
                 return 1;

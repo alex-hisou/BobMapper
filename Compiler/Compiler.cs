@@ -95,7 +95,7 @@ namespace BobMapper.Compiler
             roomGeometry.AddRange([0x0C, 0x00, 0x00, 0x00]); //SECTION HEAD
             byte[] roomGeometryText = Encoding.ASCII.GetBytes("RoomGeometry");
             roomGeometry.AddRange(roomGeometryText);
-            byte[] emptyContent = new byte[7012]; //bullshit number
+            byte[] emptyContent = new byte[8];
             roomGeometry.AddRange(BitConverter.GetBytes(emptyContent.Length));
             roomGeometry.AddRange(emptyContent);
             return roomGeometry;
@@ -109,7 +109,7 @@ namespace BobMapper.Compiler
             byte[] zonesText = Encoding.ASCII.GetBytes("Zones");
             zones.AddRange(zonesText);
             byte[] emptyContent = new byte[4]; 
-            //zones.AddRange(BitConverter.GetBytes(emptyContent.Length));
+            zones.AddRange(BitConverter.GetBytes(emptyContent.Length));
             zones.AddRange(emptyContent);
             return zones;
         }
