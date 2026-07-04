@@ -16,34 +16,54 @@ namespace BobMapper.Compiler
             hasRotation = true;
             byte[] compiledX = GetFloatCompiledCoordinate(coordinates.XPos);
             byte[] compiledY = GetFloatCompiledCoordinate(coordinates.YPos);
-            byte compiledRotation = GetCompiledRotation(rotation);
+            byte[] compiledRotation = GetCompiledRotation(rotation);
             CompiledBytes = new byte[16];
             Array.Copy(compiledX, 0, CompiledBytes, 0, compiledX.Length);
             Array.Copy(compiledY, 0, CompiledBytes, 4, compiledY.Length);
-            CompiledBytes[15] = compiledRotation;
-
+            Array.Copy(compiledRotation, 0, CompiledBytes, 12, compiledRotation.Length);
         }
 
-        public FloatCoordinate(Coordinate coordinates)
+        public FloatCoordinate(SnapCoordinate coordinates, int rotation)
+        {
+            hasRotation = true;
+            byte[] compiledX = GetFloatCompiledCoordinate(coordinates.SnappedXPos);
+            byte[] compiledY = GetFloatCompiledCoordinate(coordinates.SnappedYPos);
+            byte[] compiledRotation = GetCompiledRotation(rotation);
+            CompiledBytes = new byte[16];
+            Array.Copy(compiledX, 0, CompiledBytes, 0, compiledX.Length);
+            Array.Copy(compiledY, 0, CompiledBytes, 4, compiledY.Length);
+            Array.Copy(compiledRotation, 0, CompiledBytes, 12, compiledRotation.Length);
+        }
+
+        public FloatCoordinate(SnapCoordinate coordinates)
         {
             hasRotation = false;
-            byte[] compiledX = GetFloatCompiledCoordinate(coordinates.XPos);
-            byte[] compiledY = GetFloatCompiledCoordinate(coordinates.YPos);
+            byte[] compiledX = GetFloatCompiledCoordinate(coordinates.SnappedXPos);
+            byte[] compiledY = GetFloatCompiledCoordinate(coordinates.SnappedYPos);
             CompiledBytes = new byte[8];
             Array.Copy(compiledX, 0, CompiledBytes, 0, compiledX.Length );
             Array.Copy(compiledY, 0, CompiledBytes, 4, compiledY.Length );
         }
 
-        private byte GetCompiledRotation(int rotation)
+        private byte[] GetCompiledRotation(int rotation)
         {
             //TODO: Test rotation range
-            return (byte)0;
+            float testFloat = 1;
+            byte[] rotationBytes = BitConverter.GetBytes(testFloat);
+            return rotationBytes;
         }
 
         private byte[] GetFloatCompiledCoordinate(int anyCoordinate)
         {
             float halfCoordinate = (float)anyCoordinate / 2;
             byte[] floatAsBytes = BitConverter.GetBytes(halfCoordinate);
+            return floatAsBytes;
+        }
+
+        private byte[] GetFloatCompiledCoordinate(float anyCoordinate)
+        {
+            //float halfCoordinate = (float)anyCoordinate / 2;
+            byte[] floatAsBytes = BitConverter.GetBytes(anyCoordinate);
             return floatAsBytes;
         }
 

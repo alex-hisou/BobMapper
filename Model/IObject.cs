@@ -8,7 +8,7 @@ namespace BobMapper.Model
 {
     internal interface ISinglePointObject
     {
-        Coordinate Coordinates { get; set; }
+        SnapCoordinate Coordinates { get; set; }
         
     }
 

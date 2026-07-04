@@ -101,25 +101,29 @@ namespace BobMapper.ViewModel
             switch (CurrentSelections.SelectedTool)
             {
                 case Tools.AddWall:
-                    SnapCoordinate snappedPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    SnapCoordinate shiftedSnappedPlacementPos = new SnapCoordinate(snappedPlacementPos.SnappedXPos + 1, snappedPlacementPos.SnappedYPos);
-                    Wall wall = new Wall(snappedPlacementPos, shiftedSnappedPlacementPos, Wall.WallType.Normal, CurrentSelections.SelectedTexture, CurrentSelections.SelectedTexture);
+                    SnapCoordinate snappedWallPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
+                    SnapCoordinate shiftedSnappedPlacementPos = new SnapCoordinate(snappedWallPlacementPos.SnappedXPos + 1, snappedWallPlacementPos.SnappedYPos);
+                    Wall wall = new Wall(snappedWallPlacementPos, shiftedSnappedPlacementPos, Wall.WallType.Normal, CurrentSelections.SelectedTexture, CurrentSelections.SelectedTexture);
                     CurrentWalls.Add(wall);
                     break;
                 case Tools.AddProp:
-                    Prop prop = new Prop(placementPos, 0, CurrentSelections.SelectedTexture);
+                    SnapCoordinate snappedPropPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
+                    Prop prop = new Prop(snappedPropPlacementPos, 0, CurrentSelections.SelectedTexture);
                     CurrentProps.Add(prop);
                     break;
                 case Tools.AddNPC:
-                    NPC npc = new NPC(placementPos, NPC.NPCType.BulkyCop, 0, false, false);
+                    SnapCoordinate snappedNPCPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
+                    NPC npc = new NPC(snappedNPCPlacementPos, NPC.NPCType.BulkyCop, 0, false, false);
                     CurrentNPCs.Add(npc);
                     break;
                 case Tools.AddPathPoint:
-                    PathPoint pathPoint = new PathPoint(placementPos, 0, 0);
+                    SnapCoordinate snappedPathPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
+                    PathPoint pathPoint = new PathPoint(snappedPathPlacementPos, 0, 0);
                     CurrentPathPoints.Add(pathPoint);
                     break;
                 case Tools.AddMisc:
-                    Misc misc = new Misc(placementPos, Misc.MiscObjects.Key, 0);
+                    SnapCoordinate snappedMiscPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
+                    Misc misc = new Misc(snappedMiscPlacementPos, Misc.MiscObjects.Key, 0);
                     CurrentMiscs.Add(misc);
                     break;
                 case Tools.AddDoor:
@@ -129,7 +133,8 @@ namespace BobMapper.ViewModel
                     CurrentDoors.Add(door);
                     break;
                 case Tools.AddLoot:
-                    Loot loot = new Loot(CurrentSelections.SelectedTexture, placementPos, 0);
+                    SnapCoordinate snappedLootPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
+                    Loot loot = new Loot(CurrentSelections.SelectedTexture, snappedLootPlacementPos, 0);
                     CurrentLoots.Add(loot);
                     break;
                 default:

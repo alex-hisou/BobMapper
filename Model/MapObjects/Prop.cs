@@ -14,7 +14,7 @@ namespace BobMapper.Model.MapObjects
             set { rotation = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rotation))); }
         }
 
-        public Coordinate Coordinates { get; set; }
+        public SnapCoordinate Coordinates { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         private string propTexture;
@@ -35,7 +35,7 @@ namespace BobMapper.Model.MapObjects
         }
 
 
-        public Prop(Coordinate coordinates, int rotation, string propTexture)
+        public Prop(SnapCoordinate coordinates, int rotation, string propTexture)
         {
             Coordinates = coordinates;
             Rotation = rotation;

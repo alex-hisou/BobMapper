@@ -27,9 +27,9 @@ namespace BobMapper.Model.MapObjects
 
         public int Duration { get; set; }
 
-        private Coordinate coordinates;
+        private SnapCoordinate coordinates;
 
-        public Coordinate Coordinates
+        public SnapCoordinate Coordinates
         {
             get { return coordinates; }
             set { coordinates = value;
@@ -38,33 +38,9 @@ namespace BobMapper.Model.MapObjects
             }
         }
 
-        
-        private Coordinate lineConnectionCoordinate;
-        [JsonIgnore]
-        public Coordinate LineConnectionCoordinate
-        {
-            get { return lineConnectionCoordinate; }
-            set 
-            { 
-                Coordinate shiftedCoordinate = value;
-                shiftedCoordinate.XPos += -Coordinates.XPos;
-                shiftedCoordinate.YPos += -Coordinates.YPos;
-                lineConnectionCoordinate = shiftedCoordinate;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LineConnectionCoordinate))); 
-            }
-        }
-
-        private Coordinate absoluteLineConnectionCoordinate;
-        [JsonIgnore]
-        public Coordinate AbsoluteLineConnectionCoordinates
-        {
-            get { return absoluteLineConnectionCoordinate; }
-            set { absoluteLineConnectionCoordinate = value; LineConnectionCoordinate = value; }
-        }
-
 
         [JsonConstructor]
-        public PathPoint(Coordinate coordinates, int duration, int id, int? connectToId)
+        public PathPoint(SnapCoordinate coordinates, int duration, int id, int? connectToId)
         {
             Coordinates = coordinates;
             Id = id;
@@ -72,11 +48,10 @@ namespace BobMapper.Model.MapObjects
             Duration = duration;
         }
 
-        public PathPoint(Coordinate coordinates, int duration, int id)
+        public PathPoint(SnapCoordinate coordinates, int duration, int id)
         {
             Coordinates = coordinates;
             Id = id;
-            LineConnectionCoordinate = coordinates;
             Duration = duration;
         }
 

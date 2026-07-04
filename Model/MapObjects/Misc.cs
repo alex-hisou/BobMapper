@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
-using static BobMapper.Model.MapObjects.Wall;
 
 namespace BobMapper.Model.MapObjects
 {
@@ -27,9 +26,9 @@ namespace BobMapper.Model.MapObjects
             set { type = value; SetMiscTexture(); }
         }
 
-        public Coordinate Coordinates { get; set; }
+        public SnapCoordinate Coordinates { get; set; }
 
-        public Misc(Coordinate coordinates, MiscObjects type, int rotation)
+        public Misc(SnapCoordinate coordinates, MiscObjects type, int rotation)
         {
             Coordinates = coordinates;
             Type = type;
@@ -60,15 +59,6 @@ namespace BobMapper.Model.MapObjects
                     Texture = "/Resources/MiscTextures/SoundPoint.png";
                     break;
             }
-        }
-
-        [JsonConstructor]
-        public Misc(Coordinate coordinates, string texture, MiscObjects type, int rotation)
-        {
-            Coordinates = coordinates;
-            Texture = texture;
-            Type = type;
-            Rotation = rotation;
         }
 
         [JsonIgnore]

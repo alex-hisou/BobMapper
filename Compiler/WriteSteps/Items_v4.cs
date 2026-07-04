@@ -15,7 +15,7 @@ namespace BobMapper.Compiler.WriteSteps
         {
             itemsOutput = new List<byte>();
             itemsOutput.AddRange([0x08, 0x00, 0x00, 0x00]); //SECTION HEAD
-            byte[] items_v4 = Encoding.ASCII.GetBytes("Items_v4");
+            byte[] items_v4 = Encoding.ASCII.GetBytes("Items_v2");
             itemsOutput.AddRange(items_v4);
 
             List<byte> objectByteBuffer =
@@ -76,12 +76,12 @@ namespace BobMapper.Compiler.WriteSteps
                 byteDoors.AddRange(currentByteDoor);
                 if (door.Locked)
                 {
-                    QueuedLocator additionalLocator = new(QueuedLocator.LocatorTypes.Lock, (Coordinate)door.Point1);
+                    QueuedLocator additionalLocator = new(QueuedLocator.LocatorTypes.Lock, door.Point1);
                     Compiler.locatorQueue.Add(additionalLocator);
                 }
                 if (door.PermLocked)
                 {
-                    QueuedLocator additionalLocator = new(QueuedLocator.LocatorTypes.PermanentLock, (Coordinate)door.Point1);
+                    QueuedLocator additionalLocator = new(QueuedLocator.LocatorTypes.PermanentLock, door.Point1);
                     Compiler.locatorQueue.Add(additionalLocator);
                 }
             }
@@ -96,8 +96,9 @@ namespace BobMapper.Compiler.WriteSteps
                 byte[] currentByteProp = new byte[48];
                 currentByteProp[0] = 0x35;
                 Encoding.ASCII.GetBytes(prop.InternalTexture, 0, prop.InternalTexture.Length, currentByteProp, 4);
-                FloatCoordinate compiledCoordinate = new(prop.Coordinates, prop.Rotation);
-                Array.Copy(compiledCoordinate.CompiledBytes, 0, currentByteProp, 36, 16);
+                FloatCoordinate compiledCoordinate = new(prop.Coordinates);
+                //TODO: Fix rotation
+                Array.Copy(compiledCoordinate.CompiledBytes, 0, currentByteProp, 36, compiledCoordinate.CompiledBytes.Length);
                 byteProps.AddRange(currentByteProp);
             }
             return byteProps;

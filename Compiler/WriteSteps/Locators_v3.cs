@@ -63,7 +63,7 @@ namespace BobMapper.Compiler.WriteSteps
         private List<byte> PathPointsAsBytes(List<PathPoint> pathPoints)
         {
             List<byte> bytePathPoints = new List<byte>();
-            int[] connectFromIds = CompilerServices.GetConnectFromIds(pathPoints);
+            //int[] connectFromIds = CompilerServices.GetConnectFromIds(pathPoints);
             for (int i = 0; i < pathPoints.Count; i++)
             {
                 byte[] currentBytePathPoint = new byte[76];
@@ -73,7 +73,7 @@ namespace BobMapper.Compiler.WriteSteps
                 Array.Copy(pathPointCompileCoordinate.CompiledBytes, 0, currentBytePathPoint, 1, 14);
                 currentBytePathPoint[15] = 0x05; //Path Point Header
                 currentBytePathPoint[19] = Convert.ToByte(currentLocatorId);
-                currentBytePathPoint[55] = Convert.ToByte(connectFromIds[i]);
+                //currentBytePathPoint[55] = Convert.ToByte(connectFromIds[i]);
                 currentBytePathPoint[59] = Convert.ToByte(point.Duration);
                 currentBytePathPoint[63] = Convert.ToByte(point.ConnectToId);
                 bytePathPoints.AddRange(currentBytePathPoint);

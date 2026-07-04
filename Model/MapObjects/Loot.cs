@@ -12,7 +12,7 @@ namespace BobMapper.Model.MapObjects
 {
     public class Loot : ISinglePointObject, INotifyPropertyChanged
     {
-        public Coordinate Coordinates {  get; set; }
+        public SnapCoordinate Coordinates {  get; set; }
 
         private string texture;
 
@@ -40,7 +40,7 @@ namespace BobMapper.Model.MapObjects
         }
 
 
-        public Loot(string texture, Coordinate coordinates, int rotation)
+        public Loot(string texture, SnapCoordinate coordinates, int rotation)
         {
             Coordinates = coordinates;
             Texture = texture;

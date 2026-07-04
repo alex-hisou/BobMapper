@@ -45,23 +45,6 @@ namespace BobMapper.Model
             tileset = Tilesets.Labs;
         }
 
-        internal void AttachAllPathPointHandlers()
-        {
-            pathPoints.ForEach(x => x.ConnectionPointChanged += FillPathPointConnectCoordinate);
-        }
-
-        public void FillPathPointConnectCoordinate(object sender, EventArgs e)
-        {
-            PathPoint SelectedPathPoint = (PathPoint)sender;
-            if (pathPoints.Any(x => x.Id == SelectedPathPoint.ConnectToId))
-            {
-                Coordinate ConnectionCoordinate = pathPoints.FirstOrDefault(x => x.Id == SelectedPathPoint.ConnectToId).Coordinates;
-                SelectedPathPoint.AbsoluteLineConnectionCoordinates = ConnectionCoordinate;
-            }
-            else { SelectedPathPoint.LineConnectionCoordinate = SelectedPathPoint.Coordinates; SystemSounds.Exclamation.Play(); }
-
-        }
-
 
         [JsonConstructor] //Use only for initialization from json. Otherwise write properties directly using the no param constructor above
         public Map(List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, List<Loot> loots, Floor[][] floors, Chapter levelChapter, int levelNumber, Tilesets tileset, List<Door> doors, int Width, int Height)
