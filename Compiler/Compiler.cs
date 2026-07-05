@@ -23,7 +23,7 @@ namespace BobMapper.Compiler
             Items_v4 items_V4 = new(map.walls, map.doors, map.props, map.loots);
             output.AddRange(items_V4.itemsOutput);
 
-            output.AddRange(Level_v2(map.Width / SnapCoordinate.FloorSize, map.Height / SnapCoordinate.FloorSize));
+            output.AddRange(Level_v2(map.Width / SnapCoordinate.FloorSize, map.Height / SnapCoordinate.FloorSize, map.tileset));
 
             Locators_v3 locators_V3 = new(map.npcs, map.pathPoints, map.miscs);
             output.AddRange(locators_V3.locatorsOutput);
@@ -54,10 +54,12 @@ namespace BobMapper.Compiler
             byte[] byteHeight = BitConverter.GetBytes(floors.Length);
             floorByteBuffer.AddRange(byteWidth);
             floorByteBuffer.AddRange(byteHeight);
-            foreach (var floorRow in floors)
+            for (int i = 0; i < floors.Length; i++)
             {
-                foreach(Floor floor in floorRow)
+                var floorRow = floors[i];
+                for (int j = 0; j < floorRow.Length; j++)
                 {
+                    Floor floor = floorRow[j];
                     byte[] byteTexture1 = new byte[24];
                     Encoding.ASCII.GetBytes(floor.InternalTexture1, 0, floor.InternalTexture1.Length, byteTexture1, 0);
                     floorByteBuffer.AddRange(byteTexture1);
@@ -74,7 +76,7 @@ namespace BobMapper.Compiler
         }
         
 
-        private byte[] Level_v2(int width, int  height)
+        private byte[] Level_v2(int width, int  height, Tilesets tileset)
         {
             byte[] level_v2 = new byte[36];
             level_v2[0] = 0x08;
@@ -82,9 +84,9 @@ namespace BobMapper.Compiler
             byte[] level_v2TextBytes = Encoding.ASCII.GetBytes(level_v2Text, 0, level_v2Text.Length);
             Array.Copy(level_v2TextBytes, 0, level_v2, 4, level_v2TextBytes.Length);
             level_v2[12] = 0x14; //buffer length
-            level_v2[16] = Convert.ToByte(width);
-            level_v2[20] = Convert.ToByte(height);
-            //level_v2[24] = 0x01; //Mystery byte
+            Array.Copy(BitConverter.GetBytes(width), 0, level_v2, 16, 4);
+            Array.Copy(BitConverter.GetBytes(height), 0, level_v2, 20, 4);
+            Array.Copy(BitConverter.GetBytes((int)tileset), 0, level_v2, 24, 4);
             level_v2[32] = 0x01;
             return level_v2;
         }

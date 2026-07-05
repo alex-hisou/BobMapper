@@ -155,6 +155,7 @@ namespace BobMapper.Model
 
         public void GetFilteredTextureSet(TextureType textureType, Tilesets tileset)
         {
+            currentTileSet = tileset;
             List<string> temporaryTextureSet = new List<string>();
             SqliteConnection textureManifestConnection = new("Data Source=Data/TextureManifest.sqlite");
             textureManifestConnection.Open();
