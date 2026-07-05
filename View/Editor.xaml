@@ -451,7 +451,7 @@
                                 <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
                                 <Setter Property="RenderTransform">
                                     <Setter.Value>
-                                        <RotateTransform Angle="{Binding Rotation}"/>
+                                        <RotateTransform Angle="{Binding ViewRotation}"/>
                                     </Setter.Value>
                                 </Setter>
                                 <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
@@ -485,7 +485,7 @@
                                 <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
                                 <Setter Property="RenderTransform">
                                     <Setter.Value>
-                                        <RotateTransform Angle="{Binding Rotation}"/>
+                                        <RotateTransform Angle="{Binding ViewRotation}"/>
                                     </Setter.Value>
                                 </Setter>
                                 <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
@@ -560,7 +560,7 @@
                                 <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
                                 <Setter Property="RenderTransform">
                                     <Setter.Value>
-                                        <RotateTransform Angle="{Binding Rotation}"/>
+                                        <RotateTransform Angle="{Binding ViewRotation}"/>
                                     </Setter.Value>
                                 </Setter>
                                 <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
@@ -626,7 +626,7 @@
                                 <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
                                 <Setter Property="RenderTransform">
                                     <Setter.Value>
-                                        <RotateTransform Angle="{Binding Rotation}"/>
+                                        <RotateTransform Angle="{Binding ViewRotation}"/>
                                     </Setter.Value>
                                 </Setter>
                                 <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>

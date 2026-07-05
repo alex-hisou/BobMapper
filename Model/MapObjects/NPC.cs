@@ -11,10 +11,27 @@ namespace BobMapper.Model.MapObjects
         public SnapCoordinate Coordinates { get; set; }
 
         private int rotation;
+
         public int Rotation
         {
             get { return rotation; }
-            set { rotation = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rotation))); }
+            set
+            {
+                rotation = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rotation)));
+                ViewRotation = value + 180;
+            }
+        }
+
+        private int viewRotation;
+
+        [JsonIgnore]
+        public int ViewRotation
+        {
+            get { return viewRotation; }
+            set { viewRotation = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ViewRotation)));
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

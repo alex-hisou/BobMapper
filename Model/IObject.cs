@@ -9,6 +9,9 @@ namespace BobMapper.Model
     internal interface ISinglePointObject
     {
         SnapCoordinate Coordinates { get; set; }
+
+        int Rotation {  get; set; }
+        int ViewRotation { get; set; }
         
     }
 

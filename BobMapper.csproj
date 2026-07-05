@@ -1302,192 +1302,564 @@
     <Resource Include="Resources\Backgrounds\BackgroundDownTown2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\FloorTextures\Floor_Asphalt.png" />
-    <Resource Include="Resources\FloorTextures\Floor_AsphaltCorner.png" />
-    <Resource Include="Resources\FloorTextures\Floor_AsphaltCorner1.png" />
-    <Resource Include="Resources\FloorTextures\Floor_AsphaltEdge1.png" />
-    <Resource Include="Resources\FloorTextures\Floor_AsphaltEdge2.png" />
-    <Resource Include="Resources\FloorTextures\Floor_AsphaltEdge3.png" />
-    <Resource Include="Resources\FloorTextures\Floor_AsphaltLine.png" />
-    <Resource Include="Resources\FloorTextures\Floor_asphalt_centre.png" />
-    <Resource Include="Resources\FloorTextures\Floor_BasicWoodA.png" />
-    <Resource Include="Resources\FloorTextures\Floor_BasicWoodB.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Bathroomtile.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Black.png" />
-    <Resource Include="Resources\FloorTextures\Floor_BlackWhiteTiles.png" />
-    <Resource Include="Resources\FloorTextures\Floor_blue_base.png" />
-    <Resource Include="Resources\FloorTextures\Floor_blue_cubed.png" />
-    <Resource Include="Resources\FloorTextures\Floor_blue_striped.png" />
-    <Resource Include="Resources\FloorTextures\Floor_BrownWood.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Carpet.png" />
-    <Resource Include="Resources\FloorTextures\Floor_church_a.png" />
-    <Resource Include="Resources\FloorTextures\Floor_church_b.png" />
-    <Resource Include="Resources\FloorTextures\Floor_clay.png" />
-    <Resource Include="Resources\FloorTextures\Floor_clay_bend.png" />
-    <Resource Include="Resources\FloorTextures\Floor_clay_corner.png" />
-    <Resource Include="Resources\FloorTextures\Floor_clay_straight.png" />
-    <Resource Include="Resources\FloorTextures\Floor_concrete.png" />
-    <Resource Include="Resources\FloorTextures\Floor_concreteslab.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Conveyor1.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Conveyor2.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Conveyor3.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Conveyor4.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Conveyor5.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Conveyor6.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Conveyor7.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Conveyor8.png" />
-    <Resource Include="Resources\FloorTextures\Floor_dirt.png" />
-    <Resource Include="Resources\FloorTextures\Floor_dirt_detail_1.png" />
-    <Resource Include="Resources\FloorTextures\Floor_dirt_detail_2.png" />
-    <Resource Include="Resources\FloorTextures\Floor_dirt_detail_3.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Disco_Black.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Disco_Blue.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Disco_Green.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Disco_Magenta.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Disco_Pink.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Disco_Red.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Disco_Yellow.png" />
-    <Resource Include="Resources\FloorTextures\Floor_entrance_a.png" />
-    <Resource Include="Resources\FloorTextures\Floor_grass.png" />
-    <Resource Include="Resources\FloorTextures\Floor_grass_corner.png" />
-    <Resource Include="Resources\FloorTextures\Floor_grass_stone.png" />
-    <Resource Include="Resources\FloorTextures\Floor_grass_stone_side.png" />
-    <Resource Include="Resources\FloorTextures\Floor_grass_straight.png" />
-    <Resource Include="Resources\FloorTextures\Floor_grass_turn.png" />
-    <Resource Include="Resources\FloorTextures\Floor_graystone_centre.png" />
-    <Resource Include="Resources\FloorTextures\Floor_graystone_corner_inner.png" />
-    <Resource Include="Resources\FloorTextures\Floor_graystone_corner_outer.png" />
-    <Resource Include="Resources\FloorTextures\Floor_graystone_side.png" />
-    <Resource Include="Resources\FloorTextures\Floor_GreenGrass.png" />
-    <Resource Include="Resources\FloorTextures\Floor_GrittyConcrete.png" />
-    <Resource Include="Resources\FloorTextures\Floor_iceroom.png" />
-    <Resource Include="Resources\FloorTextures\Floor_JunkieCarpet.png" />
-    <Resource Include="Resources\FloorTextures\Floor_JunkieCarpetDark.png" />
-    <Resource Include="Resources\FloorTextures\Floor_JunkiePlanks.png" />
-    <Resource Include="Resources\FloorTextures\Floor_JunkieTiles.png" />
-    <Resource Include="Resources\FloorTextures\floor_Kitchen.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Kitchentile.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Kitchentileb.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Lab.png" />
-    <Resource Include="Resources\FloorTextures\Floor_LabBlue.png" />
-    <Resource Include="Resources\FloorTextures\Floor_LabCableA.png" />
-    <Resource Include="Resources\FloorTextures\Floor_LabCableB.png" />
-    <Resource Include="Resources\FloorTextures\Floor_LabGrate.png" />
-    <Resource Include="Resources\FloorTextures\Floor_LabGreen.png" />
-    <Resource Include="Resources\FloorTextures\Floor_LabRed.png" />
-    <Resource Include="Resources\FloorTextures\Floor_LabStripe.png" />
-    <Resource Include="Resources\FloorTextures\Floor_LabVent.png" />
-    <Resource Include="Resources\FloorTextures\Floor_large_wood.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Mansion.png" />
-    <Resource Include="Resources\FloorTextures\Floor_MansionG.png" />
-    <Resource Include="Resources\FloorTextures\Floor_naturalstone_beige.png" />
-    <Resource Include="Resources\FloorTextures\Floor_naturalstone_gray.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Nothing.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Orangetiles.png" />
-    <Resource Include="Resources\FloorTextures\Floor_orange_base.png" />
-    <Resource Include="Resources\FloorTextures\Floor_orange_cubed.png" />
-    <Resource Include="Resources\FloorTextures\Floor_orange_striped.png" />
-    <Resource Include="Resources\FloorTextures\Floor_outside_wood.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Parquetlight.png" />
-    <Resource Include="Resources\FloorTextures\Floor_pineneedle.png" />
-    <Resource Include="Resources\FloorTextures\Floor_pineneedle_corner.png" />
-    <Resource Include="Resources\FloorTextures\Floor_pineneedle_straight.png" />
-    <Resource Include="Resources\FloorTextures\Floor_pine_bend.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Plain_Blue.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Plain_Green.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Plain_LightBrown.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Plain_Lightgrey.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Plain_Maroon.png" />
-    <Resource Include="Resources\FloorTextures\Floor_planks_1.png" />
-    <Resource Include="Resources\FloorTextures\Floor_planks_2.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Plywood.png" />
-    <Resource Include="Resources\FloorTextures\Floor_pool_tile.png" />
-    <Resource Include="Resources\FloorTextures\Floor_red.png" />
-    <Resource Include="Resources\FloorTextures\Floor_RedWood.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Road.png" />
-    <Resource Include="Resources\FloorTextures\Floor_RoadEdge1.png" />
-    <Resource Include="Resources\FloorTextures\Floor_RoadEdge2.png" />
-    <Resource Include="Resources\FloorTextures\Floor_RoadEdge3.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Sand.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SandCornerA.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SandCornerB.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SandEdgeA.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SandEdgeB.png" />
-    <Resource Include="Resources\FloorTextures\Floor_sawdust.png" />
-    <Resource Include="Resources\FloorTextures\Floor_sawdust_corner.png" />
-    <Resource Include="Resources\FloorTextures\Floor_sawdust_straight.png" />
-    <Resource Include="Resources\FloorTextures\Floor_sawdust_turn.png" />
-    <Resource Include="Resources\FloorTextures\Floor_shop_a.png" />
-    <Resource Include="Resources\FloorTextures\Floor_shop_b.png" />
-    <Resource Include="Resources\FloorTextures\Floor_shop_c.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Sidewalk.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SideWalk1.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SideWalk2.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkBlack.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkBlackStair.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkBlackStairIC.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkBlackStairOC.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkBrown.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkBrownStair.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkBrownStairIC.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkBrownStairOC.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkCorner.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkCornerFlip.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkDrain.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkEdgeBlack.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkEdgeBlackIC.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkEdgeBlackOC.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkEdgeBrown.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkEdgeBrownIC.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkEdgeBrownOC.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkGold.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkGray.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkStarD.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkStarM.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkStarO.png" />
-    <Resource Include="Resources\FloorTextures\Floor_SidewalkStarS.png" />
-    <Resource Include="Resources\FloorTextures\Floor_stone_a.png" />
-    <Resource Include="Resources\FloorTextures\Floor_stone_b.png" />
-    <Resource Include="Resources\FloorTextures\Floor_storage_a.png" />
-    <Resource Include="Resources\FloorTextures\Floor_storage_b.png" />
-    <Resource Include="Resources\FloorTextures\Floor_StoreTile.png" />
-    <Resource Include="Resources\FloorTextures\Floor_StoreTileBown.png" />
-    <Resource Include="Resources\FloorTextures\Floor_tiledconc_gold.png" />
-    <Resource Include="Resources\FloorTextures\Floor_tiledconc_gray.png" />
-    <Resource Include="Resources\FloorTextures\Floor_tiledconc_green.png" />
-    <Resource Include="Resources\FloorTextures\Floor_tile_a.png" />
-    <Resource Include="Resources\FloorTextures\Floor_tile_b.png" />
-    <Resource Include="Resources\FloorTextures\Floor_tile_c.png" />
-    <Resource Include="Resources\FloorTextures\Floor_tile_d.png" />
-    <Resource Include="Resources\FloorTextures\Floor_tile_e.png" />
-    <Resource Include="Resources\FloorTextures\Floor_tile_f.png" />
-    <Resource Include="Resources\FloorTextures\Floor_tile_g.png" />
-    <Resource Include="Resources\FloorTextures\Floor_tile_h.png" />
-    <Resource Include="Resources\FloorTextures\Floor_violet_base.png" />
-    <Resource Include="Resources\FloorTextures\Floor_violet_cubed.png" />
-    <Resource Include="Resources\FloorTextures\Floor_violet_striped.png" />
-    <Resource Include="Resources\FloorTextures\Floor_water.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Whitemarble.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Whitemarblecenter.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Whitemarblecorner.png" />
-    <Resource Include="Resources\FloorTextures\Floor_Whitemarbleedge.png" />
-    <Resource Include="Resources\FloorTextures\Floor_WhiteTiles.png" />
-    <Resource Include="Resources\FloorTextures\Floor_wood_a.png" />
-    <Resource Include="Resources\FloorTextures\Floor_wood_b.png" />
-    <Resource Include="Resources\FloorTextures\Floor_wstone_centre.png" />
-    <Resource Include="Resources\FloorTextures\Floor_wstone_centre_core.png" />
-    <Resource Include="Resources\FloorTextures\Floor_wstone_corner.png" />
-    <Resource Include="Resources\FloorTextures\Floor_wstone_corner_w.png" />
-    <Resource Include="Resources\FloorTextures\Floor_wstone_edge.png" />
-    <Resource Include="Resources\FloorTextures\Floor_wstone_in_corner.png" />
-    <Resource Include="Resources\FloorTextures\Floor_wstone_in_corner_w.png" />
-    <Resource Include="Resources\FloorTextures\Floor_wstone_out_c.png" />
-    <Resource Include="Resources\FloorTextures\Floor_wstone_out_c_w.png" />
-    <Resource Include="Resources\FloorTextures\Floor_wstone_side.png" />
-    <Resource Include="Resources\FloorTextures\Floor_wstone_side_w.png" />
-    <Resource Include="Resources\FloorTextures\Floor_yellow_base.png" />
-    <Resource Include="Resources\FloorTextures\Floor_yellow_cubed.png" />
-    <Resource Include="Resources\FloorTextures\Floor_yellow_striped.png" />
+    <Resource Include="Resources\FloorTextures\Floor_Asphalt.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_AsphaltCorner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_AsphaltCorner1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_AsphaltEdge1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_AsphaltEdge2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_AsphaltEdge3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_AsphaltLine.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_asphalt_centre.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_BasicWoodA.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_BasicWoodB.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Bathroomtile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Black.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_BlackWhiteTiles.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_blue_base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_blue_cubed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_blue_striped.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_BrownWood.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Carpet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_church_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_church_b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_clay.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_clay_bend.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_clay_corner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_clay_straight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_concrete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_concreteslab.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Conveyor1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Conveyor2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Conveyor3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Conveyor4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Conveyor5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Conveyor6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Conveyor7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Conveyor8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_dirt.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_dirt_detail_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_dirt_detail_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_dirt_detail_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Disco_Black.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Disco_Blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Disco_Green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Disco_Magenta.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Disco_Pink.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Disco_Red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Disco_Yellow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_entrance_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_grass.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_grass_corner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_grass_stone.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_grass_stone_side.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_grass_straight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_grass_turn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_graystone_centre.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_graystone_corner_inner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_graystone_corner_outer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_graystone_side.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_GreenGrass.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_GrittyConcrete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_iceroom.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_JunkieCarpet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_JunkieCarpetDark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_JunkiePlanks.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_JunkieTiles.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\floor_Kitchen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Kitchentile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Kitchentileb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Lab.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_LabBlue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_LabCableA.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_LabCableB.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_LabGrate.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_LabGreen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_LabRed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_LabStripe.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_LabVent.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_large_wood.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Mansion.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_MansionG.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_naturalstone_beige.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_naturalstone_gray.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Nothing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Orangetiles.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_orange_base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_orange_cubed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_orange_striped.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_outside_wood.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Parquetlight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_pineneedle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_pineneedle_corner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_pineneedle_straight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_pine_bend.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Plain_Blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Plain_Green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Plain_LightBrown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Plain_Lightgrey.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Plain_Maroon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_planks_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_planks_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Plywood.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_pool_tile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_RedWood.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Road.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_RoadEdge1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_RoadEdge2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_RoadEdge3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Sand.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SandCornerA.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SandCornerB.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SandEdgeA.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SandEdgeB.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_sawdust.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_sawdust_corner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_sawdust_straight.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_sawdust_turn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_shop_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_shop_b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_shop_c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Sidewalk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SideWalk1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SideWalk2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkBlack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkBlackStair.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkBlackStairIC.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkBlackStairOC.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkBrown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkBrownStair.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkBrownStairIC.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkBrownStairOC.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkCorner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkCornerFlip.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkDrain.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkEdgeBlack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkEdgeBlackIC.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkEdgeBlackOC.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkEdgeBrown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkEdgeBrownIC.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkEdgeBrownOC.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkGold.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkGray.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkStarD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkStarM.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkStarO.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_SidewalkStarS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_stone_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_stone_b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_storage_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_storage_b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_StoreTile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_StoreTileBown.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_tiledconc_gold.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_tiledconc_gray.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_tiledconc_green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_tile_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_tile_b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_tile_c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_tile_d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_tile_e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_tile_f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_tile_g.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_tile_h.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_violet_base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_violet_cubed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_violet_striped.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_water.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Whitemarble.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Whitemarblecenter.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Whitemarblecorner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_Whitemarbleedge.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_WhiteTiles.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_wood_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_wood_b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_wstone_centre.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_wstone_centre_core.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_wstone_corner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_wstone_corner_w.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_wstone_edge.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_wstone_in_corner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_wstone_in_corner_w.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_wstone_out_c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_wstone_out_c_w.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_wstone_side.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_wstone_side_w.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_yellow_base.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_yellow_cubed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FloorTextures\Floor_yellow_striped.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\LootTextures\Loot_15PoundBowlingBall.png" />
     <Resource Include="Resources\LootTextures\Loot_AntiMatter.png" />
     <Resource Include="Resources\LootTextures\Loot_BallOfYarn.png" />
