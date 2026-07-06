@@ -146,14 +146,17 @@
                                     <DataTemplate DataType="{x:Type object:Prop}">
                                         <WrapPanel Width="300">
                                             <Label Width="170">X Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                 PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                                 PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Y Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                             PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                             PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Rotation</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                                PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Asset</Label>
                                             <Image Source="{Binding PropTexture}" MaxHeight="100" MaxWidth="100"/>
                                             <Label Content="{Binding PropTexture}"/>
@@ -174,14 +177,17 @@
                                     <DataTemplate DataType="{x:Type object:Loot}">
                                         <WrapPanel Width="300">
                                             <Label Width="170">X Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Y Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Rotation</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Asset</Label>
                                             <Image Source="{Binding Texture}" MaxHeight="100" MaxWidth="100"/>
                                             <Label Content="{Binding Texture}"/>
@@ -202,14 +208,17 @@
                                     <DataTemplate DataType="{x:Type object:Misc}">
                                         <WrapPanel Width="300">
                                             <Label Width="170">X Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Y Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Rotation</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                                PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Type</Label>
                                             <Image Source="{Binding Texture}" MaxHeight="100" MaxWidth="100"/>
                                             <Label Content="Type"/>
@@ -225,17 +234,21 @@
                                     <DataTemplate DataType="{x:Type object:Door}">
                                         <WrapPanel Width="300">
                                             <Label Width="170">Point 1 - X Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                             PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                             PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Point 1 - Y Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                             PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                             PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Point 2 - X Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                             PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                             PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Point 2 - Y Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                             PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                             PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Texture</Label>
                                             <Image Source="{Binding Texture1}" MaxHeight="100" MaxWidth="100"/>
                                             <Button Content="Set to selected asset">
@@ -258,17 +271,21 @@
                                     <DataTemplate DataType="{x:Type object:Wall}">
                                         <WrapPanel Width="300">
                                             <Label Width="170">Point 1 - X Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Point 1 - Y Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Point 2 - X Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Point 2 - Y Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Left Texture</Label>
                                             <Image Source="{Binding Texture1}" MaxHeight="100" MaxWidth="100"/>
                                             <Button Content="Set to selected asset">
@@ -302,14 +319,17 @@
                                     <DataTemplate DataType="{x:Type object:NPC}">
                                         <WrapPanel Width="300">
                                             <Label Width="170">X Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Y Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Rotation</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Asset</Label>
                                             <Image Source="{Binding Texture}" MaxHeight="100" MaxWidth="100"/>
                                             <CheckBox Content="Has loot attached" Width="250" IsChecked="{Binding AttachLoot}"/>
@@ -323,23 +343,29 @@
                                     <DataTemplate DataType="{x:Type object:PathPoint}">
                                         <WrapPanel Width="300">
                                             <Label Width="170">Path point Id</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Next path point Id</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding ConnectToId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding ConnectToId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">X Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Y Coordinate</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Rotation</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Duration</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Duration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                                            <TextBox Width="100" Height="20" Text="{Binding Duration, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ContentControl.Resources>
@@ -433,69 +459,70 @@
                         </ItemsControl.ItemContainerStyle>
                     </ItemsControl>
                     <ItemsControl ItemsSource="{Binding CurrentProps}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <local:CenteringCanvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding Coordinates.XPos}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:Prop}">
-                                <Image Source="{Binding PropTexture}" Width="auto" Height="auto" x:Name="img">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
-                                                    RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Image>
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleY="-1"/>
+                                            <RotateTransform Angle="{Binding Rotation}"/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Image Source="{Binding PropTexture}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Image>
+                                </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ContentPresenter">
-                                <Setter Property="Canvas.Left" Value="{Binding Coordinates.XPos}" />
-                                <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
-                                <Setter Property="RenderTransform">
-                                    <Setter.Value>
-                                        <RotateTransform Angle="{Binding ViewRotation}"/>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Canvas></Canvas>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
                     </ItemsControl>
                     <ItemsControl ItemsSource="{Binding CurrentLoots}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type object:Loot}">
-                                <Canvas>
-                                <Image Source="{Binding Texture}" Width="auto" Height="auto" x:Name="img">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
-                                RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Image>
-                                <Image Source="/Resources/MiscTextures/LootGlare.png" IsHitTestVisible="False"/>
-                                </Canvas>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <local:CenteringCanvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemContainerStyle>
                             <Style TargetType="ContentPresenter">
                                 <Setter Property="Canvas.Left" Value="{Binding Coordinates.XPos}" />
                                 <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
-                                <Setter Property="RenderTransform">
-                                    <Setter.Value>
-                                        <RotateTransform Angle="{Binding ViewRotation}"/>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                             </Style>
                         </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Canvas></Canvas>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type object:Loot}">
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleY="-1"/>
+                                            <RotateTransform Angle="{Binding Rotation}"/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Image Source="{Binding Texture}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Image>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
                     </ItemsControl>
                     <ItemsControl ItemsSource="{Binding CurrentWalls}">
                         <ItemsControl.ItemTemplate>
@@ -538,39 +565,37 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                     <ItemsControl ItemsSource="{Binding CurrentNPCs}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type object:NPC}">
-                                <Canvas>
-                                <Image Source="{Binding Texture}" Width="auto" Height="auto" x:Name="img">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
-                                    RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Image>
-                                <Image Source="/Resources/MiscTextures/LootGlare.png" Visibility="{Binding AttachLoot, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                       IsHitTestVisible="False"/>
-                                </Canvas>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <local:CenteringCanvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemContainerStyle>
                             <Style TargetType="ContentPresenter">
                                 <Setter Property="Canvas.Left" Value="{Binding Coordinates.XPos}" />
                                 <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
-                                <Setter Property="RenderTransform">
-                                    <Setter.Value>
-                                        <RotateTransform Angle="{Binding ViewRotation}"/>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                             </Style>
                         </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Canvas></Canvas>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type object:NPC}">
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleY="-1"/>
+                                            <RotateTransform Angle="{Binding Rotation}"/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Image Source="{Binding Texture}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Image>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
                     </ItemsControl>
                     <ItemsControl ItemsSource="{Binding CurrentPathPoints}">
                         <ItemsControl.ItemTemplate>
@@ -606,41 +631,37 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                     <ItemsControl ItemsSource="{Binding CurrentMiscs}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type object:Misc}">
-                                <Canvas>
-                                    <Image Source="{Binding Texture}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
-                                                    RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Image>
-                                </Canvas>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <local:CenteringCanvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemContainerStyle>
                             <Style TargetType="ContentPresenter">
                                 <Setter Property="Canvas.Left" Value="{Binding Coordinates.XPos}" />
                                 <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
-                                <Setter Property="RenderTransform">
-                                    <Setter.Value>
-                                        <RotateTransform Angle="{Binding ViewRotation}"/>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="RenderTransform">
-                                    <Setter.Value>
-                                        <ScaleTransform ScaleY="-1"/>
-                                    </Setter.Value>
-                                </Setter>
                             </Style>
                         </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Canvas></Canvas>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type object:Misc}">
+                                <Grid RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleY="-1"/>
+                                            <RotateTransform Angle="{Binding Rotation}"/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Image Source="{Binding Texture}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Image>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </Canvas>
             </ScrollViewer>

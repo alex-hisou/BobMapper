@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace BobMapper
 {
@@ -69,6 +70,27 @@ namespace BobMapper
         }
 
         
+    }
+
+    
+    public class CenteringCanvas : Canvas
+    {
+        //WARNING: VIBECODED CRAP!!!
+        protected override Size ArrangeOverride(Size arrangeSize)
+        {
+            foreach (UIElement child in Children)
+            { 
+                double x = GetLeft(child);
+                double y = GetTop(child);
+                if (double.IsNaN(x)) x = 0;
+                if (double.IsNaN(y)) y = 0;
+                double centeredX = x - (child.DesiredSize.Width / 2);
+                double centeredY = y - (child.DesiredSize.Height / 2);
+
+                child.Arrange(new Rect(new Point(centeredX, centeredY), child.DesiredSize));
+            }
+            return arrangeSize;
+        }
     }
 
     public class SnapCoordinate : INotifyPropertyChanged
