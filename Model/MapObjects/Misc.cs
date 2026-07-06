@@ -77,7 +77,7 @@ namespace BobMapper.Model.MapObjects
             {
                 rotation = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rotation)));
-                ViewRotation = value + 180;
+                ViewRotation = value;
             }
         }
 

@@ -629,7 +629,11 @@
                                         <RotateTransform Angle="{Binding ViewRotation}"/>
                                     </Setter.Value>
                                 </Setter>
-                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleY="-1"/>
+                                    </Setter.Value>
+                                </Setter>
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemsPanel>
