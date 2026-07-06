@@ -35,7 +35,22 @@ namespace BobMapper
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = Regex.IsMatch(e.Text, "[^0-9][^-]+");
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9\\-.]");
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                TextBox textBox = sender as TextBox;
+                if (textBox != null)
+                {
+                    var bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+                    bindingExpression?.UpdateSource();
+                    Keyboard.ClearFocus();
+                }
+                e.Handled = true;
+            }
         }
 
         private void ClickEmpty(object sender, MouseEventArgs e)

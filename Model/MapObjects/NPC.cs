@@ -19,18 +19,6 @@ namespace BobMapper.Model.MapObjects
             {
                 rotation = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rotation)));
-                ViewRotation = value + 180;
-            }
-        }
-
-        private int viewRotation;
-
-        [JsonIgnore]
-        public int ViewRotation
-        {
-            get { return viewRotation; }
-            set { viewRotation = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ViewRotation)));
             }
         }
 

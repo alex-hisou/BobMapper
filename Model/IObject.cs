@@ -11,7 +11,6 @@ namespace BobMapper.Model
         SnapCoordinate Coordinates { get; set; }
 
         int Rotation {  get; set; }
-        int ViewRotation { get; set; }
         
     }
 
