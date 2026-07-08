@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,12 +14,11 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using BobMapper.Model;
+using BobMapper.Model.MapObjects;
 using BobMapper.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using BobMapper.Model.MapObjects;
 using static BobMapper.Model.MapManager;
-using System.IO;
 
 namespace BobMapper.ViewModel
 {
@@ -76,12 +77,44 @@ namespace BobMapper.ViewModel
             CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls);
             CurrentNPCs = new ObservableCollection<NPC>(CurrentMap.npcs);
             CurrentPathPoints = new ObservableCollection<PathPoint>(CurrentMap.pathPoints);
+            AttachAllPathPointHandlers();
             CurrentMiscs = new ObservableCollection<Misc>(CurrentMap.miscs);
             CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors));
             CurrentDoors = new ObservableCollection<Door>(CurrentMap.doors);
             CurrentLoots = new ObservableCollection<Loot>(CurrentMap.loots);
             CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMap.tileset);
             CurrentSelections.SelectedTextureType = TextureType.All;
+        }
+        internal void AttachAllPathPointHandlers()
+        {
+            foreach (PathPoint pathPoint in CurrentPathPoints)
+            {
+                AttachNewPathPointHandler(pathPoint);
+                ResolvePathPointConnection(pathPoint);
+            }
+        }
+
+        private void ResolvePathPointConnection(PathPoint pathPoint)
+        {
+            var target = CurrentPathPoints.FirstOrDefault(x => x.Id == pathPoint.ConnectToId);
+            if (target != null)
+            {
+                pathPoint.ConnectedPathPoint = target;
+            }
+            else if (pathPoint.ConnectToId.HasValue)
+            {
+                SystemSounds.Exclamation.Play();
+            }
+        }
+
+        internal void AttachNewPathPointHandler(PathPoint pathPoint)
+        {
+            pathPoint.ConnectionPointChanged += FillPathPointConnectCoordinate;
+        }
+
+        public void FillPathPointConnectCoordinate(object sender, EventArgs e)
+        {
+            ResolvePathPointConnection((PathPoint)sender);
         }
 
         //[RelayCommand]
@@ -113,12 +146,14 @@ namespace BobMapper.ViewModel
                     break;
                 case Tools.AddNPC:
                     SnapCoordinate snappedNPCPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    NPC npc = new NPC(snappedNPCPlacementPos, NPC.NPCType.BulkyCop, 0, false, false);
+                    NPC npc = new NPC(snappedNPCPlacementPos, NPC.NPCType.BulkyCop, 0, false, false, 0);
                     CurrentNPCs.Add(npc);
                     break;
                 case Tools.AddPathPoint:
                     SnapCoordinate snappedPathPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    PathPoint pathPoint = new PathPoint(snappedPathPlacementPos, 0, 0);
+                    int lastId = CurrentPathPoints.Max(x => x.Id);
+                    PathPoint pathPoint = new PathPoint(snappedPathPlacementPos, 0, lastId + 1);
+                    AttachNewPathPointHandler(pathPoint);
                     CurrentPathPoints.Add(pathPoint);
                     break;
                 case Tools.AddMisc:

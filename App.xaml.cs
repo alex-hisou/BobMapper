@@ -124,7 +124,8 @@ namespace BobMapper
             get { return snappedXPos; }
             set { snappedXPos = value;
                 float floatValue = value * FloorSize;
-                XPos = Convert.ToInt32(floatValue); }
+                XPos = Convert.ToInt32(floatValue);
+            }
         }
         private float snappedYPos;
         public float SnappedYPos
@@ -132,7 +133,8 @@ namespace BobMapper
             get { return snappedYPos; }
             set { snappedYPos = value;
                 float floatValue = value * FloorSize;
-                YPos = Convert.ToInt32(floatValue); }
+                YPos = Convert.ToInt32(floatValue);
+            }
         }
 
 

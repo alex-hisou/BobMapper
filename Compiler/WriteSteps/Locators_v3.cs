@@ -22,8 +22,8 @@ namespace BobMapper.Compiler.WriteSteps
 
             List<byte> locatorByteBuffer =
             [
-                .. NPCsAsBytes(npcs),
                 .. PathPointsAsBytes(pathPoints),
+                .. NPCsAsBytes(npcs),
                 .. MiscsAsBytes(miscs),
                 .. AddLocatorQueueAsBytes(),
             ];
@@ -42,8 +42,9 @@ namespace BobMapper.Compiler.WriteSteps
                 FloatCoordinate npcCompiledCoordinate = new FloatCoordinate(npc.Coordinates, npc.Rotation);
                 Array.Copy(npcCompiledCoordinate.CompiledBytes, 0, currentByteNPC, 0, 16);
                 currentByteNPC[16] = 0x01; //NPC Header
-                currentByteNPC[20] = Convert.ToByte(currentLocatorId);
-                currentByteNPC[60] = Convert.ToByte((int)npc.Type);
+                Array.Copy(BitConverter.GetBytes(currentLocatorId), 0, currentByteNPC, 20, 4);
+                Array.Copy(BitConverter.GetBytes(npc.FirstPathPointId), 0, currentByteNPC, 56, 4);
+                Array.Copy(BitConverter.GetBytes((int)npc.Type), 0, currentByteNPC, 60, 4);
                 if (npc.AttachLoot)
                 {
                     QueuedLocator queueAttachLoot = new QueuedLocator(QueuedLocator.LocatorTypes.Loot, npc.Coordinates);
@@ -70,15 +71,24 @@ namespace BobMapper.Compiler.WriteSteps
                 PathPoint point = pathPoints[i];
                 //TODO: What the fuck?
                 FloatCoordinate pathPointCompileCoordinate = new(point.Coordinates, point.Rotation);
-                Array.Copy(pathPointCompileCoordinate.CompiledBytes, 0, currentBytePathPoint, 1, 14);
-                currentBytePathPoint[15] = 0x05; //Path Point Header
-                currentBytePathPoint[19] = Convert.ToByte(currentLocatorId);
-                //currentBytePathPoint[55] = Convert.ToByte(connectFromIds[i]);
-                currentBytePathPoint[59] = Convert.ToByte(point.Duration);
-                currentBytePathPoint[63] = Convert.ToByte(point.ConnectToId);
+                Array.Copy(pathPointCompileCoordinate.CompiledBytes, 0, currentBytePathPoint, 0, pathPointCompileCoordinate.CompiledBytes.Length);
+                currentBytePathPoint[16] = 0x05; //Path Point Header
+                Array.Copy(BitConverter.GetBytes(currentLocatorId), 0, currentBytePathPoint, 20, 4);
+                int connectFromId = 0;
+                connectFromId = pathPoints.FirstOrDefault(x => x.ConnectToId == point.Id).Id;
+                Array.Copy(BitConverter.GetBytes(connectFromId), 0, currentBytePathPoint, 56, 4);
+                //currentBytePathPoint[56] = Convert.ToByte(connectFromIds[i]);
+                Array.Copy(BitConverter.GetBytes(point.Duration), 0, currentBytePathPoint, 60, 4);
+                int connectToId = 0;
+                if(point.ConnectToId.HasValue)
+                {
+                    connectToId = (int)point.ConnectToId;
+                }
+                Array.Copy(BitConverter.GetBytes(connectToId), 0, currentBytePathPoint, 64, 4);
                 bytePathPoints.AddRange(currentBytePathPoint);
                 currentLocatorId++;
             }
+            currentLocatorId = pathPoints.Max(x => x.Id) + 1;
             return bytePathPoints;
         }
 
