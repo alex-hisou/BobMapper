@@ -330,6 +330,10 @@
                                             <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                             PreviewTextInput="TextBox_PreviewTextInput"
                                                      PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
+                                            <Label Width="170">Starting Path Point (Id)</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding FirstPathPointId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                                    PreviewTextInput="TextBox_PreviewTextInput"
+                                            PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Asset</Label>
                                             <Image Source="{Binding Texture}" MaxHeight="100" MaxWidth="100"/>
                                             <CheckBox Content="Has loot attached" Width="250" IsChecked="{Binding AttachLoot}"/>
@@ -343,9 +347,7 @@
                                     <DataTemplate DataType="{x:Type object:PathPoint}">
                                         <WrapPanel Width="300">
                                             <Label Width="170">Path point Id</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"
-                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
+                                            <Label Width="100" Height="20" Content="{Binding Id}"></Label>
                                             <Label Width="170">Next path point Id</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding ConnectToId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                             PreviewTextInput="TextBox_PreviewTextInput"
@@ -600,14 +602,17 @@
                     <ItemsControl ItemsSource="{Binding CurrentPathPoints}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:PathPoint}">
-                                <Canvas x:Name="InnerCanvas">
+                                <Canvas>
                                     <Line StrokeDashArray="4 2" StrokeThickness="2" Stroke="White"
                                           X1="0" 
                                           Y1="0"
-                                          X2="{Binding LineConnectionCoordinate.XPos, UpdateSourceTrigger=PropertyChanged}" 
-                                          Y2="{Binding LineConnectionCoordinate.YPos, UpdateSourceTrigger=PropertyChanged}">
+                                          X2="{Binding ConnectionDeltaX, UpdateSourceTrigger=PropertyChanged}" 
+                                          Y2="{Binding ConnectionDeltaY, UpdateSourceTrigger=PropertyChanged}">
                                     </Line>
                                     <Ellipse Width="10" Height="10" Stroke="White" Fill="White">
+                                        <Ellipse.RenderTransform>
+                                            <TranslateTransform X="-5" Y="-5"/>
+                                        </Ellipse.RenderTransform>
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                                 <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
@@ -618,17 +623,17 @@
                                 </Canvas>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <local:CenteringCanvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemContainerStyle>
                             <Style TargetType="ContentPresenter">
                                 <Setter Property="Canvas.Left" Value="{Binding Coordinates.XPos}" />
                                 <Setter Property="Canvas.Top" Value="{Binding Coordinates.YPos}" />
                             </Style>
                         </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Canvas></Canvas>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
                     </ItemsControl>
                     <ItemsControl ItemsSource="{Binding CurrentMiscs}">
                         <ItemsControl.ItemsPanel>

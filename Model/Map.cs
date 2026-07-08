@@ -45,6 +45,8 @@ namespace BobMapper.Model
             tileset = Tilesets.Labs;
         }
 
+        
+
 
         [JsonConstructor] //Use only for initialization from json. Otherwise write properties directly using the no param constructor above
         public Map(List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, List<Loot> loots, Floor[][] floors, Chapter levelChapter, int levelNumber, Tilesets tileset, List<Door> doors, int Width, int Height)

@@ -22,6 +22,15 @@ namespace BobMapper.Model.MapObjects
             }
         }
 
+        private int firstPathPointId;
+
+        public int FirstPathPointId
+        {
+            get { return firstPathPointId; }
+            set { firstPathPointId = value; }
+        }
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private string texture;
@@ -51,7 +60,7 @@ namespace BobMapper.Model.MapObjects
             }
         }
 
-        public NPC(SnapCoordinate coordinates, NPCType type, int rotation, bool attachLoot, bool attachMainLoot)
+        public NPC(SnapCoordinate coordinates, NPCType type, int rotation, bool attachLoot, bool attachMainLoot, int firstPathPointId)
         {
             Coordinates = coordinates;
             Type = type;
@@ -59,6 +68,7 @@ namespace BobMapper.Model.MapObjects
             Rotation = rotation;
             AttachLoot = attachLoot;
             AttachMainLoot = attachMainLoot;
+            FirstPathPointId = firstPathPointId;
         }
 
         public void DeleteObject()
