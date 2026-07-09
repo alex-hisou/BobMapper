@@ -1973,16 +1973,26 @@
     <Resource Include="Resources\LootTextures\Loot_WitheredPlant.png" />
     <Resource Include="Resources\LootTextures\Loot_Yarn.png" />
     <Resource Include="Resources\MiscTextures\BobSpawn.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\MiscTextures\DisguisePoint.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\MiscTextures\Key.png" />
-    <Resource Include="Resources\MiscTextures\Lock.png" />
-    <Resource Include="Resources\MiscTextures\LootGlare.png" />
-    <Resource Include="Resources\MiscTextures\MainLoot.png" />
-    <Resource Include="Resources\MiscTextures\SoundPoint.png" />
+    <Resource Include="Resources\MiscTextures\Key.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\MiscTextures\Lock.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\MiscTextures\LootGlare.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\MiscTextures\MainLoot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\MiscTextures\SoundPoint.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\NPCTextures\BaldGuard.png" />
     <Resource Include="Resources\NPCTextures\Female.png" />
     <Resource Include="Resources\NPCTextures\Guard.png" />
