@@ -64,6 +64,11 @@ namespace BobMapper.Compiler.WriteSteps
         private List<byte> PathPointsAsBytes(List<PathPoint> pathPoints)
         {
             List<byte> bytePathPoints = new List<byte>();
+            if (pathPoints.Count == 0)
+            {
+                currentLocatorId = 1;
+                return bytePathPoints;
+            }
             //int[] connectFromIds = CompilerServices.GetConnectFromIds(pathPoints);
             for (int i = 0; i < pathPoints.Count; i++)
             {

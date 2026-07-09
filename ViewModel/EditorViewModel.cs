@@ -40,6 +40,22 @@ namespace BobMapper.ViewModel
             set { fileName = value; }
         }
 
+        private int viewOffsetX;
+
+        public int ViewOffsetX
+        {
+            get { return viewOffsetX; }
+            set { viewOffsetX = value; }
+        }
+
+        private int viewOffsetY;
+
+        public int ViewOffsetY
+        {
+            get { return viewOffsetY; }
+            set { viewOffsetY = value; }
+        }
+
 
         public ObservableCollection<Wall> CurrentWalls { get => currentWalls; set => currentWalls = value; }
         private ObservableCollection<Wall> currentWalls;
@@ -72,6 +88,8 @@ namespace BobMapper.ViewModel
         {
             FileName = filename;
             CurrentMap = JsonMapParse.LoadData(filename);
+            ViewOffsetX = CurrentMap.Width / -2;
+            ViewOffsetY = CurrentMap.Height / -2;
             CurrentSelections = new Selections();
             CurrentProps = new ObservableCollection<Prop>(CurrentMap.props);
             CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls);

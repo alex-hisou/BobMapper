@@ -55,11 +55,5 @@ namespace BobMapper.Model
         }
 
         public static ResourceManager resourceManager = Resources.ResourceManager;
-
-        public static Dictionary<int, Coordinate> houseSizeSchema = new Dictionary<int, Coordinate>()
-        {
-            { 0, new Coordinate(12,12) }
-
-        };
     }
 }

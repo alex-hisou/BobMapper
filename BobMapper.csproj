@@ -1543,7 +1543,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\FloorTextures\Floor_Nothing.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\FloorTextures\Floor_Orangetiles.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
