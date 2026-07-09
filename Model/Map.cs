@@ -28,21 +28,24 @@ namespace BobMapper.Model
         public Floor[][] floors;
         public Tilesets tileset;
 
-        public Map(int inputHouseSize)
+        public Map(int sizeX, int sizeY, Tilesets tileset)
         {
-            Width = MapManager.houseSizeSchema[inputHouseSize].XPos;
-            Height = MapManager.houseSizeSchema[inputHouseSize].YPos;
+            Width = sizeX; 
+            Height = sizeY;
             floors = new Floor[Width][];
             //System.Text.Json doesnt support multi-d arrays, which is why we do this terribleness
             //And Im too lazy to switch to newtonsoft
-            for (int i = 0; i < Height; i++)
+            for (int i = 0; i < Width; i++)
             {
                 floors[i] = new Floor[Height];
+                for (int j = 0; j < Height; j++)
+                {
+                    floors[i][j] = new Floor(@"/Resources/FloorTextures/Floor_Nothing.png", @"/Resources/FloorTextures/Floor_Nothing.png");
+                }
             }
             Width *= SnapCoordinate.FloorSize; 
             Height *= SnapCoordinate.FloorSize;
-            //FOR TESTING ONLY, DELETE LATER
-            tileset = Tilesets.Labs;
+            this.tileset = tileset;
         }
 
         

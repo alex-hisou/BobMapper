@@ -425,7 +425,7 @@
                     </Canvas.RenderTransform>
                     <!-- Might have to be offset -->
                     <!-- TODO: Add Texture 2-->
-                    <ItemsControl ItemsSource="{Binding CurrentFloors}" Canvas.Left="-384" Canvas.Top="-384">
+                    <ItemsControl ItemsSource="{Binding CurrentFloors}" Canvas.Left="{Binding ViewOffsetX}" Canvas.Top="{Binding ViewOffsetY}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <ItemsControl ItemsSource="{Binding .}">

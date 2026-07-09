@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BobMapper.Model;
 using BobMapper.Services;
+using BobMapper.View;
 using BobMapper.ViewModel;
 
 namespace BobMapper
@@ -32,25 +33,12 @@ namespace BobMapper
 
         private void NewMod_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.FileName = "Map"; 
-            dialog.DefaultExt = ".json"; 
-            dialog.Filter = "BobMapper Json Files (.json)|*.json"; 
-
-            bool? result = dialog.ShowDialog();
-            string filename;
-
-            if (result == true)
+            CreateMap createMap = new CreateMap();
+            createMap.Show();
+            createMap.MapCreationComplete += (s, e) =>
             {
-                filename = dialog.FileName;
-            }
-            else { return; }
-            Map map = new Map(0);
-            string emptyJson = JsonSerializer.Serialize(map, JsonMapParse.jsonSerializerOptions);
-            File.WriteAllText(filename, emptyJson);
-            Editor editor = new Editor(filename);
-            editor.Show();
-            this.Close();
+                this.Close();
+            };
         }
 
         private void LoadMod_Click(object sender, RoutedEventArgs e)
