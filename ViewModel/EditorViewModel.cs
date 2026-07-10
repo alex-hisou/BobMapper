@@ -32,6 +32,15 @@ namespace BobMapper.ViewModel
             set { currentSelections = value; }
         }
 
+        private ViewportData currentViewportData;
+
+        public ViewportData CurrentViewportData
+        {
+            get { return currentViewportData; }
+            set { currentViewportData = value; }
+        }
+
+
         private string fileName;
 
         public string FileName
@@ -39,23 +48,6 @@ namespace BobMapper.ViewModel
             get { return fileName; }
             set { fileName = value; }
         }
-
-        private int viewOffsetX;
-
-        public int ViewOffsetX
-        {
-            get { return viewOffsetX; }
-            set { viewOffsetX = value; }
-        }
-
-        private int viewOffsetY;
-
-        public int ViewOffsetY
-        {
-            get { return viewOffsetY; }
-            set { viewOffsetY = value; }
-        }
-
 
         public ObservableCollection<Wall> CurrentWalls { get => currentWalls; set => currentWalls = value; }
         private ObservableCollection<Wall> currentWalls;
@@ -88,8 +80,15 @@ namespace BobMapper.ViewModel
         {
             FileName = filename;
             CurrentMap = JsonMapParse.LoadData(filename);
-            ViewOffsetX = CurrentMap.Width / -2;
-            ViewOffsetY = CurrentMap.Height / -2;
+            CurrentViewportData = new ViewportData
+            {
+                ViewOffsetX = CurrentMap.Width / -2,
+                ViewOffsetY = CurrentMap.Height / -2,
+                CameraX = 0,
+                CameraY = 0,
+                ZoomX = 1,
+                ZoomY = -1
+            };
             CurrentSelections = new Selections();
             CurrentProps = new ObservableCollection<Prop>(CurrentMap.props);
             CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls);
@@ -453,6 +452,50 @@ namespace BobMapper.ViewModel
                 jaggedFloor[i] = floorRow;
             }
             return jaggedFloor;
+        }
+
+        [RelayCommand]
+        internal void MoveViewport(string direction)
+        {
+            switch (direction)
+            {
+                case "Up":
+                    CurrentViewportData.CameraY += 64;
+                    break;
+                case "Right" :
+                    CurrentViewportData.CameraX -= 64;
+                    break;
+                case "Down" :
+                    CurrentViewportData.CameraY -= 64;
+                    break;
+                case "Left" :
+                    CurrentViewportData.CameraX += 64;
+                    break;
+                case "Reset":
+                    CurrentViewportData.CameraX = 0;
+                    CurrentViewportData.CameraY = 0;
+                    break;
+            }
+        }
+
+        [RelayCommand]
+        internal void ScaleViewport(string direction)
+        {
+            switch (direction)
+            {
+                case "In":
+                    CurrentViewportData.ZoomX += 0.1;
+                    CurrentViewportData.ZoomY -= 0.1;
+                    break;
+                case "Out":
+                    CurrentViewportData.ZoomX -= 0.1;
+                    CurrentViewportData.ZoomY += 0.1;
+                    break;
+                case "Reset":
+                    CurrentViewportData.ZoomX = 1;
+                    CurrentViewportData.ZoomY = -1;
+                    break;
+            }
         }
 
         [RelayCommand]
