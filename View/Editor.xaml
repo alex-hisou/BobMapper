@@ -34,6 +34,22 @@
     
     <Window.InputBindings>
         <KeyBinding Key="Delete" Command="{Binding DeleteObjectCommand}"/>
+        <KeyBinding Key="Up" Modifiers="Shift" Command="{Binding MoveViewportCommand}" 
+            CommandParameter="Up"/>
+        <KeyBinding Key="Right" Modifiers="Shift" Command="{Binding MoveViewportCommand}" 
+            CommandParameter="Right"/>
+        <KeyBinding Key="Down" Modifiers="Shift" Command="{Binding MoveViewportCommand}" 
+            CommandParameter="Down"/>
+        <KeyBinding Key="Left" Modifiers="Shift" Command="{Binding MoveViewportCommand}" 
+            CommandParameter="Left"/>
+        <KeyBinding Key="C" Modifiers="Shift" Command="{Binding MoveViewportCommand}"
+            CommandParameter="Reset"/>
+        <KeyBinding Key="Subtract" Modifiers="Shift" Command="{Binding ScaleViewportCommand}"
+                    CommandParameter="Out"/>
+        <KeyBinding Key="Add" Modifiers="Shift" Command="{Binding ScaleViewportCommand}"
+                    CommandParameter="In"/>
+        <KeyBinding Key="Multiply" Modifiers="Shift" Command="{Binding ScaleViewportCommand}"
+                    CommandParameter="Reset"/>
     </Window.InputBindings>
     
     <Grid>
@@ -415,17 +431,20 @@
                 </StackPanel>
             </StackPanel>
             <!-- BAD CANVAS CODE AHEAD -->
-            <ScrollViewer HorizontalScrollBarVisibility="Visible" HorizontalContentAlignment="Center"
+            <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" HorizontalContentAlignment="Center"
                           VerticalContentAlignment="Center" Background="Gray" Focusable="False"
                           PreviewMouseDown="ClickEmpty" x:Name="ScrollPlane">
                 <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Width="0" Height="0" 
                     RenderTransformOrigin="0.5,0.5">
                     <Canvas.RenderTransform>
-                        <ScaleTransform ScaleY="-1"/>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="{Binding CurrentViewportData.ZoomY}" ScaleX="{Binding CurrentViewportData.ZoomX}"/>
+                            <TranslateTransform X="{Binding CurrentViewportData.CameraX, UpdateSourceTrigger=PropertyChanged}" Y="{Binding CurrentViewportData.CameraY, UpdateSourceTrigger=PropertyChanged}"/>
+                        </TransformGroup>
                     </Canvas.RenderTransform>
                     <!-- Might have to be offset -->
                     <!-- TODO: Add Texture 2-->
-                    <ItemsControl ItemsSource="{Binding CurrentFloors}" Canvas.Left="{Binding ViewOffsetX}" Canvas.Top="{Binding ViewOffsetY}">
+                    <ItemsControl ItemsSource="{Binding CurrentFloors}" Canvas.Left="{Binding CurrentViewportData.ViewOffsetX}" Canvas.Top="{Binding CurrentViewportData.ViewOffsetY}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <ItemsControl ItemsSource="{Binding .}">
@@ -451,7 +470,7 @@
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel Width="768"/>
+                                <WrapPanel Width="{Binding CurrentMap.Width, RelativeSource={RelativeSource AncestorType=ScrollViewer}}"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemContainerStyle>
@@ -549,15 +568,17 @@
                     <ItemsControl ItemsSource="{Binding CurrentDoors}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:Door}">
-                                <Line StrokeThickness="10" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
+                                <Canvas>
+                                    <Line StrokeThickness="10" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
                                 X2="{Binding Point2.XPos}" Y2="{Binding Point2.YPos}" Fill="Brown" Stroke="Brown">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
-                                            RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Line>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                            RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Line>
+                                </Canvas>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
@@ -587,6 +608,7 @@
                                             <RotateTransform Angle="{Binding Rotation}"/>
                                         </TransformGroup>
                                     </Grid.RenderTransform>
+                                    <Canvas>
                                     <Image Source="{Binding Texture}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -595,6 +617,9 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Image>
+                                        <Image Source="/Resources/MiscTextures/LootGlare.png" Visibility="{Binding AttachLoot, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
+                                        <Image Source="/Resources/MiscTextures/MainLoot.png" Visibility="{Binding AttachMainLoot, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
+                                    </Canvas>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
