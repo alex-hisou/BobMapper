@@ -10,6 +10,7 @@
         xmlns:vm="clr-namespace:BobMapper.ViewModel"
         xmlns:s="clr-namespace:System;assembly=netstandard"
         xmlns:services="clr-namespace:BobMapper.Services"
+        xmlns:uc="clr-namespace:BobMapper.View.UserControls"
         xmlns:ctrls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework" d:DataContext="{d:DesignInstance Type=vm:EditorViewModel}"
         mc:Ignorable="d"
         Background="LightGray"
@@ -51,8 +52,8 @@
         <KeyBinding Key="Multiply" Modifiers="Shift" Command="{Binding ScaleViewportCommand}"
                     CommandParameter="Reset"/>
     </Window.InputBindings>
-    
-    <Grid>
+
+    <Grid x:Name="WindowGrid">
         <DockPanel Background="SlateGray">
             <Menu DockPanel.Dock="Top" Width="auto" Height="20">
                 <MenuItem Header="File">
@@ -439,7 +440,7 @@
                     <Canvas.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleY="{Binding CurrentViewportData.ZoomY}" ScaleX="{Binding CurrentViewportData.ZoomX}"/>
-                            <TranslateTransform X="{Binding CurrentViewportData.CameraX, UpdateSourceTrigger=PropertyChanged}" Y="{Binding CurrentViewportData.CameraY, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TranslateTransform X="{Binding CurrentViewportData.CameraX}" Y="{Binding CurrentViewportData.CameraY}"/>
                         </TransformGroup>
                     </Canvas.RenderTransform>
                     <!-- Might have to be offset -->
@@ -693,6 +694,11 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                    <uc:MoveGizmo x:Name="PropGizmo" Visibility="{Binding CurrentGizmoData.PropGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Canvas.Left="{Binding CurrentSelections.SelectedProp.Coordinates.XPos}"
+                                  Canvas.Top="{Binding CurrentSelections.SelectedProp.Coordinates.YPos}"
+                                  DragCommand="{Binding CurrentGizmoData.PropGizmoMovedCommand}">
+                    </uc:MoveGizmo>
                 </Canvas>
             </ScrollViewer>
         </DockPanel>

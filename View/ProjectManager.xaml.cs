@@ -46,14 +46,10 @@ namespace BobMapper
             var dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.DefaultExt = ".json"; 
             dialog.Filter = "BobMapper Json Files (.json)|*.json"; 
-
-            // Show open file dialog box
             bool? result = dialog.ShowDialog();
             string filename;
-            // Process open file dialog box results
             if (result == true)
             {
-                // Open document
                 filename = dialog.FileName;
             }
             else { return; }

@@ -40,7 +40,13 @@ namespace BobMapper.ViewModel
             set { currentViewportData = value; }
         }
 
+        private GizmoData currentGizmoData;
 
+        public GizmoData CurrentGizmoData
+        {
+            get { return currentGizmoData; }
+            set { currentGizmoData = value; }
+        }
         private string fileName;
 
         public string FileName
@@ -90,6 +96,7 @@ namespace BobMapper.ViewModel
                 ZoomY = -1
             };
             CurrentSelections = new Selections();
+            CurrentGizmoData = new GizmoData(CurrentSelections);
             CurrentProps = new ObservableCollection<Prop>(CurrentMap.props);
             CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls);
             CurrentNPCs = new ObservableCollection<NPC>(CurrentMap.npcs);
@@ -102,6 +109,7 @@ namespace BobMapper.ViewModel
             CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMap.tileset);
             CurrentSelections.SelectedTextureType = TextureType.All;
         }
+
         internal void AttachAllPathPointHandlers()
         {
             foreach (PathPoint pathPoint in CurrentPathPoints)

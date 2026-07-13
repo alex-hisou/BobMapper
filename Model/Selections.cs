@@ -81,8 +81,12 @@ namespace BobMapper.Model
             {
                 selectedProp = value;
                 OnPropertyChanged();
+                SelectedPropChanged.Invoke(this, EventArgs.Empty);
             }
         }
+
+        public event EventHandler SelectedPropChanged;
+
         private NPC selectedNPC;
         public NPC SelectedNPC
         {
