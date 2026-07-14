@@ -15,7 +15,7 @@
         mc:Ignorable="d"
         Background="LightGray"
         Title="Editor" Height="720" Width="1280" WindowState="Maximized">
-    
+
     <Window.Resources>
         <ObjectDataProvider x:Key="Tools" ObjectType="{x:Type s:Enum}" MethodName="GetValues">
             <ObjectDataProvider.MethodParameters>
@@ -32,7 +32,7 @@
         <s:Boolean x:Key="True">True</s:Boolean>
         <s:Boolean x:Key="False">False</s:Boolean>
     </Window.Resources>
-    
+
     <Window.InputBindings>
         <KeyBinding Key="Delete" Command="{Binding DeleteObjectCommand}"/>
         <KeyBinding Key="Up" Modifiers="Shift" Command="{Binding MoveViewportCommand}" 
@@ -240,7 +240,7 @@
                                             <Image Source="{Binding Texture}" MaxHeight="100" MaxWidth="100"/>
                                             <Label Content="Type"/>
                                             <ComboBox SelectedItem="{Binding Type}" ItemsSource="{Binding MiscTypeValues}">
-                                                
+
                                             </ComboBox>
                                         </WrapPanel>
                                     </DataTemplate>
@@ -402,7 +402,7 @@
                                 <Image Source="{Binding CurrentSelections.SelectedTexture}" Height="100" Width="100"/>
                             </Border>
                             <Label Width="250" Content="{Binding CurrentSelections.SelectedTexture}"></Label>
-                            
+
                             <ComboBox Width="250" Height="20" Margin="20" ItemsSource="{Binding CurrentMap.TextureTypeValues}" SelectedItem="{Binding CurrentSelections.SelectedTextureType}">
                             </ComboBox>
                             <ScrollViewer Width="300" Height="740">
@@ -610,14 +610,14 @@
                                         </TransformGroup>
                                     </Grid.RenderTransform>
                                     <Canvas>
-                                    <Image Source="{Binding Texture}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                        <Image Source="{Binding Texture}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
                                                 RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Image>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </Image>
                                         <Image Source="/Resources/MiscTextures/LootGlare.png" Visibility="{Binding AttachLoot, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
                                         <Image Source="/Resources/MiscTextures/MainLoot.png" Visibility="{Binding AttachMainLoot, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
                                     </Canvas>
@@ -697,7 +697,42 @@
                     <uc:MoveGizmo x:Name="PropGizmo" Visibility="{Binding CurrentGizmoData.PropGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
                         Canvas.Left="{Binding CurrentSelections.SelectedProp.Coordinates.XPos}"
                                   Canvas.Top="{Binding CurrentSelections.SelectedProp.Coordinates.YPos}"
-                                  DragCommand="{Binding CurrentGizmoData.PropGizmoMovedCommand}">
+                                  DragCommand="{Binding CurrentGizmoData.PropGizmoMovedCommand}" RenderTransformOrigin="0.5,0.5">
+                        </uc:MoveGizmo>
+                    <uc:MoveGizmo x:Name="NPCGizmo" Visibility="{Binding CurrentGizmoData.NPCGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                     Canvas.Left="{Binding CurrentSelections.SelectedNPC.Coordinates.XPos}"
+                        Canvas.Top="{Binding CurrentSelections.SelectedNPC.Coordinates.YPos}"
+                            DragCommand="{Binding CurrentGizmoData.NPCGizmoMovedCommand}" RenderTransformOrigin="0.5,0.5">
+                    </uc:MoveGizmo>
+                    <uc:MoveGizmo x:Name="WallGizmo1" Visibility="{Binding CurrentGizmoData.WallGizmosEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Canvas.Left="{Binding CurrentSelections.SelectedWall.Point1.XPos}"
+                    Canvas.Top="{Binding CurrentSelections.SelectedWall.Point1.YPos}"
+                    DragCommand="{Binding CurrentGizmoData.WallGizmo1MovedCommand}" RenderTransformOrigin="0.5,0.5">
+                    </uc:MoveGizmo>
+                    <uc:MoveGizmo x:Name="WallGizmo2" Visibility="{Binding CurrentGizmoData.WallGizmosEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Canvas.Left="{Binding CurrentSelections.SelectedWall.Point2.XPos}"
+                    Canvas.Top="{Binding CurrentSelections.SelectedWall.Point2.YPos}"
+                    DragCommand="{Binding CurrentGizmoData.WallGizmo2MovedCommand}" RenderTransformOrigin="0.5,0.5">
+                    </uc:MoveGizmo>
+                    <uc:MoveGizmo x:Name="DoorGizmo1" Visibility="{Binding CurrentGizmoData.DoorGizmosEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Canvas.Left="{Binding CurrentSelections.SelectedDoor.Point1.XPos}"
+                    Canvas.Top="{Binding CurrentSelections.SelectedDoor.Point1.YPos}"
+                    DragCommand="{Binding CurrentGizmoData.DoorGizmo1MovedCommand}" RenderTransformOrigin="0.5,0.5">
+                    </uc:MoveGizmo>
+                    <uc:MoveGizmo x:Name="DoorGizmo2" Visibility="{Binding CurrentGizmoData.DoorGizmosEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Canvas.Left="{Binding CurrentSelections.SelectedDoor.Point2.XPos}"
+                    Canvas.Top="{Binding CurrentSelections.SelectedDoor.Point2.YPos}"
+                    DragCommand="{Binding CurrentGizmoData.DoorGizmo2MovedCommand}" RenderTransformOrigin="0.5,0.5">
+                    </uc:MoveGizmo>
+                    <uc:MoveGizmo x:Name="LootGizmo" Visibility="{Binding CurrentGizmoData.LootGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Canvas.Left="{Binding CurrentSelections.SelectedLoot.Coordinates.XPos}"
+                    Canvas.Top="{Binding CurrentSelections.SelectedLoot.Coordinates.YPos}"
+                    DragCommand="{Binding CurrentGizmoData.LootGizmoMovedCommand}" RenderTransformOrigin="0.5,0.5">
+                    </uc:MoveGizmo>
+                    <uc:MoveGizmo x:Name="MiscGizmo" Visibility="{Binding CurrentGizmoData.MiscGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Canvas.Left="{Binding CurrentSelections.SelectedMisc.Coordinates.XPos}"
+                    Canvas.Top="{Binding CurrentSelections.SelectedMisc.Coordinates.YPos}"
+                    DragCommand="{Binding CurrentGizmoData.MiscGizmoMovedCommand}" RenderTransformOrigin="0.5,0.5">
                     </uc:MoveGizmo>
                 </Canvas>
             </ScrollViewer>
@@ -705,7 +740,7 @@
 
     </Grid>
 
-    
+
 </Window>
 
     

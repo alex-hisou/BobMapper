@@ -22,6 +22,7 @@ namespace BobMapper.View.UserControls
     {
         private bool isDragging;
         private SnapCoordinate lastMousePos;
+        private bool isHorizontal;
 
         public ICommand DragCommand
         {
@@ -50,10 +51,15 @@ namespace BobMapper.View.UserControls
             {
                 return;
             }
+            if(element == HorizontalHandle)
+            {
+                isHorizontal = true;
+            }
+            else { isHorizontal = false;  }
             isDragging = true;
             element.CaptureMouse();
             Point clickPosition = e.GetPosition(this);
-            lastMousePos = SnapCoordinate.UnsnappedCoordinateFactory((float)clickPosition.X, (float)clickPosition.Y);
+            lastMousePos = new((float)clickPosition.X / 64f, (float)clickPosition.Y / 64f);
 
         }
 
@@ -69,9 +75,15 @@ namespace BobMapper.View.UserControls
 
             Point currentMousePos = e.GetPosition(this);
 
-            int newX = (int)currentMousePos.X - lastMousePos.XPos;
-            int newY = (int)currentMousePos.Y - lastMousePos.YPos;
-            SnapCoordinate newCoordinate = SnapCoordinate.UnsnappedCoordinateFactory(newX, newY);
+            float newX = 0;
+            float newY = 0;
+
+            if(isHorizontal)
+            {
+                newX = (float)currentMousePos.X - lastMousePos.XPos;
+            }
+            else { newY = (float)currentMousePos.Y - lastMousePos.YPos; }
+            SnapCoordinate newCoordinate = new(newX / 64, newY / 64);
             DragCommand.Execute(newCoordinate);
         }
 
