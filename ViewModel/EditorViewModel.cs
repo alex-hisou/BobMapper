@@ -142,13 +142,12 @@ namespace BobMapper.ViewModel
             ResolvePathPointConnection((PathPoint)sender);
         }
 
-        //[RelayCommand]
+        [RelayCommand]
         public void SelectTool(Tools tool)
         {
             if (CurrentSelections.SelectedTool != tool)
             {
                 CurrentSelections.SelectedTool = tool;
-                
             }
             else { CurrentSelections.SelectedTool = Tools.None;  }
         }

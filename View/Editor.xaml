@@ -51,6 +51,30 @@
                     CommandParameter="In"/>
         <KeyBinding Key="Multiply" Modifiers="Shift" Command="{Binding ScaleViewportCommand}"
                     CommandParameter="Reset"/>
+        <KeyBinding Key="S" Command="{Binding SelectToolCommand}"
+                    CommandParameter="{x:Static local:Tools.Select}"/>
+        <KeyBinding Key="A" Command="{Binding SelectToolCommand}"
+                    CommandParameter="{x:Static local:Tools.Move}"/>
+        <KeyBinding Key="R" Command="{Binding SelectToolCommand}"
+                    CommandParameter="{x:Static local:Tools.Rotate}"/>
+        <KeyBinding Key="W" Command="{Binding SelectToolCommand}"
+            CommandParameter="{x:Static local:Tools.AddWall}"/>
+        <KeyBinding Key="O" Command="{Binding SelectToolCommand}"
+            CommandParameter="{x:Static local:Tools.AddProp}"/>
+        <KeyBinding Key="N" Command="{Binding SelectToolCommand}"
+            CommandParameter="{x:Static local:Tools.AddNPC}"/>
+        <KeyBinding Key="P" Command="{Binding SelectToolCommand}"
+            CommandParameter="{x:Static local:Tools.AddPathPoint}"/>
+        <KeyBinding Key="F" Command="{Binding SelectToolCommand}"
+            CommandParameter="{x:Static local:Tools.ChangeFloor}"/>
+        <KeyBinding Key="R" Command="{Binding SelectToolCommand}"
+            CommandParameter="{x:Static local:Tools.Rotate}"/>
+        <KeyBinding Key="M" Command="{Binding SelectToolCommand}"
+            CommandParameter="{x:Static local:Tools.AddMisc}"/>
+        <KeyBinding Key="D" Command="{Binding SelectToolCommand}"
+            CommandParameter="{x:Static local:Tools.AddDoor}"/>
+        <KeyBinding Key="L" Command="{Binding SelectToolCommand}"
+            CommandParameter="{x:Static local:Tools.AddLoot}"/>
     </Window.InputBindings>
 
     <Grid x:Name="WindowGrid">
@@ -76,68 +100,79 @@
             </Menu>
             <Menu DockPanel.Dock="Left" Width="auto" Height="auto" Name="ToolDrawer">
                 <MenuItem Header="Select" Name="SelectTool"
-                          Click="ToolToggle">
+                          Command="{Binding SelectToolCommand}" 
+                          CommandParameter="{x:Static local:Tools.Select}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/SelectionTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Move" Name="MoveTool"
-                          Click="ToolToggle">
+                          Command="{Binding SelectToolCommand}" 
+                          CommandParameter="{x:Static local:Tools.Move}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/MoveTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Rotate" Name="RotateTool"
-                          Click="ToolToggle">
+                          Command="{Binding SelectToolCommand}" 
+                          CommandParameter="{x:Static local:Tools.Rotate}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/RotateTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="Draw Wall" Name="AddWallTool"
-                          Click="ToolToggle">
+                          Command="{Binding SelectToolCommand}" 
+                          CommandParameter="{x:Static local:Tools.AddWall}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddWallTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Place Prop" Name="AddPropTool"
-                          Click="ToolToggle">
+                          Command="{Binding SelectToolCommand}" 
+                          CommandParameter="{x:Static local:Tools.AddProp}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddPropTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Add NPC" Name="AddNPCTool"
-                          Click="ToolToggle">
+                          Command="{Binding SelectToolCommand}" 
+                          CommandParameter="{x:Static local:Tools.AddNPC}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddNPCTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Add Path" Name="AddPathTool"
-                          Click="ToolToggle">
+                          Command="{Binding SelectToolCommand}" 
+                          CommandParameter="{x:Static local:Tools.AddPathPoint}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddPathTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Paint Floor" Name="ChangeFloorTool"
-                          Click="ToolToggle">
+                          Command="{Binding SelectToolCommand}" 
+                          CommandParameter="{x:Static local:Tools.ChangeFloor}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddFloorTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Add Misc" Name="AddMiscTool"
-                          Click="ToolToggle">
+                          Command="{Binding SelectToolCommand}" 
+                          CommandParameter="{x:Static local:Tools.AddMisc}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddMiscTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Add Door" Name="AddDoorTool"
-                    Click="ToolToggle">
+                    Command="{Binding SelectToolCommand}" 
+                    CommandParameter="{x:Static local:Tools.AddDoor}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddMiscTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Add Loot" Name="AddLootTool"
-                     Click="ToolToggle">
+                     Command="{Binding SelectToolCommand}" 
+                     CommandParameter="{x:Static local:Tools.AddLoot}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddMiscTool.png"/>
                     </MenuItem.Icon>

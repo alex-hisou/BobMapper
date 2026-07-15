@@ -27,6 +27,7 @@ namespace BobMapper
             InitializeComponent();
             var editorViewModel = new EditorViewModel(filename);
             DataContext = editorViewModel;
+            editorViewModel.CurrentSelections.SelectedToolChanged += ToolToggle;
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight; //otherwise covers taskbar
         }
 
@@ -67,68 +68,47 @@ namespace BobMapper
             
         }
 
-        private void ToolToggle(object sender, RoutedEventArgs e)
+        private void ToolToggle(object sender, EventArgs e)
         {
             //Fuck this code, worst way to do this
-            var vm = (EditorViewModel)DataContext;
-            MenuItem senderReference = (MenuItem)sender;
+            Selections selections = (Selections)sender;
             ToolDrawer.Items.OfType<MenuItem>().ToList().ForEach(x => x.Background = ToolDrawer.Background);
-            switch (senderReference.Name)
+            switch (selections.SelectedTool)
             {
-                case "SelectTool":
-                    vm.SelectTool(Tools.Select);
-                    if (vm.CurrentSelections.SelectedTool == Tools.Select)
-                    { SelectTool.Background = Brushes.DarkGray; }
+                case Tools.Select:
+                    SelectTool.Background = Brushes.DarkGray;
                     break;
-                case "MoveTool":
-                    vm.SelectTool(Tools.Move);
-                    if (vm.CurrentSelections.SelectedTool == Tools.Move)
-                    { MoveTool.Background = Brushes.DarkGray; }
+                case Tools.Move:
+                    MoveTool.Background = Brushes.DarkGray;
                     break;
-                case "RotateTool":
-                    vm.SelectTool(Tools.Rotate);
-                    if (vm.CurrentSelections.SelectedTool == Tools.Rotate)
-                    { RotateTool.Background = Brushes.DarkGray; }
+                case Tools.Rotate:
+                    RotateTool.Background = Brushes.DarkGray;
                     break;
-                case "AddWallTool":
-                    vm.SelectTool(Tools.AddWall);
-                    if (vm.CurrentSelections.SelectedTool == Tools.AddWall)
-                    { AddWallTool.Background = Brushes.DarkGray; }
+                case Tools.AddWall:
+                    AddWallTool.Background = Brushes.DarkGray;
                     break;
-                case "AddPropTool":
-                    vm.SelectTool(Tools.AddProp);
-                    if (vm.CurrentSelections.SelectedTool == Tools.AddProp)
-                    { AddPropTool.Background = Brushes.DarkGray; }
+                case Tools.AddProp:
+                    AddPropTool.Background = Brushes.DarkGray;
                     break;
-                case "AddNPCTool":
-                    vm.SelectTool(Tools.AddNPC);
-                    if (vm.CurrentSelections.SelectedTool == Tools.AddNPC)
-                    { AddNPCTool.Background = Brushes.DarkGray; }
+                case Tools.AddNPC:
+                    AddNPCTool.Background = Brushes.DarkGray;
                     break;
-                case "AddPathTool":
-                    vm.SelectTool(Tools.AddPathPoint);
-                    if (vm.CurrentSelections.SelectedTool == Tools.AddPathPoint)
-                    { AddPathTool.Background = Brushes.DarkGray; }
+                case Tools.AddPathPoint:
+                    AddPathTool.Background = Brushes.DarkGray;
                     break;
-                case "ChangeFloorTool":
-                    vm.SelectTool(Tools.ChangeFloor);
-                    if (vm.CurrentSelections.SelectedTool == Tools.ChangeFloor)
-                    { ChangeFloorTool.Background = Brushes.DarkGray; }
+                case Tools.ChangeFloor:
+                    ChangeFloorTool.Background = Brushes.DarkGray;
                     break;
-                case "AddMiscTool":
-                    vm.SelectTool(Tools.AddMisc);
-                    if (vm.CurrentSelections.SelectedTool == Tools.AddMisc)
-                    { AddMiscTool.Background = Brushes.DarkGray; }
+                case Tools.AddMisc:
+                    AddMiscTool.Background = Brushes.DarkGray;
                     break;
-                case "AddDoorTool":
-                    vm.SelectTool(Tools.AddDoor);
-                    if (vm.CurrentSelections.SelectedTool == Tools.AddDoor)
-                    { AddDoorTool.Background = Brushes.DarkGray; }
+                case Tools.AddDoor:
+                    AddDoorTool.Background = Brushes.DarkGray;
                     break;
-                case "AddLootTool":
-                    vm.SelectTool(Tools.AddLoot);
-                    if (vm.CurrentSelections.SelectedTool == Tools.AddLoot)
-                    { AddLootTool.Background = Brushes.DarkGray; }
+                case Tools.AddLoot:
+                    AddLootTool.Background = Brushes.DarkGray;
+                    break;
+                case Tools.None:
                     break;
                 default:
                     throw new Exception("Invalid tool selection");
