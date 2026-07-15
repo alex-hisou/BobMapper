@@ -39,7 +39,7 @@ namespace BobMapper.Compiler.WriteSteps
             {
                 byte[] currentByteNPC = new byte[76];
                 NPC npc = npcs[i];
-                FloatCoordinate npcCompiledCoordinate = new FloatCoordinate(npc.Coordinates, npc.Rotation);
+                FloatCoordinate npcCompiledCoordinate = new FloatCoordinate(npc.Coordinates, npc.Rotation, false);
                 Array.Copy(npcCompiledCoordinate.CompiledBytes, 0, currentByteNPC, 0, 16);
                 currentByteNPC[16] = 0x01; //NPC Header
                 Array.Copy(BitConverter.GetBytes(currentLocatorId), 0, currentByteNPC, 20, 4);
@@ -75,7 +75,7 @@ namespace BobMapper.Compiler.WriteSteps
                 byte[] currentBytePathPoint = new byte[76];
                 PathPoint point = pathPoints[i];
                 //TODO: What the fuck?
-                FloatCoordinate pathPointCompileCoordinate = new(point.Coordinates, point.Rotation);
+                FloatCoordinate pathPointCompileCoordinate = new(point.Coordinates, point.Rotation, false);
                 Array.Copy(pathPointCompileCoordinate.CompiledBytes, 0, currentBytePathPoint, 0, pathPointCompileCoordinate.CompiledBytes.Length);
                 currentBytePathPoint[16] = 0x05; //Path Point Header
                 Array.Copy(BitConverter.GetBytes(currentLocatorId), 0, currentBytePathPoint, 20, 4);
@@ -104,7 +104,7 @@ namespace BobMapper.Compiler.WriteSteps
             {
                 Misc misc = miscs[i];
                 byte[] currentByteMisc = new byte[76];
-                FloatCoordinate miscCompiledCoordinate = new(misc.Coordinates, misc.Rotation);
+                FloatCoordinate miscCompiledCoordinate = new(misc.Coordinates);
                 Array.Copy(miscCompiledCoordinate.CompiledBytes, 0, currentByteMisc, 0, 16);
                 currentByteMisc[16] = Convert.ToByte((int)misc.Type); //Hacky way to get header from enum value
                 Array.Copy(BitConverter.GetBytes(currentLocatorId), 0, currentByteMisc, 20, 4);
@@ -122,7 +122,7 @@ namespace BobMapper.Compiler.WriteSteps
             {
                 QueuedLocator locator = Compiler.locatorQueue[i];
                 byte[] currentByteLocator = new byte[76];
-                FloatCoordinate locatorCompiledCoordinate = new(locator.Coordinates, locator.Rotation);
+                FloatCoordinate locatorCompiledCoordinate = new(locator.Coordinates, locator.Rotation, false);
                 Array.Copy(locatorCompiledCoordinate.CompiledBytes, 0, currentByteLocator, 0, 16);
                 currentByteLocator[16] = Convert.ToByte((int)locator.LocatorType);
                 Array.Copy(BitConverter.GetBytes(currentLocatorId), 0, currentByteLocator, 20, 4);

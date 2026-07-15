@@ -40,7 +40,13 @@ namespace BobMapper.ViewModel
             set { currentViewportData = value; }
         }
 
+        private GizmoData currentGizmoData;
 
+        public GizmoData CurrentGizmoData
+        {
+            get { return currentGizmoData; }
+            set { currentGizmoData = value; }
+        }
         private string fileName;
 
         public string FileName
@@ -90,6 +96,7 @@ namespace BobMapper.ViewModel
                 ZoomY = -1
             };
             CurrentSelections = new Selections();
+            CurrentGizmoData = new GizmoData(CurrentSelections);
             CurrentProps = new ObservableCollection<Prop>(CurrentMap.props);
             CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls);
             CurrentNPCs = new ObservableCollection<NPC>(CurrentMap.npcs);
@@ -102,6 +109,7 @@ namespace BobMapper.ViewModel
             CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMap.tileset);
             CurrentSelections.SelectedTextureType = TextureType.All;
         }
+
         internal void AttachAllPathPointHandlers()
         {
             foreach (PathPoint pathPoint in CurrentPathPoints)
@@ -168,14 +176,16 @@ namespace BobMapper.ViewModel
                     break;
                 case Tools.AddPathPoint:
                     SnapCoordinate snappedPathPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    int lastId = CurrentPathPoints.Max(x => x.Id);
+                    int lastId = 0;
+                    if(currentPathPoints.Count > 0)
+                    { lastId = CurrentPathPoints.Max(x => x.Id); }
                     PathPoint pathPoint = new PathPoint(snappedPathPlacementPos, 0, lastId + 1);
                     AttachNewPathPointHandler(pathPoint);
                     CurrentPathPoints.Add(pathPoint);
                     break;
                 case Tools.AddMisc:
                     SnapCoordinate snappedMiscPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    Misc misc = new Misc(snappedMiscPlacementPos, Misc.MiscObjects.Key, 0);
+                    Misc misc = new Misc(snappedMiscPlacementPos, Misc.MiscObjects.Key);
                     CurrentMiscs.Add(misc);
                     break;
                 case Tools.AddDoor:

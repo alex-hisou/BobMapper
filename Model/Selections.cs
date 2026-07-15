@@ -59,8 +59,13 @@ namespace BobMapper.Model
         public Tools SelectedTool
         {
             get { return selectedTool; }
-            set { selectedTool = value; }
+            set { selectedTool = value;
+                OnPropertyChanged();
+                SelectedToolChanged.Invoke(this, EventArgs.Empty);
+            }
         }
+
+        public event EventHandler SelectedToolChanged;
 
 
         private Wall selectedWall;
@@ -83,6 +88,7 @@ namespace BobMapper.Model
                 OnPropertyChanged();
             }
         }
+
         private NPC selectedNPC;
         public NPC SelectedNPC
         {

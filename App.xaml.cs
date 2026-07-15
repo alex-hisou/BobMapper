@@ -60,10 +60,10 @@ namespace BobMapper
 
     public class Coordinate
     {
-        public int XPos {  get; set; }
-        public int YPos { get; set; }
+        public float XPos {  get; set; }
+        public float YPos { get; set; }
 
-        public Coordinate(int XPos, int YPos)
+        public Coordinate(float XPos, float YPos)
         {
             this.XPos = XPos;
             this.YPos = YPos;
@@ -100,19 +100,19 @@ namespace BobMapper
         [JsonIgnore]
         public const int FloorSize = 64;
 
-        private int xPos;
+        private float xPos;
 
         [JsonIgnore]
-        public int XPos
+        public float XPos
         {
             get { return xPos; }
             set { xPos = value; OnPropertyChanged(nameof(XPos)); }
         }
 
 
-        private int yPos;
+        private float yPos;
         [JsonIgnore]
-        public int YPos
+        public float YPos
         {
             get { return yPos; }
             set { yPos = value; OnPropertyChanged(nameof(yPos)); }
@@ -133,7 +133,7 @@ namespace BobMapper
             get { return snappedYPos; }
             set { snappedYPos = value;
                 float floatValue = value * FloorSize;
-                YPos = Convert.ToInt32(floatValue);
+                YPos = floatValue;
             }
         }
 
@@ -154,7 +154,7 @@ namespace BobMapper
 
         public static explicit operator Coordinate(SnapCoordinate snapCoordinate)
         {
-            Coordinate coordinate = new Coordinate(Convert.ToInt32(snapCoordinate.SnappedXPos), Convert.ToInt32(snapCoordinate.SnappedYPos));
+            Coordinate coordinate = new Coordinate(snapCoordinate.SnappedXPos, snapCoordinate.SnappedYPos);
             return coordinate;
         }
 

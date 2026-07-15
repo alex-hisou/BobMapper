@@ -9,35 +9,38 @@ namespace BobMapper.Compiler
     { 
 
         internal byte[] CompiledBytes { get; set; }
-        internal bool hasRotation { get; set; }
+        internal bool HasRotation { get; set; }
 
-        public FloatCoordinate(Coordinate coordinates, int rotation)
-        {
-            hasRotation = true;
-            byte[] compiledX = GetFloatCompiledCoordinate(coordinates.XPos);
-            byte[] compiledY = GetFloatCompiledCoordinate(coordinates.YPos);
-            byte[] compiledRotation = GetCompiledRotation(rotation);
-            CompiledBytes = new byte[16];
-            Array.Copy(compiledX, 0, CompiledBytes, 0, compiledX.Length);
-            Array.Copy(compiledY, 0, CompiledBytes, 4, compiledY.Length);
-            Array.Copy(compiledRotation, 0, CompiledBytes, 12, compiledRotation.Length);
-        }
+        private bool isShortened;
 
-        public FloatCoordinate(SnapCoordinate coordinates, int rotation)
+        public FloatCoordinate(SnapCoordinate coordinates, int rotation, bool isShortened)
         {
-            hasRotation = true;
+            HasRotation = true;
+            this.isShortened = isShortened;
             byte[] compiledX = GetFloatCompiledCoordinate(coordinates.SnappedXPos);
             byte[] compiledY = GetFloatCompiledCoordinate(coordinates.SnappedYPos);
             byte[] compiledRotation = GetCompiledRotation(rotation);
-            CompiledBytes = new byte[16];
+            int length;
+            int rotationIndex;
+            if(isShortened)
+            {
+                length = 12;
+                rotationIndex = 8;
+            }
+            else 
+            {
+                length = 16;
+                rotationIndex = 12;
+            }
+            CompiledBytes = new byte[length];
             Array.Copy(compiledX, 0, CompiledBytes, 0, compiledX.Length);
             Array.Copy(compiledY, 0, CompiledBytes, 4, compiledY.Length);
-            Array.Copy(compiledRotation, 0, CompiledBytes, 12, compiledRotation.Length);
+            Array.Copy(compiledRotation, 0, CompiledBytes, rotationIndex, compiledRotation.Length);
         }
 
         public FloatCoordinate(SnapCoordinate coordinates)
         {
-            hasRotation = false;
+            HasRotation = false;
             byte[] compiledX = GetFloatCompiledCoordinate(coordinates.SnappedXPos);
             byte[] compiledY = GetFloatCompiledCoordinate(coordinates.SnappedYPos);
             CompiledBytes = new byte[8];
@@ -47,17 +50,17 @@ namespace BobMapper.Compiler
 
         private byte[] GetCompiledRotation(int rotation)
         {
-            //TODO: Test rotation range
-            float testFloat = 1;
-            byte[] rotationBytes = BitConverter.GetBytes(testFloat);
+            float radians = rotation * (float)Math.PI / 180;
+            if(isShortened)
+            {
+                radians *= -1;
+            }
+            if(radians == 0)
+            {
+                radians = 1;
+            }
+            byte[] rotationBytes = BitConverter.GetBytes(radians);
             return rotationBytes;
-        }
-
-        private byte[] GetFloatCompiledCoordinate(int anyCoordinate)
-        {
-            float halfCoordinate = (float)anyCoordinate / 2;
-            byte[] floatAsBytes = BitConverter.GetBytes(halfCoordinate);
-            return floatAsBytes;
         }
 
         private byte[] GetFloatCompiledCoordinate(float anyCoordinate)

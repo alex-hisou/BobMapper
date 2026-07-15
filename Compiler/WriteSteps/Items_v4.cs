@@ -96,7 +96,7 @@ namespace BobMapper.Compiler.WriteSteps
                 byte[] currentByteProp = new byte[48];
                 currentByteProp[0] = 0x35;
                 Encoding.ASCII.GetBytes(prop.InternalTexture, 0, prop.InternalTexture.Length, currentByteProp, 4);
-                FloatCoordinate compiledCoordinate = new(prop.Coordinates);
+                FloatCoordinate compiledCoordinate = new(prop.Coordinates, prop.Rotation, true);
                 //TODO: Fix rotation
                 Array.Copy(compiledCoordinate.CompiledBytes, 0, currentByteProp, 36, compiledCoordinate.CompiledBytes.Length);
                 byteProps.AddRange(currentByteProp);
@@ -112,7 +112,7 @@ namespace BobMapper.Compiler.WriteSteps
                 byte[] currentLootTexture = new byte[48];
                 currentLootTexture[0] = 0x35;
                 Encoding.ASCII.GetBytes(loot.InternalTexture, 0, loot.InternalTexture.Length, currentLootTexture, 4);
-                FloatCoordinate compiledCoordinate = new(loot.Coordinates);
+                FloatCoordinate compiledCoordinate = new(loot.Coordinates, loot.Rotation, true);
                 Array.Copy(compiledCoordinate.CompiledBytes, 0, currentLootTexture, 36, compiledCoordinate.CompiledBytes.Length);
                 QueuedLocator queuedLocatorLoot = new(QueuedLocator.LocatorTypes.Loot, loot.Coordinates);
                 Compiler.locatorQueue.Add(queuedLocatorLoot);
