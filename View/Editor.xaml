@@ -232,10 +232,6 @@
                                             <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                             PreviewTextInput="TextBox_PreviewTextInput"
                                                      PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
-                                            <Label Width="170">Rotation</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                                PreviewTextInput="TextBox_PreviewTextInput"
-                                                     PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Type</Label>
                                             <Image Source="{Binding Texture}" MaxHeight="100" MaxWidth="100"/>
                                             <Label Content="Type"/>
@@ -679,7 +675,6 @@
                                     <Grid.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform ScaleY="-1"/>
-                                            <RotateTransform Angle="{Binding Rotation}"/>
                                         </TransformGroup>
                                     </Grid.RenderTransform>
                                     <Image Source="{Binding Texture}">
@@ -733,6 +728,11 @@
                     Canvas.Left="{Binding CurrentSelections.SelectedMisc.Coordinates.XPos}"
                     Canvas.Top="{Binding CurrentSelections.SelectedMisc.Coordinates.YPos}"
                     DragCommand="{Binding CurrentGizmoData.MiscGizmoMovedCommand}" RenderTransformOrigin="0.5,0.5">
+                    </uc:MoveGizmo>
+                    <uc:MoveGizmo x:Name="PathPointGizmo" Visibility="{Binding CurrentGizmoData.PathPointGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Canvas.Left="{Binding CurrentSelections.SelectedPathPoint.Coordinates.XPos}"
+                    Canvas.Top="{Binding CurrentSelections.SelectedPathPoint.Coordinates.YPos}"
+                    DragCommand="{Binding CurrentGizmoData.PathPointGizmoMovedCommand}" RenderTransformOrigin="0.5,0.5">
                     </uc:MoveGizmo>
                 </Canvas>
             </ScrollViewer>

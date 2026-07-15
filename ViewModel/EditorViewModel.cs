@@ -176,14 +176,16 @@ namespace BobMapper.ViewModel
                     break;
                 case Tools.AddPathPoint:
                     SnapCoordinate snappedPathPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    int lastId = CurrentPathPoints.Max(x => x.Id);
+                    int lastId = 0;
+                    if(currentPathPoints.Count > 0)
+                    { lastId = CurrentPathPoints.Max(x => x.Id); }
                     PathPoint pathPoint = new PathPoint(snappedPathPlacementPos, 0, lastId + 1);
                     AttachNewPathPointHandler(pathPoint);
                     CurrentPathPoints.Add(pathPoint);
                     break;
                 case Tools.AddMisc:
                     SnapCoordinate snappedMiscPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    Misc misc = new Misc(snappedMiscPlacementPos, Misc.MiscObjects.Key, 0);
+                    Misc misc = new Misc(snappedMiscPlacementPos, Misc.MiscObjects.Key);
                     CurrentMiscs.Add(misc);
                     break;
                 case Tools.AddDoor:

@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace BobMapper.Model.MapObjects
 {
-    public class Misc : ISinglePointObject, INotifyPropertyChanged
+    public class Misc : INotifyPropertyChanged
     {
         public enum MiscObjects
         {
@@ -28,11 +28,10 @@ namespace BobMapper.Model.MapObjects
 
         public SnapCoordinate Coordinates { get; set; }
 
-        public Misc(SnapCoordinate coordinates, MiscObjects type, int rotation)
+        public Misc(SnapCoordinate coordinates, MiscObjects type)
         {
             Coordinates = coordinates;
             Type = type;
-            Rotation = rotation;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -66,18 +65,6 @@ namespace BobMapper.Model.MapObjects
         {
             get { return texture; }
             set { texture = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture))); }
-        }
-
-        private int rotation;
-
-        public int Rotation
-        {
-            get { return rotation; }
-            set
-            {
-                rotation = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rotation)));
-            }
         }
     }
 }
