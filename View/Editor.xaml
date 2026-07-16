@@ -384,6 +384,7 @@
                                             PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Asset</Label>
                                             <Image Source="{Binding Texture}" MaxHeight="100" MaxWidth="100"/>
+                                            <ComboBox ItemsSource="{Binding NPCTypeValues}" SelectedItem="{Binding Type}" Width="200" MinHeight="30"/>
                                             <CheckBox Content="Has loot attached" Width="250" IsChecked="{Binding AttachLoot}"/>
                                             <CheckBox Content="Has main loot attached" Width="250" IsChecked="{Binding AttachMainLoot}"/>
                                         </WrapPanel>

@@ -7,7 +7,17 @@ namespace BobMapper.Model.MapObjects
     public class NPC : ISinglePointObject, INotifyPropertyChanged
     {
 
-        public NPCType Type { get; set; }
+        private NPCType type;
+
+        public NPCType Type
+        {
+            get { return type; }
+            set { type = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Type)));
+                SetNPCTexture();
+            }
+        }
+
         public SnapCoordinate Coordinates { get; set; }
 
         private int rotation;
@@ -80,7 +90,6 @@ namespace BobMapper.Model.MapObjects
         {
             switch (Type)
             {
-                //TODO: Rewrite with aliases and finish
                 case NPCType.BulkyCop:
                     Texture = "/Resources/NPCTextures/Guard.png";
                     break;
@@ -89,6 +98,36 @@ namespace BobMapper.Model.MapObjects
                     break;
                 case NPCType.RedDressLady:
                     Texture = "/Resources/NPCTextures/Female.png";
+                    break;
+                case NPCType.RedShirtGuy:
+                    Texture = "/Resources/NPCTextures/ShirtGuy.png";
+                    break;
+                case NPCType.Grandma:
+                    Texture = "/Resources/NPCTextures/Hag.png";
+                    break;
+                case NPCType.Dog:
+                    Texture = "/Resources/NPCTextures/Dog.png";
+                    break;
+                case NPCType.Agent:
+                    Texture = "/Resources/NPCTextures/Agent.png";
+                    break;
+                case NPCType.Scientist:
+                    Texture = "/Resources/NPCTextures/Scientist.png";
+                    break;
+                case NPCType.RedDressLady2:
+                    Texture = "/Resources/NPCTextures/Female.png";
+                    break;
+                case NPCType.SkinnyCop:
+                    Texture = "/Resources/NPCTextures/SkinnyCop.png";
+                    break;
+                case NPCType.BaldCop_Flashlight:
+                    Texture = "/Resources/NPCTextures/BaldGuardFL.png";
+                    break;
+                case NPCType.SecretSam:
+                    Texture = "/Resources/NPCTextures/Dealer.png";
+                    break;
+                case NPCType.Biff:
+                    Texture = "/Resources/NPCTextures/Biff.png";
                     break;
             }
         }
