@@ -6,9 +6,9 @@ namespace BobMapper.Model.MapObjects
 {
     public class Prop : ISinglePointObject, INotifyPropertyChanged
     {
-        private int rotation;
+        private float rotation;
 
-        public int Rotation
+        public float Rotation
         {
             get { return rotation; }
             set
@@ -39,7 +39,7 @@ namespace BobMapper.Model.MapObjects
         }
 
 
-        public Prop(SnapCoordinate coordinates, int rotation, string propTexture)
+        public Prop(SnapCoordinate coordinates, float rotation, string propTexture)
         {
             Coordinates = coordinates;
             Rotation = rotation;

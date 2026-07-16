@@ -31,9 +31,9 @@ namespace BobMapper.Model.MapObjects
             set { internalTexture = value; }
         }
 
-        private int rotation;
+        private float rotation;
 
-        public int Rotation
+        public float Rotation
         {
             get { return rotation; }
             set { rotation = value; 
@@ -42,7 +42,7 @@ namespace BobMapper.Model.MapObjects
         }
 
 
-        public Loot(string texture, SnapCoordinate coordinates, int rotation)
+        public Loot(string texture, SnapCoordinate coordinates, float rotation)
         {
             Coordinates = coordinates;
             Texture = texture;

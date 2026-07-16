@@ -55,6 +55,8 @@ namespace BobMapper.ViewModel
             set { fileName = value; }
         }
 
+        public LayerData CurrentLayerData { get; set; }
+
         public ObservableCollection<Wall> CurrentWalls { get => currentWalls; set => currentWalls = value; }
         private ObservableCollection<Wall> currentWalls;
         public ObservableCollection<Prop> CurrentProps { get => currentProps; set => currentProps = value; }
@@ -97,6 +99,7 @@ namespace BobMapper.ViewModel
             };
             CurrentSelections = new Selections();
             CurrentGizmoData = new GizmoData(CurrentSelections);
+            CurrentLayerData = new LayerData();
             CurrentProps = new ObservableCollection<Prop>(CurrentMap.props);
             CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls);
             CurrentNPCs = new ObservableCollection<NPC>(CurrentMap.npcs);
@@ -178,7 +181,7 @@ namespace BobMapper.ViewModel
                     int lastId = 0;
                     if(currentPathPoints.Count > 0)
                     { lastId = CurrentPathPoints.Max(x => x.Id); }
-                    PathPoint pathPoint = new PathPoint(snappedPathPlacementPos, 0, lastId + 1);
+                    PathPoint pathPoint = new PathPoint(snappedPathPlacementPos, 0, lastId + 1, 0);
                     AttachNewPathPointHandler(pathPoint);
                     CurrentPathPoints.Add(pathPoint);
                     break;
@@ -439,12 +442,10 @@ namespace BobMapper.ViewModel
             CurrentMap.floors = SaveFloor();
             if(saveNewFile)
             {
-
+                FileDialogService fileDialogService = new FileDialogService();
+                FileName = fileDialogService.SaveFileDialog("BobMapper Json Files (.json)|*.json", ".json");
             }
-            else
-            {
-                JsonMapParse.SaveData(CurrentMap, FileName);
-            }
+            JsonMapParse.SaveData(CurrentMap, FileName);
         }
 
         private Floor[][] SaveFloor()

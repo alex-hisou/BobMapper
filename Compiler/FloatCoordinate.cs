@@ -13,7 +13,7 @@ namespace BobMapper.Compiler
 
         private bool isShortened;
 
-        public FloatCoordinate(SnapCoordinate coordinates, int rotation, bool isShortened)
+        public FloatCoordinate(SnapCoordinate coordinates, float rotation, bool isShortened)
         {
             HasRotation = true;
             this.isShortened = isShortened;
@@ -48,7 +48,7 @@ namespace BobMapper.Compiler
             Array.Copy(compiledY, 0, CompiledBytes, 4, compiledY.Length );
         }
 
-        private byte[] GetCompiledRotation(int rotation)
+        private byte[] GetCompiledRotation(float rotation)
         {
             float radians = rotation * (float)Math.PI / 180;
             if(isShortened)

@@ -10,7 +10,7 @@ namespace BobMapper.Model
     {
         SnapCoordinate Coordinates { get; set; }
 
-        int Rotation {  get; set; }
+        float Rotation {  get; set; }
         
     }
 

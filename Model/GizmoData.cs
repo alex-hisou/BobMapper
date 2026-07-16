@@ -29,7 +29,17 @@ namespace BobMapper.Model
 			}
 		}
 
-        private bool npcGizmoEnabled = false;
+		private bool propRotateGizmoEnabled;
+
+		public bool PropRotateGizmoEnabled
+		{
+			get { return propRotateGizmoEnabled; }
+			set { propRotateGizmoEnabled = value;
+                OnPropertyChanged();
+            }
+		}
+
+		private bool npcGizmoEnabled = false;
         public bool NPCGizmoEnabled
         {
             get { return npcGizmoEnabled; }
@@ -40,6 +50,16 @@ namespace BobMapper.Model
             }
         }
 
+		private bool npcRotateGizmoEnabled;
+
+		public bool NPCRotateGizmoEnabled
+		{
+			get { return npcRotateGizmoEnabled; }
+			set { npcRotateGizmoEnabled = value;
+                OnPropertyChanged();
+            }
+		}
+
 		private bool pathPointGizmoEnabled = false;
 
 		public bool PathPointGizmoEnabled
@@ -49,6 +69,17 @@ namespace BobMapper.Model
 				OnPropertyChanged();
 			}
 		}
+
+		private bool pathPointRotateGizmoEnabled;
+
+		public bool PathPointRotateGizmoEnabled
+		{
+			get { return pathPointRotateGizmoEnabled; }
+			set { pathPointRotateGizmoEnabled = value;
+                OnPropertyChanged();
+            }
+		}
+
 
 		private bool wallGizmosEnabled = false;
 
@@ -65,7 +96,9 @@ namespace BobMapper.Model
 		public bool DoorGizmosEnabled
 		{
 			get { return doorGizmosEnabled; }
-			set { doorGizmosEnabled = value; }
+			set { doorGizmosEnabled = value;
+                OnPropertyChanged();
+            }
 		}
 
 		private bool lootGizmoEnabled;
@@ -73,15 +106,30 @@ namespace BobMapper.Model
 		public bool LootGizmoEnabled
 		{
 			get { return lootGizmoEnabled; }
-			set { lootGizmoEnabled = value; }
+			set { lootGizmoEnabled = value;
+                OnPropertyChanged();
+            }
 		}
+
+		private bool lootRotateGizmoEnabled;
+
+		public bool LootRotateGizmoEnabled
+		{
+			get { return lootRotateGizmoEnabled; }
+			set { lootRotateGizmoEnabled = value;
+                OnPropertyChanged();
+            }
+		}
+
 
 		private bool miscGizmoEnabled;
 
 		public bool MiscGizmoEnabled
 		{
 			get { return miscGizmoEnabled; }
-			set { miscGizmoEnabled = value; }
+			set { miscGizmoEnabled = value;
+                OnPropertyChanged();
+            }
 		}
 		public GizmoData(Selections selections)
 		{
@@ -91,38 +139,56 @@ namespace BobMapper.Model
 
 		private void SelectedToolChangedHandler(object sender, EventArgs e)
 		{
-			Selections selections = (Selections)sender;
-			if(selections.SelectedTool != Tools.Move)
+            DisableAllGizmos();
+            Selections selections = (Selections)sender;
+			if (selections.SelectedTool == Tools.Move)
 			{
-				DisableAllGizmos();
-				return;
+				switch (selections.SelectedObjectType)
+				{
+					case MapManager.ObjectType.Prop:
+						PropGizmoEnabled = true;
+						break;
+					case MapManager.ObjectType.NPC:
+						NPCGizmoEnabled = true;
+						break;
+					case MapManager.ObjectType.PathPoint:
+						PathPointGizmoEnabled = true;
+						break;
+					case MapManager.ObjectType.Wall:
+						WallGizmosEnabled = true;
+						break;
+					case MapManager.ObjectType.Loot:
+						LootGizmoEnabled = true;
+						break;
+					case MapManager.ObjectType.Door:
+						DoorGizmosEnabled = true;
+						break;
+					case MapManager.ObjectType.Misc:
+						MiscGizmoEnabled = true;
+						break;
+					default:
+						break;
+				}
 			}
-			switch(selections.SelectedObjectType)
+			else if (selections.SelectedTool == Tools.Rotate)
 			{
-				case MapManager.ObjectType.Prop:
-                    PropGizmoEnabled = true;
-                    break;
-				case MapManager.ObjectType.NPC:
-					NPCGizmoEnabled = true;
-					break;
-				case MapManager.ObjectType.PathPoint:
-					PathPointGizmoEnabled = true;
-					break;
-				case MapManager.ObjectType.Wall:
-					WallGizmosEnabled = true;
-					break;
-				case MapManager.ObjectType.Loot:
-					LootGizmoEnabled = true;
-					break;
-				case MapManager.ObjectType.Door:
-					DoorGizmosEnabled = true;
-					break;
-				case MapManager.ObjectType.Misc:
-					MiscGizmoEnabled = true;
-					break;
-				default: 
-					break;
-					
+				switch (selections.SelectedObjectType)
+				{
+					default:
+						break;
+					case MapManager.ObjectType.Prop:
+						PropRotateGizmoEnabled = true;
+						break;
+					case MapManager.ObjectType.NPC:
+						NPCRotateGizmoEnabled = true;
+						break;
+					case MapManager.ObjectType.PathPoint:
+						PathPointRotateGizmoEnabled = true;
+						break;
+					case MapManager.ObjectType.Loot:
+						LootRotateGizmoEnabled = true;
+						break;
+				}
 			}
 		}
 
@@ -135,6 +201,10 @@ namespace BobMapper.Model
 			LootGizmoEnabled = false;
 			DoorGizmosEnabled = false;
 			MiscGizmoEnabled = false;
+			PropRotateGizmoEnabled = false;
+			NPCRotateGizmoEnabled = false;
+			PathPointRotateGizmoEnabled = false;
+			LootRotateGizmoEnabled = false;
 		}
 
 		//||||||||||||||||||||||||||||||||||||||||//
@@ -167,29 +237,29 @@ namespace BobMapper.Model
         [RelayCommand]
         public void WallGizmo1Moved(SnapCoordinate newCoordinate)
         {
-            CurrentSelections.SelectedWall.Point1.SnappedXPos += newCoordinate.SnappedXPos;
-            CurrentSelections.SelectedWall.Point1.SnappedYPos += newCoordinate.SnappedYPos;
+            CurrentSelections.SelectedWall.Point1.SnappedXPos += (float)Math.Ceiling(newCoordinate.SnappedXPos * 2) / 2;
+            CurrentSelections.SelectedWall.Point1.SnappedYPos += (float)Math.Ceiling(newCoordinate.SnappedYPos * 2) / 2;
         }
 
         [RelayCommand]
         public void WallGizmo2Moved(SnapCoordinate newCoordinate)
         {
-            CurrentSelections.SelectedWall.Point2.SnappedXPos += newCoordinate.SnappedXPos;
-            CurrentSelections.SelectedWall.Point2.SnappedYPos += newCoordinate.SnappedYPos;
+            CurrentSelections.SelectedWall.Point2.SnappedXPos += (float)Math.Ceiling(newCoordinate.SnappedXPos * 2) / 2;
+            CurrentSelections.SelectedWall.Point2.SnappedYPos += (float)Math.Ceiling(newCoordinate.SnappedYPos * 2) / 2;
         }
 
         [RelayCommand]
         public void DoorGizmo1Moved(SnapCoordinate newCoordinate)
         {
-            CurrentSelections.SelectedDoor.Point1.SnappedXPos += newCoordinate.SnappedXPos;
-            CurrentSelections.SelectedDoor.Point1.SnappedYPos += newCoordinate.SnappedYPos;
+            CurrentSelections.SelectedDoor.Point1.SnappedXPos += (float)Math.Ceiling(newCoordinate.SnappedXPos * 2) / 2;
+            CurrentSelections.SelectedDoor.Point1.SnappedYPos += (float)Math.Ceiling(newCoordinate.SnappedYPos * 2) / 2;
         }
 
         [RelayCommand]
         public void DoorGizmo2Moved(SnapCoordinate newCoordinate)
         {
-            CurrentSelections.SelectedDoor.Point2.SnappedXPos += newCoordinate.SnappedXPos;
-            CurrentSelections.SelectedDoor.Point2.SnappedYPos += newCoordinate.SnappedYPos;
+            CurrentSelections.SelectedDoor.Point2.SnappedXPos += (float)Math.Ceiling(newCoordinate.SnappedXPos * 2) / 2;
+            CurrentSelections.SelectedDoor.Point2.SnappedYPos += (float)Math.Ceiling(newCoordinate.SnappedYPos * 2) / 2;
         }
 
         [RelayCommand]
@@ -204,6 +274,30 @@ namespace BobMapper.Model
         {
             CurrentSelections.SelectedMisc.Coordinates.SnappedXPos += newCoordinate.SnappedXPos;
             CurrentSelections.SelectedMisc.Coordinates.SnappedYPos += newCoordinate.SnappedYPos;
+        }
+
+		[RelayCommand]
+		public void PropRotateGizmoMoved(float angle)
+		{
+			CurrentSelections.SelectedProp.Rotation -= angle;
+		}
+
+        [RelayCommand]
+        public void NPCRotateGizmoMoved(float angle)
+        {
+            CurrentSelections.SelectedNPC.Rotation -= angle;
+        }
+
+        [RelayCommand]
+        public void PathPointRotateGizmoMoved(float angle)
+        {
+            CurrentSelections.SelectedPathPoint.Rotation -= angle;
+        }
+
+        [RelayCommand]
+        public void LootRotateGizmoMoved(float angle)
+        {
+            CurrentSelections.SelectedLoot.Rotation -= angle;
         }
 
 
