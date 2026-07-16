@@ -339,9 +339,18 @@
     <None Remove="Resources\MiscTextures\LootGlare.png" />
     <None Remove="Resources\MiscTextures\MainLoot.png" />
     <None Remove="Resources\MiscTextures\SoundPoint.png" />
+    <None Remove="Resources\NPCTextures\Agent.png" />
     <None Remove="Resources\NPCTextures\BaldGuard.png" />
+    <None Remove="Resources\NPCTextures\BaldGuardFL.png" />
+    <None Remove="Resources\NPCTextures\Biff.png" />
+    <None Remove="Resources\NPCTextures\Dealer.png" />
+    <None Remove="Resources\NPCTextures\Dog.png" />
     <None Remove="Resources\NPCTextures\Female.png" />
     <None Remove="Resources\NPCTextures\Guard.png" />
+    <None Remove="Resources\NPCTextures\Hag.png" />
+    <None Remove="Resources\NPCTextures\Scientist.png" />
+    <None Remove="Resources\NPCTextures\ShirtGuy.png" />
+    <None Remove="Resources\NPCTextures\SkinnyCop.png" />
     <None Remove="Resources\PropTextures\alarmclock.png" />
     <None Remove="Resources\PropTextures\AngelFountain.png" />
     <None Remove="Resources\PropTextures\Apple.png" />
@@ -1993,9 +2002,42 @@
     <Resource Include="Resources\MiscTextures\SoundPoint.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\NPCTextures\BaldGuard.png" />
-    <Resource Include="Resources\NPCTextures\Female.png" />
-    <Resource Include="Resources\NPCTextures\Guard.png" />
+    <Resource Include="Resources\NPCTextures\Agent.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\NPCTextures\BaldGuard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\NPCTextures\BaldGuardFL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\NPCTextures\Biff.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\NPCTextures\Dealer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\NPCTextures\Dog.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\NPCTextures\Female.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\NPCTextures\Guard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\NPCTextures\Hag.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\NPCTextures\Scientist.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\NPCTextures\ShirtGuy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\NPCTextures\SkinnyCop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\PropTextures\alarmclock.png" />
     <Resource Include="Resources\PropTextures\AngelFountain.png" />
     <Resource Include="Resources\PropTextures\Apple.png" />
