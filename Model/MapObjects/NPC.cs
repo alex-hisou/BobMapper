@@ -20,9 +20,9 @@ namespace BobMapper.Model.MapObjects
 
         public SnapCoordinate Coordinates { get; set; }
 
-        private int rotation;
+        private float rotation;
 
-        public int Rotation
+        public float Rotation
         {
             get { return rotation; }
             set
@@ -70,7 +70,7 @@ namespace BobMapper.Model.MapObjects
             }
         }
 
-        public NPC(SnapCoordinate coordinates, NPCType type, int rotation, bool attachLoot, bool attachMainLoot, int firstPathPointId)
+        public NPC(SnapCoordinate coordinates, NPCType type, float rotation, bool attachLoot, bool attachMainLoot, int firstPathPointId)
         {
             Coordinates = coordinates;
             Type = type;

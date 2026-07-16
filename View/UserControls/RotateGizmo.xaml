@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="BobMapper.View.UserControls.RotateGizmo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BobMapper.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="150">
+    <Grid>
+        <Ellipse Width="150" Height="150" Fill="Transparent" Stroke="Green" StrokeThickness="5" IsHitTestVisible="False"/>
+        <Rectangle Width="20" Height="30" Fill="Green" Margin="65,116,65,4" MouseDown="Element_MouseLeftButtonDown"
+                   MouseMove="Element_MouseMove" MouseUp="Element_MouseLeftButtonUp"/>
+    </Grid>
+</UserControl>

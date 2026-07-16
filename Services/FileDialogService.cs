@@ -7,7 +7,7 @@ using Microsoft.Win32;
 
 namespace BobMapper.Services
 {
-    public class FileDialogService : IFileDialogService
+    public class FileDialogService
     {
         public string SaveFileDialog(string filter, string defaultExt)
         {
@@ -18,10 +18,5 @@ namespace BobMapper.Services
             };
             return dialog.ShowDialog() == true ? dialog.FileName : null;
         }
-    }
-
-    public interface IFileDialogService
-    {
-        string SaveFileDialog(string filter, string defaultExt);
     }
 }

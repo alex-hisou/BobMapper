@@ -53,7 +53,7 @@
                     CommandParameter="Reset"/>
         <KeyBinding Key="S" Command="{Binding SelectToolCommand}"
                     CommandParameter="{x:Static local:Tools.Select}"/>
-        <KeyBinding Key="A" Command="{Binding SelectToolCommand}"
+        <KeyBinding Key="E" Command="{Binding SelectToolCommand}"
                     CommandParameter="{x:Static local:Tools.Move}"/>
         <KeyBinding Key="R" Command="{Binding SelectToolCommand}"
                     CommandParameter="{x:Static local:Tools.Rotate}"/>
@@ -185,7 +185,18 @@
             </Menu>
             <StackPanel DockPanel.Dock="Right" Width="300" Height="auto" HorizontalAlignment="Right" Background="LightGray">
                 <StackPanel Orientation="Horizontal">
-                    <Expander IsExpanded="True"/>
+                    <Expander IsExpanded="True">
+                        <WrapPanel Orientation="Horizontal" Width="300">
+                            <CheckBox Content="Walls" IsChecked="{Binding CurrentLayerData.WallsVisible}" Margin="10,5,10,10" Width="100"/>
+                            <CheckBox Content="Props" IsChecked="{Binding CurrentLayerData.PropsVisible}" Margin="10,5,10,10" Width="100"/>
+                            <CheckBox Content="NPCs" IsChecked="{Binding CurrentLayerData.NPCsVisible}" Margin="10,5,10,10" Width="100"/>
+                            <CheckBox Content="Paths" IsChecked="{Binding CurrentLayerData.PathPointsVisible}" Margin="10,5,10,10" Width="100"/>
+                            <CheckBox Content="Floor" IsChecked="{Binding CurrentLayerData.FloorsVisible}" Margin="10,5,10,10" Width="100"/>
+                            <CheckBox Content="Miscs" IsChecked="{Binding CurrentLayerData.MiscsVisible}" Margin="10,5,10,10" Width="100"/>
+                            <CheckBox Content="Doors" IsChecked="{Binding CurrentLayerData.DoorsVisible}" Margin="10,5,10,10" Width="100"/>
+                            <CheckBox Content="Loots" IsChecked="{Binding CurrentLayerData.LootsVisible}" Margin="10,5,10,10" Width="100"/>
+                        </WrapPanel>
+                    </Expander>
                     <Label>Layers</Label>
                 </StackPanel>
                 <Separator Foreground="Black"></Separator>
@@ -477,7 +488,8 @@
                     </Canvas.RenderTransform>
                     <!-- Might have to be offset -->
                     <!-- TODO: Add Texture 2-->
-                    <ItemsControl ItemsSource="{Binding CurrentFloors}" Canvas.Left="{Binding CurrentViewportData.ViewOffsetX}" Canvas.Top="{Binding CurrentViewportData.ViewOffsetY}">
+                    <ItemsControl ItemsSource="{Binding CurrentFloors}" Canvas.Left="{Binding CurrentViewportData.ViewOffsetX}" Canvas.Top="{Binding CurrentViewportData.ViewOffsetY}"
+                                  Visibility="{Binding CurrentLayerData.FloorsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <ItemsControl ItemsSource="{Binding .}">
@@ -512,7 +524,7 @@
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentProps}">
+                    <ItemsControl ItemsSource="{Binding CurrentProps}" Visibility="{Binding CurrentLayerData.PropsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <local:CenteringCanvas />
@@ -545,7 +557,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentLoots}">
+                    <ItemsControl ItemsSource="{Binding CurrentLoots}" Visibility="{Binding CurrentLayerData.LootsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <local:CenteringCanvas />
@@ -578,7 +590,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentWalls}">
+                    <ItemsControl ItemsSource="{Binding CurrentWalls}" Visibility="{Binding CurrentLayerData.WallsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:Wall}">
                                 <Line StrokeThickness="{Binding Width}" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
@@ -598,7 +610,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentDoors}">
+                    <ItemsControl ItemsSource="{Binding CurrentDoors}" Visibility="{Binding CurrentLayerData.DoorsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:Door}">
                                 <Canvas>
@@ -620,7 +632,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentNPCs}">
+                    <ItemsControl ItemsSource="{Binding CurrentNPCs}" Visibility="{Binding CurrentLayerData.NPCsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <local:CenteringCanvas />
@@ -657,7 +669,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentPathPoints}">
+                    <ItemsControl ItemsSource="{Binding CurrentPathPoints}" Visibility="{Binding CurrentLayerData.PathPointsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:PathPoint}">
                                 <Canvas>
@@ -693,7 +705,7 @@
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentMiscs}">
+                    <ItemsControl ItemsSource="{Binding CurrentMiscs}" Visibility="{Binding CurrentLayerData.MiscsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <local:CenteringCanvas />
@@ -770,6 +782,54 @@
                     Canvas.Top="{Binding CurrentSelections.SelectedPathPoint.Coordinates.YPos}"
                     DragCommand="{Binding CurrentGizmoData.PathPointGizmoMovedCommand}" RenderTransformOrigin="0.5,0.5">
                     </uc:MoveGizmo>
+                    <local:CenteringCanvas>
+                    <uc:RotateGizmo x:Name="PropRotateGizmo" Visibility="{Binding CurrentGizmoData.PropRotateGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Canvas.Left="{Binding CurrentSelections.SelectedProp.Coordinates.XPos}"
+                    Canvas.Top="{Binding CurrentSelections.SelectedProp.Coordinates.YPos}"
+                    DragCommand="{Binding CurrentGizmoData.PropRotateGizmoMovedCommand}" RenderTransformOrigin="0.5,0.5">
+                        <uc:RotateGizmo.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="{Binding CurrentSelections.SelectedProp.Rotation}"/>
+                            </TransformGroup>
+                        </uc:RotateGizmo.RenderTransform>
+                    </uc:RotateGizmo>
+                    </local:CenteringCanvas>
+                    <local:CenteringCanvas>
+                        <uc:RotateGizmo x:Name="NPCRotateGizmo" Visibility="{Binding CurrentGizmoData.NPCRotateGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Canvas.Left="{Binding CurrentSelections.SelectedNPC.Coordinates.XPos}"
+                            Canvas.Top="{Binding CurrentSelections.SelectedNPC.Coordinates.YPos}"
+                            DragCommand="{Binding CurrentGizmoData.NPCRotateGizmoMovedCommand}" RenderTransformOrigin="0.5,0.5">
+                            <uc:RotateGizmo.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="{Binding CurrentSelections.SelectedNPC.Rotation}"/>
+                                </TransformGroup>
+                            </uc:RotateGizmo.RenderTransform>
+                        </uc:RotateGizmo>
+                    </local:CenteringCanvas>
+                    <local:CenteringCanvas>
+                        <uc:RotateGizmo x:Name="PathPointRotateGizmo" Visibility="{Binding CurrentGizmoData.PathPointRotateGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Canvas.Left="{Binding CurrentSelections.SelectedPathPoint.Coordinates.XPos}"
+                            Canvas.Top="{Binding CurrentSelections.SelectedPathPoint.Coordinates.YPos}"
+                            DragCommand="{Binding CurrentGizmoData.PathPointRotateGizmoMovedCommand}" RenderTransformOrigin="0.5,0.5">
+                            <uc:RotateGizmo.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="{Binding CurrentSelections.SelectedPathPoint.Rotation}"/>
+                                </TransformGroup>
+                            </uc:RotateGizmo.RenderTransform>
+                        </uc:RotateGizmo>
+                    </local:CenteringCanvas>
+                    <local:CenteringCanvas>
+                        <uc:RotateGizmo x:Name="LootRotateGizmo" Visibility="{Binding CurrentGizmoData.LootRotateGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Canvas.Left="{Binding CurrentSelections.SelectedLoot.Coordinates.XPos}"
+                            Canvas.Top="{Binding CurrentSelections.SelectedLoot.Coordinates.YPos}"
+                            DragCommand="{Binding CurrentGizmoData.LootRotateGizmoMovedCommand}" RenderTransformOrigin="0.5,0.5">
+                            <uc:RotateGizmo.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="{Binding CurrentSelections.SelectedLoot.Rotation}"/>
+                                </TransformGroup>
+                            </uc:RotateGizmo.RenderTransform>
+                        </uc:RotateGizmo>
+                    </local:CenteringCanvas>
                 </Canvas>
             </ScrollViewer>
         </DockPanel>

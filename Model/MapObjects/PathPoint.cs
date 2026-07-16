@@ -20,9 +20,9 @@ namespace BobMapper.Model.MapObjects
                 ConnectionPointChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ConnectToId))); }
         }
 
-        private int rotation;
+        private float rotation;
 
-        public int Rotation
+        public float Rotation
         {
             get { return rotation; }
             set
@@ -97,19 +97,21 @@ namespace BobMapper.Model.MapObjects
         public float ConnectionDeltaY => ConnectedPathPoint != null ? (ConnectedPathPoint.Coordinates.YPos - Coordinates.YPos) : 0;
 
         [JsonConstructor]
-        public PathPoint(SnapCoordinate coordinates, int duration, int id, int? connectToId)
+        public PathPoint(SnapCoordinate coordinates, int duration, int id, int? connectToId, float rotation)
         {
             Coordinates = coordinates;
             Id = id;
             ConnectToId = connectToId;
             Duration = duration;
+            Rotation = rotation;
         }
 
-        public PathPoint(SnapCoordinate coordinates, int duration, int id)
+        public PathPoint(SnapCoordinate coordinates, int duration, int id, float rotation)
         {
             Coordinates = coordinates;
             Id = id;
             Duration = duration;
+            Rotation = rotation;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
