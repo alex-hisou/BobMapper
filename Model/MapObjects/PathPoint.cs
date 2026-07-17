@@ -17,7 +17,9 @@ namespace BobMapper.Model.MapObjects
         {
             get { return connectToId; }
             set { connectToId = value; 
-                ConnectionPointChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ConnectToId))); }
+                ConnectionPointChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ConnectToId)));
+                
+            }
         }
 
         private float rotation;
@@ -29,6 +31,7 @@ namespace BobMapper.Model.MapObjects
             {
                 rotation = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rotation)));
+                
             }
         }
 
@@ -121,6 +124,6 @@ namespace BobMapper.Model.MapObjects
         }
 
         public event EventHandler ConnectionPointChanged;
-
+        
     }
 }

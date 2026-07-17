@@ -48,6 +48,7 @@ namespace BobMapper.Model.MapObjects
                 }
                 else { Width = 5; }
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(type)));
+                
             }
         }
 
@@ -57,6 +58,7 @@ namespace BobMapper.Model.MapObjects
             get { return texture1; }
             set { texture1 = value; InternalTexture1 = InternalNameSevice.GetInternalName(value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(texture1)));
+                
             }
         }
 
@@ -68,6 +70,7 @@ namespace BobMapper.Model.MapObjects
             set { internalTexture1 = value; }
         }
         public event PropertyChangedEventHandler PropertyChanged;
+        
 
         private string texture2;
 
@@ -76,6 +79,7 @@ namespace BobMapper.Model.MapObjects
             get { return texture2; }
             set { texture2 = value; InternalTexture2 = InternalNameSevice.GetInternalName(value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(texture2)));
+                
             }
         }
 

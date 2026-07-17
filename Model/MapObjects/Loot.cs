@@ -20,7 +20,9 @@ namespace BobMapper.Model.MapObjects
         {
             get { return texture; }
             set { texture = value; InternalTexture = InternalNameSevice.GetInternalName(value);
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture))); }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture)));
+                
+            }
         }
 
         private string internalTexture;
@@ -38,6 +40,7 @@ namespace BobMapper.Model.MapObjects
             get { return rotation; }
             set { rotation = value; 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rotation)));
+                
             }
         }
 
@@ -51,5 +54,6 @@ namespace BobMapper.Model.MapObjects
 
 
         public event PropertyChangedEventHandler PropertyChanged;
+        
     }
 }

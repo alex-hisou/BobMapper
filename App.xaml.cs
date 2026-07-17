@@ -106,7 +106,8 @@ namespace BobMapper
         public float XPos
         {
             get { return xPos; }
-            set { xPos = value; OnPropertyChanged(nameof(XPos)); }
+            set { xPos = value; OnPropertyChanged(nameof(XPos));
+            }
         }
 
 
@@ -115,7 +116,8 @@ namespace BobMapper
         public float YPos
         {
             get { return yPos; }
-            set { yPos = value; OnPropertyChanged(nameof(yPos)); }
+            set { yPos = value; OnPropertyChanged(nameof(yPos));
+            }
         }
 
         private float snappedXPos;
@@ -136,7 +138,6 @@ namespace BobMapper
                 YPos = floatValue;
             }
         }
-
 
         public SnapCoordinate(float snappedXPos, float snappedYPos)
         {

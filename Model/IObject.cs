@@ -11,6 +11,8 @@ namespace BobMapper.Model
         SnapCoordinate Coordinates { get; set; }
 
         float Rotation {  get; set; }
+
+        
         
     }
 
@@ -21,5 +23,7 @@ namespace BobMapper.Model
         public string Texture1 { get; set; }
 
         public string InternalTexture1 { get; set; }
+
+        
     }
 }
