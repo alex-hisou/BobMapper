@@ -57,7 +57,7 @@ namespace BobMapper.Compiler
             }
             if(radians == 0)
             {
-                radians = 1;
+                radians = 0.00000001f;
             }
             byte[] rotationBytes = BitConverter.GetBytes(radians);
             return rotationBytes;
