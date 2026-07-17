@@ -54,9 +54,9 @@ namespace BobMapper.Compiler
             byte[] byteHeight = BitConverter.GetBytes(floors.Length);
             floorByteBuffer.AddRange(byteWidth);
             floorByteBuffer.AddRange(byteHeight);
-            for (int i = 0; i < floors.Length; i++)
+            for (int i = 0; i < floors[0].Length; i++)
             {
-                for (int j = 0; j < floors[i].Length; j++)
+                for (int j = 0; j < floors.Length; j++)
                 {
                     Floor floor = floors[j][i];
                     byte[] byteTexture1 = new byte[24];

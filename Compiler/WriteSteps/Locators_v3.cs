@@ -69,20 +69,20 @@ namespace BobMapper.Compiler.WriteSteps
                 currentLocatorId = 1;
                 return bytePathPoints;
             }
-            //int[] connectFromIds = CompilerServices.GetConnectFromIds(pathPoints);
             for (int i = 0; i < pathPoints.Count; i++)
             {
                 byte[] currentBytePathPoint = new byte[76];
                 PathPoint point = pathPoints[i];
-                //TODO: What the fuck?
                 FloatCoordinate pathPointCompileCoordinate = new(point.Coordinates, point.Rotation, false);
                 Array.Copy(pathPointCompileCoordinate.CompiledBytes, 0, currentBytePathPoint, 0, pathPointCompileCoordinate.CompiledBytes.Length);
                 currentBytePathPoint[16] = 0x05; //Path Point Header
                 Array.Copy(BitConverter.GetBytes(currentLocatorId), 0, currentBytePathPoint, 20, 4);
                 int connectFromId = 0;
-                connectFromId = pathPoints.FirstOrDefault(x => x.ConnectToId == point.Id).Id;
+                if (pathPoints.Any(x => x.ConnectToId == point.Id))
+                {
+                    connectFromId = pathPoints.FirstOrDefault(x => x.ConnectToId == point.Id).Id;
+                }
                 Array.Copy(BitConverter.GetBytes(connectFromId), 0, currentBytePathPoint, 56, 4);
-                //currentBytePathPoint[56] = Convert.ToByte(connectFromIds[i]);
                 Array.Copy(BitConverter.GetBytes(point.Duration), 0, currentBytePathPoint, 60, 4);
                 int connectToId = 0;
                 if(point.ConnectToId.HasValue)
