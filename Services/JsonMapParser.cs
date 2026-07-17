@@ -25,5 +25,11 @@ namespace BobMapper.Services
             var jsonData = JsonSerializer.Serialize(map, jsonSerializerOptions);
             File.WriteAllText(filename.ToString(), jsonData);
         }
+
+        internal static string GetMapJson(Map map)
+        {
+            var jsonData = JsonSerializer.Serialize(map, jsonSerializerOptions);
+            return jsonData;
+        }
     }
 }

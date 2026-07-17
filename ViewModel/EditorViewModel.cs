@@ -55,6 +55,14 @@ namespace BobMapper.ViewModel
             set { fileName = value; }
         }
 
+        private bool unsavedChanged;
+
+        public bool UnsavedChanges
+        {
+            get { return unsavedChanged; }
+            set { unsavedChanged = value; }
+        }
+
         public LayerData CurrentLayerData { get; set; }
 
         public ObservableCollection<Wall> CurrentWalls { get => currentWalls; set => currentWalls = value; }
@@ -111,6 +119,7 @@ namespace BobMapper.ViewModel
             CurrentLoots = new ObservableCollection<Loot>(CurrentMap.loots);
             CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMap.tileset);
             CurrentSelections.SelectedTextureType = TextureType.All;
+            UnsavedChanges = false;
         }
 
         internal void AttachAllPathPointHandlers()
@@ -230,6 +239,17 @@ namespace BobMapper.ViewModel
                     break;
 
             }
+        }
+
+        public bool CheckForChanges()
+        {
+            string mapFileString = File.ReadAllText(FileName);
+            string currentMapString = JsonMapParse.GetMapJson(CurrentMap);
+            if(mapFileString == currentMapString)
+            {
+                return false;
+            }
+            else return true;
         }
 
         [RelayCommand]
@@ -411,12 +431,6 @@ namespace BobMapper.ViewModel
             CurrentSelections.SelectedObjectType = ObjectType.None;
         }
 
-        /* internal object ReturnSelectedObject()
-        {
-
-        }
-        */
-
         private Dictionary<Type, ObjectType> TypeSchema = new Dictionary<Type, ObjectType>()
         {
             {typeof(Wall), ObjectType.Wall},
@@ -446,6 +460,7 @@ namespace BobMapper.ViewModel
                 FileName = fileDialogService.SaveFileDialog("BobMapper Json Files (.json)|*.json", ".json");
             }
             JsonMapParse.SaveData(CurrentMap, FileName);
+            UnsavedChanges = false;
         }
 
         private Floor[][] SaveFloor()

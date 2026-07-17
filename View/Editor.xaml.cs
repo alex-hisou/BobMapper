@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -8,12 +9,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BobMapper.Model;
 using BobMapper.Services;
+using BobMapper.View;
 using BobMapper.ViewModel;
 using static BobMapper.Model.MapManager;
 
@@ -36,14 +39,14 @@ namespace BobMapper
             e.Handled = Regex.IsMatch(e.Text, "[^0-9\\-.]");
         }
 
-        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void TextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                TextBox textBox = sender as TextBox;
+                System.Windows.Controls.TextBox textBox = sender as System.Windows.Controls.TextBox;
                 if (textBox != null)
                 {
-                    var bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+                    var bindingExpression = textBox.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty);
                     bindingExpression?.UpdateSource();
                     Keyboard.ClearFocus();
                 }
@@ -51,7 +54,7 @@ namespace BobMapper
             }
         }
 
-        private void ClickEmpty(object sender, MouseEventArgs e)
+        private void ClickEmpty(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Keyboard.Focus(WindowGrid);
             WindowGrid.Focus();
@@ -66,6 +69,22 @@ namespace BobMapper
                 editorViewModel.ClickEmpty(placementPos);
             }
             
+        }
+
+        private void TryClose(object sender, CancelEventArgs e)
+        {
+            if (DataContext is EditorViewModel editorViewModel)
+            {
+                if(!editorViewModel.CheckForChanges())
+                {
+                    e.Cancel = false;
+                    return;
+                }
+            }
+            if (System.Windows.Forms.MessageBox.Show("There are unsaved changes. Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                e.Cancel = false;
+            else
+                e.Cancel = true;
         }
 
         private void ToolToggle(object sender, EventArgs e)

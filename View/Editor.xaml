@@ -14,6 +14,7 @@
         xmlns:ctrls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework" d:DataContext="{d:DesignInstance Type=vm:EditorViewModel}"
         mc:Ignorable="d"
         Background="LightGray"
+        Closing="TryClose"
         Title="Editor" Height="720" Width="1280" WindowState="Maximized">
 
     <Window.Resources>
@@ -88,7 +89,11 @@
                     <MenuItem Header="Save as" Command="{Binding SaveCommand}" CommandParameter="{StaticResource True}"/>
                     <MenuItem Header="Exit"/>
                 </MenuItem>
-                <MenuItem Header="Edit"></MenuItem>
+                <MenuItem Header="Edit">
+                    <MenuItem Header="Expand or Contract Map"/>
+                    <Separator/>
+                    <MenuItem Header="Prefrences"/>
+                </MenuItem>
                 <MenuItem Header="Tools"></MenuItem>
                 <MenuItem Header="Compile">
                     <MenuItem Header="Compile" Command="{Binding CompileCommand}"></MenuItem>
@@ -96,7 +101,10 @@
                     <MenuItem Header="Inject"></MenuItem>
                     <MenuItem Header="Inject and Play"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="Help"></MenuItem>
+                <MenuItem Header="Help">
+                    <MenuItem Header="Shortcuts"/>
+                    <MenuItem Header="About"/>
+                </MenuItem>
             </Menu>
             <Menu DockPanel.Dock="Left" Width="auto" Height="auto" Name="ToolDrawer">
                 <MenuItem Header="Select" Name="SelectTool"

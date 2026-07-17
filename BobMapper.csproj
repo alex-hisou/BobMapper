@@ -21,6 +21,7 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <StartupObject>BobMapper.App</StartupObject>
     <AssemblyVersion>0.1.0</AssemblyVersion>
+	<UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Resources\Textures\**" />

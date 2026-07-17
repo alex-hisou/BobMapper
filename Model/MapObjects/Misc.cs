@@ -23,8 +23,11 @@ namespace BobMapper.Model.MapObjects
         public MiscObjects Type
         {
             get { return type; }
-            set { type = value; SetMiscTexture(); }
+            set { type = value; SetMiscTexture(); 
+            }
         }
+
+        
 
         public SnapCoordinate Coordinates { get; set; }
 

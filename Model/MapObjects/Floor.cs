@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 using BobMapper.Services;
 
@@ -9,14 +10,14 @@ namespace BobMapper.Model.MapObjects
         private string texture1;
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-
         
         public string Texture1
         {
             get { return texture1; }
             set { texture1 = value; InternalTexture1 = InternalNameSevice.GetInternalName(value);
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture1))); }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture1)));
+                
+            }
 
         }
 
@@ -38,6 +39,8 @@ namespace BobMapper.Model.MapObjects
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture2))); }
 
         }
+
+        
 
         private string internalTexture2;
         [JsonIgnore]

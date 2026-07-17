@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 using BobMapper.Services;
 
@@ -25,6 +26,7 @@ namespace BobMapper.Model.MapObjects
             get { return texture1; }
             set { texture1 = value; InternalTexture1 = InternalNameSevice.GetInternalName(value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Texture1)));
+                
             }
         }
 
@@ -40,14 +42,20 @@ namespace BobMapper.Model.MapObjects
         public bool Locked
         {
             get { return locked; }
-            set { locked = value; }
+            set { locked = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Locked)));
+                
+            }
         }
 
         private bool permLocked;
         public bool PermLocked
         {
             get { return permLocked; }
-            set { permLocked = value; }
+            set { permLocked = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PermLocked)));
+                
+            }
         }
 
         public Door(SnapCoordinate point1, SnapCoordinate point2, string texture1, bool locked, bool permlocked)
@@ -60,6 +68,6 @@ namespace BobMapper.Model.MapObjects
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        
     }
 }

@@ -15,6 +15,7 @@ namespace BobMapper.Model.MapObjects
             set { type = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Type)));
                 SetNPCTexture();
+                
             }
         }
 
@@ -29,6 +30,7 @@ namespace BobMapper.Model.MapObjects
             {
                 rotation = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rotation)));
+                
             }
         }
 
@@ -37,11 +39,14 @@ namespace BobMapper.Model.MapObjects
         public int FirstPathPointId
         {
             get { return firstPathPointId; }
-            set { firstPathPointId = value; }
+            set { firstPathPointId = value;
+                
+            }
         }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
+        
 
         private string texture;
         [JsonIgnore]
@@ -56,7 +61,9 @@ namespace BobMapper.Model.MapObjects
         {
             get { return attachLoot; }
             set { attachLoot = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AttachLoot))); } 
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AttachLoot)));
+                
+            } 
         }
 
         private bool attachMainLoot;
@@ -67,6 +74,7 @@ namespace BobMapper.Model.MapObjects
             {
                 attachMainLoot = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AttachMainLoot)));
+                
             }
         }
 
