@@ -49,6 +49,10 @@ namespace BobMapper.Compiler.WriteSteps
                         currentByteWall[0] = 0x31;
                         currentByteWall[1] = 0x33;
                         break;
+                    case Wall.WallType.Window:
+                        currentByteWall[0] = 0x36;
+                        currentByteWall[1] = 0x00;
+                        break;
                 }
                 CompiledCoordinate compiledPoint1 = new(wall.Point1);
                 Array.Copy(compiledPoint1.CompiledBytes, 0, currentByteWall, 4, 4);

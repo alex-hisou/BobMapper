@@ -10,7 +10,8 @@ namespace BobMapper.Model.MapObjects
         public enum WallType
         {
             Normal,
-            Paperthin
+            Paperthin,
+            Window
         }
 
         [JsonIgnore]
@@ -42,11 +43,11 @@ namespace BobMapper.Model.MapObjects
             set
             {
                 type = value;
-                if (value == WallType.Normal)
+                if (value == WallType.Paperthin)
                 {
-                    Width = 20;
+                    Width = 5;
                 }
-                else { Width = 5; }
+                else { Width = 20; }
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(type)));
                 
             }

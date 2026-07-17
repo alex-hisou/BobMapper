@@ -91,6 +91,7 @@
                 </MenuItem>
                 <MenuItem Header="Edit">
                     <MenuItem Header="Expand or Contract Map" IsEnabled="False"/>
+                    <MenuItem Header="Object list" IsEnabled="False"/>
                     <Separator/>
                     <MenuItem Header="Prefrences" IsEnabled="False"/>
                 </MenuItem>

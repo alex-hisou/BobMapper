@@ -533,6 +533,7 @@ namespace BobMapper.ViewModel
             Compiler.Compiler compiler = new Compiler.Compiler();
             compiler.Compile(CurrentMap);
             File.WriteAllBytes(compileFilePath, Compiler.Compiler.output.ToArray());
+            Process.Start("explorer.exe", $"/select,\"{CompiledMapFileName}\"");
         }
     }
 }

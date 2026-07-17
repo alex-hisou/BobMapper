@@ -52,8 +52,8 @@ namespace BobMapper.Compiler
             List<byte> floorByteBuffer = new List<byte>();
             byte[] byteWidth = BitConverter.GetBytes(floors[0].Length);
             byte[] byteHeight = BitConverter.GetBytes(floors.Length);
-            floorByteBuffer.AddRange(byteWidth);
             floorByteBuffer.AddRange(byteHeight);
+            floorByteBuffer.AddRange(byteWidth);
             for (int i = 0; i < floors[0].Length; i++)
             {
                 for (int j = 0; j < floors.Length; j++)
