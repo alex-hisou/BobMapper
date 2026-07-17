@@ -55,13 +55,7 @@ namespace BobMapper.ViewModel
             set { fileName = value; }
         }
 
-        private bool unsavedChanged;
-
-        public bool UnsavedChanges
-        {
-            get { return unsavedChanged; }
-            set { unsavedChanged = value; }
-        }
+        public string CompiledMapFileName { get; set; }
 
         public LayerData CurrentLayerData { get; set; }
 
@@ -119,7 +113,6 @@ namespace BobMapper.ViewModel
             CurrentLoots = new ObservableCollection<Loot>(CurrentMap.loots);
             CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMap.tileset);
             CurrentSelections.SelectedTextureType = TextureType.All;
-            UnsavedChanges = false;
         }
 
         internal void AttachAllPathPointHandlers()
@@ -460,7 +453,6 @@ namespace BobMapper.ViewModel
                 FileName = fileDialogService.SaveFileDialog("BobMapper Json Files (.json)|*.json", ".json");
             }
             JsonMapParse.SaveData(CurrentMap, FileName);
-            UnsavedChanges = false;
         }
 
         private Floor[][] SaveFloor()
@@ -524,18 +516,23 @@ namespace BobMapper.ViewModel
         }
 
         [RelayCommand]
-        internal void Compile()
+        internal void Compile(bool saveNewFile)
         {
             CurrentMap.floors = SaveFloor();
-            FileDialogService fileDialogService = new FileDialogService();
-            string filePath = fileDialogService.SaveFileDialog("Compiled map (*.lev)|*.lev", ".lev");
-            if (string.IsNullOrEmpty(filePath))
+            string compileFilePath = CompiledMapFileName;
+            if (saveNewFile || string.IsNullOrEmpty(compileFilePath))
+            {
+                FileDialogService fileDialogService = new FileDialogService();
+                compileFilePath = fileDialogService.SaveFileDialog("Compiled map (*.lev)|*.lev", ".lev");
+                CompiledMapFileName = compileFilePath;
+            }
+            if (string.IsNullOrEmpty(compileFilePath))
             {
                 return;
             }
             Compiler.Compiler compiler = new Compiler.Compiler();
             compiler.Compile(CurrentMap);
-            File.WriteAllBytes(filePath, Compiler.Compiler.output.ToArray());
+            File.WriteAllBytes(compileFilePath, Compiler.Compiler.output.ToArray());
         }
     }
 }

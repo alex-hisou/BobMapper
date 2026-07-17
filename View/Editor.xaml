@@ -90,16 +90,15 @@
                     <MenuItem Header="Exit"/>
                 </MenuItem>
                 <MenuItem Header="Edit">
-                    <MenuItem Header="Expand or Contract Map"/>
+                    <MenuItem Header="Expand or Contract Map" IsEnabled="False"/>
                     <Separator/>
-                    <MenuItem Header="Prefrences"/>
+                    <MenuItem Header="Prefrences" IsEnabled="False"/>
                 </MenuItem>
-                <MenuItem Header="Tools"></MenuItem>
                 <MenuItem Header="Compile">
-                    <MenuItem Header="Compile" Command="{Binding CompileCommand}"></MenuItem>
-                    <MenuItem Header="Compile to"></MenuItem>
-                    <MenuItem Header="Inject"></MenuItem>
-                    <MenuItem Header="Inject and Play"></MenuItem>
+                    <MenuItem Header="Compile" Command="{Binding CompileCommand}" CommandParameter="{StaticResource False}"></MenuItem>
+                    <MenuItem Header="Compile to" Command="{Binding CompileCommand}" CommandParameter="{StaticResource True}"></MenuItem>
+                    <MenuItem Header="Inject" IsEnabled="False"></MenuItem>
+                    <MenuItem Header="Inject and Play" IsEnabled="False"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Help">
                     <MenuItem Header="Shortcuts"/>
