@@ -96,7 +96,6 @@
                     <MenuItem Header="Prefrences" IsEnabled="False"/>
                 </MenuItem>
                 <MenuItem Header="Compile">
-                    <MenuItem Header="Compile" Command="{Binding CompileCommand}" CommandParameter="{StaticResource False}"></MenuItem>
                     <MenuItem Header="Compile to" Command="{Binding CompileCommand}" CommandParameter="{StaticResource True}"></MenuItem>
                     <MenuItem Header="Inject" IsEnabled="False"></MenuItem>
                     <MenuItem Header="Inject and Play" IsEnabled="False"></MenuItem>
@@ -586,14 +585,15 @@
                                             <RotateTransform Angle="{Binding Rotation}"/>
                                         </TransformGroup>
                                     </Grid.RenderTransform>
-                                    <Image Source="{Binding Texture}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                    <Image Source="{Binding Texture}" Stretch="None">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
                                                 RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                     </Image>
+                                    <Image Source="/Resources/MiscTextures/LootGlare.png" IsHitTestVisible="False" Opacity="0.7"/>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
