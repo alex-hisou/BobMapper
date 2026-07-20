@@ -259,6 +259,16 @@ namespace BobMapper.ViewModel
             }
         }
 
+        [RelayCommand]
+        public void RightClickObject(object sender)
+        {
+            if(CurrentSelections.SelectedTool == Tools.ChangeFloor && sender is Floor)
+            {
+                Floor floor = (Floor)sender;
+                floor.Flip++;
+            }
+        }
+
         private void ResetSelection()
         {
             switch (CurrentSelections.SelectedObjectType)
@@ -529,6 +539,10 @@ namespace BobMapper.ViewModel
             if (string.IsNullOrEmpty(compileFilePath))
             {
                 return;
+            }
+            if (File.Exists(compileFilePath))
+            {
+                File.Delete(compileFilePath);
             }
             Compiler.Compiler compiler = new Compiler.Compiler();
             compiler.Compile(CurrentMap);

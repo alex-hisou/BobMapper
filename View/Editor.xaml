@@ -502,13 +502,20 @@
                                 <ItemsControl ItemsSource="{Binding .}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type object:Floor}">
-                                            <Image Source="{Binding Texture1}" Width="64" Height="64">
+                                            <Image Source="{Binding Texture1}" Width="64" Height="64" RenderTransformOrigin="0.5,0.5">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="MouseLeftButtonDown">
                                                         <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
                                                         RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}" />
                                                     </i:EventTrigger>
+                                                    <i:EventTrigger EventName="MouseRightButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.RightClickObjectCommand, 
+                                                            RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
                                                 </i:Interaction.Triggers>
+                                                <Image.RenderTransform>
+                                                    <ScaleTransform ScaleX="{Binding VisualScaleX}" ScaleY="{Binding VisualScaleY}"/>
+                                                </Image.RenderTransform>
                                             </Image>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
