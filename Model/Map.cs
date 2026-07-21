@@ -40,7 +40,7 @@ namespace BobMapper.Model
                 floors[i] = new Floor[Height];
                 for (int j = 0; j < Height; j++)
                 {
-                    floors[i][j] = new Floor(@"/Resources/FloorTextures/Floor_Nothing.png", @"/Resources/FloorTextures/Floor_Nothing.png");
+                    floors[i][j] = new Floor(@"/Resources/FloorTextures/Floor_Nothing.png", @"/Resources/FloorTextures/Floor_Nothing.png", 0);
                 }
             }
             Width *= SnapCoordinate.FloorSize; 

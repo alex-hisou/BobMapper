@@ -172,6 +172,20 @@ namespace BobMapper.ViewModel
                     SnapCoordinate snappedPropPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
                     Prop prop = new Prop(snappedPropPlacementPos, 0, CurrentSelections.SelectedTexture);
                     CurrentProps.Add(prop);
+                    if(prop.PropTexture == "/Resources/PropTextures/Teleporter.png")
+                    {
+                        SnapCoordinate tele2Coordinate = new(prop.Coordinates.SnappedXPos, prop.Coordinates.SnappedYPos);
+                        tele2Coordinate.SnappedXPos += 2;
+                        Prop tele2 = new Prop(tele2Coordinate, 0, "/Resources/PropTextures/Teleporter.png");
+                        CurrentProps.Add(tele2);
+                    }
+                    if(prop.PropTexture == "/Resources/PropTextures/TelePad.png")
+                    {
+                        SnapCoordinate tele2Coordinate = new(prop.Coordinates.SnappedXPos, prop.Coordinates.SnappedYPos);
+                        tele2Coordinate.SnappedXPos += 1;
+                        Prop tele2 = new Prop(tele2Coordinate, 0, "/Resources/PropTextures/TelePad.png");
+                        CurrentProps.Add(tele2);
+                    }
                     break;
                 case Tools.AddNPC:
                     SnapCoordinate snappedNPCPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
@@ -195,7 +209,7 @@ namespace BobMapper.ViewModel
                 case Tools.AddDoor:
                     SnapCoordinate snappedDoorPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
                     SnapCoordinate shiftedSnappedDoorPlacementPos = new SnapCoordinate(snappedDoorPlacementPos.SnappedXPos + 1, snappedDoorPlacementPos.SnappedYPos);
-                    Door door = new Door(snappedDoorPlacementPos, shiftedSnappedDoorPlacementPos, CurrentSelections.SelectedTexture, false, false);
+                    Door door = new Door(snappedDoorPlacementPos, shiftedSnappedDoorPlacementPos, CurrentSelections.SelectedTexture, false, false, false);
                     CurrentDoors.Add(door);
                     break;
                 case Tools.AddLoot:
@@ -256,6 +270,16 @@ namespace BobMapper.ViewModel
             {
                 Floor floor = (Floor)sender;
                 floor.Texture1 = CurrentSelections.SelectedTexture;
+            }
+        }
+
+        [RelayCommand]
+        public void RightClickObject(object sender)
+        {
+            if(CurrentSelections.SelectedTool == Tools.ChangeFloor && sender is Floor)
+            {
+                Floor floor = (Floor)sender;
+                floor.Flip++;
             }
         }
 
@@ -529,6 +553,10 @@ namespace BobMapper.ViewModel
             if (string.IsNullOrEmpty(compileFilePath))
             {
                 return;
+            }
+            if (File.Exists(compileFilePath))
+            {
+                File.Delete(compileFilePath);
             }
             Compiler.Compiler compiler = new Compiler.Compiler();
             compiler.Compile(CurrentMap);

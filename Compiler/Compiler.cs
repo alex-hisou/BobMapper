@@ -65,7 +65,7 @@ namespace BobMapper.Compiler
                     //TODO: Make Texture2 work
                     byte[] byteTexture2 = new byte[26];
                     Encoding.ASCII.GetBytes(floor.InternalTexture1, 0, floor.InternalTexture1.Length, byteTexture2, 0);
-                    byteTexture2[25] = 0x01;
+                    byteTexture2[25] = (byte)floor.Flip;
                     floorByteBuffer.AddRange(byteTexture2);
                 }
             }

@@ -409,7 +409,6 @@
     <None Remove="Resources\PropTextures\CafeteriaTable.png" />
     <None Remove="Resources\PropTextures\calculator.png" />
     <None Remove="Resources\PropTextures\Camera.png" />
-    <None Remove="Resources\PropTextures\CameraDot.png" />
     <None Remove="Resources\PropTextures\CardboardBox_Fallen.png" />
     <None Remove="Resources\PropTextures\CardBoardSign_HeroMan.png" />
     <None Remove="Resources\PropTextures\CardBoardSign_Silhouettes.png" />
@@ -1019,7 +1018,6 @@
     <None Remove="Resources\PropTextures\TelePad.png" />
     <None Remove="Resources\PropTextures\telephone.png" />
     <None Remove="Resources\PropTextures\Teleporter.png" />
-    <None Remove="Resources\PropTextures\Teleporter2.png" />
     <None Remove="Resources\PropTextures\Toilet.png" />
     <None Remove="Resources\PropTextures\toilet_bathtub.png" />
     <None Remove="Resources\PropTextures\toilet_closed_toilet.png" />
@@ -2096,7 +2094,6 @@
     <Resource Include="Resources\PropTextures\CafeteriaTable.png" />
     <Resource Include="Resources\PropTextures\calculator.png" />
     <Resource Include="Resources\PropTextures\Camera.png" />
-    <Resource Include="Resources\PropTextures\CameraDot.png" />
     <Resource Include="Resources\PropTextures\CardboardBox_Fallen.png" />
     <Resource Include="Resources\PropTextures\CardBoardSign_HeroMan.png" />
     <Resource Include="Resources\PropTextures\CardBoardSign_Silhouettes.png" />
@@ -2706,7 +2703,6 @@
     <Resource Include="Resources\PropTextures\TelePad.png" />
     <Resource Include="Resources\PropTextures\telephone.png" />
     <Resource Include="Resources\PropTextures\Teleporter.png" />
-    <Resource Include="Resources\PropTextures\Teleporter2.png" />
     <Resource Include="Resources\PropTextures\Toilet.png" />
     <Resource Include="Resources\PropTextures\toilet_bathtub.png" />
     <Resource Include="Resources\PropTextures\toilet_closed_toilet.png" />
