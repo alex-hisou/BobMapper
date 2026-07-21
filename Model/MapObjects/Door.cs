@@ -58,13 +58,24 @@ namespace BobMapper.Model.MapObjects
             }
         }
 
-        public Door(SnapCoordinate point1, SnapCoordinate point2, string texture1, bool locked, bool permlocked)
+        private bool slidingDoor;
+
+        public bool SlidingDoor
+        {
+            get { return slidingDoor; }
+            set { slidingDoor = value; 
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SlidingDoor))); }
+        }
+
+
+        public Door(SnapCoordinate point1, SnapCoordinate point2, string texture1, bool locked, bool permlocked, bool slidingDoor)
         {
             Point1 = point1;
             Point2 = point2;
             Texture1 = texture1;
             Locked = locked;
             PermLocked = permlocked;
+            SlidingDoor = slidingDoor;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

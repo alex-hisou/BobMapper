@@ -328,6 +328,7 @@
                                             <Label Content="{Binding Texture1}"/>
                                             <CheckBox Content="Locked" Width="250" IsChecked="{Binding Locked}"/>
                                             <CheckBox Content="Permanent Lock" Width="250" IsChecked="{Binding PermLocked}"/>
+                                            <CheckBox Content="Sliding Door" Width="250" IsChecked="{Binding SlidingDoor}"/>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ContentControl.Resources>
