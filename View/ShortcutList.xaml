@@ -1,0 +1,24 @@
+﻿<Window x:Class="BobMapper.View.ShortcutList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BobMapper.View" 
+        xmlns:viewmodel="clr-namespace:BobMapper.ViewModel" 
+        d:DataContext="{d:DesignInstance Type=viewmodel:ShortcutListViewModel}"
+        mc:Ignorable="d"
+        Title="ShortcutList" Height="552" Width="750">
+    <Grid>
+        <ScrollViewer>
+            <ListView ItemsSource="{Binding Shortcuts}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Action" Width="250" DisplayMemberBinding="{Binding Action}"/>
+                        <GridViewColumn Header="Key" Width="250" DisplayMemberBinding="{Binding Key}"/>
+                        <GridViewColumn Header="Modifier Key" Width="250" DisplayMemberBinding="{Binding Modifier}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </ScrollViewer>
+    </Grid>
+</Window>

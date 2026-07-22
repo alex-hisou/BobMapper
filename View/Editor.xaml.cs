@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -39,14 +38,14 @@ namespace BobMapper
             e.Handled = Regex.IsMatch(e.Text, "[^0-9\\-.]");
         }
 
-        private void TextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                System.Windows.Controls.TextBox textBox = sender as System.Windows.Controls.TextBox;
+                TextBox textBox = sender as TextBox;
                 if (textBox != null)
                 {
-                    var bindingExpression = textBox.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty);
+                    var bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
                     bindingExpression?.UpdateSource();
                     Keyboard.ClearFocus();
                 }
@@ -54,7 +53,7 @@ namespace BobMapper
             }
         }
 
-        private void ClickEmpty(object sender, System.Windows.Input.MouseEventArgs e)
+        private void ClickEmpty(object sender, MouseEventArgs e)
         {
             Keyboard.Focus(WindowGrid);
             WindowGrid.Focus();
@@ -68,7 +67,9 @@ namespace BobMapper
             {
                 editorViewModel.ClickEmpty(placementPos);
             }
-            
+            Keyboard.ClearFocus();
+            FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), this);
+            ScrollPlane.Focus();
         }
 
         private void TryClose(object sender, CancelEventArgs e)
@@ -81,7 +82,8 @@ namespace BobMapper
                     return;
                 }
             }
-            if (System.Windows.Forms.MessageBox.Show("There are unsaved changes. Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+            var result = MessageBox.Show("There are unsaved changes. Are you sure you want to exit?", "Exit", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
                 e.Cancel = false;
             else
                 e.Cancel = true;
@@ -135,6 +137,16 @@ namespace BobMapper
             }
         }
 
+        private void ShortcutListOpen(object sender, RoutedEventArgs e)
+        {
+            ShortcutList shortcutList = new ShortcutList();
+            shortcutList.Show();
+        }
 
+        private void AssetGalleryScroll_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            Keyboard.ClearFocus();
+            FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), this);
+        }
     }
 }

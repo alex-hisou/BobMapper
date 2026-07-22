@@ -159,6 +159,12 @@ namespace BobMapper
             return coordinate;
         }
 
+        public static explicit operator string(SnapCoordinate snapCoordinate)
+        {
+            string stringOutput = $"X - {snapCoordinate.SnappedXPos}; Y - {snapCoordinate.SnappedYPos}";
+            return stringOutput;
+        }
+
         protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

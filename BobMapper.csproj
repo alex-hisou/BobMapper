@@ -21,7 +21,8 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <StartupObject>BobMapper.App</StartupObject>
     <AssemblyVersion>0.1.0</AssemblyVersion>
-	<UseWindowsForms>true</UseWindowsForms>
+	<UseWindowsForms>false</UseWindowsForms>
+	<ApplicationIcon>Resources\UI\AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Resources\Textures\**" />
@@ -1092,7 +1093,9 @@
     <None Remove="Resources\DoorTextures\Fence_White.png" />
     <None Remove="Resources\DoorTextures\Window.png" />
     <None Remove="Resources\DoorTextures\WindowTop.png" />
+    <None Remove="Resources\UI\AddDoorTool.png" />
     <None Remove="Resources\UI\AddFloorTool.png" />
+    <None Remove="Resources\UI\AddLootTool.png" />
     <None Remove="Resources\UI\AddMiscTool.png" />
     <None Remove="Resources\UI\AddNPCTool.png" />
     <None Remove="Resources\UI\AddPathTool.png" />
@@ -1296,6 +1299,7 @@
     <Content Include="Data\TextureManifest.sqlite">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\UI\AppIcon.ico" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.3" />
@@ -2774,6 +2778,12 @@
     <Resource Include="Resources\DoorTextures\Door_Store.png" />
     <Resource Include="Resources\DoorTextures\Door_White.png" />
     <Resource Include="Resources\DoorTextures\Door_Yellow.png" />
+    <Resource Include="Resources\UI\AddDoorTool.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\UI\AddLootTool.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\WallTextures\Window.png" />
     <Resource Include="Resources\WallTextures\WindowTop.png" />
     <Resource Include="Resources\UI\AddFloorTool.png" />
