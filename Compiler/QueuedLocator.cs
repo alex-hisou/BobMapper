@@ -22,6 +22,7 @@ namespace BobMapper.Compiler
         {
             Lock = 9,
             Loot = 6,
+            Teleporter = 10,
             PermanentLock = 13,
             MainLoot = 7
         }

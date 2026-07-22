@@ -104,6 +104,16 @@ namespace BobMapper.Compiler.WriteSteps
                 FloatCoordinate compiledCoordinate = new(prop.Coordinates, prop.Rotation, true);
                 Array.Copy(compiledCoordinate.CompiledBytes, 0, currentByteProp, 36, compiledCoordinate.CompiledBytes.Length);
                 byteProps.AddRange(currentByteProp);
+                if(prop.PropTexture == "/Resources/PropTextures/Teleporter.png")
+                {
+                    QueuedLocator queuedLocator = new(QueuedLocator.LocatorTypes.Teleporter, prop.Coordinates);
+                    Compiler.locatorQueue.Add(queuedLocator);
+                }
+                if(prop.PropTexture == "/Resources/PropTextures/TelePad.png")
+                {
+                    QueuedLocator queuedLocator = new(QueuedLocator.LocatorTypes.Teleporter, prop.Coordinates);
+                    Compiler.locatorQueue.Add(queuedLocator);
+                }
             }
             return byteProps;
         }

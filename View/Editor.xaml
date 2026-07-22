@@ -76,6 +76,10 @@
             CommandParameter="{x:Static local:Tools.AddDoor}"/>
         <KeyBinding Key="L" Command="{Binding SelectToolCommand}"
             CommandParameter="{x:Static local:Tools.AddLoot}"/>
+        <KeyBinding Key="S" Command="{Binding SaveCommand}" Modifiers="Ctrl"
+            CommandParameter="{StaticResource False}"/>
+        <KeyBinding Key="C" Command="{Binding CompileCommand}" Modifiers="Ctrl"
+            CommandParameter="{StaticResource True}"/>
     </Window.InputBindings>
 
     <Grid x:Name="WindowGrid">
@@ -101,7 +105,7 @@
                     <MenuItem Header="Inject and Play" IsEnabled="False"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Help">
-                    <MenuItem Header="Shortcuts"/>
+                    <MenuItem Header="Shortcuts" Click="ShortcutListOpen"/>
                     <MenuItem Header="About"/>
                 </MenuItem>
             </Menu>
@@ -163,23 +167,23 @@
                         <Image Source="/Resources/UI/AddFloorTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Add Misc" Name="AddMiscTool"
-                          Command="{Binding SelectToolCommand}" 
-                          CommandParameter="{x:Static local:Tools.AddMisc}">
-                    <MenuItem.Icon>
-                        <Image Source="/Resources/UI/AddMiscTool.png"/>
-                    </MenuItem.Icon>
-                </MenuItem>
                 <MenuItem Header="Add Door" Name="AddDoorTool"
                     Command="{Binding SelectToolCommand}" 
                     CommandParameter="{x:Static local:Tools.AddDoor}">
                     <MenuItem.Icon>
-                        <Image Source="/Resources/UI/AddMiscTool.png"/>
+                        <Image Source="/Resources/UI/AddDoorTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Add Loot" Name="AddLootTool"
                      Command="{Binding SelectToolCommand}" 
                      CommandParameter="{x:Static local:Tools.AddLoot}">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/UI/AddLootTool.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Add Misc" Name="AddMiscTool"
+                          Command="{Binding SelectToolCommand}" 
+                          CommandParameter="{x:Static local:Tools.AddMisc}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddMiscTool.png"/>
                     </MenuItem.Icon>
@@ -456,7 +460,7 @@
 
                             <ComboBox Width="250" Height="20" Margin="20" ItemsSource="{Binding CurrentMap.TextureTypeValues}" SelectedItem="{Binding CurrentSelections.SelectedTextureType}">
                             </ComboBox>
-                            <ScrollViewer Width="300" Height="740">
+                            <ScrollViewer MinHeight="150" MaxHeight="700" x:Name="AssetGalleryScroll" GotKeyboardFocus="AssetGalleryScroll_GotKeyboardFocus" MinWidth="300">
                                 <ItemsControl ItemsSource="{Binding CurrentSelections.CurrentTextureSet}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>

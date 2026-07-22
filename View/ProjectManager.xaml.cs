@@ -57,5 +57,10 @@ namespace BobMapper
             editor.Show();
             this.Close();
         }
+
+        private void Prefrences_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

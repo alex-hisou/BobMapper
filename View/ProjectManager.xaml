@@ -8,8 +8,9 @@
         
         Title="BobMapper" Height="450" Width="800" ResizeMode="CanMinimize">
     <Grid>
-        <Button x:Name="NewMod" Content="Start new mapping project" HorizontalAlignment="Left" Margin="49,90,0,0" VerticalAlignment="Top" Width="367" Height="40" Click="NewMod_Click"/>
-        <Button x:Name="LoadMod" Content="Load existing mapping project" HorizontalAlignment="Left" Margin="49,135,0,0" VerticalAlignment="Top" Width="367" Height="40" Click="LoadMod_Click"/>
+        <Button x:Name="NewMod" Content="Create new map"  Margin="0,90,0,0" VerticalAlignment="Top" Width="700" Height="70" Click="NewMod_Click" FontSize="22"/>
+        <Button x:Name="LoadMod" Content="Load map" HorizontalAlignment="Center" Margin="0,177,0,0" VerticalAlignment="Top" Width="700" Height="70" Click="LoadMod_Click" FontSize="22"/>
+        <Button x:Name="Prefrences" Content="Prefrences" HorizontalAlignment="Center" Margin="0,264,0,0" VerticalAlignment="Top" Width="700" Height="70" Click="Prefrences_Click" FontSize="22" IsEnabled="False"/>
 
     </Grid>
 </Window>
