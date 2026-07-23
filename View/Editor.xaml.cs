@@ -50,13 +50,13 @@ namespace BobMapper
                     Keyboard.ClearFocus();
                 }
                 e.Handled = true;
+                Keyboard.ClearFocus();
+                FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), this);
             }
         }
 
         private void ClickEmpty(object sender, MouseEventArgs e)
         {
-            Keyboard.Focus(WindowGrid);
-            WindowGrid.Focus();
             var mousePos = e.GetPosition(ScrollPlane);
             int wholeX = Convert.ToInt32(mousePos.X);
             int wholeY = Convert.ToInt32(mousePos.Y);
@@ -67,9 +67,6 @@ namespace BobMapper
             {
                 editorViewModel.ClickEmpty(placementPos);
             }
-            Keyboard.ClearFocus();
-            FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), this);
-            ScrollPlane.Focus();
         }
 
         private void TryClose(object sender, CancelEventArgs e)
