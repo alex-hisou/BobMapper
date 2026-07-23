@@ -20,7 +20,7 @@
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <StartupObject>BobMapper.App</StartupObject>
-    <AssemblyVersion>0.1.0</AssemblyVersion>
+    <AssemblyVersion>0.1.1</AssemblyVersion>
 	<UseWindowsForms>false</UseWindowsForms>
 	<ApplicationIcon>Resources\UI\AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
@@ -594,34 +594,17 @@
     <None Remove="Resources\PropTextures\Hedge.png" />
     <None Remove="Resources\PropTextures\HeliPad.png" />
     <None Remove="Resources\PropTextures\Hidingplace_Bottle.png" />
-    <None Remove="Resources\PropTextures\Hidingplace_Bottle_use.png" />
     <None Remove="Resources\PropTextures\Hidingplace_box.png" />
-    <None Remove="Resources\PropTextures\Hidingplace_box_use.png" />
-    <None Remove="Resources\PropTextures\hidingplace_box_use_p2.png" />
     <None Remove="Resources\PropTextures\hidingplace_bush.png" />
-    <None Remove="Resources\PropTextures\hidingplace_bush_use.png" />
-    <None Remove="Resources\PropTextures\hidingplace_bush_use_2p.png" />
     <None Remove="Resources\PropTextures\Hidingplace_Carpet.png" />
-    <None Remove="Resources\PropTextures\Hidingplace_Carpet_use.png" />
     <None Remove="Resources\PropTextures\hidingplace_clothes.png" />
-    <None Remove="Resources\PropTextures\hidingplace_clothes_use.png" />
-    <None Remove="Resources\PropTextures\hidingplace_clothes_use_2p.png" />
     <None Remove="Resources\PropTextures\Hidingplace_Fern.png" />
-    <None Remove="Resources\PropTextures\Hidingplace_Fern_use.png" />
     <None Remove="Resources\PropTextures\Hidingplace_floor.png" />
-    <None Remove="Resources\PropTextures\Hidingplace_floor_use.png" />
     <None Remove="Resources\PropTextures\Hidingplace_flower.png" />
-    <None Remove="Resources\PropTextures\Hidingplace_flower_use.png" />
     <None Remove="Resources\PropTextures\Hidingplace_Laundry.png" />
-    <None Remove="Resources\PropTextures\Hidingplace_Laundry_use.png" />
     <None Remove="Resources\PropTextures\hidingplace_sewerlid.png" />
-    <None Remove="Resources\PropTextures\hidingplace_sewerlid_use.png" />
-    <None Remove="Resources\PropTextures\hidingplace_sewerlid_use_2p.png" />
     <None Remove="Resources\PropTextures\Hidingplace_toilet.png" />
-    <None Remove="Resources\PropTextures\Hidingplace_toilet_use.png" />
-    <None Remove="Resources\PropTextures\hidingplace_toilet_use_2p.png" />
     <None Remove="Resources\PropTextures\Hidingplace_Trash.png" />
-    <None Remove="Resources\PropTextures\Hidingplace_Trash_use.png" />
     <None Remove="Resources\PropTextures\Hologram_B.png" />
     <None Remove="Resources\PropTextures\Hologram_S.png" />
     <None Remove="Resources\PropTextures\IceMachine.png" />
@@ -1101,6 +1084,7 @@
     <None Remove="Resources\UI\AddPathTool.png" />
     <None Remove="Resources\UI\AddPropTool.png" />
     <None Remove="Resources\UI\AddWallTool.png" />
+    <None Remove="Resources\UI\Banner.png" />
     <None Remove="Resources\UI\MoveTool.png" />
     <None Remove="Resources\UI\RotateTool.png" />
     <None Remove="Resources\UI\SelectionTool.png" />
@@ -2282,34 +2266,17 @@
     <Resource Include="Resources\PropTextures\Hedge.png" />
     <Resource Include="Resources\PropTextures\HeliPad.png" />
     <Resource Include="Resources\PropTextures\Hidingplace_Bottle.png" />
-    <Resource Include="Resources\PropTextures\Hidingplace_Bottle_use.png" />
     <Resource Include="Resources\PropTextures\Hidingplace_box.png" />
-    <Resource Include="Resources\PropTextures\Hidingplace_box_use.png" />
-    <Resource Include="Resources\PropTextures\hidingplace_box_use_p2.png" />
     <Resource Include="Resources\PropTextures\hidingplace_bush.png" />
-    <Resource Include="Resources\PropTextures\hidingplace_bush_use.png" />
-    <Resource Include="Resources\PropTextures\hidingplace_bush_use_2p.png" />
     <Resource Include="Resources\PropTextures\Hidingplace_Carpet.png" />
-    <Resource Include="Resources\PropTextures\Hidingplace_Carpet_use.png" />
     <Resource Include="Resources\PropTextures\hidingplace_clothes.png" />
-    <Resource Include="Resources\PropTextures\hidingplace_clothes_use.png" />
-    <Resource Include="Resources\PropTextures\hidingplace_clothes_use_2p.png" />
     <Resource Include="Resources\PropTextures\Hidingplace_Fern.png" />
-    <Resource Include="Resources\PropTextures\Hidingplace_Fern_use.png" />
     <Resource Include="Resources\PropTextures\Hidingplace_floor.png" />
-    <Resource Include="Resources\PropTextures\Hidingplace_floor_use.png" />
     <Resource Include="Resources\PropTextures\Hidingplace_flower.png" />
-    <Resource Include="Resources\PropTextures\Hidingplace_flower_use.png" />
     <Resource Include="Resources\PropTextures\Hidingplace_Laundry.png" />
-    <Resource Include="Resources\PropTextures\Hidingplace_Laundry_use.png" />
     <Resource Include="Resources\PropTextures\hidingplace_sewerlid.png" />
-    <Resource Include="Resources\PropTextures\hidingplace_sewerlid_use.png" />
-    <Resource Include="Resources\PropTextures\hidingplace_sewerlid_use_2p.png" />
     <Resource Include="Resources\PropTextures\Hidingplace_toilet.png" />
-    <Resource Include="Resources\PropTextures\Hidingplace_toilet_use.png" />
-    <Resource Include="Resources\PropTextures\hidingplace_toilet_use_2p.png" />
     <Resource Include="Resources\PropTextures\Hidingplace_Trash.png" />
-    <Resource Include="Resources\PropTextures\Hidingplace_Trash_use.png" />
     <Resource Include="Resources\PropTextures\Hologram_B.png" />
     <Resource Include="Resources\PropTextures\Hologram_S.png" />
     <Resource Include="Resources\PropTextures\IceMachine.png" />
@@ -2783,6 +2750,9 @@
     </Resource>
     <Resource Include="Resources\UI\AddLootTool.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\UI\Banner.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\WallTextures\Window.png" />
     <Resource Include="Resources\WallTextures\WindowTop.png" />

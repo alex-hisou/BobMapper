@@ -148,5 +148,11 @@ namespace BobMapper
             Keyboard.ClearFocus();
             FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), this);
         }
+
+        private void AboutOpen(object sender, RoutedEventArgs e)
+        {
+            About about = new About();
+            about.Show();
+        }
     }
 }

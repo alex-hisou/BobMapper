@@ -102,11 +102,11 @@
                 <MenuItem Header="Compile">
                     <MenuItem Header="Compile to" Command="{Binding CompileCommand}" CommandParameter="{StaticResource True}"></MenuItem>
                     <MenuItem Header="Inject" IsEnabled="False"></MenuItem>
-                    <MenuItem Header="Inject and Play" IsEnabled="False"></MenuItem>
+                    <MenuItem Header="Inject and Play (Steam)" IsEnabled="False"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Help">
                     <MenuItem Header="Shortcuts" Click="ShortcutListOpen"/>
-                    <MenuItem Header="About"/>
+                    <MenuItem Header="About" Click="AboutOpen"/>
                 </MenuItem>
             </Menu>
             <Menu DockPanel.Dock="Left" Width="auto" Height="auto" Name="ToolDrawer">
@@ -289,12 +289,10 @@
                                             <TextBox Width="100" Height="20" Text="{Binding Coordinates.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                             PreviewTextInput="TextBox_PreviewTextInput"
                                                      PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
-                                            <Label Width="170">Type</Label>
+                                            <Label Width="170">Asset</Label>
                                             <Image Source="{Binding Texture}" MaxHeight="100" MaxWidth="100"/>
-                                            <Label Content="Type"/>
-                                            <ComboBox SelectedItem="{Binding Type}" ItemsSource="{Binding MiscTypeValues}">
-
-                                            </ComboBox>
+                                            <Label Content="Type" Width="100"/>
+                                            <ComboBox SelectedItem="{Binding Type}" ItemsSource="{Binding MiscTypeValues}" MinWidth="150"/>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ContentControl.Resources>

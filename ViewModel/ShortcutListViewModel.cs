@@ -25,6 +25,7 @@ namespace BobMapper.ViewModel
             new("Add Misc tool", "M", ""),
             new("Add Door tool", "D", ""),
             new("Add Loot tool", "L", ""),
+            new("Delete selected object", "Delete", ""),
             new("Zoom In", "+", "Shift"),
             new("Zoom Out", "-", "Shift"),
             new("Reset Zoom", "*", "Shift"),
