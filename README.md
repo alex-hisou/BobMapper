@@ -73,4 +73,4 @@ Note: The repo doesn't include the tools, dependencies or runtimes. It only incl
 * If a horizontal wall intersects a vertical wall, you need to split the vertical wall in two at the intersection point
 * Some textures will not display ingame. For any texture that does that, contact the developers.
 * You can right click with the Change Floor tool selected to 
-* Currently missing features include: Teleporters, elevators, room shadow vfx, apartment levels, night levels, big buttons, cables, changing map size after level creation, direct file injection.
+* Currently missing features include: Elevators, room shadow vfx, apartment levels, night levels, big buttons, cables, changing map size after level creation, direct file injection.
