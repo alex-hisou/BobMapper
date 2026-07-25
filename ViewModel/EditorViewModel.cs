@@ -84,16 +84,26 @@ namespace BobMapper.ViewModel
             get { return currentMap; }
             set { currentMap = value; }
         }
-        
+
+        private MapProperties currentMapProperties;
+
+        public MapProperties CurrentMapProperties
+        {
+            get { return currentMapProperties; }
+            set { currentMapProperties = value; }
+        }
+
+
 
         public EditorViewModel(string filename)
         {
             FileName = filename;
             CurrentMap = JsonMapParse.LoadData(filename);
+            CurrentMapProperties = CurrentMap.mapProperties;
             CurrentViewportData = new ViewportData
             {
-                ViewOffsetX = CurrentMap.Width / -2,
-                ViewOffsetY = CurrentMap.Height / -2,
+                ViewOffsetX = CurrentMapProperties.Width / -2,
+                ViewOffsetY = CurrentMapProperties.Height / -2,
                 CameraX = 0,
                 CameraY = 0,
                 ZoomX = 1,
@@ -111,7 +121,7 @@ namespace BobMapper.ViewModel
             CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors));
             CurrentDoors = new ObservableCollection<Door>(CurrentMap.doors);
             CurrentLoots = new ObservableCollection<Loot>(CurrentMap.loots);
-            CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMap.tileset);
+            CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMapProperties.tileset);
             CurrentSelections.SelectedTextureType = TextureType.All;
         }
 
@@ -165,13 +175,13 @@ namespace BobMapper.ViewModel
                 case Tools.AddWall:
                     SnapCoordinate snappedWallPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
                     SnapCoordinate shiftedSnappedPlacementPos = new SnapCoordinate(snappedWallPlacementPos.SnappedXPos + 1, snappedWallPlacementPos.SnappedYPos);
-                    string validWallTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Wall, CurrentMap.tileset, true);
+                    string validWallTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Wall, CurrentMapProperties.tileset, true);
                     Wall wall = new Wall(snappedWallPlacementPos, shiftedSnappedPlacementPos, Wall.WallType.Normal, validWallTexture, validWallTexture);
                     CurrentWalls.Add(wall);
                     break;
                 case Tools.AddProp:
                     SnapCoordinate snappedPropPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    string validPropTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Prop, CurrentMap.tileset, true);
+                    string validPropTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Prop, CurrentMapProperties.tileset, true);
                     Prop prop = new Prop(snappedPropPlacementPos, 0, validPropTexture);
                     CurrentProps.Add(prop);
                     if(prop.PropTexture == "/Resources/PropTextures/Teleporter.png")
@@ -211,13 +221,13 @@ namespace BobMapper.ViewModel
                 case Tools.AddDoor:
                     SnapCoordinate snappedDoorPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
                     SnapCoordinate shiftedSnappedDoorPlacementPos = new SnapCoordinate(snappedDoorPlacementPos.SnappedXPos + 1, snappedDoorPlacementPos.SnappedYPos);
-                    string validDoorTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Door, CurrentMap.tileset, true);
+                    string validDoorTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Door, CurrentMapProperties.tileset, true);
                     Door door = new Door(snappedDoorPlacementPos, shiftedSnappedDoorPlacementPos, CurrentSelections.SelectedTexture, false, false, false);
                     CurrentDoors.Add(door);
                     break;
                 case Tools.AddLoot:
                     SnapCoordinate snappedLootPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    string validLootTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Loot, CurrentMap.tileset, true);
+                    string validLootTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Loot, CurrentMapProperties.tileset, true);
                     Loot loot = new Loot(validLootTexture, snappedLootPlacementPos, 0);
                     CurrentLoots.Add(loot);
                     break;
@@ -234,7 +244,7 @@ namespace BobMapper.ViewModel
             switch (parsedSender)
             {
                 case "PropTexture":
-                    string validPropTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Prop, CurrentMap.tileset, false);
+                    string validPropTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Prop, CurrentMapProperties.tileset, false);
                     if (CurrentSelections.SelectedTexture != validPropTexture)
                     {
                         SystemSounds.Exclamation.Play();
@@ -243,7 +253,7 @@ namespace BobMapper.ViewModel
                     CurrentSelections.SelectedProp.PropTexture = CurrentSelections.SelectedTexture;
                     break;
                 case "LootTexture":
-                    string validLootTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Loot, CurrentMap.tileset, false);
+                    string validLootTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Loot, CurrentMapProperties.tileset, false);
                     if (CurrentSelections.SelectedTexture != validLootTexture)
                     {
                         SystemSounds.Exclamation.Play();
@@ -252,7 +262,7 @@ namespace BobMapper.ViewModel
                     CurrentSelections.SelectedLoot.Texture = CurrentSelections.SelectedTexture;
                     break;
                 case "WallTexture1":
-                    string validWallTexture1 = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Wall, CurrentMap.tileset, false);
+                    string validWallTexture1 = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Wall, CurrentMapProperties.tileset, false);
                     if (CurrentSelections.SelectedTexture != validWallTexture1)
                     {
                         SystemSounds.Exclamation.Play();
@@ -261,7 +271,7 @@ namespace BobMapper.ViewModel
                     CurrentSelections.SelectedWall.Texture1 = CurrentSelections.SelectedTexture;
                     break;
                 case "WallTexture2":
-                    string validWallTexture2 = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Wall, CurrentMap.tileset, false);
+                    string validWallTexture2 = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Wall, CurrentMapProperties.tileset, false);
                     if (CurrentSelections.SelectedTexture != validWallTexture2)
                     {
                         SystemSounds.Exclamation.Play();
@@ -270,7 +280,7 @@ namespace BobMapper.ViewModel
                     CurrentSelections.SelectedWall.Texture2 = CurrentSelections.SelectedTexture;
                     break;
                 case "DoorTexture":
-                    string validDoorTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Door, CurrentMap.tileset, false);
+                    string validDoorTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Door, CurrentMapProperties.tileset, false);
                     if (CurrentSelections.SelectedTexture != validDoorTexture)
                     {
                         SystemSounds.Exclamation.Play();
@@ -303,13 +313,14 @@ namespace BobMapper.ViewModel
             if(CurrentSelections.SelectedTool == Tools.ChangeFloor && sender is Floor)
             {
                 Floor floor = (Floor)sender;
-                string validFloorTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Floor, CurrentMap.tileset, false);
+                string validFloorTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Floor, CurrentMapProperties.tileset, false);
                 if(CurrentSelections.SelectedTexture != validFloorTexture)
                 {
                     SystemSounds.Exclamation.Play();
                     return;
                 }
                 floor.Texture1 = CurrentSelections.SelectedTexture;
+                floor.SetOpacity(CurrentMapProperties.IsApartment);
             }
         }
 

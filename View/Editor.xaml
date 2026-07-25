@@ -94,7 +94,8 @@
                     <MenuItem Header="Exit"/>
                 </MenuItem>
                 <MenuItem Header="Edit">
-                    <MenuItem Header="Expand or Contract Map" IsEnabled="False"/>
+                    <MenuItem Header="Map Properties" Click="MapPropertiesClick"/>
+                    <MenuItem Header="Expand or Contract Map"/>
                     <MenuItem Header="Object list" IsEnabled="False"/>
                     <Separator/>
                     <MenuItem Header="Prefrences" IsEnabled="False"/>
@@ -496,6 +497,10 @@
                             <TranslateTransform X="{Binding CurrentViewportData.CameraX}" Y="{Binding CurrentViewportData.CameraY}"/>
                         </TransformGroup>
                     </Canvas.RenderTransform>
+                    <local:CenteringCanvas>
+                        <Image Source="/Resources/Backgrounds/BackgroundDownTown1.png" Visibility="{Binding CurrentMapProperties.IsApartment, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    </local:CenteringCanvas>
+                    
                     <!-- Might have to be offset -->
                     <!-- TODO: Add Texture 2-->
                     <ItemsControl ItemsSource="{Binding CurrentFloors}" Canvas.Left="{Binding CurrentViewportData.ViewOffsetX}" Canvas.Top="{Binding CurrentViewportData.ViewOffsetY}"
@@ -505,7 +510,7 @@
                                 <ItemsControl ItemsSource="{Binding .}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type object:Floor}">
-                                            <Image Source="{Binding Texture1}" Width="64" Height="64" RenderTransformOrigin="0.5,0.5">
+                                            <Image Source="{Binding Texture1}" Width="64" Height="64" RenderTransformOrigin="0.5,0.5" Opacity="{Binding Opacity}">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="MouseLeftButtonDown">
                                                         <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 

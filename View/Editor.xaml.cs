@@ -151,5 +151,12 @@ namespace BobMapper
             About about = new About();
             about.Show();
         }
+
+        private void MapPropertiesClick(object sender, RoutedEventArgs e)
+        {
+            var vm = (EditorViewModel)DataContext;
+            MapPropertiesWindow mapPropertiesWindow = new(vm.CurrentMapProperties);
+            mapPropertiesWindow.Show();
+        }
     }
 }

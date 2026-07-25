@@ -1,0 +1,17 @@
+﻿<Window x:Class="BobMapper.View.ExpandOrContract"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BobMapper.View"
+        mc:Ignorable="d"
+        Title="ExpandOrContract" Height="254" Width="401">
+    <Grid>
+        <Rectangle Width="100" Height="100" Fill="Black"/>
+        <TextBox x:Name="NorthTextBox" Width="50" Height="35" Margin="176,18,175,185"/>
+        <TextBox x:Name="SouthTextBox" Width="50" Height="35" Margin="176,193,175,10"/>
+        <TextBox x:Name="EastTextBox" Width="50" Height="35" Margin="275,102,76,101"/>
+        <TextBox x:Name="WestTextBox" Width="50" Height="35" Margin="75,102,276,101"/>
+        <Button Content="OK" Width="75" Height="35" Margin="300,193,26,10"/>
+    </Grid>
+</Window>
