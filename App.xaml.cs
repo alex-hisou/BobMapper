@@ -22,7 +22,7 @@ namespace BobMapper
     }
 
 
-    internal enum Tools
+    public enum Tools
     {
         None,
         Select,

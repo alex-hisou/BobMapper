@@ -67,7 +67,7 @@ namespace BobMapper.Model
             {
                 query = reader.GetString(0);
             }
-            if(string.IsNullOrEmpty(query))
+            if (string.IsNullOrEmpty(query))
             {
                 if (!setDefault)
                 {
@@ -78,6 +78,13 @@ namespace BobMapper.Model
             return query;
         }
 
+        public static Dictionary<string, string> BackGroundManifest = new()
+            {
+                {"",""},
+                {"/Resources/Backgrounds/BackgroundDownTown1.png","LevelGfx/Chapter2/BackgroundDownTown1.png"},
+                {"/Resources/Backgrounds/BackgroundDownTown2.png","LevelGfx/Chapter2/BackgroundDownTown2.png"},
+                {"/Resources/Backgrounds/BackgroundDownTown1_2.png","LevelGfx/Chapter2/BackgroundDownTown1_2.png"}
+            };
 
         public static string GetDefaultTexture(TextureType textureType, Tilesets tileset)
         {

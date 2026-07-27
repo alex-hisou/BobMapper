@@ -95,7 +95,7 @@
                 </MenuItem>
                 <MenuItem Header="Edit">
                     <MenuItem Header="Map Properties" Click="MapPropertiesClick"/>
-                    <MenuItem Header="Expand or Contract Map"/>
+                    <MenuItem Header="Expand or Contract Map" Click="ExpandOrContractOpen"/>
                     <MenuItem Header="Object list" IsEnabled="False"/>
                     <Separator/>
                     <MenuItem Header="Prefrences" IsEnabled="False"/>
@@ -498,7 +498,12 @@
                         </TransformGroup>
                     </Canvas.RenderTransform>
                     <local:CenteringCanvas>
-                        <Image Source="/Resources/Backgrounds/BackgroundDownTown1.png" Visibility="{Binding CurrentMapProperties.IsApartment, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <Image Source="{Binding CurrentMapProperties.BackgroundImage}" Visibility="{Binding CurrentMapProperties.IsApartment, 
+                            Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Image.RenderTransform>
+                                <ScaleTransform ScaleX="{Binding CurrentMapProperties.ApartmentHeight}" ScaleY="{Binding CurrentMapProperties.ApartmentHeight}"/>
+                            </Image.RenderTransform>
+                        </Image>
                     </local:CenteringCanvas>
                     
                     <!-- Might have to be offset -->

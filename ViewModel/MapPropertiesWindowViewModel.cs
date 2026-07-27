@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BobMapper.Model;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BobMapper.ViewModel
 {
-    internal class MapPropertiesWindowViewModel : ViewModelBase
+    internal partial class MapPropertiesWindowViewModel : ViewModelBase
     {
         private MapProperties currentMapProperties;
 
@@ -17,12 +18,30 @@ namespace BobMapper.ViewModel
             set { currentMapProperties = value; }
         }
 
+        private Selections currentSelections;
 
-        public MapPropertiesWindowViewModel(MapProperties mapProperties)
+        public Selections CurrentSelections
+        {
+            get { return currentSelections; }
+            set { currentSelections = value; }
+        }
+
+
+        public Array Backgrounds => MapManager.BackGroundManifest.Keys.ToArray();
+
+        public MapPropertiesWindowViewModel(MapProperties mapProperties, Selections selections)
         {
             CurrentMapProperties = mapProperties;
+            CurrentSelections = selections;
         }
 
         public Array TilesetEnum => Enum.GetValues(typeof(Tilesets));
+
+        [RelayCommand]
+        public void ChangeTileset()
+        {
+            CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMapProperties.Tileset);
+            //TODO: Make map change all of the invalid textures
+        }
     }
 }

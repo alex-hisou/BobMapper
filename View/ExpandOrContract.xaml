@@ -5,13 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BobMapper.View"
         mc:Ignorable="d"
-        Title="ExpandOrContract" Height="254" Width="401">
+        ResizeMode="CanMinimize"
+        Title="Expand or contract map" Height="254" Width="401">
     <Grid>
-        <Rectangle Width="100" Height="100" Fill="Black"/>
-        <TextBox x:Name="NorthTextBox" Width="50" Height="35" Margin="176,18,175,185"/>
-        <TextBox x:Name="SouthTextBox" Width="50" Height="35" Margin="176,193,175,10"/>
-        <TextBox x:Name="EastTextBox" Width="50" Height="35" Margin="275,102,76,101"/>
-        <TextBox x:Name="WestTextBox" Width="50" Height="35" Margin="75,102,276,101"/>
-        <Button Content="OK" Width="75" Height="35" Margin="300,193,26,10"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="63*"/>
+            <ColumnDefinition Width="55*"/>
+            <ColumnDefinition Width="52*"/>
+            <ColumnDefinition Width="55*"/>
+            <ColumnDefinition Width="52*"/>
+            <ColumnDefinition Width="55*"/>
+            <ColumnDefinition Width="38*"/>
+            <ColumnDefinition Width="31*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="52*"/>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="6*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="Black" Margin="26,23,31,21" Grid.Row="2" Grid.Column="2" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
+        <TextBox x:Name="NorthTextBox" Grid.Row="1" Grid.Column="3" Text="0"/>
+        <TextBox x:Name="SouthTextBox" Grid.Row="5" Grid.Column="3" Text="0"/>
+        <TextBox x:Name="EastTextBox" Grid.Row="3" Grid.Column="5" Text="0"/>
+        <TextBox x:Name="WestTextBox" Grid.Row="3" Grid.Column="1" Text="0"/>
+        <Button Content="OK" Click="Button_Click" Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

@@ -23,7 +23,7 @@ namespace BobMapper.Compiler
             Items_v4 items_V4 = new(map.walls, map.doors, map.props, map.loots);
             output.AddRange(items_V4.itemsOutput);
 
-            output.AddRange(Level_v2(map.mapProperties.Width / SnapCoordinate.FloorSize, map.mapProperties.Height / SnapCoordinate.FloorSize, map.mapProperties.tileset));
+            output.AddRange(Level_v2(map.mapProperties.Width / SnapCoordinate.FloorSize, map.mapProperties.Height / SnapCoordinate.FloorSize, map.mapProperties.Tileset));
 
             Locators_v3 locators_V3 = new(map.npcs, map.pathPoints, map.miscs);
             output.AddRange(locators_V3.locatorsOutput);

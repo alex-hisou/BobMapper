@@ -73,7 +73,41 @@ namespace BobMapper.Model
             Extras,
             Challenge
         }
-        
+
+        public void ExpandOrContractMap(int northOffset, int southOffset, int eastOffset, int westOffset)
+        {
+            int netVerticalOffset = northOffset + southOffset;
+            int netHorizontalOffset = westOffset + eastOffset;
+            int snapHeight = mapProperties.Height / 64;
+            int snapWidth = mapProperties.Width / 64;
+            int newFloorHeight = snapHeight + netVerticalOffset;
+            int newFloorWidth = snapWidth + netHorizontalOffset;
+            Floor[][] newFloor = new Floor[newFloorWidth][];
+            for (int i = 0 - westOffset; i < snapWidth + eastOffset; i++)
+            {
+                int adjustedI = i + westOffset;
+                newFloor[adjustedI] = new Floor[newFloorHeight];
+                for (int j = 0 - southOffset;  j < snapHeight + northOffset; j++)
+                {
+                    int adjustedJ = j + southOffset;
+                    if (j < 0 || j >= snapHeight || i < 0 || i >= snapWidth)
+                    {
+                        newFloor[adjustedI][adjustedJ] = new Floor(@"/Resources/FloorTextures/Floor_Nothing.png", @"/Resources/FloorTextures/Floor_Nothing.png", 0);
+                    }
+                    else
+                    {
+                        newFloor[adjustedI][adjustedJ] = floors[i][j];
+                    }
+                }
+            }
+            mapProperties.Height = newFloorHeight * 64;
+            mapProperties.Width = newFloorWidth * 64;
+            floors = newFloor;
+            MapSizeChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler MapSizeChanged;
+
         public static Array TextureTypeValues => Enum.GetValues(typeof(TextureType));
 
     }

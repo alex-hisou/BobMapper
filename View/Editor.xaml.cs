@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BobMapper.Model;
+using BobMapper.Model.MapObjects;
 using BobMapper.Services;
 using BobMapper.View;
 using BobMapper.ViewModel;
@@ -155,8 +157,22 @@ namespace BobMapper
         private void MapPropertiesClick(object sender, RoutedEventArgs e)
         {
             var vm = (EditorViewModel)DataContext;
-            MapPropertiesWindow mapPropertiesWindow = new(vm.CurrentMapProperties);
+            MapPropertiesWindow mapPropertiesWindow = new(vm.CurrentMapProperties, vm.CurrentSelections);
             mapPropertiesWindow.Show();
+        }
+
+        private void ExpandOrContractOpen(object sender, RoutedEventArgs e)
+        {
+            var vm = (EditorViewModel)DataContext;
+            ExpandOrContract expandOrContract = new(vm.CurrentMap);
+            expandOrContract.Show();
+            EventHandler mapSizeChangeHandler = null!;
+            mapSizeChangeHandler = (sender, e) =>
+            {
+                vm.CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(vm.CurrentMap.floors));
+                vm.CurrentMap.MapSizeChanged -= mapSizeChangeHandler;
+            };
+            vm.CurrentMap.MapSizeChanged += mapSizeChangeHandler;
         }
     }
 }

@@ -21,10 +21,10 @@ namespace BobMapper.View
     /// </summary>
     public partial class MapPropertiesWindow : Window
     {
-        public MapPropertiesWindow(MapProperties mapProperties)
+        public MapPropertiesWindow(MapProperties mapProperties, Selections selections)
         {
             InitializeComponent();
-            MapPropertiesWindowViewModel vm = new MapPropertiesWindowViewModel(mapProperties);
+            MapPropertiesWindowViewModel vm = new MapPropertiesWindowViewModel(mapProperties, selections);
             DataContext = vm;
         }
     }
