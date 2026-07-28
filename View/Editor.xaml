@@ -35,22 +35,22 @@
     </Window.Resources>
 
     <Window.InputBindings>
-        <KeyBinding Key="Delete" Command="{Binding DeleteObjectCommand}"/>
-        <KeyBinding Key="Up" Modifiers="Shift" Command="{Binding MoveViewportCommand}" 
+        <KeyBinding Key="Delete" Command="{Binding CurrentEditingInteractions.DeleteObjectCommand}"/>
+        <KeyBinding Key="Up" Modifiers="Shift" Command="{Binding CurrentViewportData.MoveViewportCommand}" 
             CommandParameter="Up"/>
-        <KeyBinding Key="Right" Modifiers="Shift" Command="{Binding MoveViewportCommand}" 
+        <KeyBinding Key="Right" Modifiers="Shift" Command="{Binding CurrentViewportData.MoveViewportCommand}" 
             CommandParameter="Right"/>
-        <KeyBinding Key="Down" Modifiers="Shift" Command="{Binding MoveViewportCommand}" 
+        <KeyBinding Key="Down" Modifiers="Shift" Command="{Binding CurrentViewportData.MoveViewportCommand}" 
             CommandParameter="Down"/>
-        <KeyBinding Key="Left" Modifiers="Shift" Command="{Binding MoveViewportCommand}" 
+        <KeyBinding Key="Left" Modifiers="Shift" Command="{Binding CurrentViewportData.MoveViewportCommand}" 
             CommandParameter="Left"/>
-        <KeyBinding Key="C" Modifiers="Shift" Command="{Binding MoveViewportCommand}"
+        <KeyBinding Key="C" Modifiers="Shift" Command="{Binding CurrentViewportData.MoveViewportCommand}"
             CommandParameter="Reset"/>
-        <KeyBinding Key="Subtract" Modifiers="Shift" Command="{Binding ScaleViewportCommand}"
+        <KeyBinding Key="Subtract" Modifiers="Shift" Command="{Binding CurrentViewportData.ScaleViewportCommand}"
                     CommandParameter="Out"/>
-        <KeyBinding Key="Add" Modifiers="Shift" Command="{Binding ScaleViewportCommand}"
+        <KeyBinding Key="Add" Modifiers="Shift" Command="{Binding CurrentViewportData.ScaleViewportCommand}"
                     CommandParameter="In"/>
-        <KeyBinding Key="Multiply" Modifiers="Shift" Command="{Binding ScaleViewportCommand}"
+        <KeyBinding Key="Multiply" Modifiers="Shift" Command="{Binding CurrentViewportData.ScaleViewportCommand}"
                     CommandParameter="Reset"/>
         <KeyBinding Key="S" Command="{Binding SelectToolCommand}"
                     CommandParameter="{x:Static local:Tools.Select}"/>
@@ -238,7 +238,7 @@
                                             <Button Content="Set to selected asset">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction Command="{Binding DataContext.SetObjectTextureCommand, 
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.SetObjectTextureCommand, 
                                                         RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="PropTexture" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
@@ -269,7 +269,7 @@
                                             <Button Content="Set to selected asset">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction Command="{Binding DataContext.SetObjectTextureCommand, 
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.SetObjectTextureCommand, 
                                                            RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="LootTexture" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
@@ -323,7 +323,7 @@
                                             <Button Content="Set to selected asset">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction Command="{Binding DataContext.SetObjectTextureCommand, 
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.SetObjectTextureCommand, 
                                                             RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="DoorTexture" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
@@ -361,7 +361,7 @@
                                             <Button Content="Set to selected asset">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction Command="{Binding DataContext.SetObjectTextureCommand, 
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.SetObjectTextureCommand, 
                                                         RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="WallTexture1" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
@@ -372,7 +372,7 @@
                                             <Button Content="Set to selected asset">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction Command="{Binding DataContext.SetObjectTextureCommand, 
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.SetObjectTextureCommand, 
                                                             RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="WallTexture2" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
@@ -459,14 +459,14 @@
 
                             <ComboBox Width="250" Height="20" Margin="20" ItemsSource="{Binding CurrentMap.TextureTypeValues}" SelectedItem="{Binding CurrentSelections.SelectedTextureType}">
                             </ComboBox>
-                            <ScrollViewer MinHeight="150" MaxHeight="700" x:Name="AssetGalleryScroll" GotKeyboardFocus="AssetGalleryScroll_GotKeyboardFocus" MinWidth="300">
+                            <ScrollViewer MinHeight="150" MaxHeight="600" x:Name="AssetGalleryScroll" GotKeyboardFocus="AssetGalleryScroll_GotKeyboardFocus" MinWidth="300">
                                 <ItemsControl ItemsSource="{Binding CurrentSelections.CurrentTextureSet}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Image Source="{Binding}" MaxHeight="100" MaxWidth="100" Margin="10">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                        <i:InvokeCommandAction Command="{Binding DataContext.SetTextureCommand, 
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.SetTextureCommand, 
                                                         RelativeSource={RelativeSource AncestorType=Expander}}" CommandParameter="{Binding}" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
@@ -500,15 +500,15 @@
                     <local:CenteringCanvas>
                         <Image Source="{Binding CurrentMapProperties.BackgroundImage}" Visibility="{Binding CurrentMapProperties.IsApartment, 
                             Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <Image.RenderTransform>
-                                <ScaleTransform ScaleX="{Binding CurrentMapProperties.ApartmentHeight}" ScaleY="{Binding CurrentMapProperties.ApartmentHeight}"/>
-                            </Image.RenderTransform>
                         </Image>
+                        <local:CenteringCanvas.RenderTransform>
+                            <ScaleTransform ScaleX="{Binding CurrentMapProperties.ApartmentHeight}" ScaleY="{Binding CurrentMapProperties.ApartmentHeight}"/>
+                        </local:CenteringCanvas.RenderTransform>
                     </local:CenteringCanvas>
                     
                     <!-- Might have to be offset -->
                     <!-- TODO: Add Texture 2-->
-                    <ItemsControl ItemsSource="{Binding CurrentFloors}" Canvas.Left="{Binding CurrentViewportData.ViewOffsetX}" Canvas.Top="{Binding CurrentViewportData.ViewOffsetY}"
+                    <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentFloors}" Canvas.Left="{Binding CurrentViewportData.ViewOffsetX}" Canvas.Top="{Binding CurrentViewportData.ViewOffsetY}"
                                   Visibility="{Binding CurrentLayerData.FloorsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -518,11 +518,11 @@
                                             <Image Source="{Binding Texture1}" Width="64" Height="64" RenderTransformOrigin="0.5,0.5" Opacity="{Binding Opacity}">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                        <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
                                                         RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}" />
                                                     </i:EventTrigger>
                                                     <i:EventTrigger EventName="MouseRightButtonDown">
-                                                        <i:InvokeCommandAction Command="{Binding DataContext.RightClickObjectCommand, 
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.RightClickObjectCommand, 
                                                             RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}"/>
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
@@ -551,7 +551,7 @@
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentProps}" Visibility="{Binding CurrentLayerData.PropsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentProps}" Visibility="{Binding CurrentLayerData.PropsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <local:CenteringCanvas />
@@ -575,7 +575,7 @@
                                     <Image Source="{Binding PropTexture}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
                                                 RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
@@ -584,7 +584,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentLoots}" Visibility="{Binding CurrentLayerData.LootsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentLoots}" Visibility="{Binding CurrentLayerData.LootsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <local:CenteringCanvas />
@@ -608,7 +608,7 @@
                                     <Image Source="{Binding Texture}" Stretch="None">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
                                                 RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
@@ -618,14 +618,14 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentWalls}" Visibility="{Binding CurrentLayerData.WallsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentWalls}" Visibility="{Binding CurrentLayerData.WallsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:Wall}">
                                 <Line StrokeThickness="{Binding Width}" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
                                       X2="{Binding Point2.XPos}" Y2="{Binding Point2.YPos}" Fill="Beige" Stroke="Beige">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                            <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
                                                 RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}" />
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -638,7 +638,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentDoors}" Visibility="{Binding CurrentLayerData.DoorsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentDoors}" Visibility="{Binding CurrentLayerData.DoorsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:Door}">
                                 <Canvas>
@@ -646,7 +646,7 @@
                                 X2="{Binding Point2.XPos}" Y2="{Binding Point2.YPos}" Fill="Brown" Stroke="Brown">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
                                             RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
@@ -660,7 +660,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentNPCs}" Visibility="{Binding CurrentLayerData.NPCsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentNPCs}" Visibility="{Binding CurrentLayerData.NPCsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <local:CenteringCanvas />
@@ -685,7 +685,7 @@
                                         <Image Source="{Binding Texture}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
                                                 RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
@@ -697,7 +697,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentPathPoints}" Visibility="{Binding CurrentLayerData.PathPointsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentPathPoints}" Visibility="{Binding CurrentLayerData.PathPointsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:PathPoint}">
                                 <Canvas>
@@ -713,7 +713,7 @@
                                         </Ellipse.RenderTransform>
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
+                                                <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
                                                 RelativeSource={RelativeSource AncestorType=Grid}}" CommandParameter="{Binding}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
@@ -733,7 +733,7 @@
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentMiscs}" Visibility="{Binding CurrentLayerData.MiscsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentMiscs}" Visibility="{Binding CurrentLayerData.MiscsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <local:CenteringCanvas />
@@ -756,8 +756,8 @@
                                     <Image Source="{Binding Texture}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.ClickObjectCommand, 
-                                RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
+                                                <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
+                                                RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Image>

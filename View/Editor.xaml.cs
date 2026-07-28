@@ -169,7 +169,7 @@ namespace BobMapper
             EventHandler mapSizeChangeHandler = null!;
             mapSizeChangeHandler = (sender, e) =>
             {
-                vm.CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(vm.CurrentMap.floors));
+                vm.CurrentObjectCollection.CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(vm.CurrentMap.floors));
                 vm.CurrentMap.MapSizeChanged -= mapSizeChangeHandler;
             };
             vm.CurrentMap.MapSizeChanged += mapSizeChangeHandler;

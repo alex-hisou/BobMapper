@@ -93,6 +93,7 @@ namespace BobMapper.Model
                     if (j < 0 || j >= snapHeight || i < 0 || i >= snapWidth)
                     {
                         newFloor[adjustedI][adjustedJ] = new Floor(@"/Resources/FloorTextures/Floor_Nothing.png", @"/Resources/FloorTextures/Floor_Nothing.png", 0);
+                        newFloor[adjustedI][adjustedJ].SetOpacity(mapProperties.IsApartment);
                     }
                     else
                     {

@@ -30,12 +30,6 @@ namespace BobMapper.Model
             get { return isApartment; }
             set { isApartment = value;
                 OnPropertyChanged();
-                if(isApartment)
-                {
-                    ApartmentHeight = 1.0;
-                    BackgroundImage = "/Resources/Backgrounds/BackgroundDownTown1.png";
-                }
-                else { ApartmentHeight = 1.0; BackgroundImage = ""; }
             }
         }
 
@@ -51,12 +45,14 @@ namespace BobMapper.Model
 
         public bool IsNightTime { get; set; }
 
-        private double? apartmentHeight;
+        private double apartmentHeight;
 
-        public double? ApartmentHeight
+        public double ApartmentHeight
         {
             get { return apartmentHeight; }
-            set { apartmentHeight = value; }
+            set { apartmentHeight = value;
+                OnPropertyChanged();
+            }
         }
 
         public MapProperties(int width, int height, Tilesets tileset) 
@@ -66,13 +62,13 @@ namespace BobMapper.Model
             Height = height;
             Name = "Unnamed Map";
             IsApartment = false;
-            BackgroundImage = "";
+            BackgroundImage = "/Resources/Backgrounds/BackgroundDownTown1.png";
             IsNightTime = false;
             ApartmentHeight = 1.0;
         }
 
         [JsonConstructor]
-        public MapProperties(int width, int height, Tilesets tileset, string name, bool isApartment, string BackgroundImage, bool IsNightTime, double? apartmentHeight)
+        public MapProperties(int width, int height, Tilesets tileset, string name, bool isApartment, string BackgroundImage, bool IsNightTime, double apartmentHeight)
         {
             this.Tileset = tileset;
             this.Width = width;
@@ -88,6 +84,13 @@ namespace BobMapper.Model
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public event EventHandler TilesetChanged;
+
+        public void ChangeTileset()
+        {
+            TilesetChanged?.Invoke(this, EventArgs.Empty);
         }
 
     }

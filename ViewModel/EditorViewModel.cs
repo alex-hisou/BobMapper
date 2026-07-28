@@ -24,88 +24,23 @@ namespace BobMapper.ViewModel
 {
     internal partial class EditorViewModel : ViewModelBase
     {
-        private Selections currentSelections;
-
-        public Selections CurrentSelections
-        {
-            get { return currentSelections; }
-            set { currentSelections = value; }
-        }
-
-        private ViewportData currentViewportData;
-
-        public ViewportData CurrentViewportData
-        {
-            get { return currentViewportData; }
-            set { currentViewportData = value; }
-        }
-
-        private GizmoData currentGizmoData;
-
-        public GizmoData CurrentGizmoData
-        {
-            get { return currentGizmoData; }
-            set { currentGizmoData = value; }
-        }
-        private string fileName;
-
-        public string FileName
-        {
-            get { return fileName; }
-            set { fileName = value; }
-        }
-
+        public Selections CurrentSelections { get; set; }
+        public ViewportData CurrentViewportData { get; set; }
+        public GizmoData CurrentGizmoData { get; set; }
+        public string FileName { get; set; }
         public string CompiledMapFileName { get; set; }
-
         public LayerData CurrentLayerData { get; set; }
-
-        public ObservableCollection<Wall> CurrentWalls { get => currentWalls; set => currentWalls = value; }
-        private ObservableCollection<Wall> currentWalls;
-        public ObservableCollection<Prop> CurrentProps { get => currentProps; set => currentProps = value; }
-        private ObservableCollection<Prop> currentProps;
-        public ObservableCollection<NPC> CurrentNPCs { get => currentNPCs; set => currentNPCs = value; }
-        private ObservableCollection<NPC> currentNPCs;
-        public ObservableCollection<PathPoint> CurrentPathPoints { get => currentPathPoints; set => currentPathPoints = value; }
-        private ObservableCollection<PathPoint> currentPathPoints;
-        public ObservableCollection<Misc> CurrentMiscs { get => currentMiscs; set => currentMiscs = value; }
-        private ObservableCollection<Misc> currentMiscs;
-
-        public ObservableCollection<ObservableCollection<Floor>> CurrentFloors 
-        { get => currentFloors;
-            set { currentFloors = value;
-                OnPropertyChanged(nameof(CurrentFloors));
-            }
-        }
-        private ObservableCollection<ObservableCollection<Floor>> currentFloors;
-        public ObservableCollection<Door> CurrentDoors { get => currentDoors; set => currentDoors = value; }
-        private ObservableCollection<Door> currentDoors;
-        public ObservableCollection<Loot> CurrentLoots { get => currentLoots; set => currentLoots = value; }
-        private ObservableCollection<Loot> currentLoots;
-
-
-        private Map currentMap;
-
-        public Map CurrentMap
-        {
-            get { return currentMap; }
-            set { currentMap = value; }
-        }
-
-        private MapProperties currentMapProperties;
-
-        public MapProperties CurrentMapProperties
-        {
-            get { return currentMapProperties; }
-            set { currentMapProperties = value; }
-        }
-
-
+        public ObjectCollection CurrentObjectCollection { get; set; }
+        public Map CurrentMap { get; set; }
+        public MapProperties CurrentMapProperties { get; set; }
+        public EditingInteractions CurrentEditingInteractions { get; set; }
 
         public EditorViewModel(string filename)
         {
             FileName = filename;
             CurrentMap = JsonMapParse.LoadData(filename);
             CurrentMapProperties = CurrentMap.mapProperties;
+            CurrentMapProperties.TilesetChanged += ChangeTileset;
             CurrentViewportData = new ViewportData
             {
                 ViewOffsetX = CurrentMapProperties.Width / -2,
@@ -118,49 +53,50 @@ namespace BobMapper.ViewModel
             CurrentSelections = new Selections();
             CurrentGizmoData = new GizmoData(CurrentSelections);
             CurrentLayerData = new LayerData();
-            CurrentProps = new ObservableCollection<Prop>(CurrentMap.props);
-            CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls);
-            CurrentNPCs = new ObservableCollection<NPC>(CurrentMap.npcs);
-            CurrentPathPoints = new ObservableCollection<PathPoint>(CurrentMap.pathPoints);
-            AttachAllPathPointHandlers();
-            CurrentMiscs = new ObservableCollection<Misc>(CurrentMap.miscs);
-            CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors));
-            CurrentDoors = new ObservableCollection<Door>(CurrentMap.doors);
-            CurrentLoots = new ObservableCollection<Loot>(CurrentMap.loots);
+            CurrentObjectCollection = new ObjectCollection
+            {
+                CurrentProps = new ObservableCollection<Prop>(CurrentMap.props),
+                 CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls),
+                CurrentNPCs = new ObservableCollection<NPC>(CurrentMap.npcs),
+                CurrentPathPoints = new ObservableCollection<PathPoint>(CurrentMap.pathPoints),
+                CurrentMiscs = new ObservableCollection<Misc>(CurrentMap.miscs),
+                CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors)),
+                CurrentDoors = new ObservableCollection<Door>(CurrentMap.doors),
+                CurrentLoots = new ObservableCollection<Loot>(CurrentMap.loots)
+            };
+            CurrentEditingInteractions = new(CurrentObjectCollection, CurrentSelections, CurrentMapProperties);
+            CurrentEditingInteractions.AttachAllPathPointHandlers();
             CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMapProperties.Tileset);
             CurrentSelections.SelectedTextureType = TextureType.All;
         }
 
-        internal void AttachAllPathPointHandlers()
+        private void ChangeTileset(object sender, EventArgs e)
         {
-            foreach (PathPoint pathPoint in CurrentPathPoints)
+            CurrentSelections.GetFilteredTextureSet(CurrentSelections.SelectedTextureType, CurrentMapProperties.Tileset);
+            foreach(Wall wall in CurrentObjectCollection.CurrentWalls)
             {
-                AttachNewPathPointHandler(pathPoint);
-                ResolvePathPointConnection(pathPoint);
+                wall.Texture1 = ValidateTexture(wall.Texture1, TextureType.Wall, CurrentMapProperties.Tileset, true);
+                wall.Texture2 = ValidateTexture(wall.Texture2, TextureType.Wall, CurrentMapProperties.Tileset, true);
             }
-        }
-
-        private void ResolvePathPointConnection(PathPoint pathPoint)
-        {
-            var target = CurrentPathPoints.FirstOrDefault(x => x.Id == pathPoint.ConnectToId);
-            if (target != null)
+            foreach(Prop prop in CurrentObjectCollection.CurrentProps)
             {
-                pathPoint.ConnectedPathPoint = target;
+                prop.PropTexture = ValidateTexture(prop.PropTexture, TextureType.Prop, CurrentMapProperties.Tileset, true);
             }
-            else if (pathPoint.ConnectToId.HasValue)
+            foreach(Loot loot in CurrentObjectCollection.CurrentLoots)
             {
-                SystemSounds.Exclamation.Play();
+                loot.Texture = ValidateTexture(loot.Texture, TextureType.Loot, CurrentMapProperties.Tileset, true);
             }
-        }
-
-        internal void AttachNewPathPointHandler(PathPoint pathPoint)
-        {
-            pathPoint.ConnectionPointChanged += FillPathPointConnectCoordinate;
-        }
-
-        public void FillPathPointConnectCoordinate(object sender, EventArgs e)
-        {
-            ResolvePathPointConnection((PathPoint)sender);
+            foreach(Door door in CurrentObjectCollection.CurrentDoors)
+            {
+                door.Texture1 = ValidateTexture(door.Texture1, TextureType.Door, CurrentMapProperties.Tileset, true);
+            }
+            foreach(var floorRow in CurrentObjectCollection.CurrentFloors)
+            {
+                foreach(Floor floor in floorRow)
+                {
+                    floor.Texture1 = ValidateTexture(floor.Texture1, TextureType.Floor, CurrentMapProperties.Tileset, true);
+                }
+            }
         }
 
         [RelayCommand]
@@ -173,129 +109,9 @@ namespace BobMapper.ViewModel
             else { CurrentSelections.SelectedTool = Tools.None;  }
         }
 
-        
         public void ClickEmpty(Coordinate placementPos)
         {
-            switch (CurrentSelections.SelectedTool)
-            {
-                case Tools.AddWall:
-                    SnapCoordinate snappedWallPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    SnapCoordinate shiftedSnappedPlacementPos = new SnapCoordinate(snappedWallPlacementPos.SnappedXPos + 1, snappedWallPlacementPos.SnappedYPos);
-                    string validWallTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Wall, CurrentMapProperties.Tileset, true);
-                    Wall wall = new Wall(snappedWallPlacementPos, shiftedSnappedPlacementPos, Wall.WallType.Normal, validWallTexture, validWallTexture);
-                    CurrentWalls.Add(wall);
-                    break;
-                case Tools.AddProp:
-                    SnapCoordinate snappedPropPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    string validPropTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Prop, CurrentMapProperties.Tileset, true);
-                    Prop prop = new Prop(snappedPropPlacementPos, 0, validPropTexture);
-                    CurrentProps.Add(prop);
-                    if(prop.PropTexture == "/Resources/PropTextures/Teleporter.png")
-                    {
-                        SnapCoordinate tele2Coordinate = new(prop.Coordinates.SnappedXPos, prop.Coordinates.SnappedYPos);
-                        tele2Coordinate.SnappedXPos += 2;
-                        Prop tele2 = new Prop(tele2Coordinate, 0, "/Resources/PropTextures/Teleporter.png");
-                        CurrentProps.Add(tele2);
-                    }
-                    if(prop.PropTexture == "/Resources/PropTextures/TelePad.png")
-                    {
-                        SnapCoordinate tele2Coordinate = new(prop.Coordinates.SnappedXPos, prop.Coordinates.SnappedYPos);
-                        tele2Coordinate.SnappedXPos += 1;
-                        Prop tele2 = new Prop(tele2Coordinate, 0, "/Resources/PropTextures/TelePad.png");
-                        CurrentProps.Add(tele2);
-                    }
-                    break;
-                case Tools.AddNPC:
-                    SnapCoordinate snappedNPCPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    NPC npc = new NPC(snappedNPCPlacementPos, NPC.NPCType.BulkyCop, 0, false, false, 0);
-                    CurrentNPCs.Add(npc);
-                    break;
-                case Tools.AddPathPoint:
-                    SnapCoordinate snappedPathPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    int lastId = 0;
-                    if(currentPathPoints.Count > 0)
-                    { lastId = CurrentPathPoints.Max(x => x.Id); }
-                    PathPoint pathPoint = new PathPoint(snappedPathPlacementPos, 0, lastId + 1, 0);
-                    AttachNewPathPointHandler(pathPoint);
-                    CurrentPathPoints.Add(pathPoint);
-                    break;
-                case Tools.AddMisc:
-                    SnapCoordinate snappedMiscPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    Misc misc = new Misc(snappedMiscPlacementPos, Misc.MiscObjects.Key);
-                    CurrentMiscs.Add(misc);
-                    break;
-                case Tools.AddDoor:
-                    SnapCoordinate snappedDoorPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    SnapCoordinate shiftedSnappedDoorPlacementPos = new SnapCoordinate(snappedDoorPlacementPos.SnappedXPos + 1, snappedDoorPlacementPos.SnappedYPos);
-                    string validDoorTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Door, CurrentMapProperties.Tileset, true);
-                    Door door = new Door(snappedDoorPlacementPos, shiftedSnappedDoorPlacementPos, CurrentSelections.SelectedTexture, false, false, false);
-                    CurrentDoors.Add(door);
-                    break;
-                case Tools.AddLoot:
-                    SnapCoordinate snappedLootPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    string validLootTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Loot, CurrentMapProperties.Tileset, true);
-                    Loot loot = new Loot(validLootTexture, snappedLootPlacementPos, 0);
-                    CurrentLoots.Add(loot);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        [RelayCommand]
-        public void SetObjectTexture(object sender)
-        {
-            //SUUUUUUUUPER BAAAAAAAD!!!!!
-            string parsedSender = (string)sender;
-            switch (parsedSender)
-            {
-                case "PropTexture":
-                    string validPropTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Prop, CurrentMapProperties.Tileset, false);
-                    if (CurrentSelections.SelectedTexture != validPropTexture)
-                    {
-                        SystemSounds.Exclamation.Play();
-                        return;
-                    }
-                    CurrentSelections.SelectedProp.PropTexture = CurrentSelections.SelectedTexture;
-                    break;
-                case "LootTexture":
-                    string validLootTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Loot, CurrentMapProperties.Tileset, false);
-                    if (CurrentSelections.SelectedTexture != validLootTexture)
-                    {
-                        SystemSounds.Exclamation.Play();
-                        return;
-                    }
-                    CurrentSelections.SelectedLoot.Texture = CurrentSelections.SelectedTexture;
-                    break;
-                case "WallTexture1":
-                    string validWallTexture1 = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Wall, CurrentMapProperties.Tileset, false);
-                    if (CurrentSelections.SelectedTexture != validWallTexture1)
-                    {
-                        SystemSounds.Exclamation.Play();
-                        return;
-                    }
-                    CurrentSelections.SelectedWall.Texture1 = CurrentSelections.SelectedTexture;
-                    break;
-                case "WallTexture2":
-                    string validWallTexture2 = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Wall, CurrentMapProperties.Tileset, false);
-                    if (CurrentSelections.SelectedTexture != validWallTexture2)
-                    {
-                        SystemSounds.Exclamation.Play();
-                        return;
-                    }
-                    CurrentSelections.SelectedWall.Texture2 = CurrentSelections.SelectedTexture;
-                    break;
-                case "DoorTexture":
-                    string validDoorTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Door, CurrentMapProperties.Tileset, false);
-                    if (CurrentSelections.SelectedTexture != validDoorTexture)
-                    {
-                        SystemSounds.Exclamation.Play();
-                        return;
-                    }
-                    CurrentSelections.SelectedDoor.Texture1 = CurrentSelections.SelectedTexture; 
-                    break;
-
-            }
+            CurrentEditingInteractions.HandleClickEmpty(placementPos);
         }
 
         public bool CheckForChanges()
@@ -310,228 +126,15 @@ namespace BobMapper.ViewModel
         }
 
         [RelayCommand]
-        public void ClickObject(object sender)
-        {
-            if(CurrentSelections.SelectedTool == Tools.Select)
-            {
-                SelectObject(sender);
-            }
-            if(CurrentSelections.SelectedTool == Tools.ChangeFloor && sender is Floor)
-            {
-                Floor floor = (Floor)sender;
-                string validFloorTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Floor, CurrentMapProperties.Tileset, false);
-                if(CurrentSelections.SelectedTexture != validFloorTexture)
-                {
-                    SystemSounds.Exclamation.Play();
-                    return;
-                }
-                floor.Texture1 = CurrentSelections.SelectedTexture;
-                floor.SetOpacity(CurrentMapProperties.IsApartment);
-            }
-        }
-
-        [RelayCommand]
-        public void RightClickObject(object sender)
-        {
-            if(CurrentSelections.SelectedTool == Tools.ChangeFloor && sender is Floor)
-            {
-                Floor floor = (Floor)sender;
-                floor.Flip++;
-            }
-        }
-
-        private void ResetSelection()
-        {
-            switch (CurrentSelections.SelectedObjectType)
-            {
-                case ObjectType.Wall:
-                    {
-                        CurrentSelections.SelectedWall = null;
-                        break;
-                    }
-                case ObjectType.Prop:
-                    {
-                        CurrentSelections.SelectedProp = null;
-                        break;
-                    }
-                case ObjectType.NPC:
-                    {
-                        CurrentSelections.SelectedNPC = null;
-                        break;
-                    }
-                case ObjectType.PathPoint:
-                    {
-                        CurrentSelections.SelectedPathPoint = null;
-                        break;
-                    }
-                case ObjectType.Floor:
-                    {
-                        CurrentSelections.SelectedFloor = null;
-                        break;
-                    }
-                case ObjectType.Misc:
-                    {
-                        CurrentSelections.SelectedMisc = null;
-                        break;
-                    }
-                case ObjectType.Door:
-                    {
-                        CurrentSelections.SelectedDoor = null;
-                        break;
-                    }
-                case ObjectType.Loot:
-                    {
-                        CurrentSelections.SelectedLoot = null;
-                        break;
-                    }
-            }
-            CurrentSelections.SelectedObjectType = ObjectType.None;
-        }
-
-        [RelayCommand]
-        public void SetTexture(object sender)
-        {
-            CurrentSelections.SelectedTexture = (string)sender;
-        }
-
-        private void SelectObject(object sender)
-        {
-            //Not the best code, but this will do
-            ResetSelection();
-            int selectedObjectIndex;
-            CurrentSelections.SelectedObjectType = TypeSchema[sender.GetType()];
-            switch (TypeSchema[sender.GetType()])
-            {
-                case ObjectType.Wall: 
-                    selectedObjectIndex = CurrentWalls.IndexOf((Wall)sender);
-                    CurrentSelections.SelectedWall = CurrentWalls[selectedObjectIndex];
-                    break;
-                case ObjectType.Prop: //Prop
-                    selectedObjectIndex = CurrentProps.IndexOf((Prop)sender);
-                    CurrentSelections.SelectedProp = CurrentProps[selectedObjectIndex];
-                    break;
-                case ObjectType.NPC: //NPC
-                    selectedObjectIndex = CurrentNPCs.IndexOf((NPC)sender);
-                    CurrentSelections.SelectedNPC = CurrentNPCs[selectedObjectIndex];
-                    break;
-                case ObjectType.PathPoint: //PathPoint
-                    selectedObjectIndex = CurrentPathPoints.IndexOf((PathPoint)sender);
-                    CurrentSelections.SelectedPathPoint = CurrentPathPoints[selectedObjectIndex];
-                    break;
-                case ObjectType.Floor: //Floor TODO: Implement
-                    /*
-                    selectedObjectIndex = CurrentFloors.IndexOf((Floor)sender);
-                    SelectedFloor = CurrentFloors[selectedObjectIndex];
-                    selectedObjectType = ObjectType.Floor;
-                    */
-                    break;
-                case ObjectType.Misc: //Misc
-                    selectedObjectIndex = CurrentMiscs.IndexOf((Misc)sender);
-                    CurrentSelections.SelectedMisc = CurrentMiscs[selectedObjectIndex];
-                    break;
-                case ObjectType.Door: 
-                    selectedObjectIndex = CurrentDoors.IndexOf((Door)sender);
-                    CurrentSelections.SelectedDoor = CurrentDoors[selectedObjectIndex];
-                    break;
-                case ObjectType.Loot:
-                    selectedObjectIndex = CurrentLoots.IndexOf((Loot)sender);
-                    CurrentSelections.SelectedLoot = CurrentLoots[selectedObjectIndex];
-                    break;
-                default:
-                    throw new Exception("Invalid object type");
-            }
-        }
-
-        [RelayCommand]
-        public void DeleteObject()
-        {
-            var result = MessageBox.Show("Do you want to delete the selected object?", "Delete object", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.No)
-            {
-                return;
-            }
-            int toDeleteId;
-            switch (CurrentSelections.SelectedObjectType)
-            {
-                case ObjectType.Wall:
-                    {
-                        toDeleteId = CurrentWalls.IndexOf(CurrentSelections.SelectedWall);
-                        CurrentSelections.SelectedWall = null;
-                        CurrentWalls.RemoveAt(toDeleteId);
-                        break;
-                    }
-                case ObjectType.Prop:
-                    {
-                        toDeleteId = CurrentProps.IndexOf(CurrentSelections.SelectedProp);
-                        CurrentSelections.SelectedProp = null;
-                        CurrentProps.RemoveAt(toDeleteId);
-                        break;
-                    }
-                case ObjectType.NPC:
-                    {
-                        toDeleteId = CurrentNPCs.IndexOf(CurrentSelections.SelectedNPC);
-                        CurrentSelections.SelectedNPC = null;
-                        CurrentNPCs.RemoveAt(toDeleteId);
-                        break;
-                    }
-                case ObjectType.PathPoint:
-                    {
-                        toDeleteId = CurrentPathPoints.IndexOf(CurrentSelections.SelectedPathPoint);
-                        CurrentSelections.SelectedPathPoint = null;
-                        CurrentPathPoints.RemoveAt(toDeleteId);
-                        break;
-                    }
-                case ObjectType.Misc:
-                    {
-                        toDeleteId = CurrentMiscs.IndexOf(CurrentSelections.SelectedMisc);
-                        CurrentSelections.SelectedMisc = null;
-                        CurrentMiscs.RemoveAt(toDeleteId);
-                        break;
-                    }
-                case ObjectType.Door:
-                    {
-                        toDeleteId = CurrentDoors.IndexOf(CurrentSelections.SelectedDoor);
-                        CurrentSelections.SelectedDoor = null;
-                        CurrentDoors.RemoveAt(toDeleteId);
-                        break;
-                    }
-                case ObjectType.Loot:
-                    {
-                        toDeleteId = CurrentLoots.IndexOf(CurrentSelections.SelectedLoot);
-                        CurrentSelections.SelectedLoot = null;
-                        CurrentLoots.RemoveAt(toDeleteId); 
-                        break;
-                    }
-                default:
-                    {
-                        return;
-                    }
-            }
-            CurrentSelections.SelectedObjectType = ObjectType.None;
-        }
-
-        private Dictionary<Type, ObjectType> TypeSchema = new Dictionary<Type, ObjectType>()
-        {
-            {typeof(Wall), ObjectType.Wall},
-            {typeof(Prop), ObjectType.Prop},
-            {typeof(NPC), ObjectType.NPC},
-            {typeof(PathPoint), ObjectType.PathPoint},
-            {typeof(Floor), ObjectType.Floor},
-            {typeof(Misc), ObjectType.Misc},
-            {typeof(Door), ObjectType.Door },
-            {typeof(Loot), ObjectType.Loot }
-        };
-
-        [RelayCommand]
         internal void Save(bool saveNewFile)
         {
-            CurrentMap.walls = CurrentWalls.ToList();
-            CurrentMap.doors = CurrentDoors.ToList();
-            CurrentMap.props = CurrentProps.ToList();
-            CurrentMap.pathPoints = CurrentPathPoints.ToList();
-            CurrentMap.npcs = CurrentNPCs.ToList();
-            CurrentMap.miscs = CurrentMiscs.ToList();
-            CurrentMap.loots = CurrentLoots.ToList();
+            CurrentMap.walls = CurrentObjectCollection.CurrentWalls.ToList();
+            CurrentMap.doors = CurrentObjectCollection.CurrentDoors.ToList();
+            CurrentMap.props = CurrentObjectCollection.CurrentProps.ToList();
+            CurrentMap.pathPoints = CurrentObjectCollection.CurrentPathPoints.ToList();
+            CurrentMap.npcs = CurrentObjectCollection.CurrentNPCs.ToList();
+            CurrentMap.miscs = CurrentObjectCollection.CurrentMiscs.ToList();
+            CurrentMap.loots = CurrentObjectCollection.CurrentLoots.ToList();
             CurrentMap.floors = SaveFloor();
             if(saveNewFile)
             {
@@ -543,10 +146,10 @@ namespace BobMapper.ViewModel
 
         private Floor[][] SaveFloor()
         {
-            Floor[][] jaggedFloor = new Floor[CurrentFloors.Count][];
-            for (int i = 0; i < CurrentFloors.Count; i++)
+            Floor[][] jaggedFloor = new Floor[CurrentObjectCollection.CurrentFloors.Count][];
+            for (int i = 0; i < CurrentObjectCollection.CurrentFloors.Count; i++)
             {
-                var currentColumn = CurrentFloors[i];
+                var currentColumn = CurrentObjectCollection.CurrentFloors[i];
                 Floor[] floorRow = new Floor[currentColumn.Count];
                 for (int j = 0; j < currentColumn.Count; j++)
                 {
@@ -555,50 +158,6 @@ namespace BobMapper.ViewModel
                 jaggedFloor[i] = floorRow;
             }
             return jaggedFloor;
-        }
-
-        [RelayCommand]
-        internal void MoveViewport(string direction)
-        {
-            switch (direction)
-            {
-                case "Up":
-                    CurrentViewportData.CameraY += 64;
-                    break;
-                case "Right" :
-                    CurrentViewportData.CameraX -= 64;
-                    break;
-                case "Down" :
-                    CurrentViewportData.CameraY -= 64;
-                    break;
-                case "Left" :
-                    CurrentViewportData.CameraX += 64;
-                    break;
-                case "Reset":
-                    CurrentViewportData.CameraX = 0;
-                    CurrentViewportData.CameraY = 0;
-                    break;
-            }
-        }
-
-        [RelayCommand]
-        internal void ScaleViewport(string direction)
-        {
-            switch (direction)
-            {
-                case "In":
-                    CurrentViewportData.ZoomX += 0.1;
-                    CurrentViewportData.ZoomY -= 0.1;
-                    break;
-                case "Out":
-                    CurrentViewportData.ZoomX -= 0.1;
-                    CurrentViewportData.ZoomY += 0.1;
-                    break;
-                case "Reset":
-                    CurrentViewportData.ZoomX = 1;
-                    CurrentViewportData.ZoomY = -1;
-                    break;
-            }
         }
 
         [RelayCommand]

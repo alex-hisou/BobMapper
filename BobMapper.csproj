@@ -1297,7 +1297,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Backgrounds\BackgroundDownTown1_2.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Backgrounds\BackgroundDownTown2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

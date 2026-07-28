@@ -80,7 +80,6 @@ namespace BobMapper.Model
 
         public static Dictionary<string, string> BackGroundManifest = new()
             {
-                {"",""},
                 {"/Resources/Backgrounds/BackgroundDownTown1.png","LevelGfx/Chapter2/BackgroundDownTown1.png"},
                 {"/Resources/Backgrounds/BackgroundDownTown2.png","LevelGfx/Chapter2/BackgroundDownTown2.png"},
                 {"/Resources/Backgrounds/BackgroundDownTown1_2.png","LevelGfx/Chapter2/BackgroundDownTown1_2.png"}

@@ -40,7 +40,7 @@ namespace BobMapper.ViewModel
         [RelayCommand]
         public void ChangeTileset()
         {
-            CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMapProperties.Tileset);
+            CurrentMapProperties.ChangeTileset();
             //TODO: Make map change all of the invalid textures
         }
     }

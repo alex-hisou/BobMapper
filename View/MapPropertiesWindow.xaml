@@ -50,7 +50,9 @@
             </i:Interaction.Triggers>
         </ComboBox>
         <Label Content="Apartment height" Grid.Row="4" Grid.Column="2" FontSize="20"/>
-        <TextBox Grid.Row="4" Grid.Column="3" IsEnabled="{Binding CurrentMapProperties.IsApartment}" Text="{Binding CurrentMapProperties.ApartmentHeight}"/>
+        <TextBox Grid.Row="4" Grid.Column="3" IsEnabled="{Binding CurrentMapProperties.IsApartment}" Text="{Binding CurrentMapProperties.ApartmentHeight, UpdateSourceTrigger=LostFocus}" 
+                    PreviewTextInput="TextBox_PreviewTextInput"
+                    PreviewKeyDown="TextBox_PreviewKeyDown"/>
         <Label Content="Background" Grid.Row="8" Grid.Column="1" FontSize="20"/>
         <ComboBox ItemsSource="{Binding Backgrounds}" SelectedItem="{Binding CurrentMapProperties.BackgroundImage}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="8"/>
     </Grid>
