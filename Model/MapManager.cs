@@ -133,5 +133,11 @@ namespace BobMapper.Model
         }
 
         public static ResourceManager resourceManager = Resources.ResourceManager;
+
+        public class LevelInjectPromptEventArgs : EventArgs
+        {
+            public int Level { get; set; }
+            public Map.Chapter Chapter { get; set; }
+        }
     }
 }

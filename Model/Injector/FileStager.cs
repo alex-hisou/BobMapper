@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BobMapper.Model.Injectior
+namespace BobMapper.Model.Injector
 {
-    internal class Injector
+    internal class FileStager
     {
     }
 }

@@ -102,7 +102,7 @@
                 </MenuItem>
                 <MenuItem Header="Compile">
                     <MenuItem Header="Compile to" Command="{Binding CompileCommand}" CommandParameter="{StaticResource True}"></MenuItem>
-                    <MenuItem Header="Inject" IsEnabled="False"></MenuItem>
+                    <MenuItem Header="Inject" Command="{Binding InjectCommand}" CommandParameter="{StaticResource True}"></MenuItem>
                     <MenuItem Header="Inject and Play (Steam)" IsEnabled="False"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Help">

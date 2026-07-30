@@ -14,8 +14,10 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using BobMapper.Model;
+using BobMapper.Model.Injector;
 using BobMapper.Model.MapObjects;
 using BobMapper.Services;
+using BobMapper.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using static BobMapper.Model.MapManager;
@@ -183,6 +185,25 @@ namespace BobMapper.ViewModel
             compiler.Compile(CurrentMap);
             File.WriteAllBytes(compileFilePath, Compiler.Compiler.output.ToArray());
             Process.Start("explorer.exe", $"/select,\"{CompiledMapFileName}\"");
+        }
+
+        [RelayCommand]
+        internal void Inject(bool buildApk)
+        {
+            Save(false);
+            InjectorPrompt injectorPrompt = new InjectorPrompt();
+            injectorPrompt.Show();
+            EventHandler<LevelInjectPromptEventArgs> injectionPromptComplete = null!;
+            injectionPromptComplete = (sender, e) =>
+            {
+                string tempLevFile = Path.GetTempFileName();
+                Compiler.Compiler compiler = new();
+                compiler.Compile(CurrentMap);
+                File.WriteAllBytes(tempLevFile, Compiler.Compiler.output.ToArray());
+                Injector injector = new(tempLevFile, CurrentMap, buildApk, e.Chapter, e.Level);
+                injectorPrompt.ConfirmationComplete -= injectionPromptComplete;
+            };
+            injectorPrompt.ConfirmationComplete += injectionPromptComplete;
         }
     }
 }
