@@ -62,12 +62,12 @@ namespace BobMapper.Model
 
         public enum Chapter
         {
-            Suburbs,    //NOT USED
-            Downtown,   //NOT USED
-            SecretLabs, //NOT USED
+            Suburbs,
+            Downtown,
+            SecretLabs,
             Advanced,
             Winter,
-            HighRise,
+            Highrise,
             SummerCamp,
             Bonus,
             Extras,
