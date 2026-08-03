@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace BobMapper.Model.Injector
 {
@@ -13,7 +18,7 @@ namespace BobMapper.Model.Injector
         internal FileStager(string levelsXml, string levelNamesLocale, bool android, MapProperties mapProperties, int level, Map.Chapter chapter, string levFileName) 
         {
             StageLevelsXml(levelsXml, android, mapProperties, chapter, level, levFileName);
-            StageLevelNamesLocale(levelsXml, android);
+            StageLevelNamesLocale(levelNamesLocale, android, chapter, level, mapProperties.Name);
         }
 
         private void StageLevelsXml(string levelsXml, bool android, MapProperties mapProperties, Map.Chapter chapter, int level, string levFileName)
@@ -46,11 +51,55 @@ namespace BobMapper.Model.Injector
             }
             fileStream.SetLength(0);
             xmlSerializer.Serialize(fileStream, root);
+            fileStream.Close();
         }
 
-        private void StageLevelNamesLocale(string levelNamesLocale, bool android)
+        private void StageLevelNamesLocale(string levelNamesLocale, bool android, Map.Chapter chapter, int level, string mapName)
         {
-
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+                ShouldQuote = args => true
+            };
+            string temporaryLocale = Path.GetTempFileName();
+            var reader = new StreamReader(levelNamesLocale);
+            var csvReader = new CsvReader(reader, config);
+            var writer = new StreamWriter(temporaryLocale);
+            var csvWriter = new CsvWriter(writer, config);
+            bool alreadyMatched = false;
+            while (csvReader.Read())
+            {
+                string internalName = csvReader.GetField(0);
+                string displayName = csvReader.GetField(1);
+                string chapterName = chapter.ToString();
+                if (Regex.IsMatch(internalName, $@"{chapterName}.*{level}", RegexOptions.IgnoreCase) && !alreadyMatched)
+                {
+                    displayName = mapName;
+                    alreadyMatched = true;
+                }
+                var record = new { InternalName = internalName, DisplayName = displayName };
+                csvWriter.WriteRecord(record);
+            }
+            csvWriter.Flush();
+            reader.Dispose();
+            writer.Dispose(); //just in case to prevent conflicts
+            char[] unparsedCsv = File.ReadAllText(temporaryLocale).ToCharArray();
+            //WORST SOLUTION OF ALL TIME
+            bool evenComma = false;
+            for (int i = 0; i < unparsedCsv.Length; i++)
+            {
+                char c = unparsedCsv[i];
+                if (c != ',')
+                    continue;
+                if (evenComma)
+                {
+                    unparsedCsv[i] = '\n';
+                }
+                evenComma = !evenComma;
+            }
+            string parsedCsv = new string(unparsedCsv);
+            File.WriteAllText(temporaryLocale, parsedCsv);
+            File.Move(temporaryLocale, levelNamesLocale, true);
         }
 
         private Dictionary<string, string> androidBackgrounds = new Dictionary<string, string>()

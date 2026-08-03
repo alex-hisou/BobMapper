@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using BobMapper.Services;
 using NetTopologySuite.Utilities;
+using static BobMapper.Model.Injector.FileStager;
 
 namespace BobMapper.Model.Injector
 {
@@ -19,15 +20,37 @@ namespace BobMapper.Model.Injector
         string levelsXmlPath;
         string levelNamesLocale;
         string finalLevFileName;
+        string destination;
+        string tempDestination;
+        ZipArchiveEntry levelsXmlEntry;
+        ZipArchiveEntry levelNamesLocaleEntry;
 
         bool android;
 
-        //FOR FRIDAY - Get FileStager atleast somewhat working
-
-        internal Injector(string levFilePath, MapProperties mapProperties, bool buildApk, Map.Chapter chapter, int level)
+        internal Injector(string levFilePath, MapProperties mapProperties, bool buildApk, bool insertToSteam, Map.Chapter chapter, int level)
         {
             FileDialogService fileDialogService = new FileDialogService();
             string destination = fileDialogService.LoadFileDialog(filter);
+            this.destination = destination;
+            InitializeInjection(levFilePath, mapProperties, buildApk, insertToSteam, chapter, level);
+            //Ask user where to inject, what level |||||DONE!
+            //Retrieve level xml and set all the properties.
+            //Retrieve other files and Inject the level name and level whatever
+            //(COPY WITH NEW NAME LIKE BobMapper{propertyname w/o spaces} AND CHECK IF A FILE OF SUCH A NAME EXISTS, IF SO, APPEND NUMBER)
+            //EXAMPLE: BobMapperHouse.lev BobMapperHouse2.lev BobMapperHouse3.lev and so on
+            //Once all files have been edited, run powershell script to inject them in. If it's steam, open robbery bob
+        }
+
+        internal Injector(string destination, string levFilePath, MapProperties mapProperties, bool buildApk, bool insertToSteam, Map.Chapter chapter, int level)
+        {
+            this.destination = destination;
+            InitializeInjection(levFilePath, mapProperties, buildApk, insertToSteam, chapter, level);
+        }
+
+        private void InitializeInjection(string levFilePath, MapProperties mapProperties, bool buildApk, bool insertToSteam, Map.Chapter chapter, int level)
+        {
+            tempDestination = Path.GetTempFileName();
+            File.Copy(destination, tempDestination, true);
             switch (Path.GetExtension(destination))
             {
                 default:
@@ -39,24 +62,23 @@ namespace BobMapper.Model.Injector
                     android = true;
                     break;
             }
-            RetrieveFiles(destination);
-            InsertLevel(levFilePath, destination, mapProperties.Name);
+            RetrieveFiles();
+            InsertLevel(levFilePath, mapProperties.Name);
             FileStager fileStager = new FileStager(levelsXmlPath, levelNamesLocale, android, mapProperties, level, chapter, finalLevFileName);
-
-            //Ask user where to inject, what level |||||DONE!
-            //Retrieve level xml and set all the properties.
-            //Retrieve other files and Inject the level name and level whatever
-            //(COPY WITH NEW NAME LIKE BobMapper{propertyname w/o spaces} AND CHECK IF A FILE OF SUCH A NAME EXISTS, IF SO, APPEND NUMBER)
-            //EXAMPLE: BobMapperHouse.lev BobMapperHouse2.lev BobMapperHouse3.lev and so on
-            //Once all files have been edited, run powershell script to inject them in. If it's steam, open robbery bob
+            if (android)
+            {
+                AndroidWrite(buildApk);
+            }
+            else
+            {
+                SteamWrite(insertToSteam);
+            }
         }
 
-        private void RetrieveFiles(string destination)
+        private void RetrieveFiles()
         {
-            using ZipArchive archive = ZipFile.Open(destination, ZipArchiveMode.Update);
-            ZipArchiveEntry levelsXmlEntry;
+            using ZipArchive archive = ZipFile.Open(tempDestination, ZipArchiveMode.Update);
             ZipArchiveEntry levelsXmlEntryBackup;
-            ZipArchiveEntry levelNamesLocaleEntry;
             ZipArchiveEntry levelNamesLocaleEntryBackup;
             if (android)
             {
@@ -98,12 +120,12 @@ namespace BobMapper.Model.Injector
             }
         }
 
-        private void InsertLevel(string levFilePath, string destination, string mapName)
+        private void InsertLevel(string levFilePath, string mapName)
         {
             string filename = "BobMapper";
             mapName = Regex.Replace(mapName, @"[^A-Za-z0-9]", "");
             finalLevFileName = filename + mapName;
-            using ZipArchive archive = ZipFile.Open(destination, ZipArchiveMode.Update);
+            using ZipArchive archive = ZipFile.Open(tempDestination, ZipArchiveMode.Update);
             if (android)
             {
                 string entryDirectory = @"Moddable Robbery Bob 1/assets/common/Levels/" + finalLevFileName;
@@ -128,12 +150,34 @@ namespace BobMapper.Model.Injector
 
         private void AndroidWrite(bool buildApk)
         {
-
+            using (ZipArchive zipArchive = ZipFile.Open(tempDestination, ZipArchiveMode.Update))
+            {
+                zipArchive.GetEntry(levelsXmlEntry.FullName).Delete();
+                zipArchive.GetEntry(levelNamesLocaleEntry.FullName).Delete();
+                zipArchive.CreateEntryFromFile(levelsXmlPath, levelsXmlEntry.FullName);
+                zipArchive.CreateEntryFromFile(levelNamesLocale, levelNamesLocaleEntry.FullName);
+            }
+            File.Copy(tempDestination, destination, true);
+            if(!buildApk)
+            {
+                return;
+            }
         }
 
-        private void SteamWrite()
+        private void SteamWrite(bool insertToSteam)
         {
-
+            using (ZipArchive zipArchive = ZipFile.Open(tempDestination, ZipArchiveMode.Update))
+            {
+                zipArchive.GetEntry(levelsXmlEntry.FullName).Delete();
+                zipArchive.GetEntry(levelNamesLocaleEntry.FullName).Delete();
+                zipArchive.CreateEntryFromFile(levelsXmlPath, levelsXmlEntry.FullName);
+                zipArchive.CreateEntryFromFile(levelNamesLocale, levelNamesLocaleEntry.FullName);
+            }
+            File.Copy(tempDestination, destination, true);
+            if(!insertToSteam)
+            {
+                return;
+            }
         }
     }
 }

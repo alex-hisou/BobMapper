@@ -200,7 +200,7 @@ namespace BobMapper.ViewModel
                 Compiler.Compiler compiler = new();
                 compiler.Compile(CurrentMap);
                 File.WriteAllBytes(tempLevFile, Compiler.Compiler.output.ToArray());
-                Injector injector = new(tempLevFile, CurrentMapProperties, buildApk, e.Chapter, e.Level);
+                Injector injector = new(tempLevFile, CurrentMapProperties, buildApk, false, e.Chapter, e.Level);
                 injectorPrompt.ConfirmationComplete -= injectionPromptComplete;
             };
             injectorPrompt.ConfirmationComplete += injectionPromptComplete;
