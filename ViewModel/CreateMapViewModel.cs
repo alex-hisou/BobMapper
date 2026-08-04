@@ -52,8 +52,8 @@ namespace BobMapper.ViewModel
                 return;
             var dialog = new Microsoft.Win32.SaveFileDialog();
             dialog.FileName = "Map";
-            dialog.DefaultExt = ".json";
-            dialog.Filter = "BobMapper Json Files (.json)|*.json";
+            dialog.DefaultExt = ".bobmap";
+            dialog.Filter = "BobMapper Map File (.bobmap)|*.bobmap";
 
             bool? result = dialog.ShowDialog();
             string filename;

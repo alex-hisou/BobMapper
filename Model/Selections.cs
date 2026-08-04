@@ -12,7 +12,7 @@ using BobMapper.Services;
 
 namespace BobMapper.Model
 {
-    internal class Selections : INotifyPropertyChanged
+    public class Selections : INotifyPropertyChanged
     {
         private ObjectType selectedObjectType;
 

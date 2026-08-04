@@ -34,6 +34,7 @@
     <None Remove="Data\TextureManifest.sqlite" />
     <None Remove="Model\TextureSchema.sqlite" />
     <None Remove="Resources\Backgrounds\BackgroundDownTown1.png" />
+    <None Remove="Resources\Backgrounds\BackgroundDownTown1_2.jpg" />
     <None Remove="Resources\Backgrounds\BackgroundDownTown2.png" />
     <None Remove="Resources\FloorTextures\Floor_Asphalt.png" />
     <None Remove="Resources\FloorTextures\Floor_AsphaltCorner.png" />
@@ -1285,6 +1286,7 @@
     </Content>
     <Content Include="Resources\UI\AppIcon.ico" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="CsvHelper" Version="33.1.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.3" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
@@ -1293,6 +1295,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Backgrounds\BackgroundDownTown1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Backgrounds\BackgroundDownTown1_2.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Backgrounds\BackgroundDownTown2.png">
@@ -2957,9 +2962,108 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Update="Model\Injector\apktool_3.0.3.jar">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\BobMapper Steam Injection Script.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\adb.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\AdbWinApi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\AdbWinUsbApi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\etc1tool.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\fastboot.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\hprof-conv.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\libwinpthread-1.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\make_f2fs.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\make_f2fs_casefold.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\mke2fs.conf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\mke2fs.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\NOTICE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\source.properties">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\sqlite3.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\uber-apk-signer-1.3.0.jar">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="Tools\apktool_3.0.3.jar">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\adb.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\AdbWinApi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\AdbWinUsbApi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\etc1tool.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\fastboot.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\hprof-conv.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\libwinpthread-1.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\make_f2fs.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\make_f2fs_casefold.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\mke2fs.conf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\mke2fs.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\NOTICE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\source.properties">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\platform-tools-latest-windows\platform-tools\sqlite3.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\uber-apk-signer-1.3.0.jar">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

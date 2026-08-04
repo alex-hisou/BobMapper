@@ -19,10 +19,25 @@ namespace BobMapper
     
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            System.IO.Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            base.OnStartup(e);
+            if (e.Args.Length > 0)
+            {
+                Editor editor = new Editor(e.Args[0]);
+                editor.Show();
+            }
+            else
+            {
+                ProjectManager projectManager = new ProjectManager();
+                projectManager.Show();
+            }
+        }
     }
 
 
-    internal enum Tools
+    public enum Tools
     {
         None,
         Select,

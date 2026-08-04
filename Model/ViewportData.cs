@@ -5,10 +5,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BobMapper.Model
 {
-    internal class ViewportData : INotifyPropertyChanged
+    internal partial class ViewportData : INotifyPropertyChanged
     {
         private int viewOffsetX;
 
@@ -84,6 +85,49 @@ namespace BobMapper.Model
             }
         }
 
+        [RelayCommand]
+        internal void MoveViewport(string direction)
+        {
+            switch (direction)
+            {
+                case "Up":
+                    CameraY += 64;
+                    break;
+                case "Right":
+                    CameraX -= 64;
+                    break;
+                case "Down":
+                    CameraY -= 64;
+                    break;
+                case "Left":
+                    CameraX += 64;
+                    break;
+                case "Reset":
+                    CameraX = 0;
+                    CameraY = 0;
+                    break;
+            }
+        }
+
+        [RelayCommand]
+        internal void ScaleViewport(string direction)
+        {
+            switch (direction)
+            {
+                case "In":
+                    ZoomX += 0.1;
+                    ZoomY -= 0.1;
+                    break;
+                case "Out":
+                    ZoomX -= 0.1;
+                    ZoomY += 0.1;
+                    break;
+                case "Reset":
+                    ZoomX = 1;
+                    ZoomY = -1;
+                    break;
+            }
+        }
 
     }
 }

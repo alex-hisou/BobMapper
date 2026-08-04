@@ -18,5 +18,17 @@ namespace BobMapper.Services
             };
             return dialog.ShowDialog() == true ? dialog.FileName : null;
         }
+
+        public string LoadFileDialog(string filter)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Filter = filter;
+            bool? result = dialog.ShowDialog();
+            if (result == true)
+            {
+                return dialog.FileName;
+            }
+            return "";
+        }
     }
 }

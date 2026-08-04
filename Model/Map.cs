@@ -14,10 +14,6 @@ namespace BobMapper.Model
 {
     public class Map
     {
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public int levelNumber;
-        public Chapter levelChapter;
         public List<Wall> walls = new List<Wall>();
         public List<Door> doors = new List<Door>();
         public List<Prop> props = new List<Prop>();
@@ -26,33 +22,32 @@ namespace BobMapper.Model
         public List<Misc> miscs = new List<Misc>();
         public List<Loot> loots = new List<Loot>();
         public Floor[][] floors;
-        public Tilesets tileset;
+        public MapProperties mapProperties;
 
         public Map(int sizeX, int sizeY, Tilesets tileset)
         {
-            Width = sizeX; 
-            Height = sizeY;
-            floors = new Floor[Width][];
+            MapProperties mapProperties = new(sizeX, sizeY, tileset);
+            this.mapProperties = mapProperties;
+            floors = new Floor[mapProperties.Width][];
             //System.Text.Json doesnt support multi-d arrays, which is why we do this terribleness
             //And Im too lazy to switch to newtonsoft
-            for (int i = 0; i < Width; i++)
+            for (int i = 0; i < mapProperties.Width; i++)
             {
-                floors[i] = new Floor[Height];
-                for (int j = 0; j < Height; j++)
+                floors[i] = new Floor[mapProperties.Height];
+                for (int j = 0; j < mapProperties.Height; j++)
                 {
                     floors[i][j] = new Floor(@"/Resources/FloorTextures/Floor_Nothing.png", @"/Resources/FloorTextures/Floor_Nothing.png", 0);
                 }
             }
-            Width *= SnapCoordinate.FloorSize; 
-            Height *= SnapCoordinate.FloorSize;
-            this.tileset = tileset;
+            mapProperties.Width *= SnapCoordinate.FloorSize; 
+            mapProperties.Height *= SnapCoordinate.FloorSize;
         }
 
         
 
 
         [JsonConstructor] //Use only for initialization from json. Otherwise write properties directly using the no param constructor above
-        public Map(List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, List<Loot> loots, Floor[][] floors, Chapter levelChapter, int levelNumber, Tilesets tileset, List<Door> doors, int Width, int Height)
+        public Map(List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, List<Loot> loots, Floor[][] floors, List<Door> doors, MapProperties mapProperties)
         {
             this.walls = walls;
             this.props = props;
@@ -61,28 +56,59 @@ namespace BobMapper.Model
             this.miscs = miscs;
             this.loots = loots;
             this.floors = floors;
-            this.levelChapter = levelChapter;
-            this.levelNumber = levelNumber;
-            this.tileset = tileset;
+            this.mapProperties = mapProperties;
             this.doors = doors;
-            this.Width = Width;
-            this.Height = Height;
         }
 
         public enum Chapter
         {
-            Suburbs,    //NOT USED
-            Downtown,   //NOT USED
-            SecretLabs, //NOT USED
+            Suburbs,
+            Downtown,
+            SecretLabs,
             Advanced,
             Winter,
-            HighRise,
+            Highrise,
             SummerCamp,
             Bonus,
             Extras,
             Challenge
         }
-        
+
+        public void ExpandOrContractMap(int northOffset, int southOffset, int eastOffset, int westOffset)
+        {
+            int netVerticalOffset = northOffset + southOffset;
+            int netHorizontalOffset = westOffset + eastOffset;
+            int snapHeight = mapProperties.Height / 64;
+            int snapWidth = mapProperties.Width / 64;
+            int newFloorHeight = snapHeight + netVerticalOffset;
+            int newFloorWidth = snapWidth + netHorizontalOffset;
+            Floor[][] newFloor = new Floor[newFloorWidth][];
+            for (int i = 0 - westOffset; i < snapWidth + eastOffset; i++)
+            {
+                int adjustedI = i + westOffset;
+                newFloor[adjustedI] = new Floor[newFloorHeight];
+                for (int j = 0 - southOffset;  j < snapHeight + northOffset; j++)
+                {
+                    int adjustedJ = j + southOffset;
+                    if (j < 0 || j >= snapHeight || i < 0 || i >= snapWidth)
+                    {
+                        newFloor[adjustedI][adjustedJ] = new Floor(@"/Resources/FloorTextures/Floor_Nothing.png", @"/Resources/FloorTextures/Floor_Nothing.png", 0);
+                        newFloor[adjustedI][adjustedJ].SetOpacity(mapProperties.IsApartment);
+                    }
+                    else
+                    {
+                        newFloor[adjustedI][adjustedJ] = floors[i][j];
+                    }
+                }
+            }
+            mapProperties.Height = newFloorHeight * 64;
+            mapProperties.Width = newFloorWidth * 64;
+            floors = newFloor;
+            MapSizeChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler MapSizeChanged;
+
         public static Array TextureTypeValues => Enum.GetValues(typeof(TextureType));
 
     }

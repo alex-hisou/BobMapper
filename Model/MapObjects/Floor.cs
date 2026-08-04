@@ -81,10 +81,30 @@ namespace BobMapper.Model.MapObjects
             set { internalTexture2 = value; }
         }
 
+        private float opacity;
+
+        public float Opacity
+        {
+            get { return opacity; }
+            set { opacity = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Opacity))); }
+        }
+
         public Floor(string texture1, string texture2, int flip)
         {
             Texture1 = texture1; Texture2 = texture2;
-            Flip = flip;
+            Flip = flip; Opacity = 1.0f;
+        }
+
+        public void SetOpacity(bool isApartment)
+        {
+            Opacity = 1.0f;
+            //if(isApartment)
+            //{
+                if(Texture1 == @"/Resources/FloorTextures/Floor_Nothing.png")
+                {
+                    Opacity = 0.2f;
+                }
+            //}
         }
 
         private void SetVisualFlip()
