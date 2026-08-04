@@ -141,7 +141,7 @@ namespace BobMapper.ViewModel
             if(saveNewFile)
             {
                 FileDialogService fileDialogService = new FileDialogService();
-                FileName = fileDialogService.SaveFileDialog("BobMapper Json Files (.json)|*.json", ".json");
+                FileName = fileDialogService.SaveFileDialog("BobMapper Map File (.bobmap)|*.bobmap", ".bobmap");
             }
             JsonMapParse.SaveData(CurrentMap, FileName);
         }

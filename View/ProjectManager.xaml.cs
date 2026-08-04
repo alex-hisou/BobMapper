@@ -44,8 +44,7 @@ namespace BobMapper
         private void LoadMod_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.DefaultExt = ".json"; 
-            dialog.Filter = "BobMapper Json Files (.json)|*.json"; 
+            dialog.Filter = "BobMapper Map File (.bobmap)|*.bobmap|BobMapper Json Files (.json)|*.json"; 
             bool? result = dialog.ShowDialog();
             string filename;
             if (result == true)
