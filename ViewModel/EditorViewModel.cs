@@ -18,6 +18,7 @@ using BobMapper.Model.Injector;
 using BobMapper.Model.MapObjects;
 using BobMapper.Services;
 using BobMapper.View;
+using BobMapper.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using static BobMapper.Model.MapManager;
@@ -200,7 +201,35 @@ namespace BobMapper.ViewModel
                 Compiler.Compiler compiler = new();
                 compiler.Compile(CurrentMap);
                 File.WriteAllBytes(tempLevFile, Compiler.Compiler.output.ToArray());
-                Injector injector = new(tempLevFile, CurrentMapProperties, buildApk, false, e.Chapter, e.Level);
+                string filter = "resources.dat|resources.dat|Moddable Robbery Bob 1.zip|Moddable Robbery Bob 1.zip|All files (*.*)|*.*";
+                FileDialogService fileDialogService = new FileDialogService();
+                string destination = fileDialogService.LoadFileDialog(filter);
+                Injector injector = new(destination, tempLevFile, CurrentMapProperties, buildApk, false, e.Chapter, e.Level);
+                injectorPrompt.ConfirmationComplete -= injectionPromptComplete;
+            };
+            injectorPrompt.ConfirmationComplete += injectionPromptComplete;
+        }
+
+        [RelayCommand]
+        internal void SteamInject()
+        {
+            if(string.IsNullOrEmpty(UserSettings.Instance.SteamResourcesDirectory))
+            {
+                MessageBox.Show("To Inject to Steam, please set the Steam directory in Prefrences", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            Save(false);
+            InjectorPrompt injectorPrompt = new InjectorPrompt();
+            injectorPrompt.Show();
+            EventHandler<LevelInjectPromptEventArgs> injectionPromptComplete = null!;
+            injectionPromptComplete = (sender, e) =>
+            {
+                string tempLevFile = Path.GetTempFileName();
+                Compiler.Compiler compiler = new();
+                compiler.Compile(CurrentMap);
+                File.WriteAllBytes(tempLevFile, Compiler.Compiler.output.ToArray());
+                string destination = UserSettings.Instance.SteamResourcesDirectory;
+                Injector injector = new(destination, tempLevFile, CurrentMapProperties, false, true, e.Chapter, e.Level);
                 injectorPrompt.ConfirmationComplete -= injectionPromptComplete;
             };
             injectorPrompt.ConfirmationComplete += injectionPromptComplete;

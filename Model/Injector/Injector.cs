@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using BobMapper.Services;
+using BobMapper.Data;
 using NetTopologySuite.Utilities;
 using static BobMapper.Model.Injector.FileStager;
 
@@ -26,20 +28,6 @@ namespace BobMapper.Model.Injector
         ZipArchiveEntry levelNamesLocaleEntry;
 
         bool android;
-
-        internal Injector(string levFilePath, MapProperties mapProperties, bool buildApk, bool insertToSteam, Map.Chapter chapter, int level)
-        {
-            FileDialogService fileDialogService = new FileDialogService();
-            string destination = fileDialogService.LoadFileDialog(filter);
-            this.destination = destination;
-            InitializeInjection(levFilePath, mapProperties, buildApk, insertToSteam, chapter, level);
-            //Ask user where to inject, what level |||||DONE!
-            //Retrieve level xml and set all the properties.
-            //Retrieve other files and Inject the level name and level whatever
-            //(COPY WITH NEW NAME LIKE BobMapper{propertyname w/o spaces} AND CHECK IF A FILE OF SUCH A NAME EXISTS, IF SO, APPEND NUMBER)
-            //EXAMPLE: BobMapperHouse.lev BobMapperHouse2.lev BobMapperHouse3.lev and so on
-            //Once all files have been edited, run powershell script to inject them in. If it's steam, open robbery bob
-        }
 
         internal Injector(string destination, string levFilePath, MapProperties mapProperties, bool buildApk, bool insertToSteam, Map.Chapter chapter, int level)
         {
@@ -110,8 +98,8 @@ namespace BobMapper.Model.Injector
                     archive.CreateEntryFromFile(levelsXmlPath, @"common/Levels/Levels.xml.backup");
                 }
                 levelNamesLocale = Path.GetTempFileName();
-                levelNamesLocaleEntry = archive.GetEntry(@"localization/en.lproj/LevelNames.locale.csv");
-                levelNamesLocaleEntryBackup = archive.GetEntry(@"localization/en.lproj/LevelNames.locale.csv.backup");
+                levelNamesLocaleEntry = archive.GetEntry(@"localization/en.lproj/LevelNames.csv");
+                levelNamesLocaleEntryBackup = archive.GetEntry(@"localization/en.lproj/LevelNames.csv.backup");
                 levelNamesLocaleEntry.ExtractToFile(levelNamesLocale, overwrite: true);
                 if (levelNamesLocaleEntryBackup == null)
                 {
@@ -162,6 +150,10 @@ namespace BobMapper.Model.Injector
             {
                 return;
             }
+            ProcessStartInfo info = new ProcessStartInfo(@"Model/Injector/BobMapper Android Injection Script.ps1");
+            info.UseShellExecute = true;
+            info.Verb = "runas";
+            Process.Start(info);
         }
 
         private void SteamWrite(bool insertToSteam)
@@ -173,11 +165,19 @@ namespace BobMapper.Model.Injector
                 zipArchive.CreateEntryFromFile(levelsXmlPath, levelsXmlEntry.FullName);
                 zipArchive.CreateEntryFromFile(levelNamesLocale, levelNamesLocaleEntry.FullName);
             }
-            File.Copy(tempDestination, destination, true);
             if(!insertToSteam)
             {
+                File.Copy(tempDestination, destination, true);
                 return;
             }
+            string currentDir = Directory.GetCurrentDirectory();
+            currentDir = Path.Combine(currentDir, @"Model\Injector\BobMapper Steam Injection Script.ps1");
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.FileName = "powershell.exe";
+            info.Arguments = $"-NoProfile -ExecutionPolicy Bypass -File \"{currentDir}\" -moddedPath \"{tempDestination}\" -destination \"{destination}\"";
+            info.UseShellExecute = true;
+            info.Verb = "runas";
+            Process.Start(info);
         }
     }
 }
