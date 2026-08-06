@@ -18,7 +18,6 @@ namespace BobMapper.Model.Injector
 {
     internal class Injector
     {
-        const string filter = "resources.dat|resources.dat|Moddable Robbery Bob 1.zip|Moddable Robbery Bob 1.zip|All files (*.*)|*.*";
         string levelsXmlPath;
         string levelNamesLocale;
         string finalLevFileName;
@@ -150,9 +149,22 @@ namespace BobMapper.Model.Injector
             {
                 return;
             }
-            ProcessStartInfo info = new ProcessStartInfo(@"Model/Injector/BobMapper Android Injection Script.ps1");
+            string unzippedApkParent = Directory.GetParent(destination).FullName;
+            string unzippedApk = Path.Combine(unzippedApkParent, "Moddable Robbery Bob 1");
+            if(!Directory.Exists(unzippedApk))
+            {
+                using (ZipArchive unzipArchive = ZipFile.Open(destination, ZipArchiveMode.Read))
+                {
+                    unzipArchive.ExtractToDirectory(unzippedApkParent);
+                }
+            }
+            string currentDir = Directory.GetCurrentDirectory();
+            string toolsDir = Path.Combine(currentDir, @"Model\Injector");
+            currentDir = Path.Combine(currentDir, @"Model\Injector\BobMapper Android Injection Script.ps1");
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.FileName = "powershell.exe";
+            info.Arguments = $"-NoProfile -ExecutionPolicy Bypass -File \"{currentDir}\" -moddedPath \"{unzippedApk}\" -toolsPath \"{toolsDir}\"";
             info.UseShellExecute = true;
-            info.Verb = "runas";
             Process.Start(info);
         }
 

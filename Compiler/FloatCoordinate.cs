@@ -69,17 +69,5 @@ namespace BobMapper.Compiler
             byte[] floatAsBytes = BitConverter.GetBytes(anyCoordinate);
             return floatAsBytes;
         }
-
-        public SnapCoordinate GetSnapCoordinate()
-        {
-            byte[] xArray = { CompiledBytes[0], CompiledBytes[1], CompiledBytes[2], CompiledBytes[3] };
-            float xFloat = BitConverter.ToSingle(xArray, 0);
-            int uncompiledX = Convert.ToInt32(xFloat * 2);
-            byte[] yArray = { CompiledBytes[4], CompiledBytes[5], CompiledBytes[6], CompiledBytes[7] };
-            float yFloat = BitConverter.ToSingle(yArray, 0);
-            int uncompiledY = Convert.ToInt32(yFloat * 2);
-            SnapCoordinate snapCoordinate = new SnapCoordinate(uncompiledX, uncompiledY);
-            return snapCoordinate;
-        }
     }
 }

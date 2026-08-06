@@ -31,7 +31,6 @@ namespace BobMapper.ViewModel
         public ViewportData CurrentViewportData { get; set; }
         public GizmoData CurrentGizmoData { get; set; }
         public string FileName { get; set; }
-        public string CompiledMapFileName { get; set; }
         public LayerData CurrentLayerData { get; set; }
         public ObjectCollection CurrentObjectCollection { get; set; }
         public Map CurrentMap { get; set; }
@@ -164,16 +163,11 @@ namespace BobMapper.ViewModel
         }
 
         [RelayCommand]
-        internal void Compile(bool saveNewFile)
+        internal void Compile()
         {
             CurrentMap.floors = SaveFloor();
-            string compileFilePath = CompiledMapFileName;
-            if (saveNewFile || string.IsNullOrEmpty(compileFilePath))
-            {
-                FileDialogService fileDialogService = new FileDialogService();
-                compileFilePath = fileDialogService.SaveFileDialog("Compiled map (*.lev)|*.lev", ".lev");
-                CompiledMapFileName = compileFilePath;
-            }
+            FileDialogService fileDialogService = new FileDialogService();
+            string compileFilePath = fileDialogService.SaveFileDialog("Compiled map (*.lev)|*.lev", ".lev");
             if (string.IsNullOrEmpty(compileFilePath))
             {
                 return;
@@ -185,7 +179,7 @@ namespace BobMapper.ViewModel
             Compiler.Compiler compiler = new Compiler.Compiler();
             compiler.Compile(CurrentMap);
             File.WriteAllBytes(compileFilePath, Compiler.Compiler.output.ToArray());
-            Process.Start("explorer.exe", $"/select,\"{CompiledMapFileName}\"");
+            Process.Start("explorer.exe", $"/select,\"{compileFilePath}\"");
         }
 
         [RelayCommand]
