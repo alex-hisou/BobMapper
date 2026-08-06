@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BobMapper.Data;
 using BobMapper.Model;
 using BobMapper.Services;
 using BobMapper.View;
@@ -29,6 +30,7 @@ namespace BobMapper
         public ProjectManager()
         {
             InitializeComponent();
+            var userSettings = UserSettings.Instance;
         }
 
         private void NewMod_Click(object sender, RoutedEventArgs e)

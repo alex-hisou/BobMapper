@@ -18,6 +18,7 @@ using BobMapper.Model.Injector;
 using BobMapper.Model.MapObjects;
 using BobMapper.Services;
 using BobMapper.View;
+using BobMapper.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using static BobMapper.Model.MapManager;
@@ -30,7 +31,6 @@ namespace BobMapper.ViewModel
         public ViewportData CurrentViewportData { get; set; }
         public GizmoData CurrentGizmoData { get; set; }
         public string FileName { get; set; }
-        public string CompiledMapFileName { get; set; }
         public LayerData CurrentLayerData { get; set; }
         public ObjectCollection CurrentObjectCollection { get; set; }
         public Map CurrentMap { get; set; }
@@ -163,16 +163,11 @@ namespace BobMapper.ViewModel
         }
 
         [RelayCommand]
-        internal void Compile(bool saveNewFile)
+        internal void Compile()
         {
             CurrentMap.floors = SaveFloor();
-            string compileFilePath = CompiledMapFileName;
-            if (saveNewFile || string.IsNullOrEmpty(compileFilePath))
-            {
-                FileDialogService fileDialogService = new FileDialogService();
-                compileFilePath = fileDialogService.SaveFileDialog("Compiled map (*.lev)|*.lev", ".lev");
-                CompiledMapFileName = compileFilePath;
-            }
+            FileDialogService fileDialogService = new FileDialogService();
+            string compileFilePath = fileDialogService.SaveFileDialog("Compiled map (*.lev)|*.lev", ".lev");
             if (string.IsNullOrEmpty(compileFilePath))
             {
                 return;
@@ -184,7 +179,7 @@ namespace BobMapper.ViewModel
             Compiler.Compiler compiler = new Compiler.Compiler();
             compiler.Compile(CurrentMap);
             File.WriteAllBytes(compileFilePath, Compiler.Compiler.output.ToArray());
-            Process.Start("explorer.exe", $"/select,\"{CompiledMapFileName}\"");
+            Process.Start("explorer.exe", $"/select,\"{compileFilePath}\"");
         }
 
         [RelayCommand]
@@ -200,7 +195,35 @@ namespace BobMapper.ViewModel
                 Compiler.Compiler compiler = new();
                 compiler.Compile(CurrentMap);
                 File.WriteAllBytes(tempLevFile, Compiler.Compiler.output.ToArray());
-                Injector injector = new(tempLevFile, CurrentMapProperties, buildApk, false, e.Chapter, e.Level);
+                string filter = "resources.dat|resources.dat|Moddable Robbery Bob 1.zip|Moddable Robbery Bob 1.zip|All files (*.*)|*.*";
+                FileDialogService fileDialogService = new FileDialogService();
+                string destination = fileDialogService.LoadFileDialog(filter);
+                Injector injector = new(destination, tempLevFile, CurrentMapProperties, buildApk, false, e.Chapter, e.Level);
+                injectorPrompt.ConfirmationComplete -= injectionPromptComplete;
+            };
+            injectorPrompt.ConfirmationComplete += injectionPromptComplete;
+        }
+
+        [RelayCommand]
+        internal void SteamInject()
+        {
+            if(string.IsNullOrEmpty(UserSettings.Instance.SteamResourcesDirectory))
+            {
+                MessageBox.Show("To Inject to Steam, please set the Steam directory in Prefrences", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            Save(false);
+            InjectorPrompt injectorPrompt = new InjectorPrompt();
+            injectorPrompt.Show();
+            EventHandler<LevelInjectPromptEventArgs> injectionPromptComplete = null!;
+            injectionPromptComplete = (sender, e) =>
+            {
+                string tempLevFile = Path.GetTempFileName();
+                Compiler.Compiler compiler = new();
+                compiler.Compile(CurrentMap);
+                File.WriteAllBytes(tempLevFile, Compiler.Compiler.output.ToArray());
+                string destination = UserSettings.Instance.SteamResourcesDirectory;
+                Injector injector = new(destination, tempLevFile, CurrentMapProperties, false, true, e.Chapter, e.Level);
                 injectorPrompt.ConfirmationComplete -= injectionPromptComplete;
             };
             injectorPrompt.ConfirmationComplete += injectionPromptComplete;

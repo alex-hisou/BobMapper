@@ -1,6 +1,22 @@
 param 
 (
-    [Parameter(Mandatory=$true)][string]$levelpath,
-    [Parameter(Mandatory=$true)][string]$destination,
-    [Parameter(Mandatory=$true)][bool]$buildapk
+    [Parameter(Mandatory=$true)][string]$moddedPath,
+    [Parameter(Mandatory=$true)][string]$destination
 )
+
+try {
+    $stream = [System.IO.File]::Open(
+        $destination,
+        [System.IO.FileMode]::Open,
+        [System.IO.FileAccess]::ReadWrite,
+        [System.IO.FileShare]::None
+    )
+    $stream.Close()
+}
+catch {
+    Write-Host "resources.dat is in use. Make sure that Robbery Bob or any other process using the file is closed"
+    exit 1
+}
+
+Copy-Item $moddedPath -Destination $destination
+Start-Process "steam://rungameid/372960"
