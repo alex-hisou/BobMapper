@@ -92,6 +92,15 @@ namespace BobMapper.Model
             }
         }
 
+        private bool exitZonesVisible = true;
+
+        public bool ExitZonesVisible
+        {
+            get { return exitZonesVisible; }
+            set { exitZonesVisible = value;
+                OnPropertyChanged();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

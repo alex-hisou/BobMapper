@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="BobMapper.View.UserControls.ExitZoneControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:services="clr-namespace:BobMapper.Services"
+             xmlns:local="clr-namespace:BobMapper.View.UserControls"
+             x:Name="Root"
+             mc:Ignorable="d" 
+             MinWidth="64" MinHeight="64">
+
+    <UserControl.Resources>
+        <services:PointsCollectionConverter x:Key="PointsCollectionConverter"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Canvas>
+            <Polygon x:Name="Rectangle" IsHitTestVisible="False" Fill="LightGreen">
+                <Polygon.Style>
+                    <Style TargetType="Polygon">
+                        <Setter Property="Points">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource PointsCollectionConverter}">
+                                    <Binding Path="Point1" ElementName="Root"/>
+                                    <Binding Path="Point2" ElementName="Root"/>
+                                    <Binding Path="Point3" ElementName="Root"/>
+                                    <Binding Path="Point4" ElementName="Root"/>
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Polygon.Style>
+            </Polygon>
+            <Thumb Tag="N" Width="10" Height="10" DragDelta="Thumb_DragDelta" IsEnabled="{Binding Selected, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <Thumb Tag="W" Width="10" Height="10" DragDelta="Thumb_DragDelta" IsEnabled="{Binding Selected, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <Thumb Tag="E" Width="10" Height="10" DragDelta="Thumb_DragDelta" IsEnabled="{Binding Selected, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <Thumb Tag="S" Width="10" Height="10" DragDelta="Thumb_DragDelta" IsEnabled="{Binding Selected, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        </Canvas>
+    </Grid>
+</UserControl>

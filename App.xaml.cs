@@ -168,6 +168,14 @@ namespace BobMapper
             return SnapCoordinate;
         }
 
+        public static SnapCoordinate PreciseSnapCoordinateFactory(float unsnappedXPos, float  unsnappedYPos)
+        {
+            float snappedXPos = unsnappedXPos / FloorSize;
+            float snappedYPos = unsnappedYPos / FloorSize;
+            SnapCoordinate SnapCoordinate = new SnapCoordinate(snappedXPos, snappedYPos);
+            return SnapCoordinate;
+        }
+
         public static explicit operator Coordinate(SnapCoordinate snapCoordinate)
         {
             Coordinate coordinate = new Coordinate(snapCoordinate.SnappedXPos, snapCoordinate.SnappedYPos);
@@ -178,6 +186,20 @@ namespace BobMapper
         {
             string stringOutput = $"X - {snapCoordinate.SnappedXPos}; Y - {snapCoordinate.SnappedYPos}";
             return stringOutput;
+        }
+
+        public static implicit operator Point(SnapCoordinate snapCoordinate)
+        {
+            Point point = new();
+            point.X = snapCoordinate.XPos;
+            point.Y = snapCoordinate.YPos;
+            return point;
+        }
+
+        public static implicit operator SnapCoordinate(Point point)
+        {
+            SnapCoordinate snapCoordinate = PreciseSnapCoordinateFactory((float)point.X, (float)point.Y);
+            return snapCoordinate;
         }
 
         protected void OnPropertyChanged(string name)

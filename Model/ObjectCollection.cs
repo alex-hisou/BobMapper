@@ -37,6 +37,8 @@ namespace BobMapper.Model
         private ObservableCollection<Door> currentDoors;
         public ObservableCollection<Loot> CurrentLoots { get => currentLoots; set => currentLoots = value; }
         private ObservableCollection<Loot> currentLoots;
+        public ObservableCollection<ExitZone> CurrentExitZones { get => currentExitZones; set => currentExitZones = value; }
+        private ObservableCollection<ExitZone> currentExitZones;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

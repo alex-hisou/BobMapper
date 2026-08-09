@@ -60,7 +60,6 @@ namespace BobMapper.Model.MapObjects
 
         private void OnCoordinatesChanged(object sender, PropertyChangedEventArgs e)
         {
-            // Any change to the inner XPos/YPos/Snapped values counts as "Coordinates changed"
             OnPropertyChanged(nameof(Coordinates));
             OnPropertyChanged(nameof(ConnectionDeltaX));
             OnPropertyChanged(nameof(ConnectionDeltaY));

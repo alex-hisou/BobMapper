@@ -158,6 +158,8 @@ namespace BobMapper.Model.Injector
                     unzipArchive.ExtractToDirectory(unzippedApkParent);
                 }
             }
+            DirectoryInfo di = new DirectoryInfo(unzippedApk);
+            di.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             string currentDir = Directory.GetCurrentDirectory();
             string toolsDir = Path.Combine(currentDir, @"Model\Injector");
             currentDir = Path.Combine(currentDir, @"Model\Injector\BobMapper Android Injection Script.ps1");
