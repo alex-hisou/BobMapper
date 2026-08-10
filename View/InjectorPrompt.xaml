@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BobMapper.View"
         mc:Ignorable="d"
+        ResizeMode="CanMinimize"
         Title="Select level to inject into" Height="172" Width="404">
     <Grid>
         <Grid.RowDefinitions>

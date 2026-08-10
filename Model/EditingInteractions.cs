@@ -5,6 +5,7 @@ using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using BobMapper.Data;
 using BobMapper.Model.MapObjects;
 using CommunityToolkit.Mvvm.Input;
 using static BobMapper.Model.MapManager;
@@ -55,6 +56,10 @@ namespace BobMapper.Model
                     string validWallTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Wall, CurrentMapProperties.Tileset, true);
                     Wall wall = new Wall(snappedWallPlacementPos, shiftedSnappedPlacementPos, Wall.WallType.Normal, validWallTexture, validWallTexture);
                     CurrentObjectCollection.CurrentWalls.Add(wall);
+                    if (UserSettings.Instance.AutoSelect)
+                    {
+                        SelectObject(wall);
+                    }
                     break;
                 case Tools.AddProp:
                     SnapCoordinate snappedPropPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
@@ -75,11 +80,19 @@ namespace BobMapper.Model
                         Prop tele2 = new Prop(tele2Coordinate, 0, "/Resources/PropTextures/TelePad.png");
                         CurrentObjectCollection.CurrentProps.Add(tele2);
                     }
+                    if (UserSettings.Instance.AutoSelect)
+                    {
+                        SelectObject(prop);
+                    }
                     break;
                 case Tools.AddNPC:
                     SnapCoordinate snappedNPCPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
                     NPC npc = new NPC(snappedNPCPlacementPos, NPC.NPCType.BulkyCop, 0, false, false, 0);
                     CurrentObjectCollection.CurrentNPCs.Add(npc);
+                    if (UserSettings.Instance.AutoSelect)
+                    {
+                        SelectObject(npc);
+                    }
                     break;
                 case Tools.AddPathPoint:
                     SnapCoordinate snappedPathPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
@@ -89,11 +102,19 @@ namespace BobMapper.Model
                     PathPoint pathPoint = new PathPoint(snappedPathPlacementPos, 0, lastId + 1, 0);
                     AttachNewPathPointHandler(pathPoint);
                     CurrentObjectCollection.CurrentPathPoints.Add(pathPoint);
+                    if (UserSettings.Instance.AutoSelect)
+                    {
+                        SelectObject(pathPoint);
+                    }
                     break;
                 case Tools.AddMisc:
                     SnapCoordinate snappedMiscPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
                     Misc misc = new Misc(snappedMiscPlacementPos, Misc.MiscObjects.Key);
                     CurrentObjectCollection.CurrentMiscs.Add(misc);
+                    if (UserSettings.Instance.AutoSelect)
+                    {
+                        SelectObject(misc);
+                    }
                     break;
                 case Tools.AddDoor:
                     SnapCoordinate snappedDoorPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
@@ -101,12 +122,20 @@ namespace BobMapper.Model
                     string validDoorTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Door, CurrentMapProperties.Tileset, true);
                     Door door = new Door(snappedDoorPlacementPos, shiftedSnappedDoorPlacementPos, CurrentSelections.SelectedTexture, false, false, false);
                     CurrentObjectCollection.CurrentDoors.Add(door);
+                    if (UserSettings.Instance.AutoSelect)
+                    {
+                        SelectObject(door);
+                    }
                     break;
                 case Tools.AddLoot:
                     SnapCoordinate snappedLootPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
                     string validLootTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Loot, CurrentMapProperties.Tileset, true);
                     Loot loot = new Loot(validLootTexture, snappedLootPlacementPos, 0);
                     CurrentObjectCollection.CurrentLoots.Add(loot);
+                    if (UserSettings.Instance.AutoSelect)
+                    {
+                        SelectObject(loot);
+                    }
                     break;
                 default:
                     break;

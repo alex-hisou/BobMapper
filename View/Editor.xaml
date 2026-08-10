@@ -86,8 +86,8 @@
         <DockPanel Background="SlateGray">
             <Menu DockPanel.Dock="Top" Width="auto" Height="20">
                 <MenuItem Header="File">
-                    <MenuItem Header="New Project"/>
-                    <MenuItem Header="Open Project"/>
+                    <MenuItem Header="New Project" Click="NewProject"/>
+                    <MenuItem Header="Open Project" Click="OpenProject"/>
                     <Separator/>
                     <MenuItem Header="Save" Command="{Binding SaveCommand}" CommandParameter="{StaticResource False}"/>
                     <MenuItem Header="Save as" Command="{Binding SaveCommand}" CommandParameter="{StaticResource True}"/>
@@ -95,10 +95,14 @@
                 </MenuItem>
                 <MenuItem Header="Edit">
                     <MenuItem Header="Map Properties" Click="MapPropertiesClick"/>
+                    <MenuItem Header="Additional Exit Areas" Click="ExitAreasOpen"/>
                     <MenuItem Header="Expand or Contract Map" Click="ExpandOrContractOpen"/>
                     <MenuItem Header="Object list" IsEnabled="False"/>
                     <Separator/>
-                    <MenuItem Header="Prefrences" IsEnabled="False"/>
+                    <MenuItem Header="Prefrences" Click="PrefrencesClick"/>
+                </MenuItem>
+                <MenuItem Header="Tools">
+                    <MenuItem Header="Dialogue Editor" IsEnabled="False"/>
                 </MenuItem>
                 <MenuItem Header="Compile">
                     <MenuItem Header="Compile to" Command="{Binding CompileCommand}"></MenuItem>
@@ -763,6 +767,19 @@
                                         </i:Interaction.Triggers>
                                     </Image>
                                 </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentExitZones}" Visibility="{Binding CurrentLayerData.ExitZonesVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type object:ExitZone}">
+                                <uc:ExitZoneControl Point1="{Binding Point1}" Point2="{Binding Point2}"
+                                                    Point3="{Binding Point3}" Point4="{Binding Point4}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

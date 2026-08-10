@@ -11,21 +11,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BobMapper.Model;
 using BobMapper.ViewModel;
 
 namespace BobMapper.View
 {
     /// <summary>
-    /// Interaction logic for ObjectList.xaml
+    /// Interaction logic for Prefrences.xaml
     /// </summary>
-    public partial class ObjectList : Window
+    public partial class Prefrences : Window
     {
-        public ObjectList(Map map)
+        public Prefrences()
         {
             InitializeComponent();
-            ObjectListViewModel objectListViewModel = new();
-            DataContext = objectListViewModel;
+            PrefrencesViewModel vm = new();
+            DataContext = vm;
         }
     }
 }

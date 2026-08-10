@@ -1,0 +1,51 @@
+﻿<Window x:Class="BobMapper.View.ExitAreasWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BobMapper.View" 
+        xmlns:viewmodel="clr-namespace:BobMapper.ViewModel" 
+        xmlns:i="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
+        d:DataContext="{d:DesignInstance Type=viewmodel:ExitAreasViewModel}"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        Deactivated="Window_Deactivated"
+        Title="Additional Exit Areas" Height="450" Width="650">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding CloseWindowCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="144*"/>
+            <ColumnDefinition Width="57*"/>
+            <ColumnDefinition Width="149*"/>
+            <ColumnDefinition Width="57*"/>
+            <ColumnDefinition Width="142*"/>
+            <ColumnDefinition Width="48*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="41*"/>
+            <RowDefinition Height="289*"/>
+            <RowDefinition Height="34*"/>
+            <RowDefinition Height="49*"/>
+            <RowDefinition Height="21*"/>
+        </Grid.RowDefinitions>
+        <ListView ItemsSource="{Binding ExitZones}" Grid.Column="1" Grid.ColumnSpan="5"
+                  SelectedIndex="{Binding SelectedId}" Grid.Row="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="100" Header="Id"/>
+                    <GridViewColumn Width="100" Header="Point 1 Coords" DisplayMemberBinding="{Binding Path=Point1, StringFormat={}{0}}"/>
+                    <GridViewColumn Width="100" Header="Point 2 Coords" DisplayMemberBinding="{Binding Path=Point2, StringFormat={}{0}}"/>
+                    <GridViewColumn Width="100" Header="Point 3 Coords" DisplayMemberBinding="{Binding Path=Point3, StringFormat={}{0}}"/>
+                    <GridViewColumn Width="100" Header="Point 4 Coords" DisplayMemberBinding="{Binding Path=Point4, StringFormat={}{0}}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="New" Grid.Column="1" Grid.Row="3" Command="{Binding AddExitZoneCommand}"/>
+        <Button Content="Delete" Grid.Column="5" Grid.Row="3" Command="{Binding DeleteCommand}"/>
+    </Grid>
+</Window>

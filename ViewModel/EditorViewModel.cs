@@ -55,16 +55,19 @@ namespace BobMapper.ViewModel
             CurrentSelections = new Selections();
             CurrentGizmoData = new GizmoData(CurrentSelections);
             CurrentLayerData = new LayerData();
+            if (CurrentMap.exitZones == null)
+                CurrentMap.exitZones = new();
             CurrentObjectCollection = new ObjectCollection
             {
                 CurrentProps = new ObservableCollection<Prop>(CurrentMap.props),
-                 CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls),
+                CurrentWalls = new ObservableCollection<Wall>(CurrentMap.walls),
                 CurrentNPCs = new ObservableCollection<NPC>(CurrentMap.npcs),
                 CurrentPathPoints = new ObservableCollection<PathPoint>(CurrentMap.pathPoints),
                 CurrentMiscs = new ObservableCollection<Misc>(CurrentMap.miscs),
                 CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors)),
                 CurrentDoors = new ObservableCollection<Door>(CurrentMap.doors),
-                CurrentLoots = new ObservableCollection<Loot>(CurrentMap.loots)
+                CurrentLoots = new ObservableCollection<Loot>(CurrentMap.loots),
+                CurrentExitZones = new ObservableCollection<ExitZone>(CurrentMap.exitZones)
             };
             CurrentEditingInteractions = new(CurrentObjectCollection, CurrentSelections, CurrentMapProperties);
             CurrentEditingInteractions.AttachAllPathPointHandlers();
@@ -138,6 +141,7 @@ namespace BobMapper.ViewModel
             CurrentMap.miscs = CurrentObjectCollection.CurrentMiscs.ToList();
             CurrentMap.loots = CurrentObjectCollection.CurrentLoots.ToList();
             CurrentMap.floors = SaveFloor();
+            CurrentMap.exitZones = CurrentObjectCollection.CurrentExitZones.ToList();
             if(saveNewFile)
             {
                 FileDialogService fileDialogService = new FileDialogService();
@@ -172,10 +176,7 @@ namespace BobMapper.ViewModel
             {
                 return;
             }
-            if (File.Exists(compileFilePath))
-            {
-                File.Delete(compileFilePath);
-            }
+            File.Delete(compileFilePath);
             Compiler.Compiler compiler = new Compiler.Compiler();
             compiler.Compile(CurrentMap);
             File.WriteAllBytes(compileFilePath, Compiler.Compiler.output.ToArray());

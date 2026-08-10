@@ -9,7 +9,7 @@
         Title="About" Height="378" Width="253">
     <Grid>
         <Image Source="/Resources/UI/Banner.png" Height="100" Margin="0,0,0,253"/>
-        <TextBlock Text="Version 0.1.1" Margin="0,102,0,0" TextAlignment="Center" FontSize="16"/>
+        <TextBlock Text="Version 0.2.0" Margin="0,102,0,0" TextAlignment="Center" FontSize="16"/>
         <TextBlock Margin="0,132,0,0" TextAlignment="Center" FontSize="16">
             Created by 
             <Hyperlink NavigateUri="https://www.youtube.com/@alexans_soul_extras" RequestNavigate="Hyperlink_RequestNavigate">Alexan's Soul</Hyperlink>

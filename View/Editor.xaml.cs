@@ -161,6 +161,12 @@ namespace BobMapper
             mapPropertiesWindow.Show();
         }
 
+        private void PrefrencesClick(object sender, RoutedEventArgs e)
+        {
+            Prefrences prefrences = new Prefrences();
+            prefrences.Show();
+        }
+
         private void ExpandOrContractOpen(object sender, RoutedEventArgs e)
         {
             var vm = (EditorViewModel)DataContext;
@@ -173,6 +179,34 @@ namespace BobMapper
                 vm.CurrentMap.MapSizeChanged -= mapSizeChangeHandler;
             };
             vm.CurrentMap.MapSizeChanged += mapSizeChangeHandler;
+        }
+
+        private void OpenProject(object sender, RoutedEventArgs e)
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.Filter = "BobMapper Map File (.bobmap)|*.bobmap|BobMapper Json Files (.json)|*.json";
+            bool? result = dialog.ShowDialog();
+            string filename;
+            if (result == true)
+            {
+                filename = dialog.FileName;
+            }
+            else { return; }
+            Editor editor = new Editor(filename);
+            editor.Show();
+        }
+
+        private void NewProject(object sender, RoutedEventArgs e)
+        {
+            CreateMap createMap = new CreateMap();
+            createMap.Show();
+        }
+
+        private void ExitAreasOpen(object sender, RoutedEventArgs e)
+        {
+            var vm = (EditorViewModel)DataContext;
+            ExitAreasWindow exitAreasWindow = new(vm.CurrentObjectCollection.CurrentExitZones, vm.CurrentLayerData);
+            exitAreasWindow.Show();
         }
     }
 }

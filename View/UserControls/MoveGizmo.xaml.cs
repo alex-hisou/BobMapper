@@ -42,8 +42,6 @@ namespace BobMapper.View.UserControls
             lastMousePos = new(0, 0);
         }
 
-
-
         private void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             UIElement element = sender as UIElement;
@@ -69,15 +67,11 @@ namespace BobMapper.View.UserControls
             {
                 return;
             }
-
             var element = sender as UIElement;
             if (element == null) return;
-
             Point currentMousePos = e.GetPosition(this);
-
             float newX = 0;
             float newY = 0;
-
             if(isHorizontal)
             {
                 newX = (float)currentMousePos.X - lastMousePos.XPos;
