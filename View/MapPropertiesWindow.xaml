@@ -8,6 +8,14 @@
         d:DataContext="{d:DesignInstance Type=viewmodel:MapPropertiesWindowViewModel}"
         mc:Ignorable="d"
         Title="Map Properties" Height="600" Width="800">
+
+    <Window.Resources>
+        <Style x:Key="TooltipStyle">
+            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
+            <Setter Property="TextBlock.Foreground" Value="DarkBlue" />
+        </Style>
+    </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="23*"/>
@@ -19,8 +27,9 @@
             <RowDefinition Height="52*"/>
             <RowDefinition Height="22*"/>
             <RowDefinition Height="52*"/>
-            <RowDefinition Height="43*"/>
-            <RowDefinition Height="157*"/>
+            <RowDefinition Height="22*"/>
+            <RowDefinition Height="52*"/>
+            <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="64*"/>
@@ -55,5 +64,12 @@
                     PreviewKeyDown="TextBox_PreviewKeyDown"/>
         <Label Content="Background" Grid.Row="8" Grid.Column="1" FontSize="20"/>
         <ComboBox ItemsSource="{Binding Backgrounds}" SelectedItem="{Binding CurrentMapProperties.BackgroundImage}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="8"/>
+        <CheckBox IsChecked="{Binding CurrentMapProperties.AutomaticExitZones}" Grid.Column="1" Grid.Row="10" >
+            <CheckBox.RenderTransform>
+                <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+            </CheckBox.RenderTransform>
+            <CheckBox.ToolTip>Automatically assigns the outside of the map as an exit zone. Do not disable unless the outside has NPCs</CheckBox.ToolTip>
+            <TextBlock Style="{DynamicResource TooltipStyle}">Automatic Exit Areas</TextBlock>
+        </CheckBox>
     </Grid>
 </Window>

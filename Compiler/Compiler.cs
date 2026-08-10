@@ -28,7 +28,8 @@ namespace BobMapper.Compiler
             Locators_v3 locators_V3 = new(map.npcs, map.pathPoints, map.miscs);
             output.AddRange(locators_V3.locatorsOutput);
 
-            NavMesh navMesh = new NavMesh(map.mapProperties.Width / SnapCoordinate.FloorSize, map.mapProperties.Height / SnapCoordinate.FloorSize, map.walls, map.doors, map.props);
+            NavMesh navMesh = new NavMesh(map.mapProperties.Width / SnapCoordinate.FloorSize, map.mapProperties.Height / SnapCoordinate.FloorSize, 
+                map.walls, map.doors, map.props, map.mapProperties.AutomaticExitZones);
             output.AddRange(navMesh.navMeshOutput);
 
             output.AddRange(RoomGeometry());

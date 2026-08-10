@@ -20,7 +20,7 @@ namespace BobMapper.Compiler
             Area = area;
         }
 
-        internal static List<Room> GenerateRooms(List<Wall> walls, List<Door> doors)
+        internal static List<Room> GenerateRooms(List<Wall> walls, List<Door> doors, bool autoOutside)
         {
             //Using dependency cause im lazy afffffffffffffff
             List<Room> rooms = new List<Room>();
@@ -44,22 +44,31 @@ namespace BobMapper.Compiler
             {
                 return rooms;
             }
-            for (int i = 2; i <= polygons.Count + 1; i++)
+            int autoOutsideModifier = autoOutside ? 0 : 1;
+            //Must have been absolutely hammered when I wrote this loop
+            for (int i = 2 + autoOutsideModifier; i <= polygons.Count + 1 + autoOutsideModifier; i++)
             {
-                Room room = new Room(i, polygons[i - 2]);
+                Room room = new Room(i, polygons[i - 2 - autoOutsideModifier]);
                 rooms.Add(room);
             }
             return rooms;
         }
 
-        internal static int GetPointRoomId(float x, float y, List<Room> rooms)
+        internal static int GetPointRoomId(float x, float y, List<Room> rooms, bool autoOutside)
         {
             //This gets run after we know a point is not on a wall or a door, so a wall check is not needed
             Point point = new(x, y);
             Room room = rooms.FirstOrDefault(x => x.Area.Covers(point));
             if(room == null)
             {
-                return 1;
+                if (autoOutside)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 2;
+                }
             }
             return room.Id;
         }

@@ -55,6 +55,17 @@ namespace BobMapper.Model
             }
         }
 
+        private bool automaticExitZones;
+
+        public bool AutomaticExitZones
+        {
+            get { return automaticExitZones; }
+            set { automaticExitZones = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public MapProperties(int width, int height, Tilesets tileset) 
         {
             this.Tileset = tileset;
@@ -65,10 +76,11 @@ namespace BobMapper.Model
             BackgroundImage = "/Resources/Backgrounds/BackgroundDownTown1.png";
             IsNightTime = false;
             ApartmentHeight = 1.0;
+            AutomaticExitZones = true;
         }
 
         [JsonConstructor]
-        public MapProperties(int width, int height, Tilesets tileset, string name, bool isApartment, string BackgroundImage, bool IsNightTime, double apartmentHeight)
+        public MapProperties(int width, int height, Tilesets tileset, string name, bool isApartment, string BackgroundImage, bool IsNightTime, double apartmentHeight, bool automaticExitZones)
         {
             this.Tileset = tileset;
             this.Width = width;
@@ -78,6 +90,7 @@ namespace BobMapper.Model
             this.BackgroundImage = BackgroundImage;
             this.IsNightTime = IsNightTime;
             ApartmentHeight = apartmentHeight;
+            AutomaticExitZones = automaticExitZones;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

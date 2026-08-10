@@ -11,14 +11,14 @@ namespace BobMapper.Compiler.WriteSteps
     {
         internal List<byte> navMeshOutput;
         private const int navNodeLength = 26; 
-        internal NavMesh(int width, int height, List<Wall> walls, List<Door> doors, List<Prop> props) 
+        internal NavMesh(int width, int height, List<Wall> walls, List<Door> doors, List<Prop> props, bool autoOutside) 
         {
             navMeshOutput = new List<byte>();
             navMeshOutput.AddRange([0x0E, 0x00, 0x00, 0x00]); //SECTION HEAD
             byte[] navigationMeshLabel = Encoding.ASCII.GetBytes("NavigationMesh");
             navMeshOutput.AddRange(navigationMeshLabel);
             //TODO: Add all the mysterious stuff and make sure this code works with rectangular maps
-            List<byte> navMeshByteBuffer = NavMeshAsBytes(width, height, walls, doors, props);
+            List<byte> navMeshByteBuffer = NavMeshAsBytes(width, height, walls, doors, props, autoOutside);
             navMeshOutput.AddRange(BitConverter.GetBytes(navMeshByteBuffer.Count + 8)); //Add 8 bytes due to the order of steps
             navMeshOutput.AddRange(BitConverter.GetBytes(navMeshByteBuffer.Count / navNodeLength));
             navMeshOutput.AddRange(BitConverter.GetBytes((int)56)); //Dafuq?!?!?!
@@ -26,10 +26,10 @@ namespace BobMapper.Compiler.WriteSteps
 
         }
 
-        private List<byte> NavMeshAsBytes(int width, int height, List<Wall> walls, List<Door> doors, List<Prop> props)
+        private List<byte> NavMeshAsBytes(int width, int height, List<Wall> walls, List<Door> doors, List<Prop> props, bool autoOutside)
         {
             List<byte> navMeshBytes = new List<byte>();
-            List<Room> rooms = Room.GenerateRooms(walls, doors);
+            List<Room> rooms = Room.GenerateRooms(walls, doors, autoOutside);
             //Maybe swap width and height?
             float startY = (float)height / -2;
             float endY = (float)height / 2;
@@ -48,7 +48,7 @@ namespace BobMapper.Compiler.WriteSteps
                     byte[] yBytes = BitConverter.GetBytes(currentY);
                     Array.Copy(yBytes, 0, navNodeBytes, 6, yBytes.Length);
                     SnapCoordinate navNodePos = new(currentX, currentY);
-                    byte[] navNodeVariables = NavNodeVariables(navNodePos, walls, doors, props, rooms);
+                    byte[] navNodeVariables = NavNodeVariables(navNodePos, walls, doors, props, rooms, autoOutside);
                     Array.Copy(navNodeVariables, 0, navNodeBytes, 10, navNodeVariables.Length);
                     byte[] idAsBytes = BitConverter.GetBytes(index);
                     Array.Copy(idAsBytes, 0, navNodeBytes, 22, 4);
@@ -61,7 +61,7 @@ namespace BobMapper.Compiler.WriteSteps
             return navMeshBytes;
         }
 
-        private byte[] NavNodeVariables(SnapCoordinate navNodePos,List<Wall> walls, List<Door> doors, List<Prop> props, List<Room> rooms)
+        private byte[] NavNodeVariables(SnapCoordinate navNodePos,List<Wall> walls, List<Door> doors, List<Prop> props, List<Room> rooms, bool autoOutside)
         {
             byte roomId = 1; //outside default
             byte objectCollision = 0;
@@ -90,7 +90,7 @@ namespace BobMapper.Compiler.WriteSteps
                     return VariablesAsBytes(roomId, objectCollision, isNonWalkable, lockedByDefault);
                 }
             }
-            int intRoomId = Room.GetPointRoomId(navNodePos.SnappedXPos, navNodePos.SnappedYPos, rooms);
+            int intRoomId = Room.GetPointRoomId(navNodePos.SnappedXPos, navNodePos.SnappedYPos, rooms, autoOutside);
             roomId = Convert.ToByte(intRoomId);
             return VariablesAsBytes(roomId, objectCollision, isNonWalkable, lockedByDefault);
         }
