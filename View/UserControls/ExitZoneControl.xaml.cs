@@ -24,7 +24,6 @@ namespace BobMapper.View.UserControls
         public ExitZoneControl()
         {
             InitializeComponent();
-            Rectangle.Points = new PointCollection(4);
         }
 
         public static readonly DependencyProperty SelectedProperty = DependencyProperty.Register
@@ -69,31 +68,68 @@ namespace BobMapper.View.UserControls
         public SnapCoordinate Point4
         {
             get => (SnapCoordinate)GetValue(Point4Property);
-            set => SetValue(Point4Property, value);
+            set { SetValue(Point4Property, value); }
         }
 
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            double delta = e.HorizontalChange + e.VerticalChange;
+            double deltax = e.HorizontalChange;
+            double deltay = e.VerticalChange;
             Thumb thumb = (Thumb)sender;
             string tag = thumb.Tag.ToString();
-            Resize(delta, tag);
+            Resize(deltax, deltay, tag);
         }
 
-        private void Resize(double delta, string tag)
+        private void Resize(double deltax, double deltay, string tag)
         {
+            deltax = Math.Floor(deltax / 64);
+            deltay = Math.Floor(deltay / 64);
             //Points implementation from notes
             switch(tag)
             {
                 case "N":
+                    Point1.SnappedYPos += (float)deltay;
+                    Point2.SnappedYPos += (float)deltay;
                     break;
                 case "W":
+                    Point2.SnappedXPos += (float)deltax;
+                    Point3.SnappedXPos += (float)deltax;
                     break;
                 case "E":
+                    Point1.SnappedXPos += (float)deltax;
+                    Point4.SnappedXPos += (float)deltax;
                     break;
                 case "S":
+                    Point3.SnappedYPos += (float)deltay;
+                    Point4.SnappedYPos += (float)deltay;
                     break;
             }
+            //I wish it would just bind properly, but the spaghetti doesnt let me
+            Rectangle.Points = new PointCollection([Point1, Point2, Point3, Point4]);
+            UpdateView();
+        }
+
+        private void UpdateView()
+        {
+            double midpointNorth = (Point1.XPos + Point2.XPos) / 2;
+            double midpointWest = (Point2.YPos + Point3.YPos) / 2;
+            double midpointEast = (Point1.YPos + Point4.YPos) / 2;
+            double midpointSouth = (Point3.XPos + Point4.XPos) / 2;
+            PlaceHandle(NorthHandle, midpointNorth, Point1.YPos);
+            PlaceHandle(WestHandle, Point2.XPos, midpointWest);
+            PlaceHandle(EastHandle, Point1.XPos, midpointEast);
+            PlaceHandle(SouthHandle, midpointSouth, Point4.YPos);
+        }
+
+        private static void PlaceHandle(FrameworkElement handle, double x, double y)
+        {
+            Canvas.SetLeft(handle, x);
+            Canvas.SetTop(handle, y);
+        }
+
+        private void Rectangle_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateView();
         }
     }
 }

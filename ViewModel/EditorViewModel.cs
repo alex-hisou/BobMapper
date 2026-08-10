@@ -55,6 +55,8 @@ namespace BobMapper.ViewModel
             CurrentSelections = new Selections();
             CurrentGizmoData = new GizmoData(CurrentSelections);
             CurrentLayerData = new LayerData();
+            if (CurrentMap.exitZones == null)
+                CurrentMap.exitZones = new();
             CurrentObjectCollection = new ObjectCollection
             {
                 CurrentProps = new ObservableCollection<Prop>(CurrentMap.props),

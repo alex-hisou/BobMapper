@@ -182,9 +182,9 @@ namespace BobMapper
             return coordinate;
         }
 
-        public static explicit operator string(SnapCoordinate snapCoordinate)
+        public override string ToString()
         {
-            string stringOutput = $"X - {snapCoordinate.SnappedXPos}; Y - {snapCoordinate.SnappedYPos}";
+            string stringOutput = $"X: {SnappedXPos} || Y: {SnappedYPos}";
             return stringOutput;
         }
 

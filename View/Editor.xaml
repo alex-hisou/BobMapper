@@ -95,7 +95,7 @@
                 </MenuItem>
                 <MenuItem Header="Edit">
                     <MenuItem Header="Map Properties" Click="MapPropertiesClick"/>
-                    <MenuItem Header="Additional Exit Areas" Click="NewProject"/>
+                    <MenuItem Header="Additional Exit Areas" Click="ExitAreasOpen"/>
                     <MenuItem Header="Expand or Contract Map" Click="ExpandOrContractOpen"/>
                     <MenuItem Header="Object list" IsEnabled="False"/>
                     <Separator/>

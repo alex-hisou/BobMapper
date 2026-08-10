@@ -49,7 +49,7 @@ namespace BobMapper.ViewModel
         }
 
         [RelayCommand]
-        public void NewExitZone()
+        public void AddExitZone()
         {
             SnapCoordinate point1 = new(0, 0);
             SnapCoordinate point2 = new(1, 0);

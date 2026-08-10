@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:services="clr-namespace:BobMapper.Services"
              xmlns:local="clr-namespace:BobMapper.View.UserControls"
-             x:Name="Root"
-             mc:Ignorable="d" 
+             xmlns:global="clr-namespace:BobMapper"
+             mc:Ignorable="d"
              MinWidth="64" MinHeight="64">
 
     <UserControl.Resources>
@@ -15,26 +15,28 @@
     
     <Grid>
         <Canvas>
-            <Polygon x:Name="Rectangle" IsHitTestVisible="False" Fill="LightGreen">
+            <Polygon x:Name="Rectangle" IsHitTestVisible="False" Fill="LightGreen" DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}" Loaded="Rectangle_Loaded">
                 <Polygon.Style>
                     <Style TargetType="Polygon">
                         <Setter Property="Points">
                             <Setter.Value>
                                 <MultiBinding Converter="{StaticResource PointsCollectionConverter}">
-                                    <Binding Path="Point1" ElementName="Root"/>
-                                    <Binding Path="Point2" ElementName="Root"/>
-                                    <Binding Path="Point3" ElementName="Root"/>
-                                    <Binding Path="Point4" ElementName="Root"/>
+                                    <Binding Path="Point1" RelativeSource="{RelativeSource AncestorType={x:Type local:ExitZoneControl}}"/>
+                                    <Binding Path="Point2" RelativeSource="{RelativeSource AncestorType={x:Type local:ExitZoneControl}}"/>
+                                    <Binding Path="Point3" RelativeSource="{RelativeSource AncestorType={x:Type local:ExitZoneControl}}"/>
+                                    <Binding Path="Point4" RelativeSource="{RelativeSource AncestorType={x:Type local:ExitZoneControl}}"/>
                                 </MultiBinding>
                             </Setter.Value>
                         </Setter>
                     </Style>
                 </Polygon.Style>
             </Polygon>
-            <Thumb Tag="N" Width="10" Height="10" DragDelta="Thumb_DragDelta" IsEnabled="{Binding Selected, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-            <Thumb Tag="W" Width="10" Height="10" DragDelta="Thumb_DragDelta" IsEnabled="{Binding Selected, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-            <Thumb Tag="E" Width="10" Height="10" DragDelta="Thumb_DragDelta" IsEnabled="{Binding Selected, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-            <Thumb Tag="S" Width="10" Height="10" DragDelta="Thumb_DragDelta" IsEnabled="{Binding Selected, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <global:CenteringCanvas>
+            <Thumb Tag="N" Width="10" Height="10" DragDelta="Thumb_DragDelta" x:Name="NorthHandle"/>
+            <Thumb Tag="W" Width="10" Height="10" DragDelta="Thumb_DragDelta" x:Name="WestHandle"/>
+            <Thumb Tag="E" Width="10" Height="10" DragDelta="Thumb_DragDelta" x:Name="EastHandle"/>
+            <Thumb Tag="S" Width="10" Height="10" DragDelta="Thumb_DragDelta" x:Name="SouthHandle"/>
+            </global:CenteringCanvas>
         </Canvas>
     </Grid>
 </UserControl>

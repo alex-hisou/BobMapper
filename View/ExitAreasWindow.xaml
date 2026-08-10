@@ -12,7 +12,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="53*"/>
             <ColumnDefinition Width="144*"/>
-            <ColumnDefinition Width="263*"/>
+            <ColumnDefinition Width="57*"/>
+            <ColumnDefinition Width="149*"/>
+            <ColumnDefinition Width="57*"/>
             <ColumnDefinition Width="142*"/>
             <ColumnDefinition Width="48*"/>
         </Grid.ColumnDefinitions>
@@ -23,20 +25,20 @@
             <RowDefinition Height="49*"/>
             <RowDefinition Height="21*"/>
         </Grid.RowDefinitions>
-        <ListView ItemsSource="{Binding ExitZones}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"
-                  SelectedIndex="{Binding SelectedId}">
+        <ListView ItemsSource="{Binding ExitZones}" Grid.Column="1" Grid.ColumnSpan="5"
+                  SelectedIndex="{Binding SelectedId}" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="100" Header="Id"/>
-                    <GridViewColumn Width="100" Header="Point 1 Coords"/>
-                    <GridViewColumn Width="100" Header="Point 2 Coords"/>
-                    <GridViewColumn Width="100" Header="Point 3 Coords"/>
-                    <GridViewColumn Width="100" Header="Point 4 Coords"/>
+                    <GridViewColumn Width="100" Header="Point 1 Coords" DisplayMemberBinding="{Binding Path=Point1, StringFormat={}{0}}"/>
+                    <GridViewColumn Width="100" Header="Point 2 Coords" DisplayMemberBinding="{Binding Path=Point2, StringFormat={}{0}}"/>
+                    <GridViewColumn Width="100" Header="Point 3 Coords" DisplayMemberBinding="{Binding Path=Point3, StringFormat={}{0}}"/>
+                    <GridViewColumn Width="100" Header="Point 4 Coords" DisplayMemberBinding="{Binding Path=Point4, StringFormat={}{0}}"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="New" Grid.Column="3"/>
-        <Button Content="Edit" Grid.Column="1" Grid.Row="3" Command="{Binding EditCommand}"/>
-        <Button Content="Delete" Grid.Column="3" Grid.Row="3" Command="{Binding DeleteCommand}"/>
+        <Button Content="New" Grid.Column="1" Grid.Row="3" Command="{Binding AddExitZoneCommand}"/>
+        <Button Content="Edit" Grid.Column="3" Grid.Row="3" Command="{Binding EditCommand}"/>
+        <Button Content="Delete" Grid.Column="5" Grid.Row="3" Command="{Binding DeleteCommand}"/>
     </Grid>
 </Window>

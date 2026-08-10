@@ -55,7 +55,7 @@ namespace BobMapper.Model.MapObjects
         public bool Selected
         {
             get { return selected; }
-            set { selected = value; }
+            set { selected = value; OnPropertyChanged(); }
         }
 
 
