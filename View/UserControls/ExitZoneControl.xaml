@@ -11,11 +11,12 @@
 
     <UserControl.Resources>
         <services:PointsCollectionConverter x:Key="PointsCollectionConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolVisibilityConverter"/>
     </UserControl.Resources>
     
     <Grid>
         <Canvas>
-            <Polygon x:Name="Rectangle" IsHitTestVisible="False" Fill="LightGreen" DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}" Loaded="Rectangle_Loaded">
+            <Polygon x:Name="Rectangle" IsHitTestVisible="False" Opacity="0.7" Fill="DarkGreen" DataContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}" Loaded="Rectangle_Loaded">
                 <Polygon.Style>
                     <Style TargetType="Polygon">
                         <Setter Property="Points">
@@ -32,10 +33,10 @@
                 </Polygon.Style>
             </Polygon>
             <global:CenteringCanvas>
-            <Thumb Tag="N" Width="10" Height="10" DragDelta="Thumb_DragDelta" x:Name="NorthHandle"/>
-            <Thumb Tag="W" Width="10" Height="10" DragDelta="Thumb_DragDelta" x:Name="WestHandle"/>
-            <Thumb Tag="E" Width="10" Height="10" DragDelta="Thumb_DragDelta" x:Name="EastHandle"/>
-            <Thumb Tag="S" Width="10" Height="10" DragDelta="Thumb_DragDelta" x:Name="SouthHandle"/>
+                <Thumb Tag="N" Width="10" Height="10" DragDelta="Thumb_DragDelta" x:Name="NorthHandle"/>
+                <Thumb Tag="W" Width="10" Height="10" DragDelta="Thumb_DragDelta" x:Name="WestHandle"/>
+                <Thumb Tag="E" Width="10" Height="10" DragDelta="Thumb_DragDelta" x:Name="EastHandle"/>
+                <Thumb Tag="S" Width="10" Height="10" DragDelta="Thumb_DragDelta" x:Name="SouthHandle"/>
             </global:CenteringCanvas>
         </Canvas>
     </Grid>

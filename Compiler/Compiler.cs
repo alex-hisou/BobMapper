@@ -32,7 +32,7 @@ namespace BobMapper.Compiler
             output.AddRange(navMesh.navMeshOutput);
 
             output.AddRange(RoomGeometry());
-            output.AddRange(Zones());
+            output.AddRange(Zones(map.exitZones));
 
 
         }
@@ -102,16 +102,32 @@ namespace BobMapper.Compiler
             return roomGeometry;
         }
 
-        private List<byte> Zones()
+        private List<byte> Zones(List<ExitZone> exitZones)
         {
             //TODO: Figure out the purpose of this section
             List<byte> zones = new List<byte>();
-            zones.AddRange([0x0C, 0x00, 0x00, 0x00]); //SECTION HEAD
+            zones.AddRange([0x05, 0x00, 0x00, 0x00]); //SECTION HEAD
             byte[] zonesText = Encoding.ASCII.GetBytes("Zones");
             zones.AddRange(zonesText);
-            byte[] emptyContent = new byte[4]; 
-            zones.AddRange(BitConverter.GetBytes(emptyContent.Length));
-            zones.AddRange(emptyContent);
+            List<byte> byteContentZones = new List<byte>();
+            foreach (var zone in exitZones)
+            {
+                byte[] byteZone = new byte[10];
+                CompiledCoordinate coordinate1 = new(zone.Point1);
+                Array.Copy(coordinate1.CompiledBytes, 0, byteZone, 0, 4);
+                CompiledCoordinate coordinate2 = new(zone.Point3);
+                Array.Copy(coordinate2.CompiledBytes, 0, byteZone, 4, 4);
+                byteZone[8] = 0x03;
+                byteZone[9] = 0x00;
+                byteContentZones.AddRange(byteZone);
+
+            }
+            if(byteContentZones.Count == 0)
+            {
+                byteContentZones.AddRange([0x00, 0x00, 0x00, 0x00]);
+            }
+            zones.AddRange(BitConverter.GetBytes(Convert.ToInt32(byteContentZones.Count)));
+            zones.AddRange(byteContentZones);
             return zones;
         }
 

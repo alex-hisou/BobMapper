@@ -205,7 +205,7 @@ namespace BobMapper
         private void ExitAreasOpen(object sender, RoutedEventArgs e)
         {
             var vm = (EditorViewModel)DataContext;
-            ExitAreasWindow exitAreasWindow = new(vm.CurrentObjectCollection.CurrentExitZones);
+            ExitAreasWindow exitAreasWindow = new(vm.CurrentObjectCollection.CurrentExitZones, vm.CurrentLayerData);
             exitAreasWindow.Show();
         }
     }

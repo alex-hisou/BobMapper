@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BobMapper.Model
 {
-    internal class LayerData : INotifyPropertyChanged
+    public class LayerData : INotifyPropertyChanged
     {
 		private bool wallsVisible = true;
 
@@ -92,7 +92,7 @@ namespace BobMapper.Model
             }
         }
 
-        private bool exitZonesVisible = true;
+        private bool exitZonesVisible = false;
 
         public bool ExitZonesVisible
         {

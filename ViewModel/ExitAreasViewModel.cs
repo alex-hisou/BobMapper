@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BobMapper.Model;
 using BobMapper.Model.MapObjects;
 using CommunityToolkit.Mvvm.Input;
 
@@ -27,19 +28,13 @@ namespace BobMapper.ViewModel
             set { selectedId = value; }
         }
 
-        public ExitAreasViewModel(ObservableCollection<ExitZone> exitZones)
+        public LayerData LayerData { get; set; }
+
+        public ExitAreasViewModel(ObservableCollection<ExitZone> exitZones, LayerData layerData)
         {
             ExitZones = exitZones;
-        }
-
-        [RelayCommand]
-        public void Edit()
-        {
-            foreach (var exitZone in exitZones)
-            {
-                exitZone.Selected = false;
-            }
-            ExitZones[SelectedId].Selected = true;
+            LayerData = layerData;
+            LayerData.ExitZonesVisible = true;
         }
 
         [RelayCommand]
@@ -57,6 +52,12 @@ namespace BobMapper.ViewModel
             SnapCoordinate point4 = new(0, 1);
             ExitZone exitZone = new(point1, point2, point3, point4);
             ExitZones.Add(exitZone);
+        }
+
+        [RelayCommand]
+        public void CloseWindow()
+        {
+            LayerData.ExitZonesVisible = false;
         }
     }
 }

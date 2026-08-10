@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BobMapper.Model;
 using BobMapper.Model.MapObjects;
 using BobMapper.ViewModel;
 
@@ -22,12 +23,17 @@ namespace BobMapper.View
     /// </summary>
     public partial class ExitAreasWindow : Window
     {
-        public ExitAreasWindow(ObservableCollection<ExitZone> exitZones)
+        public ExitAreasWindow(ObservableCollection<ExitZone> exitZones, LayerData layerData)
         {
             InitializeComponent();
-            ExitAreasViewModel viewModel = new ExitAreasViewModel(exitZones);
+            ExitAreasViewModel viewModel = new ExitAreasViewModel(exitZones, layerData);
             DataContext = viewModel;
-            viewModel.ExitZones = exitZones;
+        }
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            Window window = (Window)sender;
+            window.Topmost = true;
         }
     }
 }

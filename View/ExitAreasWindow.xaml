@@ -5,9 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BobMapper.View" 
         xmlns:viewmodel="clr-namespace:BobMapper.ViewModel" 
+        xmlns:i="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
         d:DataContext="{d:DesignInstance Type=viewmodel:ExitAreasViewModel}"
         mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        Deactivated="Window_Deactivated"
         Title="Additional Exit Areas" Height="450" Width="650">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding CloseWindowCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="53*"/>
@@ -38,7 +46,6 @@
             </ListView.View>
         </ListView>
         <Button Content="New" Grid.Column="1" Grid.Row="3" Command="{Binding AddExitZoneCommand}"/>
-        <Button Content="Edit" Grid.Column="3" Grid.Row="3" Command="{Binding EditCommand}"/>
         <Button Content="Delete" Grid.Column="5" Grid.Row="3" Command="{Binding DeleteCommand}"/>
     </Grid>
 </Window>

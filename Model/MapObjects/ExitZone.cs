@@ -49,15 +49,6 @@ namespace BobMapper.Model.MapObjects
             set { point4 = value; }
         }
 
-        private bool selected = false;
-
-        [JsonIgnore]
-        public bool Selected
-        {
-            get { return selected; }
-            set { selected = value; OnPropertyChanged(); }
-        }
-
 
         [JsonConstructor]
         public ExitZone(SnapCoordinate point1, SnapCoordinate point2, SnapCoordinate point3, SnapCoordinate point4) 

@@ -176,10 +176,7 @@ namespace BobMapper.ViewModel
             {
                 return;
             }
-            if (File.Exists(compileFilePath))
-            {
-                File.Delete(compileFilePath);
-            }
+            File.Delete(compileFilePath);
             Compiler.Compiler compiler = new Compiler.Compiler();
             compiler.Compile(CurrentMap);
             File.WriteAllBytes(compileFilePath, Compiler.Compiler.output.ToArray());
