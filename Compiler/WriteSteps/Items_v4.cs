@@ -88,7 +88,10 @@ namespace BobMapper.Compiler.WriteSteps
                     QueuedLocator additionalLocator = new(QueuedLocator.LocatorTypes.PermanentLock, door.Point1);
                     Compiler.locatorQueue.Add(additionalLocator);
                 }
-                currentByteDoor[44] = Convert.ToByte(door.SlidingDoor);
+                if(door.SlidingDoor)
+                {
+                    currentByteDoor[44] = 0x01;
+                }
             }
             return byteDoors;
         }
