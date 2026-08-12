@@ -43,7 +43,15 @@ namespace BobMapper.Model
             }
         }
 
-        public bool IsNightTime { get; set; }
+        private bool isNightTime;
+
+        public bool IsNightTime
+        {
+            get { return isNightTime; }
+            set { isNightTime = value;
+                OnPropertyChanged();
+            }
+        }
 
         private double apartmentHeight;
 

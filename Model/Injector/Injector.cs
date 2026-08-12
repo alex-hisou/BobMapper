@@ -20,7 +20,7 @@ namespace BobMapper.Model.Injector
     {
         string levelsXmlPath;
         string levelNamesLocale;
-        string finalLevFileName;
+        string finalLevEntryFileName;
         string destination;
         string tempDestination;
         ZipArchiveEntry levelsXmlEntry;
@@ -28,13 +28,13 @@ namespace BobMapper.Model.Injector
 
         bool android;
 
-        internal Injector(string destination, string levFilePath, MapProperties mapProperties, bool buildApk, bool insertToSteam, Map.Chapter chapter, int level)
+        internal Injector(string destination, string tempLevFile, MapProperties mapProperties, bool buildApk, bool insertToSteam, Map.Chapter chapter, int level)
         {
             this.destination = destination;
-            InitializeInjection(levFilePath, mapProperties, buildApk, insertToSteam, chapter, level);
+            InitializeInjection(tempLevFile, mapProperties, buildApk, insertToSteam, chapter, level);
         }
 
-        private void InitializeInjection(string levFilePath, MapProperties mapProperties, bool buildApk, bool insertToSteam, Map.Chapter chapter, int level)
+        private void InitializeInjection(string tempLevFile, MapProperties mapProperties, bool buildApk, bool insertToSteam, Map.Chapter chapter, int level)
         {
             tempDestination = Path.GetTempFileName();
             File.Copy(destination, tempDestination, true);
@@ -50,8 +50,8 @@ namespace BobMapper.Model.Injector
                     break;
             }
             RetrieveFiles();
-            InsertLevel(levFilePath, mapProperties.Name);
-            FileStager fileStager = new FileStager(levelsXmlPath, levelNamesLocale, android, mapProperties, level, chapter, finalLevFileName);
+            InsertLevel(tempLevFile, mapProperties.Name);
+            FileStager fileStager = new FileStager(levelsXmlPath, levelNamesLocale, android, mapProperties, level, chapter, finalLevEntryFileName);
             if (android)
             {
                 AndroidWrite(buildApk);
@@ -102,37 +102,37 @@ namespace BobMapper.Model.Injector
                 levelNamesLocaleEntry.ExtractToFile(levelNamesLocale, overwrite: true);
                 if (levelNamesLocaleEntryBackup == null)
                 {
-                    archive.CreateEntryFromFile(levelNamesLocale, @"localization/en.lproj/LevelNames.locale.csv.backup");
+                    archive.CreateEntryFromFile(levelNamesLocale, @"localization/en.lproj/LevelNames.csv.backup");
                 }
             }
         }
 
-        private void InsertLevel(string levFilePath, string mapName)
+        private void InsertLevel(string tempLevFile, string mapName)
         {
             string filename = "BobMapper";
             mapName = Regex.Replace(mapName, @"[^A-Za-z0-9]", "");
-            finalLevFileName = filename + mapName;
+            finalLevEntryFileName = filename + mapName;
             using ZipArchive archive = ZipFile.Open(tempDestination, ZipArchiveMode.Update);
+            string noExtEntryDirectory = @"common/Levels/" + finalLevEntryFileName;
             if (android)
             {
-                string entryDirectory = @"Moddable Robbery Bob 1/assets/common/Levels/" + finalLevFileName;
-                ZipArchiveEntry levelEntry = archive.GetEntry(entryDirectory);
-                int failSafeIndex = 1;
-                string failSafeDirectory = entryDirectory;
-                while (levelEntry != null)
-                {
-                    failSafeDirectory = entryDirectory + failSafeIndex;
-                    levelEntry = archive.GetEntry(failSafeDirectory);
-                    failSafeIndex++;
-                }
-                if(failSafeIndex > 1)
-                {
-                    finalLevFileName += failSafeIndex;
-                }
-                failSafeDirectory += ".lev";
-                finalLevFileName += ".lev";
-                archive.CreateEntryFromFile(levFilePath, failSafeDirectory);
+                noExtEntryDirectory = @"Moddable Robbery Bob 1/assets/common/Levels/" + finalLevEntryFileName;
             }
+            string extEntryDirectory = noExtEntryDirectory + ".lev";
+            ZipArchiveEntry levelEntry = archive.GetEntry(extEntryDirectory);
+            int failSafeIndex = 1;
+            while (levelEntry != null)
+            {
+                failSafeIndex++;
+                extEntryDirectory = noExtEntryDirectory + failSafeIndex + ".lev";
+                levelEntry = archive.GetEntry(extEntryDirectory);
+            }
+            if (failSafeIndex > 1)
+            {
+                finalLevEntryFileName += failSafeIndex;
+            }
+            finalLevEntryFileName += ".lev";
+            archive.CreateEntryFromFile(tempLevFile, extEntryDirectory);
         }
 
         private void AndroidWrite(bool buildApk)

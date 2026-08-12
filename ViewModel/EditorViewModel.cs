@@ -169,6 +169,12 @@ namespace BobMapper.ViewModel
         [RelayCommand]
         internal void Compile()
         {
+            string msgboxtext = "This option has been depricated. New features, such as apartment levels, cannot be generated with it. Continue?";
+            var result = MessageBox.Show(msgboxtext, "Warning", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+            if (result != MessageBoxResult.Yes)
+            {
+                return;
+            }
             CurrentMap.floors = SaveFloor();
             FileDialogService fileDialogService = new FileDialogService();
             string compileFilePath = fileDialogService.SaveFileDialog("Compiled map (*.lev)|*.lev", ".lev");
@@ -176,10 +182,10 @@ namespace BobMapper.ViewModel
             {
                 return;
             }
-            File.Delete(compileFilePath);
             Compiler.Compiler compiler = new Compiler.Compiler();
             compiler.Compile(CurrentMap);
-            File.WriteAllBytes(compileFilePath, Compiler.Compiler.output.ToArray());
+            File.Delete(compileFilePath);
+            File.WriteAllBytes(compileFilePath, compiler.output.ToArray());
             Process.Start("explorer.exe", $"/select,\"{compileFilePath}\"");
         }
 
@@ -195,7 +201,8 @@ namespace BobMapper.ViewModel
                 string tempLevFile = Path.GetTempFileName();
                 Compiler.Compiler compiler = new();
                 compiler.Compile(CurrentMap);
-                File.WriteAllBytes(tempLevFile, Compiler.Compiler.output.ToArray());
+                File.Delete(tempLevFile);
+                File.WriteAllBytes(tempLevFile, compiler.output.ToArray());
                 string filter = "resources.dat|resources.dat|Moddable Robbery Bob 1.zip|Moddable Robbery Bob 1.zip|All files (*.*)|*.*";
                 FileDialogService fileDialogService = new FileDialogService();
                 string destination = fileDialogService.LoadFileDialog(filter);
@@ -222,7 +229,7 @@ namespace BobMapper.ViewModel
                 string tempLevFile = Path.GetTempFileName();
                 Compiler.Compiler compiler = new();
                 compiler.Compile(CurrentMap);
-                File.WriteAllBytes(tempLevFile, Compiler.Compiler.output.ToArray());
+                File.WriteAllBytes(tempLevFile, compiler.output.ToArray());
                 string destination = UserSettings.Instance.SteamResourcesDirectory;
                 Injector injector = new(destination, tempLevFile, CurrentMapProperties, false, true, e.Chapter, e.Level);
                 injectorPrompt.ConfirmationComplete -= injectionPromptComplete;

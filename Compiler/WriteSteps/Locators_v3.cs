@@ -12,9 +12,11 @@ namespace BobMapper.Compiler.WriteSteps
     {
         internal List<byte> locatorsOutput;
         private int currentLocatorId = 1;
+        Compiler currentCompiler;
 
-        internal Locators_v3(List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs)
+        internal Locators_v3(List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, Compiler compiler)
         {
+            currentCompiler = compiler;
             locatorsOutput = new List<byte>();
             locatorsOutput.AddRange([0x0B, 0x00, 0x00, 0x00]); // SECTION HEAD
             byte[] locators_v3 = Encoding.ASCII.GetBytes("Locators_v3");
@@ -48,12 +50,12 @@ namespace BobMapper.Compiler.WriteSteps
                 if (npc.AttachLoot)
                 {
                     QueuedLocator queueAttachLoot = new QueuedLocator(QueuedLocator.LocatorTypes.Loot, npc.Coordinates);
-                    Compiler.locatorQueue.Add(queueAttachLoot);
+                    currentCompiler.locatorQueue.Add(queueAttachLoot);
                 }
                 if (npc.AttachMainLoot)
                 {
                     QueuedLocator queueAttachMainLoot = new QueuedLocator(QueuedLocator.LocatorTypes.MainLoot, npc.Coordinates);
-                    Compiler.locatorQueue.Add(queueAttachMainLoot);
+                    currentCompiler.locatorQueue.Add(queueAttachMainLoot);
                 }
                 byteNPCs.AddRange(currentByteNPC);
                 currentLocatorId++;
@@ -120,9 +122,9 @@ namespace BobMapper.Compiler.WriteSteps
         private List<byte> AddLocatorQueueAsBytes()
         {
             List<byte> byteLocators = new List<byte>();
-            for (int i = 0; i < Compiler.locatorQueue.Count; i++)
+            for (int i = 0; i < currentCompiler.locatorQueue.Count; i++)
             {
-                QueuedLocator locator = Compiler.locatorQueue[i];
+                QueuedLocator locator = currentCompiler.locatorQueue[i];
                 byte[] currentByteLocator = new byte[76];
                 FloatCoordinate locatorCompiledCoordinate = new(locator.Coordinates, locator.Rotation, false);
                 Array.Copy(locatorCompiledCoordinate.CompiledBytes, 0, currentByteLocator, 0, 16);

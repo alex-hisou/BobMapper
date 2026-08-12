@@ -40,9 +40,10 @@ namespace BobMapper.Model.Injector
                 }
                 else 
                 {
-                    targetLevel.Background = mapProperties.BackgroundImage;
+                    string steamBackground = steamBackgrounds[mapProperties.BackgroundImage];
+                    targetLevel.Background = steamBackground;
                 }
-                targetLevel.BackgroundHeight = mapProperties.Height;
+                targetLevel.BackgroundHeight = (float)mapProperties.ApartmentHeight;
             }
             else
             {
@@ -82,7 +83,7 @@ namespace BobMapper.Model.Injector
             }
             csvWriter.Flush();
             reader.Dispose();
-            writer.Dispose(); //just in case to prevent conflicts
+            writer.Dispose();
             char[] unparsedCsv = File.ReadAllText(temporaryLocale).ToCharArray();
             //WORST SOLUTION OF ALL TIME
             bool evenComma = false;
@@ -104,9 +105,16 @@ namespace BobMapper.Model.Injector
 
         private Dictionary<string, string> androidBackgrounds = new Dictionary<string, string>()
         {
-            {"LevelGfx/Chapter2/BackgroundDownTown1.png" ,"BackgroundDownTown1"},
-            {"LevelGfx/Chapter2/BackgroundDownTown1_2.png", "BackgroundDownTown1_2"},
-            {"LevelGfx/Chapter2/BackgroundDownTown2.png", "BackgroundDownTown2"}
+            {@"/Resources/Backgrounds/BackgroundDownTown1.png" ,"BackgroundDownTown1"},
+            {@"/Resources/Backgrounds/BackgroundDownTown1_2.png", "BackgroundDownTown1_2"},
+            {@"/Resources/Backgrounds/BackgroundDownTown2.png", "BackgroundDownTown2"}
+        };
+
+        private Dictionary<string, string> steamBackgrounds = new Dictionary<string, string>()
+        {
+            {@"/Resources/Backgrounds/BackgroundDownTown1.png", "LevelGfx/Chapter2/BackgroundDownTown1.png" },
+            {@"/Resources/Backgrounds/BackgroundDownTown1_2.png", "LevelGfx/Chapter2/BackgroundDownTown1_2.png" },
+            {@"/Resources/Backgrounds/BackgroundDownTown2.png", "LevelGfx/Chapter2/BackgroundDownTown2.png" },
         };
 
         [XmlRoot]

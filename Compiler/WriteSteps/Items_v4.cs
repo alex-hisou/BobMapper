@@ -11,8 +11,10 @@ namespace BobMapper.Compiler.WriteSteps
     internal class Items_v4
     {
         internal List<byte> itemsOutput;
-        internal Items_v4(List<Wall> walls, List<Door> doors, List<Prop> props, List<Loot> loots)
+        internal Compiler currentCompiler;
+        internal Items_v4(List<Wall> walls, List<Door> doors, List<Prop> props, List<Loot> loots, Compiler compiler)
         {
+            currentCompiler = compiler;
             itemsOutput = new List<byte>();
             itemsOutput.AddRange([0x08, 0x00, 0x00, 0x00]); //SECTION HEAD
             byte[] items_v4 = Encoding.ASCII.GetBytes("Items_v2");
@@ -77,18 +79,21 @@ namespace BobMapper.Compiler.WriteSteps
                 CompiledCoordinate compiledPoint2 = new(door.Point2);
                 Array.Copy(compiledPoint2.CompiledBytes, 0, currentByteDoor, 8, 4);
                 Encoding.ASCII.GetBytes(door.InternalTexture1, 0, door.InternalTexture1.Length, currentByteDoor, 12);
-                byteDoors.AddRange(currentByteDoor);
                 if (door.Locked)
                 {
                     QueuedLocator additionalLocator = new(QueuedLocator.LocatorTypes.Lock, door.Point1);
-                    Compiler.locatorQueue.Add(additionalLocator);
+                    currentCompiler.locatorQueue.Add(additionalLocator);
                 }
                 if (door.PermLocked)
                 {
                     QueuedLocator additionalLocator = new(QueuedLocator.LocatorTypes.PermanentLock, door.Point1);
-                    Compiler.locatorQueue.Add(additionalLocator);
+                    currentCompiler.locatorQueue.Add(additionalLocator);
                 }
-                currentByteDoor[44] = Convert.ToByte(door.SlidingDoor);
+                if(door.SlidingDoor)
+                {
+                    currentByteDoor[44] = 0x01;
+                }
+                byteDoors.AddRange(currentByteDoor);
             }
             return byteDoors;
         }
@@ -107,12 +112,12 @@ namespace BobMapper.Compiler.WriteSteps
                 if(prop.PropTexture == "/Resources/PropTextures/Teleporter.png")
                 {
                     QueuedLocator queuedLocator = new(QueuedLocator.LocatorTypes.Teleporter, prop.Coordinates);
-                    Compiler.locatorQueue.Add(queuedLocator);
+                    currentCompiler.locatorQueue.Add(queuedLocator);
                 }
                 if(prop.PropTexture == "/Resources/PropTextures/TelePad.png")
                 {
                     QueuedLocator queuedLocator = new(QueuedLocator.LocatorTypes.Teleporter, prop.Coordinates);
-                    Compiler.locatorQueue.Add(queuedLocator);
+                    currentCompiler.locatorQueue.Add(queuedLocator);
                 }
             }
             return byteProps;
