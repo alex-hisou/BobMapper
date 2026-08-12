@@ -184,11 +184,8 @@ namespace BobMapper.ViewModel
             }
             Compiler.Compiler compiler = new Compiler.Compiler();
             compiler.Compile(CurrentMap);
-            if (new FileInfo(compileFilePath).Length > 0)
-            {
-                File.Delete(compileFilePath);
-            }
-            File.WriteAllBytes(compileFilePath, Compiler.Compiler.output.ToArray());
+            File.Delete(compileFilePath);
+            File.WriteAllBytes(compileFilePath, compiler.output.ToArray());
             Process.Start("explorer.exe", $"/select,\"{compileFilePath}\"");
         }
 
@@ -204,11 +201,8 @@ namespace BobMapper.ViewModel
                 string tempLevFile = Path.GetTempFileName();
                 Compiler.Compiler compiler = new();
                 compiler.Compile(CurrentMap);
-                if (new FileInfo(tempLevFile).Length > 0)
-                {
-                    File.Delete(tempLevFile);
-                }
-                File.WriteAllBytes(tempLevFile, Compiler.Compiler.output.ToArray());
+                File.Delete(tempLevFile);
+                File.WriteAllBytes(tempLevFile, compiler.output.ToArray());
                 string filter = "resources.dat|resources.dat|Moddable Robbery Bob 1.zip|Moddable Robbery Bob 1.zip|All files (*.*)|*.*";
                 FileDialogService fileDialogService = new FileDialogService();
                 string destination = fileDialogService.LoadFileDialog(filter);
@@ -235,7 +229,7 @@ namespace BobMapper.ViewModel
                 string tempLevFile = Path.GetTempFileName();
                 Compiler.Compiler compiler = new();
                 compiler.Compile(CurrentMap);
-                File.WriteAllBytes(tempLevFile, Compiler.Compiler.output.ToArray());
+                File.WriteAllBytes(tempLevFile, compiler.output.ToArray());
                 string destination = UserSettings.Instance.SteamResourcesDirectory;
                 Injector injector = new(destination, tempLevFile, CurrentMapProperties, false, true, e.Chapter, e.Level);
                 injectorPrompt.ConfirmationComplete -= injectionPromptComplete;

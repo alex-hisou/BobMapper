@@ -123,9 +123,9 @@ namespace BobMapper.Model.Injector
             int failSafeIndex = 1;
             while (levelEntry != null)
             {
+                failSafeIndex++;
                 extEntryDirectory = noExtEntryDirectory + failSafeIndex + ".lev";
                 levelEntry = archive.GetEntry(extEntryDirectory);
-                failSafeIndex++;
             }
             if (failSafeIndex > 1)
             {

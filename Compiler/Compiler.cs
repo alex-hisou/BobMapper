@@ -11,8 +11,8 @@ namespace BobMapper.Compiler
 {
     internal class Compiler
     {
-        internal static List<byte> output = new List<byte>();
-        internal static List<QueuedLocator> locatorQueue = new List<QueuedLocator>();
+        internal List<byte> output = new List<byte>();
+        internal List<QueuedLocator> locatorQueue = new List<QueuedLocator>();
         internal void Compile(Map map)
         {
             byte[] fileHeader = [0x01, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00];
@@ -20,12 +20,12 @@ namespace BobMapper.Compiler
             //output.AddRange(CablesAsBytes());
             output.AddRange(FloorAsBytes(map.floors));
 
-            Items_v4 items_V4 = new(map.walls, map.doors, map.props, map.loots);
+            Items_v4 items_V4 = new(map.walls, map.doors, map.props, map.loots, this);
             output.AddRange(items_V4.itemsOutput);
 
             output.AddRange(Level_v2(map.mapProperties.Width / SnapCoordinate.FloorSize, map.mapProperties.Height / SnapCoordinate.FloorSize, map.mapProperties.Tileset));
 
-            Locators_v3 locators_V3 = new(map.npcs, map.pathPoints, map.miscs);
+            Locators_v3 locators_V3 = new(map.npcs, map.pathPoints, map.miscs, this);
             output.AddRange(locators_V3.locatorsOutput);
 
             NavMesh navMesh = new NavMesh(map.mapProperties.Width / SnapCoordinate.FloorSize, map.mapProperties.Height / SnapCoordinate.FloorSize, 
