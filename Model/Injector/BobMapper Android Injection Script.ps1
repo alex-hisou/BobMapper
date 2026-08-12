@@ -21,7 +21,8 @@ if($adbconfirm -eq "y")
     $adblocation = Join-Path -Path $toolsPath -ChildPath "platform-tools-latest-windows\platform-tools"
     Set-Location -Path $adblocation
     .\adb install -r -d $signedapk
-    Read-Host "If you see no errors above, the script ran successfully. Otherwise, consult developer.android.com/tools/adb. Press any key to exit."
+    Write-Host "If you see no errors above, the script ran successfully. Otherwise, consult developer.android.com/tools/adb. Press any key to exit."
+    $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
     exit 0
 }
 else {

@@ -208,5 +208,15 @@ namespace BobMapper
             ExitAreasWindow exitAreasWindow = new(vm.CurrentObjectCollection.CurrentExitZones, vm.CurrentLayerData);
             exitAreasWindow.Show();
         }
+
+        private void DownloadZip(object sender, RoutedEventArgs e)
+        {
+            Uri uri = new("https://drive.google.com/uc?export=download&id=1FitSAD96k9nVp6HoTE7XwP0A5u42kiBN");
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = uri.AbsoluteUri,
+                UseShellExecute = true
+            });
+        }
     }
 }

@@ -15,6 +15,8 @@ try {
 }
 catch {
     Write-Host "resources.dat is in use. Make sure that Robbery Bob or any other process using the file is closed"
+    Write-Host "Press any key to close this window"
+    $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
     exit 1
 }
 
