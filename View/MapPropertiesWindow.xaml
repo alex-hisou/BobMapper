@@ -44,6 +44,14 @@
             <CheckBox.RenderTransform>
                 <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
             </CheckBox.RenderTransform>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Checked">
+                    <i:InvokeCommandAction Command="{Binding InvokeIsApartmentEventCommand}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Unchecked">
+                    <i:InvokeCommandAction Command="{Binding InvokeIsApartmentEventCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </CheckBox>
         <CheckBox Content="Night level" IsChecked="{Binding CurrentMapProperties.IsNightTime}" Grid.Column="1" Grid.Row="6">
             <CheckBox.RenderTransform>
@@ -54,7 +62,7 @@
         <ComboBox ItemsSource="{Binding TilesetEnum}" SelectedItem="{Binding CurrentMapProperties.Tileset}" Grid.Column="3" Grid.Row="6">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding ChangeTilesetCommand}"/>
+                    <i:InvokeCommandAction Command="{Binding InvokeChangeTilesetCommand}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ComboBox>

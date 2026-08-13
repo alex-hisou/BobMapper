@@ -44,7 +44,7 @@ namespace BobMapper.View
         {
             viewModel.CreateMap();
             this.Close();
-            MapCreationComplete.Invoke(this, EventArgs.Empty);
+            MapCreationComplete?.Invoke(this, EventArgs.Empty);
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)

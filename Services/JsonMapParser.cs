@@ -50,7 +50,8 @@ namespace BobMapper.Services
             root.Remove("tileset");
             root.Remove("levelNumber");
             root.Remove("levelChapter");
-            root["mapProperties"] = JsonSerializer.SerializeToNode(new MapProperties(width, height, (Tilesets)tileset), jsonSerializerOptions);
+            MapProperties mapProperties = new(width, height, (Tilesets)tileset, "Unnamed Map");
+            root["mapProperties"] = JsonSerializer.SerializeToNode(mapProperties, jsonSerializerOptions);
             return root.ToJsonString(jsonSerializerOptions);
         }
     }

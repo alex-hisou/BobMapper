@@ -45,7 +45,7 @@ namespace BobMapper.Compiler.WriteSteps
                 Array.Copy(npcCompiledCoordinate.CompiledBytes, 0, currentByteNPC, 0, 16);
                 currentByteNPC[16] = 0x01; //NPC Header
                 Array.Copy(BitConverter.GetBytes(currentLocatorId), 0, currentByteNPC, 20, 4);
-                Array.Copy(BitConverter.GetBytes(npc.FirstPathPointId), 0, currentByteNPC, 56, 4);
+                Array.Copy(BitConverter.GetBytes(1), 0, currentByteNPC, 56, 4);
                 Array.Copy(BitConverter.GetBytes((int)npc.Type), 0, currentByteNPC, 60, 4);
                 if (npc.AttachLoot)
                 {

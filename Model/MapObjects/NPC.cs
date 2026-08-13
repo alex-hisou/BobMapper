@@ -33,18 +33,6 @@ namespace BobMapper.Model.MapObjects
                 
             }
         }
-
-        private int firstPathPointId;
-
-        public int FirstPathPointId
-        {
-            get { return firstPathPointId; }
-            set { firstPathPointId = value;
-                
-            }
-        }
-
-
         public event PropertyChangedEventHandler PropertyChanged;
         
 
@@ -78,7 +66,7 @@ namespace BobMapper.Model.MapObjects
             }
         }
 
-        public NPC(SnapCoordinate coordinates, NPCType type, float rotation, bool attachLoot, bool attachMainLoot, int firstPathPointId)
+        public NPC(SnapCoordinate coordinates, NPCType type, float rotation, bool attachLoot, bool attachMainLoot)
         {
             Coordinates = coordinates;
             Type = type;
@@ -86,7 +74,6 @@ namespace BobMapper.Model.MapObjects
             Rotation = rotation;
             AttachLoot = attachLoot;
             AttachMainLoot = attachMainLoot;
-            FirstPathPointId = firstPathPointId;
         }
 
         public void DeleteObject()

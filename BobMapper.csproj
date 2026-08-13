@@ -20,9 +20,11 @@
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <StartupObject>BobMapper.App</StartupObject>
-    <AssemblyVersion>0.1.1</AssemblyVersion>
+    <AssemblyVersion>0.2.0</AssemblyVersion>
 	<UseWindowsForms>false</UseWindowsForms>
 	<ApplicationIcon>Resources\UI\AppIcon.ico</ApplicationIcon>
+	<RepositoryUrl>https://github.com/alex-hisou/BobMapper.git</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Resources\Textures\**" />
@@ -1299,6 +1301,7 @@
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.3" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
     <PackageReference Include="NetTopologySuite" Version="2.6.0" />
+    <PackageReference Include="SharpZipLib" Version="1.4.2" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
@@ -1904,7 +1907,9 @@
     <Resource Include="Resources\LootTextures\Loot_DogFood.png" />
     <Resource Include="Resources\LootTextures\Loot_DogTreat.png" />
     <Resource Include="Resources\LootTextures\loot_donught.png" />
-    <Resource Include="Resources\LootTextures\Loot_Donut.png" />
+    <Resource Include="Resources\LootTextures\Loot_Donut.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\LootTextures\Loot_Drawing.png" />
     <Resource Include="Resources\LootTextures\Loot_DustyComic.png" />
     <Resource Include="Resources\LootTextures\Loot_EmptyWallet.png" />
@@ -2973,6 +2978,30 @@
     <None Update="Model\Injector\apktool_3.0.3.jar">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Model\Injector\bkcrack\bkcrack.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\bkcrack\example\secrets.zip">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\bkcrack\example\tutorial.md">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\bkcrack\license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\bkcrack\readme.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\bkcrack\tools\deflate.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\bkcrack\tools\inflate.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\BobMapper Decrypt Steam Resources.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Model\Injector\platform-tools-latest-windows\platform-tools\adb.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -3016,6 +3045,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Model\Injector\uber-apk-signer-1.3.0.jar">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Model\Injector\xmlHeader.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Properties\Settings.settings">

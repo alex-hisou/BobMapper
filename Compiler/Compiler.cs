@@ -86,7 +86,12 @@ namespace BobMapper.Compiler
             level_v2[12] = 0x14; //buffer length
             Array.Copy(BitConverter.GetBytes(width), 0, level_v2, 16, 4);
             Array.Copy(BitConverter.GetBytes(height), 0, level_v2, 20, 4);
-            Array.Copy(BitConverter.GetBytes((int)tileset), 0, level_v2, 24, 4);
+            int ingametilesetindex = (int)tileset;
+            if (tileset == Tilesets.Winter)
+                ingametilesetindex = 5;
+            if (tileset == Tilesets.Camp)
+                ingametilesetindex = 7;
+            Array.Copy(BitConverter.GetBytes(ingametilesetindex), 0, level_v2, 24, 4);
             level_v2[32] = 0x01;
             return level_v2;
         }

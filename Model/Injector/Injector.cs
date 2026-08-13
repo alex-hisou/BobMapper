@@ -9,8 +9,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using BobMapper.Services;
+using System.Windows.Threading;
 using BobMapper.Data;
+using BobMapper.Services;
+using BobMapper.View;
+using ICSharpCode.SharpZipLib.Zip;
 using NetTopologySuite.Utilities;
 using static BobMapper.Model.Injector.FileStager;
 
@@ -25,7 +28,6 @@ namespace BobMapper.Model.Injector
         string tempDestination;
         ZipArchiveEntry levelsXmlEntry;
         ZipArchiveEntry levelNamesLocaleEntry;
-
         bool android;
 
         internal Injector(string destination, string tempLevFile, MapProperties mapProperties, bool buildApk, bool insertToSteam, Map.Chapter chapter, int level)
@@ -49,6 +51,7 @@ namespace BobMapper.Model.Injector
                     android = true;
                     break;
             }
+            CheckAndDecrypt();
             RetrieveFiles();
             InsertLevel(tempLevFile, mapProperties.Name);
             FileStager fileStager = new FileStager(levelsXmlPath, levelNamesLocale, android, mapProperties, level, chapter, finalLevEntryFileName);
@@ -62,9 +65,39 @@ namespace BobMapper.Model.Injector
             }
         }
 
+        private void CheckAndDecrypt()
+        {
+            //Using dependency because dotnet library cannot check if the file is encrypted.
+            using (ICSharpCode.SharpZipLib.Zip.ZipFile zip = new ICSharpCode.SharpZipLib.Zip.ZipFile(tempDestination))
+            {
+                foreach (ZipEntry entry in zip)
+                {
+                    if (!entry.IsCrypted)
+                    {
+                        return;
+                    }
+                    else break;
+                }
+            }
+            string currentDir = Directory.GetCurrentDirectory();
+            currentDir = Path.Combine(currentDir, @"Model\Injector");
+            string bkCrackPath = Path.Combine(currentDir, @"bkcrack");
+            string xmlHeader = Path.Combine(currentDir, @"xmlHeader.txt");
+            string script = Path.Combine(currentDir, @"BobMapper Decrypt Steam Resources.ps1");
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.FileName = "powershell.exe";
+            info.Arguments = $"-NoProfile -ExecutionPolicy Bypass -File \"{script}\" -moddedPath \"{tempDestination}\" -bkCrackPath \"{bkCrackPath}\" -xmlHeader \"{xmlHeader}\"";
+            info.UseShellExecute = true;
+            info.Verb = "runas";
+            using (Process process = Process.Start(info))
+            {
+                process.WaitForExit();
+            }
+        }
+
         private void RetrieveFiles()
         {
-            using ZipArchive archive = ZipFile.Open(tempDestination, ZipArchiveMode.Update);
+            using ZipArchive archive = System.IO.Compression.ZipFile.Open(tempDestination, ZipArchiveMode.Update);
             ZipArchiveEntry levelsXmlEntryBackup;
             ZipArchiveEntry levelNamesLocaleEntryBackup;
             if (android)
@@ -112,7 +145,7 @@ namespace BobMapper.Model.Injector
             string filename = "BobMapper";
             mapName = Regex.Replace(mapName, @"[^A-Za-z0-9]", "");
             finalLevEntryFileName = filename + mapName;
-            using ZipArchive archive = ZipFile.Open(tempDestination, ZipArchiveMode.Update);
+            using ZipArchive archive = System.IO.Compression.ZipFile.Open(tempDestination, ZipArchiveMode.Update);
             string noExtEntryDirectory = @"common/Levels/" + finalLevEntryFileName;
             if (android)
             {
@@ -137,7 +170,7 @@ namespace BobMapper.Model.Injector
 
         private void AndroidWrite(bool buildApk)
         {
-            using (ZipArchive zipArchive = ZipFile.Open(tempDestination, ZipArchiveMode.Update))
+            using (ZipArchive zipArchive = System.IO.Compression.ZipFile.Open(tempDestination, ZipArchiveMode.Update))
             {
                 zipArchive.GetEntry(levelsXmlEntry.FullName).Delete();
                 zipArchive.GetEntry(levelNamesLocaleEntry.FullName).Delete();
@@ -153,7 +186,7 @@ namespace BobMapper.Model.Injector
             string unzippedApk = Path.Combine(unzippedApkParent, "Moddable Robbery Bob 1");
             if(!Directory.Exists(unzippedApk))
             {
-                using (ZipArchive unzipArchive = ZipFile.Open(destination, ZipArchiveMode.Read))
+                using (ZipArchive unzipArchive = System.IO.Compression.ZipFile.Open(destination, ZipArchiveMode.Read))
                 {
                     unzipArchive.ExtractToDirectory(unzippedApkParent);
                 }
@@ -167,12 +200,15 @@ namespace BobMapper.Model.Injector
             info.FileName = "powershell.exe";
             info.Arguments = $"-NoProfile -ExecutionPolicy Bypass -File \"{currentDir}\" -moddedPath \"{unzippedApk}\" -toolsPath \"{toolsDir}\"";
             info.UseShellExecute = true;
-            Process.Start(info);
+            using (Process process = Process.Start(info))
+            {
+                process.WaitForExit();
+            }
         }
 
         private void SteamWrite(bool insertToSteam)
         {
-            using (ZipArchive zipArchive = ZipFile.Open(tempDestination, ZipArchiveMode.Update))
+            using (ZipArchive zipArchive = System.IO.Compression.ZipFile.Open(tempDestination, ZipArchiveMode.Update))
             {
                 zipArchive.GetEntry(levelsXmlEntry.FullName).Delete();
                 zipArchive.GetEntry(levelNamesLocaleEntry.FullName).Delete();
@@ -191,7 +227,10 @@ namespace BobMapper.Model.Injector
             info.Arguments = $"-NoProfile -ExecutionPolicy Bypass -File \"{currentDir}\" -moddedPath \"{tempDestination}\" -destination \"{destination}\"";
             info.UseShellExecute = true;
             info.Verb = "runas";
-            Process.Start(info);
+            using (Process process = Process.Start(info))
+            {
+                process.WaitForExit();
+            }
         }
     }
 }

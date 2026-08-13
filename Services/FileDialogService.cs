@@ -9,12 +9,13 @@ namespace BobMapper.Services
 {
     public class FileDialogService
     {
-        public string SaveFileDialog(string filter, string defaultExt)
+        public string SaveFileDialog(string filter, string defaultExt, string defaultName)
         {
             SaveFileDialog dialog = new SaveFileDialog
             {
                 Filter = filter,
-                DefaultExt = defaultExt
+                DefaultExt = defaultExt,
+                FileName = defaultName
             };
             return dialog.ShowDialog() == true ? dialog.FileName : null;
         }

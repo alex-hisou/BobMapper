@@ -25,9 +25,8 @@ namespace BobMapper.Model
         public Floor[][] floors;
         public MapProperties mapProperties;
 
-        public Map(int sizeX, int sizeY, Tilesets tileset)
+        public Map(MapProperties mapProperties)
         {
-            MapProperties mapProperties = new(sizeX, sizeY, tileset);
             this.mapProperties = mapProperties;
             floors = new Floor[mapProperties.Width][];
             //System.Text.Json doesnt support multi-d arrays, which is why we do this terribleness

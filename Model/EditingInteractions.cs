@@ -87,7 +87,7 @@ namespace BobMapper.Model
                     break;
                 case Tools.AddNPC:
                     SnapCoordinate snappedNPCPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    NPC npc = new NPC(snappedNPCPlacementPos, NPC.NPCType.BulkyCop, 0, false, false, 0);
+                    NPC npc = new NPC(snappedNPCPlacementPos, NPC.NPCType.BulkyCop, 0, false, false);
                     CurrentObjectCollection.CurrentNPCs.Add(npc);
                     if (UserSettings.Instance.AutoSelect)
                     {

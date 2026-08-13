@@ -43,7 +43,7 @@ namespace BobMapper.Model
         public TextureType SelectedTextureType
         {
             get { return selectedTextureType; }
-            set { selectedTextureType = value; OnPropertyChanged(); GetFilteredTextureSet(value, currentTileSet); }
+            set { selectedTextureType = value; OnPropertyChanged(); GetFilteredTextureSet(value, CurrentTileSet); }
         }
 
 
@@ -157,11 +157,11 @@ namespace BobMapper.Model
         }
 
 
-        private Tilesets currentTileSet;
+        public Tilesets CurrentTileSet { get; set; }
 
         public void GetFilteredTextureSet(TextureType textureType, Tilesets tileset)
         {
-            currentTileSet = tileset;
+            CurrentTileSet = tileset;
             List<string> temporaryTextureSet = new List<string>();
             SqliteConnection textureManifestConnection = new("Data Source=Data/TextureManifest.sqlite");
             textureManifestConnection.Open();

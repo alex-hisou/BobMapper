@@ -43,6 +43,7 @@ namespace BobMapper.ViewModel
             CurrentMap = JsonMapParse.LoadData(filename);
             CurrentMapProperties = CurrentMap.mapProperties;
             CurrentMapProperties.TilesetChanged += ChangeTileset;
+            CurrentMapProperties.IsApartmentChanged += UpdateFloorOpacities;
             CurrentViewportData = new ViewportData
             {
                 ViewOffsetX = CurrentMapProperties.Width / -2,
@@ -71,12 +72,13 @@ namespace BobMapper.ViewModel
             };
             CurrentEditingInteractions = new(CurrentObjectCollection, CurrentSelections, CurrentMapProperties);
             CurrentEditingInteractions.AttachAllPathPointHandlers();
-            CurrentSelections.GetFilteredTextureSet(TextureType.All, CurrentMapProperties.Tileset);
+            CurrentSelections.CurrentTileSet = CurrentMapProperties.Tileset;
             CurrentSelections.SelectedTextureType = TextureType.All;
         }
 
         private void ChangeTileset(object sender, EventArgs e)
         {
+            CurrentSelections.CurrentTileSet = CurrentMapProperties.Tileset;
             CurrentSelections.GetFilteredTextureSet(CurrentSelections.SelectedTextureType, CurrentMapProperties.Tileset);
             foreach(Wall wall in CurrentObjectCollection.CurrentWalls)
             {
@@ -104,6 +106,17 @@ namespace BobMapper.ViewModel
             }
         }
 
+        public void UpdateFloorOpacities(object sender, EventArgs e)
+        {
+            foreach(var floorRow in CurrentObjectCollection.CurrentFloors)
+            {
+                foreach (var floor in floorRow)
+                {
+                    floor.SetOpacity(CurrentMapProperties.IsApartment);
+                }
+            }
+        }
+
         [RelayCommand]
         public void SelectTool(Tools tool)
         {
@@ -112,6 +125,24 @@ namespace BobMapper.ViewModel
                 CurrentSelections.SelectedTool = tool;
             }
             else { CurrentSelections.SelectedTool = Tools.None;  }
+            switch (CurrentSelections.SelectedTool)
+            {
+                case Tools.AddWall:
+                    CurrentSelections.SelectedTextureType = TextureType.Wall;
+                    break;
+                case Tools.AddProp:
+                    CurrentSelections.SelectedTextureType = TextureType.Prop;
+                    break;
+                case Tools.AddLoot:
+                    CurrentSelections.SelectedTextureType = TextureType.Loot;
+                    break;
+                case Tools.ChangeFloor:
+                    CurrentSelections.SelectedTextureType = TextureType.Floor;
+                    break;
+                case Tools.AddDoor:
+                    CurrentSelections.SelectedTextureType = TextureType.Door;
+                    break;
+            }
         }
 
         public void ClickEmpty(Coordinate placementPos)
@@ -145,7 +176,8 @@ namespace BobMapper.ViewModel
             if(saveNewFile)
             {
                 FileDialogService fileDialogService = new FileDialogService();
-                FileName = fileDialogService.SaveFileDialog("BobMapper Map File (.bobmap)|*.bobmap", ".bobmap");
+                FileName = fileDialogService.SaveFileDialog("BobMapper Map File (.bobmap)|*.bobmap",
+                    ".bobmap", $"{CurrentMap.mapProperties.Name}.bobmap");
             }
             JsonMapParse.SaveData(CurrentMap, FileName);
         }
@@ -177,7 +209,7 @@ namespace BobMapper.ViewModel
             }
             CurrentMap.floors = SaveFloor();
             FileDialogService fileDialogService = new FileDialogService();
-            string compileFilePath = fileDialogService.SaveFileDialog("Compiled map (*.lev)|*.lev", ".lev");
+            string compileFilePath = fileDialogService.SaveFileDialog("Compiled map (*.lev)|*.lev", ".lev", $"{CurrentMapProperties.Name}.lev");
             if (string.IsNullOrEmpty(compileFilePath))
             {
                 return;
@@ -204,6 +236,10 @@ namespace BobMapper.ViewModel
                 File.Delete(tempLevFile);
                 File.WriteAllBytes(tempLevFile, compiler.output.ToArray());
                 string filter = "resources.dat|resources.dat|Moddable Robbery Bob 1.zip|Moddable Robbery Bob 1.zip|All files (*.*)|*.*";
+                if(buildApk)
+                {
+                    filter = "Moddable Robbery Bob 1.zip|Moddable Robbery Bob 1.zip|All files (*.*)|*.*";
+                }
                 FileDialogService fileDialogService = new FileDialogService();
                 string destination = fileDialogService.LoadFileDialog(filter);
                 Injector injector = new(destination, tempLevFile, CurrentMapProperties, buildApk, false, e.Chapter, e.Level);
