@@ -20,9 +20,11 @@
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <StartupObject>BobMapper.App</StartupObject>
-    <AssemblyVersion>0.1.1</AssemblyVersion>
+    <AssemblyVersion>0.2.0</AssemblyVersion>
 	<UseWindowsForms>false</UseWindowsForms>
 	<ApplicationIcon>Resources\UI\AppIcon.ico</ApplicationIcon>
+	<RepositoryUrl>https://github.com/alex-hisou/BobMapper.git</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Resources\Textures\**" />
@@ -1905,7 +1907,9 @@
     <Resource Include="Resources\LootTextures\Loot_DogFood.png" />
     <Resource Include="Resources\LootTextures\Loot_DogTreat.png" />
     <Resource Include="Resources\LootTextures\loot_donught.png" />
-    <Resource Include="Resources\LootTextures\Loot_Donut.png" />
+    <Resource Include="Resources\LootTextures\Loot_Donut.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\LootTextures\Loot_Drawing.png" />
     <Resource Include="Resources\LootTextures\Loot_DustyComic.png" />
     <Resource Include="Resources\LootTextures\Loot_EmptyWallet.png" />

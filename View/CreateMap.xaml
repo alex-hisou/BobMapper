@@ -13,28 +13,33 @@
             <RowDefinition Height="30*"/>
             <RowDefinition Height="44*"/>
             <RowDefinition Height="36*"/>
-            <RowDefinition Height="62*"/>
+            <RowDefinition Height="44*"/>
+            <RowDefinition Height="18*"/>
             <RowDefinition Height="42*"/>
             <RowDefinition Height="29*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="59*"/>
-            <ColumnDefinition Width="436*"/>
-            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="109*"/>
+            <ColumnDefinition Width="101*"/>
+            <ColumnDefinition Width="81*"/>
+            <ColumnDefinition Width="151*"/>
+            <ColumnDefinition Width="41*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Width" HorizontalAlignment="Left" Margin="0,3,0,0" VerticalAlignment="Top" Height="31" Width="123" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2"/>
-        <Button Content="Back" Grid.Column="1" RenderTransformOrigin="0.462,-3.341" Click="Button_Click" Grid.Row="5" Height="36" VerticalAlignment="Center" HorizontalAlignment="Left" Width="101"/>
-        <Button Content="Create" Margin="347,3,0,2" Grid.Column="1" Grid.Row="5" Click="Button_Click_1"/>
-        <TextBox Name="WidthBox" Grid.Column="1" Margin="10,0,371,0" TextWrapping="Wrap" 
-                 Text="{Binding SizeX, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Grid.Row="2" Height="24"/>
-        <Label Content="Height" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Width="123" Grid.Column="1" Grid.Row="3"
+        <Label Content="Width" Grid.Column="1" Grid.Row="1"/>
+        <Button Content="Back" Grid.Column="1" Click="Button_Click" Grid.Row="6"/>
+        <Button Content="Create" Grid.Column="4" Grid.Row="6" Click="Button_Click_1"/>
+        <TextBox Name="WidthBox" Grid.Column="1" 
+                 Text="{Binding SizeX, UpdateSourceTrigger=LostFocus}" Grid.Row="2" />
+        <Label Content="Height" Grid.Column="1" Grid.Row="3"
                PreviewTextInput="TextBox_PreviewTextInput"/>
-        <TextBox Name="HeightBox" Grid.Column="1" Margin="10,6,371,31" TextWrapping="Wrap" 
+        <TextBox Name="HeightBox" Grid.Column="1" 
                  Text="{Binding SizeY, UpdateSourceTrigger=LostFocus}" Grid.Row="4"
                  PreviewTextInput="TextBox_PreviewTextInput"/>
-        <ComboBox Name="TilesetCB" Grid.Column="1" Margin="309,5,10,5" Grid.Row="2"
+        <ComboBox Name="TilesetCB" Grid.Column="4" Grid.Row="2"
                   ItemsSource="{Binding TilesetEnum}" SelectedValue="{Binding SelectedTileset}"/>
-        <Label Content="Tileset" HorizontalAlignment="Left" Margin="319,3,0,0" VerticalAlignment="Top" Height="31" Width="123" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2"/>
-        <Label Content="Chapter and level" HorizontalAlignment="Left" Margin="313,0,0,0" VerticalAlignment="Center" Height="30" Width="123" Grid.Column="1" Grid.Row="3"/>
+        <Label Content="Tileset" HorizontalAlignment="Left" Grid.Column="4" Grid.Row="1"/>
+        <Label Content="Name" Grid.Column="3" Grid.Row="3"/>
+        <TextBox Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="3" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </Window>

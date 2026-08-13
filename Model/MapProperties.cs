@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BobMapper.Model
 {
@@ -58,7 +59,18 @@ namespace BobMapper.Model
         public double ApartmentHeight
         {
             get { return apartmentHeight; }
-            set { apartmentHeight = value;
+            set { if (value < 0.1)
+                {
+                    ApartmentHeight = 0.1;
+                    return;
+                }
+                if (value > 1.9)
+                {
+                    ApartmentHeight = 1.9;
+                    return;
+                }
+                apartmentHeight = value;
+                VisualHeight = 2 - value;
                 OnPropertyChanged();
             }
         }
@@ -73,13 +85,25 @@ namespace BobMapper.Model
             }
         }
 
+        private double visualHeight;
 
-        public MapProperties(int width, int height, Tilesets tileset) 
+        [JsonIgnore]
+        public double VisualHeight
+        {
+            get { return visualHeight; }
+            set { visualHeight = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        public MapProperties(int width, int height, Tilesets tileset, string name) 
         {
             this.Tileset = tileset;
             Width = width;
             Height = height;
-            Name = "Unnamed Map";
+            Name = name;
             IsApartment = false;
             BackgroundImage = "/Resources/Backgrounds/BackgroundDownTown1.png";
             IsNightTime = false;
@@ -109,9 +133,16 @@ namespace BobMapper.Model
 
         public event EventHandler TilesetChanged;
 
-        public void ChangeTileset()
+        public void InvokeTilesetEvent()
         {
             TilesetChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler IsApartmentChanged;
+
+        public void InvokeIsApartmentEvent()
+        {
+            IsApartmentChanged?.Invoke(this, EventArgs.Empty);
         }
 
     }

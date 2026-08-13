@@ -211,7 +211,7 @@ namespace BobMapper
 
         private void DownloadZip(object sender, RoutedEventArgs e)
         {
-            Uri uri = new("https://drive.google.com/uc?export=download&id=1FitSAD96k9nVp6HoTE7XwP0A5u42kiBN");
+            Uri uri = new("https://drive.google.com/uc?export=download&id=1Sg1AC8RJLRYd5_-EcOH96j8C9IjwXY6n");
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
             {
                 FileName = uri.AbsoluteUri,

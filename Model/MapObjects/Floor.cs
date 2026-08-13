@@ -53,23 +53,13 @@ namespace BobMapper.Model.MapObjects
             }
         }
 
-        private int visualScaleX;
+        private int visualRotate;
         [JsonIgnore]
-        public int VisualScaleX
+        public int VisualRotate
         {
-            get { return visualScaleX; }
-            set { visualScaleX = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VisualScaleX)));
-            }
-        }
-
-        private int visualScaleY;
-        [JsonIgnore]
-        public int VisualScaleY
-        {
-            get { return visualScaleY; }
-            set { visualScaleY = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VisualScaleY)));
+            get { return visualRotate; }
+            set { visualRotate = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VisualRotate)));
             }
         }
 
@@ -98,13 +88,13 @@ namespace BobMapper.Model.MapObjects
         public void SetOpacity(bool isApartment)
         {
             Opacity = 1.0f;
-            //if(isApartment)
-            //{
-                if(Texture1 == @"/Resources/FloorTextures/Floor_Nothing.png")
+            if(isApartment)
+            {
+                if (Texture1 == @"/Resources/FloorTextures/Floor_Nothing.png")
                 {
                     Opacity = 0.2f;
                 }
-            //}
+            }
         }
 
         private void SetVisualFlip()
@@ -113,20 +103,16 @@ namespace BobMapper.Model.MapObjects
             {
                 //Totally fucked up but whatever
                 case 0:
-                    VisualScaleX = -1;
-                    VisualScaleY = 1;
+                    VisualRotate = 90;
                     break;
                 case 1:
-                    VisualScaleX = 1;
-                    VisualScaleY = 1;
+                    VisualRotate = 0;
                     break;
                 case 2:
-                    VisualScaleX = 1;
-                    VisualScaleY = -1;
+                    VisualRotate = 270;
                     break;
                 case 3: 
-                    VisualScaleX = -1;
-                    VisualScaleY = -1;
+                    VisualRotate = 180;
                     break;
                 default:
                     throw new Exception("Invalid floor flip value");

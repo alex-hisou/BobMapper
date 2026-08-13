@@ -37,6 +37,15 @@ namespace BobMapper.ViewModel
             set { selectedTileset = value; }
         }
 
+        private string name;
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+
         public Array TilesetEnum => Enum.GetValues(typeof(Tilesets));
 
         public CreateMapViewModel()
@@ -51,19 +60,13 @@ namespace BobMapper.ViewModel
             if (SizeX <= 0 || SizeY <= 0)
                 return;
             var dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.FileName = "Map";
-            dialog.DefaultExt = ".bobmap";
-            dialog.Filter = "BobMapper Map File (.bobmap)|*.bobmap";
-
-            bool? result = dialog.ShowDialog();
-            string filename;
-
-            if (result == true)
-            {
-                filename = dialog.FileName;
-            }
-            else { return; }
-            Map map = new Map(SizeX, sizeY, selectedTileset);
+            FileDialogService dialogService = new FileDialogService();
+            string filename = dialogService.SaveFileDialog("BobMapper Map File (.bobmap)|*.bobmap",
+                    ".bobmap", $"{Name}.bobmap");
+            if (string.IsNullOrEmpty(filename))
+                return;
+            MapProperties mapProperties = new(SizeX, SizeY, selectedTileset, Name);
+            Map map = new Map(mapProperties);
             string emptyJson = JsonSerializer.Serialize(map, JsonMapParse.jsonSerializerOptions);
             File.WriteAllText(filename, emptyJson);
             Editor editor = new Editor(filename);

@@ -61,7 +61,8 @@ namespace BobMapper
 
         private void Prefrences_Click(object sender, RoutedEventArgs e)
         {
-
+            Prefrences prefrences = new Prefrences();
+            prefrences.Show();
         }
     }
 }

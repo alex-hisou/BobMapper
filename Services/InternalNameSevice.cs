@@ -23,7 +23,7 @@ namespace BobMapper.Services
             }
             if (internalName == null)
             {
-                throw new Exception("Texture not found");
+                return "InvalidTexture";
             }
             return internalName;
         }
@@ -42,7 +42,7 @@ namespace BobMapper.Services
             }
             if (resourceName == null)
             {
-                throw new Exception("Texture not found");
+                return "InvalidTexture";
             }
             return resourceName;
         }

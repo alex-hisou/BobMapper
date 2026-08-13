@@ -9,11 +9,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using BobMapper.Services;
+using System.Windows.Threading;
 using BobMapper.Data;
+using BobMapper.Services;
+using BobMapper.View;
+using ICSharpCode.SharpZipLib.Zip;
 using NetTopologySuite.Utilities;
 using static BobMapper.Model.Injector.FileStager;
-using ICSharpCode.SharpZipLib.Zip;
 
 namespace BobMapper.Model.Injector
 {
@@ -26,7 +28,6 @@ namespace BobMapper.Model.Injector
         string tempDestination;
         ZipArchiveEntry levelsXmlEntry;
         ZipArchiveEntry levelNamesLocaleEntry;
-
         bool android;
 
         internal Injector(string destination, string tempLevFile, MapProperties mapProperties, bool buildApk, bool insertToSteam, Map.Chapter chapter, int level)
@@ -199,7 +200,10 @@ namespace BobMapper.Model.Injector
             info.FileName = "powershell.exe";
             info.Arguments = $"-NoProfile -ExecutionPolicy Bypass -File \"{currentDir}\" -moddedPath \"{unzippedApk}\" -toolsPath \"{toolsDir}\"";
             info.UseShellExecute = true;
-            Process.Start(info);
+            using (Process process = Process.Start(info))
+            {
+                process.WaitForExit();
+            }
         }
 
         private void SteamWrite(bool insertToSteam)
@@ -223,7 +227,10 @@ namespace BobMapper.Model.Injector
             info.Arguments = $"-NoProfile -ExecutionPolicy Bypass -File \"{currentDir}\" -moddedPath \"{tempDestination}\" -destination \"{destination}\"";
             info.UseShellExecute = true;
             info.Verb = "runas";
-            Process.Start(info);
+            using (Process process = Process.Start(info))
+            {
+                process.WaitForExit();
+            }
         }
     }
 }

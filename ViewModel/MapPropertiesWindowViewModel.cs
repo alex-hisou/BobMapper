@@ -38,10 +38,15 @@ namespace BobMapper.ViewModel
         public Array TilesetEnum => Enum.GetValues(typeof(Tilesets));
 
         [RelayCommand]
-        public void ChangeTileset()
+        public void InvokeChangeTileset()
         {
-            CurrentMapProperties.ChangeTileset();
-            //TODO: Make map change all of the invalid textures
+            CurrentMapProperties.InvokeTilesetEvent();
+        }
+
+        [RelayCommand]
+        public void InvokeIsApartmentEvent()
+        {
+            CurrentMapProperties.InvokeIsApartmentEvent();
         }
     }
 }

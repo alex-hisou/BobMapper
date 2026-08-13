@@ -80,6 +80,8 @@
             CommandParameter="{StaticResource False}"/>
         <KeyBinding Key="C" Command="{Binding CompileCommand}" Modifiers="Ctrl"
             CommandParameter="{StaticResource True}"/>
+        <KeyBinding Key="I" Command="{Binding InjectCommand}" Modifiers="Ctrl"
+                    CommandParameter="{StaticResource False}"/>
     </Window.InputBindings>
 
     <Grid x:Name="WindowGrid">
@@ -407,10 +409,6 @@
                                             <TextBox Width="100" Height="20" Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                             PreviewTextInput="TextBox_PreviewTextInput"
                                                      PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
-                                            <Label Width="170">Starting Path Point (Id)</Label>
-                                            <TextBox Width="100" Height="20" Text="{Binding FirstPathPointId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                                    PreviewTextInput="TextBox_PreviewTextInput"
-                                            PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Asset</Label>
                                             <Image Source="{Binding Texture}" MaxHeight="100" MaxWidth="100"/>
                                             <ComboBox ItemsSource="{Binding NPCTypeValues}" SelectedItem="{Binding Type}" Width="200" MinHeight="30"/>
@@ -424,8 +422,8 @@
                                 <ContentControl.Resources>
                                     <DataTemplate DataType="{x:Type object:PathPoint}">
                                         <WrapPanel Width="300">
-                                            <Label Width="170">Path point Id</Label>
-                                            <Label Width="100" Height="20" Content="{Binding Id}"></Label>
+                                            <Label Width="170" Height="30">Path point Id</Label>
+                                            <Label Width="100" Height="30" Content="{Binding Id}"></Label>
                                             <Label Width="170">Next path point Id</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding ConnectToId, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                             PreviewTextInput="TextBox_PreviewTextInput"
@@ -510,7 +508,7 @@
                             Converter={StaticResource BooleanToVisibilityConverter}}">
                         </Image>
                         <local:CenteringCanvas.RenderTransform>
-                            <ScaleTransform ScaleX="{Binding CurrentMapProperties.ApartmentHeight}" ScaleY="{Binding CurrentMapProperties.ApartmentHeight}"/>
+                            <ScaleTransform ScaleX="{Binding CurrentMapProperties.VisualHeight}" ScaleY="{Binding CurrentMapProperties.VisualHeight}"/>
                         </local:CenteringCanvas.RenderTransform>
                     </local:CenteringCanvas>
 
@@ -535,7 +533,7 @@
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
                                                 <Image.RenderTransform>
-                                                    <ScaleTransform ScaleX="{Binding VisualScaleX}" ScaleY="{Binding VisualScaleY}"/>
+                                                    <RotateTransform Angle="{Binding VisualRotate}"/>
                                                 </Image.RenderTransform>
                                             </Image>
                                         </DataTemplate>
@@ -689,7 +687,7 @@
                                             <RotateTransform Angle="{Binding Rotation}"/>
                                         </TransformGroup>
                                     </Grid.RenderTransform>
-                                    <Canvas>
+                                    <local:CenteringCanvas>
                                         <Image Source="{Binding Texture}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -700,7 +698,7 @@
                                         </Image>
                                         <Image Source="/Resources/MiscTextures/LootGlare.png" Visibility="{Binding AttachLoot, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
                                         <Image Source="/Resources/MiscTextures/MainLoot.png" Visibility="{Binding AttachMainLoot, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
-                                    </Canvas>
+                                    </local:CenteringCanvas>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
