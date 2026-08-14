@@ -15,12 +15,13 @@ namespace BobMapper.Compiler
         internal List<QueuedLocator> locatorQueue = new List<QueuedLocator>();
         internal void Compile(Map map)
         {
+            List<Wall> unsplitWalls = SplitWalls(map.walls);
             byte[] fileHeader = [0x01, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00];
             output.AddRange(fileHeader);
             //output.AddRange(CablesAsBytes());
             output.AddRange(FloorAsBytes(map.floors));
 
-            Items_v4 items_V4 = new(map.walls, map.doors, map.props, map.loots, this);
+            Items_v4 items_V4 = new(unsplitWalls, map.doors, map.props, map.loots, this);
             output.AddRange(items_V4.itemsOutput);
 
             output.AddRange(Level_v2(map.mapProperties.Width / SnapCoordinate.FloorSize, map.mapProperties.Height / SnapCoordinate.FloorSize, map.mapProperties.Tileset));
@@ -36,6 +37,43 @@ namespace BobMapper.Compiler
             output.AddRange(Zones(map.exitZones));
 
 
+        }
+
+        private List<Wall> SplitWalls(List<Wall> unsplitWalls)
+        {
+            List<Wall> splitWalls = new();
+            foreach (Wall wall in unsplitWalls)
+            {
+                double xdiff = wall.Point2.SnappedXPos - wall.Point1.SnappedXPos;
+                double ydiff = wall.Point2.SnappedYPos - wall.Point1.SnappedYPos;
+                bool isHorizontal = ydiff == 0;
+                bool isVertical = xdiff == 0;
+                bool isDiagonal = Math.Abs(xdiff) == Math.Abs(ydiff);
+                if (!isHorizontal && !isVertical && !isDiagonal)
+                {
+                    splitWalls.Add(wall);
+                    continue;
+                }
+                double length = Math.Max(Math.Abs(xdiff), Math.Abs(ydiff));
+                if (length <= 1)
+                {
+                    splitWalls.Add(wall);
+                    continue;
+                }
+                float xSign = Math.Sign(xdiff);
+                float ySign = Math.Sign(ydiff);
+                for (int i = 0; i < length; i++)
+                {
+                    float currX = (float)wall.Point1.SnappedXPos + i * xSign;
+                    float currY = (float)wall.Point1.SnappedYPos + i * ySign;
+                    float nextX = currX + xSign;
+                    float nextY = currY + ySign;
+                    SnapCoordinate point1 = new(currX, currY);
+                    SnapCoordinate point2 = new(nextX, nextY);
+                    splitWalls.Add(new(point1, point2, wall.Type, wall.Texture2, wall.Texture1));
+                }
+            }
+            return splitWalls;
         }
 
         private List<byte> CablesAsBytes()
