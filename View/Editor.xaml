@@ -106,11 +106,11 @@
                 <MenuItem Header="Tools">
                     <MenuItem Header="Dialogue Editor" IsEnabled="False"/>
                 </MenuItem>
-                <MenuItem Header="Compile">
+                <MenuItem Header="Inject">
                     <MenuItem Header="(LEGACY) Compile to" Command="{Binding CompileCommand}"></MenuItem>
                     <MenuItem Header="Inject" Command="{Binding InjectCommand}" CommandParameter="{StaticResource False}"></MenuItem>
                     <MenuItem Header="Inject and Play (Steam)" Command="{Binding SteamInjectCommand}"></MenuItem>
-                    <MenuItem Header="Inject and Make APK" Command="{Binding InjectCommand}" CommandParameter="{StaticResource True}"/>
+                    <MenuItem Header="Inject and Make APK (Android)" Command="{Binding InjectCommand}" CommandParameter="{StaticResource True}"/>
                     <Separator/>
                     <MenuItem Header="Download Android Moddable zip" Click="DownloadZip"/>
                 </MenuItem>
