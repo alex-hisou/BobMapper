@@ -243,6 +243,10 @@ namespace BobMapper.ViewModel
                 FileDialogService fileDialogService = new FileDialogService();
                 string destination = fileDialogService.LoadFileDialog(filter);
                 Injector injector = new(destination, tempLevFile, CurrentMapProperties, buildApk, false, e.Chapter, e.Level);
+                if (!injector.Success)
+                {
+                    MessageBox.Show("Something went wrong during injection. Make sure you selected the right file. If this problem presists with the right file selected, contact the developer.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
                 injectorPrompt.ConfirmationComplete -= injectionPromptComplete;
             };
             injectorPrompt.ConfirmationComplete += injectionPromptComplete;
@@ -268,6 +272,10 @@ namespace BobMapper.ViewModel
                 File.WriteAllBytes(tempLevFile, compiler.output.ToArray());
                 string destination = UserSettings.Instance.SteamResourcesDirectory;
                 Injector injector = new(destination, tempLevFile, CurrentMapProperties, false, true, e.Chapter, e.Level);
+                if(!injector.Success)
+                {
+                    MessageBox.Show("Something went wrong during injection. Make sure you selected the right file. If this problem presists with the right file selected, contact the developer.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
                 injectorPrompt.ConfirmationComplete -= injectionPromptComplete;
             };
             injectorPrompt.ConfirmationComplete += injectionPromptComplete;
