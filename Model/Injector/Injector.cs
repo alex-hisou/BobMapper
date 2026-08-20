@@ -8,12 +8,8 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Threading;
 using BobMapper.Data;
 using BobMapper.Services;
-using BobMapper.View;
-using ICSharpCode.SharpZipLib.Zip;
 using NetTopologySuite.Utilities;
 using static BobMapper.Model.Injector.FileStager;
 
@@ -21,14 +17,15 @@ namespace BobMapper.Model.Injector
 {
     internal class Injector
     {
-        string levelsXmlPath;
-        string levelNamesLocale;
+        string tempLevelsXmlPath;
+        string tempLevelNamesLocale;
         string finalLevEntryFileName;
         string destination;
         string tempDestination;
         ZipArchiveEntry levelsXmlEntry;
         ZipArchiveEntry levelNamesLocaleEntry;
         bool android;
+        public bool Success { get; set; } = false;
 
         internal Injector(string destination, string tempLevFile, MapProperties mapProperties, bool buildApk, bool insertToSteam, Map.Chapter chapter, int level)
         {
@@ -40,21 +37,25 @@ namespace BobMapper.Model.Injector
         {
             tempDestination = Path.GetTempFileName();
             File.Copy(destination, tempDestination, true);
-            switch (Path.GetExtension(destination))
+            try
             {
-                default:
-                    throw new Exception();
-                case ".dat":
-                    android = false;
-                    break;
-                case ".zip":
-                    android = true;
-                    break;
+                using (ZipArchive zip = ZipFile.Open(destination, ZipArchiveMode.Read))
+                {
+                    ZipArchiveEntry androidEntry = zip.GetEntry(@"Moddable Robbery Bob 1/assets/common/Levels/Levels.xml");
+                    ZipArchiveEntry steamEntry = zip.GetEntry(@"common/Levels/Levels.xml");
+                    if (androidEntry != null)
+                        android = true;
+                    else if (steamEntry != null)
+                        android = false;
+                    else { return; }
+                }
             }
+            catch (Exception ex) 
+            { return; }
             CheckAndDecrypt();
             RetrieveFiles();
             InsertLevel(tempLevFile, mapProperties.Name);
-            FileStager fileStager = new FileStager(levelsXmlPath, levelNamesLocale, android, mapProperties, level, chapter, finalLevEntryFileName);
+            FileStager fileStager = new FileStager(tempLevelsXmlPath, tempLevelNamesLocale, android, mapProperties, level, chapter, finalLevEntryFileName);
             if (android)
             {
                 AndroidWrite(buildApk);
@@ -63,16 +64,17 @@ namespace BobMapper.Model.Injector
             {
                 SteamWrite(insertToSteam);
             }
+            Success = true;
         }
 
         private void CheckAndDecrypt()
         {
             //Using dependency because dotnet library cannot check if the file is encrypted.
-            using (ICSharpCode.SharpZipLib.Zip.ZipFile zip = new ICSharpCode.SharpZipLib.Zip.ZipFile(tempDestination))
+            using (ZipArchive zipArchive = ZipFile.Open(tempDestination, ZipArchiveMode.Update))
             {
-                foreach (ZipEntry entry in zip)
+                foreach (ZipArchiveEntry archiveEntry in zipArchive.Entries)
                 {
-                    if (!entry.IsCrypted)
+                    if (!archiveEntry.IsEncrypted)
                     {
                         return;
                     }
@@ -97,45 +99,45 @@ namespace BobMapper.Model.Injector
 
         private void RetrieveFiles()
         {
-            using ZipArchive archive = System.IO.Compression.ZipFile.Open(tempDestination, ZipArchiveMode.Update);
+            using ZipArchive archive = ZipFile.Open(tempDestination, ZipArchiveMode.Update);
             ZipArchiveEntry levelsXmlEntryBackup;
             ZipArchiveEntry levelNamesLocaleEntryBackup;
             if (android)
             {
                 levelsXmlEntry = archive.GetEntry(@"Moddable Robbery Bob 1/assets/common/Levels/Levels.xml");
                 levelsXmlEntryBackup = archive.GetEntry(@"Moddable Robbery Bob 1/assets/common/Levels/Levels.xml.backup");
-                levelsXmlPath = Path.GetTempFileName();
-                levelsXmlEntry.ExtractToFile(levelsXmlPath, overwrite: true);
+                tempLevelsXmlPath = Path.GetTempFileName();
+                levelsXmlEntry.ExtractToFile(tempLevelsXmlPath, overwrite: true);
                 if (levelsXmlEntryBackup == null)
                 {
-                    archive.CreateEntryFromFile(levelsXmlPath, @"Moddable Robbery Bob 1/assets/common/Levels/Levels.xml.backup");
+                    archive.CreateEntryFromFile(tempLevelsXmlPath, @"Moddable Robbery Bob 1/assets/common/Levels/Levels.xml.backup");
                 }
-                levelNamesLocale = Path.GetTempFileName();
+                tempLevelNamesLocale = Path.GetTempFileName();
                 levelNamesLocaleEntry = archive.GetEntry(@"Moddable Robbery Bob 1/assets/localization/en.lproj/LevelNames.locale.csv");
                 levelNamesLocaleEntryBackup = archive.GetEntry(@"Moddable Robbery Bob 1/assets/localization/en.lproj/LevelNames.locale.csv.backup");
-                levelNamesLocaleEntry.ExtractToFile(levelNamesLocale, overwrite: true);
+                levelNamesLocaleEntry.ExtractToFile(tempLevelNamesLocale, overwrite: true);
                 if (levelNamesLocaleEntryBackup == null)
                 {
-                    archive.CreateEntryFromFile(levelNamesLocale, @"Moddable Robbery Bob 1/assets/localization/en.lproj/LevelNames.locale.csv.backup");
+                    archive.CreateEntryFromFile(tempLevelNamesLocale, @"Moddable Robbery Bob 1/assets/localization/en.lproj/LevelNames.locale.csv.backup");
                 }
             }
             else
             {
                 levelsXmlEntry = archive.GetEntry(@"common/Levels/Levels.xml");
                 levelsXmlEntryBackup = archive.GetEntry(@"common/Levels/Levels.xml.backup");
-                levelsXmlPath = Path.GetTempFileName();
-                levelsXmlEntry.ExtractToFile(levelsXmlPath, overwrite: true);
+                tempLevelsXmlPath = Path.GetTempFileName();
+                levelsXmlEntry.ExtractToFile(tempLevelsXmlPath, overwrite: true);
                 if (levelsXmlEntryBackup == null)
                 {
-                    archive.CreateEntryFromFile(levelsXmlPath, @"common/Levels/Levels.xml.backup");
+                    archive.CreateEntryFromFile(tempLevelsXmlPath, @"common/Levels/Levels.xml.backup");
                 }
-                levelNamesLocale = Path.GetTempFileName();
+                tempLevelNamesLocale = Path.GetTempFileName();
                 levelNamesLocaleEntry = archive.GetEntry(@"localization/en.lproj/LevelNames.csv");
                 levelNamesLocaleEntryBackup = archive.GetEntry(@"localization/en.lproj/LevelNames.csv.backup");
-                levelNamesLocaleEntry.ExtractToFile(levelNamesLocale, overwrite: true);
+                levelNamesLocaleEntry.ExtractToFile(tempLevelNamesLocale, overwrite: true);
                 if (levelNamesLocaleEntryBackup == null)
                 {
-                    archive.CreateEntryFromFile(levelNamesLocale, @"localization/en.lproj/LevelNames.csv.backup");
+                    archive.CreateEntryFromFile(tempLevelNamesLocale, @"localization/en.lproj/LevelNames.csv.backup");
                 }
             }
         }
@@ -145,7 +147,7 @@ namespace BobMapper.Model.Injector
             string filename = "BobMapper";
             mapName = Regex.Replace(mapName, @"[^A-Za-z0-9]", "");
             finalLevEntryFileName = filename + mapName;
-            using ZipArchive archive = System.IO.Compression.ZipFile.Open(tempDestination, ZipArchiveMode.Update);
+            using ZipArchive archive = ZipFile.Open(tempDestination, ZipArchiveMode.Update);
             string noExtEntryDirectory = @"common/Levels/" + finalLevEntryFileName;
             if (android)
             {
@@ -170,12 +172,12 @@ namespace BobMapper.Model.Injector
 
         private void AndroidWrite(bool buildApk)
         {
-            using (ZipArchive zipArchive = System.IO.Compression.ZipFile.Open(tempDestination, ZipArchiveMode.Update))
+            using (ZipArchive zipArchive = ZipFile.Open(tempDestination, ZipArchiveMode.Update))
             {
                 zipArchive.GetEntry(levelsXmlEntry.FullName).Delete();
                 zipArchive.GetEntry(levelNamesLocaleEntry.FullName).Delete();
-                zipArchive.CreateEntryFromFile(levelsXmlPath, levelsXmlEntry.FullName);
-                zipArchive.CreateEntryFromFile(levelNamesLocale, levelNamesLocaleEntry.FullName);
+                zipArchive.CreateEntryFromFile(tempLevelsXmlPath, levelsXmlEntry.FullName);
+                zipArchive.CreateEntryFromFile(tempLevelNamesLocale, levelNamesLocaleEntry.FullName);
             }
             File.Copy(tempDestination, destination, true);
             if(!buildApk)
@@ -186,7 +188,7 @@ namespace BobMapper.Model.Injector
             string unzippedApk = Path.Combine(unzippedApkParent, "Moddable Robbery Bob 1");
             if(!Directory.Exists(unzippedApk))
             {
-                using (ZipArchive unzipArchive = System.IO.Compression.ZipFile.Open(destination, ZipArchiveMode.Read))
+                using (ZipArchive unzipArchive = ZipFile.Open(destination, ZipArchiveMode.Read))
                 {
                     unzipArchive.ExtractToDirectory(unzippedApkParent);
                 }
@@ -208,12 +210,12 @@ namespace BobMapper.Model.Injector
 
         private void SteamWrite(bool insertToSteam)
         {
-            using (ZipArchive zipArchive = System.IO.Compression.ZipFile.Open(tempDestination, ZipArchiveMode.Update))
+            using (ZipArchive zipArchive = ZipFile.Open(tempDestination, ZipArchiveMode.Update))
             {
                 zipArchive.GetEntry(levelsXmlEntry.FullName).Delete();
                 zipArchive.GetEntry(levelNamesLocaleEntry.FullName).Delete();
-                zipArchive.CreateEntryFromFile(levelsXmlPath, levelsXmlEntry.FullName);
-                zipArchive.CreateEntryFromFile(levelNamesLocale, levelNamesLocaleEntry.FullName);
+                zipArchive.CreateEntryFromFile(tempLevelsXmlPath, levelsXmlEntry.FullName);
+                zipArchive.CreateEntryFromFile(tempLevelNamesLocale, levelNamesLocaleEntry.FullName);
             }
             if(!insertToSteam)
             {
