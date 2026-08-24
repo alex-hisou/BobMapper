@@ -50,17 +50,6 @@ namespace BobMapper.Model
         {
             switch (CurrentSelections.SelectedTool)
             {
-                case Tools.AddWall:
-                    SnapCoordinate snappedWallPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    SnapCoordinate shiftedSnappedPlacementPos = new SnapCoordinate(snappedWallPlacementPos.SnappedXPos + 1, snappedWallPlacementPos.SnappedYPos);
-                    string validWallTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Wall, CurrentMapProperties.Tileset, true);
-                    Wall wall = new Wall(snappedWallPlacementPos, shiftedSnappedPlacementPos, Wall.WallType.Normal, validWallTexture, validWallTexture);
-                    CurrentObjectCollection.CurrentWalls.Add(wall);
-                    if (UserSettings.Instance.AutoSelect)
-                    {
-                        SelectObject(wall);
-                    }
-                    break;
                 case Tools.AddProp:
                     SnapCoordinate snappedPropPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
                     string validPropTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Prop, CurrentMapProperties.Tileset, true);
@@ -114,17 +103,6 @@ namespace BobMapper.Model
                     if (UserSettings.Instance.AutoSelect)
                     {
                         SelectObject(misc);
-                    }
-                    break;
-                case Tools.AddDoor:
-                    SnapCoordinate snappedDoorPlacementPos = SnapCoordinate.UnsnappedCoordinateFactory(placementPos.XPos, placementPos.YPos);
-                    SnapCoordinate shiftedSnappedDoorPlacementPos = new SnapCoordinate(snappedDoorPlacementPos.SnappedXPos + 1, snappedDoorPlacementPos.SnappedYPos);
-                    string validDoorTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Door, CurrentMapProperties.Tileset, true);
-                    Door door = new Door(snappedDoorPlacementPos, shiftedSnappedDoorPlacementPos, CurrentSelections.SelectedTexture, false, false, false);
-                    CurrentObjectCollection.CurrentDoors.Add(door);
-                    if (UserSettings.Instance.AutoSelect)
-                    {
-                        SelectObject(door);
                     }
                     break;
                 case Tools.AddLoot:
@@ -382,7 +360,7 @@ namespace BobMapper.Model
             CurrentSelections.SelectedTexture = (string)sender;
         }
 
-        private void SelectObject(object sender)
+        public void SelectObject(object sender)
         {
             //Not the best code, but this will do
             ResetSelection();

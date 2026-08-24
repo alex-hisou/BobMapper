@@ -493,7 +493,12 @@
             <!-- BAD CANVAS CODE AHEAD -->
             <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" HorizontalContentAlignment="Center"
                           VerticalContentAlignment="Center" Background="Gray" Focusable="False"
-                          PreviewMouseDown="ClickEmpty" x:Name="ScrollPlane">
+                          PreviewMouseDown="ClickEmpty" MouseMove="MoveMouse" x:Name="ScrollPlane">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <i:InvokeCommandAction Command="{Binding ReleaseMouseCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <Grid>
                 <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Width="0" Height="0" 
                     RenderTransformOrigin="0.5,0.5">
@@ -771,20 +776,28 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentExitZones}" Visibility="{Binding CurrentLayerData.ExitZonesVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Canvas/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type object:ExitZone}">
-                                <uc:ExitZoneControl Point1="{Binding Point1}" Point2="{Binding Point2}"
+                        <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentExitZones}" Visibility="{Binding CurrentLayerData.ExitZonesVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type object:ExitZone}">
+                                    <uc:ExitZoneControl Point1="{Binding Point1}" Point2="{Binding Point2}"
                                                     Point3="{Binding Point3}" Point4="{Binding Point4}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <uc:MoveGizmo x:Name="PropGizmo" Visibility="{Binding CurrentGizmoData.PropGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <local:CenteringCanvas Visibility="{Binding TwoPointToolsData.IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Ellipse Width="10" Height="10" Fill="GreenYellow" Canvas.Left="{Binding TwoPointToolsData.StartCoordinate.XPos}"
+                                Canvas.Top="{Binding TwoPointToolsData.StartCoordinate.YPos}">
+                            </Ellipse>
+                            <Ellipse Width="10" Height="10" Fill="Gold" Canvas.Left="{Binding TwoPointToolsData.EndCoordinate.XPos}"
+                                Canvas.Top="{Binding TwoPointToolsData.EndCoordinate.YPos}">
+                            </Ellipse>
+                        </local:CenteringCanvas>
+                        <uc:MoveGizmo x:Name="PropGizmo" Visibility="{Binding CurrentGizmoData.PropGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
                         Canvas.Left="{Binding CurrentSelections.SelectedProp.Coordinates.XPos}"
                                   Canvas.Top="{Binding CurrentSelections.SelectedProp.Coordinates.YPos}"
                                   DragCommand="{Binding CurrentGizmoData.PropGizmoMovedCommand}" RenderTransformOrigin="0.5,0.5">
@@ -865,19 +878,19 @@
                             </uc:RotateGizmo.RenderTransform>
                         </uc:RotateGizmo>
                     </local:CenteringCanvas>
-                    <local:CenteringCanvas>
-                        <uc:RotateGizmo x:Name="LootRotateGizmo" Visibility="{Binding CurrentGizmoData.LootRotateGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        <local:CenteringCanvas>
+                            <uc:RotateGizmo x:Name="LootRotateGizmo" Visibility="{Binding CurrentGizmoData.LootRotateGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
                             Canvas.Left="{Binding CurrentSelections.SelectedLoot.Coordinates.XPos}"
                             Canvas.Top="{Binding CurrentSelections.SelectedLoot.Coordinates.YPos}"
                             DragCommand="{Binding CurrentGizmoData.LootRotateGizmoMovedCommand}" RenderTransformOrigin="0.5,0.5">
-                            <uc:RotateGizmo.RenderTransform>
-                                <TransformGroup>
-                                    <RotateTransform Angle="{Binding CurrentSelections.SelectedLoot.Rotation}"/>
-                                </TransformGroup>
-                            </uc:RotateGizmo.RenderTransform>
-                        </uc:RotateGizmo>
-                    </local:CenteringCanvas>
-                </Canvas>
+                                <uc:RotateGizmo.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="{Binding CurrentSelections.SelectedLoot.Rotation}"/>
+                                    </TransformGroup>
+                                </uc:RotateGizmo.RenderTransform>
+                            </uc:RotateGizmo>
+                        </local:CenteringCanvas>
+                    </Canvas>
                     <Border Background="#80000000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False" Visibility="{Binding CurrentMapProperties.IsNightTime, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 </Grid>
             </ScrollViewer>
