@@ -157,6 +157,9 @@ namespace BobMapper.ViewModel
                 TwoPointToolsData.IsDragging = true;
                 return;
             }
+            float unsnappedX = (placementPos.XPos - CurrentViewportData.CameraX) / (float)CurrentViewportData.ZoomX;
+            float unsnappedY = (placementPos.YPos - CurrentViewportData.CameraY) / (float)CurrentViewportData.ZoomX;
+            placementPos = new(unsnappedX, unsnappedY);
             CurrentEditingInteractions.HandleClickEmpty(placementPos);
         }
 
@@ -164,8 +167,8 @@ namespace BobMapper.ViewModel
         {
             if (!TwoPointToolsData.IsVisible)
                 return;
-            float unsnappedX = mousePos.XPos;
-            float unsnappedY = mousePos.YPos;
+            float unsnappedX = (mousePos.XPos - CurrentViewportData.CameraX) / (float)CurrentViewportData.ZoomX;
+            float unsnappedY = (mousePos.YPos - CurrentViewportData.CameraY) / (float)CurrentViewportData.ZoomX;
             SnapCoordinate snapCoordinate = SnapCoordinate.UnsnappedCoordinateFactory(unsnappedX, unsnappedY);
             TwoPointToolsData.HandleMouseMove(snapCoordinate);
         }
@@ -177,6 +180,11 @@ namespace BobMapper.ViewModel
                 return;
             SnapCoordinate startCoordinate = new(TwoPointToolsData.StartCoordinate.SnappedXPos, TwoPointToolsData.StartCoordinate.SnappedYPos);
             SnapCoordinate endCoordinate = new(TwoPointToolsData.EndCoordinate.SnappedXPos, TwoPointToolsData.EndCoordinate.SnappedYPos);
+            if (startCoordinate.XPos == endCoordinate.XPos && startCoordinate.YPos == endCoordinate.YPos)
+            {
+                TwoPointToolsData.IsDragging = false;
+                return;
+            }
             if (CurrentSelections.SelectedTool == Tools.AddWall)
             {
                 string validWallTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Wall, CurrentMapProperties.Tileset, true);
@@ -197,6 +205,8 @@ namespace BobMapper.ViewModel
                     CurrentEditingInteractions.SelectObject(door);
                 }
             }
+            TwoPointToolsData.StartCoordinate.SnappedXPos = endCoordinate.SnappedXPos;
+            TwoPointToolsData.StartCoordinate.SnappedYPos = endCoordinate.SnappedYPos;
             TwoPointToolsData.IsDragging = false;
         }
 

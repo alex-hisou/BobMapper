@@ -10,16 +10,19 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace BobMapper.Model
 {
-    public partial class TwoPointToolsData : INotifyPropertyChanged
+    public class TwoPointToolsData : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public SnapCoordinate StartCoordinate { get; set; }
+        public SnapCoordinate StartCoordinate { get; set; } = new(0,0);
 
-        public SnapCoordinate EndCoordinate { get; set; }
+        public SnapCoordinate EndCoordinate { get; set; } = new(0,0);
+
+        public float ConnectionDeltaX => EndCoordinate.XPos - StartCoordinate.XPos;
+        public float ConnectionDeltaY => EndCoordinate.YPos - StartCoordinate.YPos;
 
         private bool isVisible;
 
@@ -33,12 +36,6 @@ namespace BobMapper.Model
 
         public bool IsDragging { get; set; }
 
-        public TwoPointToolsData()
-        {
-            StartCoordinate = new(0, 0);
-            EndCoordinate = new(0, 0);
-        }
-
         public void HandleMouseMove(SnapCoordinate mousePos)
         {
             if (!IsDragging)
@@ -48,6 +45,8 @@ namespace BobMapper.Model
             }
             EndCoordinate.SnappedXPos = mousePos.SnappedXPos;
             EndCoordinate.SnappedYPos = mousePos.SnappedYPos;
+            OnPropertyChanged(nameof(ConnectionDeltaX));
+            OnPropertyChanged(nameof(ConnectionDeltaY));
         }
 
     }

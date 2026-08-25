@@ -789,19 +789,25 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <local:CenteringCanvas Visibility="{Binding TwoPointToolsData.IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Canvas Visibility="{Binding TwoPointToolsData.IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Ellipse Width="10" Height="10" Fill="GreenYellow" Canvas.Left="{Binding TwoPointToolsData.StartCoordinate.XPos}"
                                 Canvas.Top="{Binding TwoPointToolsData.StartCoordinate.YPos}">
+                                <Ellipse.RenderTransform>
+                                    <TranslateTransform X="-5" Y="-5"/>
+                                </Ellipse.RenderTransform>
                             </Ellipse>
-                            <Line
-                                X1="0"
-                                Y1="0"
-                                X2="20"
-                                Y2="20"/>
+                            <Line Stroke="Beige" Opacity="0.4" StrokeThickness="10"
+                                X1="{Binding TwoPointToolsData.StartCoordinate.XPos}"
+                                Y1="{Binding TwoPointToolsData.StartCoordinate.YPos}"
+                                X2="{Binding TwoPointToolsData.EndCoordinate.XPos}"
+                                Y2="{Binding TwoPointToolsData.EndCoordinate.YPos}"/>
                             <Ellipse Width="10" Height="10" Fill="Gold" Canvas.Left="{Binding TwoPointToolsData.EndCoordinate.XPos}"
                                 Canvas.Top="{Binding TwoPointToolsData.EndCoordinate.YPos}">
+                                <Ellipse.RenderTransform>
+                                    <TranslateTransform X="-5" Y="-5"/>
+                                </Ellipse.RenderTransform>
                             </Ellipse>
-                        </local:CenteringCanvas>
+                        </Canvas>
                         <uc:MoveGizmo x:Name="PropGizmo" Visibility="{Binding CurrentGizmoData.PropGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
                         Canvas.Left="{Binding CurrentSelections.SelectedProp.Coordinates.XPos}"
                                   Canvas.Top="{Binding CurrentSelections.SelectedProp.Coordinates.YPos}"
