@@ -793,6 +793,11 @@
                             <Ellipse Width="10" Height="10" Fill="GreenYellow" Canvas.Left="{Binding TwoPointToolsData.StartCoordinate.XPos}"
                                 Canvas.Top="{Binding TwoPointToolsData.StartCoordinate.YPos}">
                             </Ellipse>
+                            <Line
+                                X1="0"
+                                Y1="0"
+                                X2="20"
+                                Y2="20"/>
                             <Ellipse Width="10" Height="10" Fill="Gold" Canvas.Left="{Binding TwoPointToolsData.EndCoordinate.XPos}"
                                 Canvas.Top="{Binding TwoPointToolsData.EndCoordinate.YPos}">
                             </Ellipse>
