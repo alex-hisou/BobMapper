@@ -29,6 +29,7 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
         <services:EnumBoolConverter x:Key="EnumBoolConvert"/>
+        <services:SelectedObjectVisibilityConverter x:Key="SelectedObjectConvert"/>
         <ctrls:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <s:Boolean x:Key="True">True</s:Boolean>
         <s:Boolean x:Key="False">False</s:Boolean>
@@ -577,21 +578,29 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:Prop}">
                                 <Grid RenderTransformOrigin="0.5,0.5">
-                                    <Grid.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform ScaleY="-1"/>
-                                            <RotateTransform Angle="{Binding Rotation}"/>
-                                        </TransformGroup>
-                                    </Grid.RenderTransform>
-                                    <Image Source="{Binding PropTexture}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
+                                        <Grid.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleY="-1"/>
+                                                <RotateTransform Angle="{Binding Rotation}"/>
+                                            </TransformGroup>
+                                        </Grid.RenderTransform>
+                                        <Image Source="{Binding PropTexture}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
                                                 RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Image>
-                                </Grid>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </Image>
+                                        <Rectangle Stroke="Orange" Fill="Transparent" StrokeThickness="2" IsHitTestVisible="False">
+                                            <Rectangle.Visibility>
+                                                <MultiBinding Converter="{StaticResource SelectedObjectConvert}">
+                                                    <Binding/>
+                                                    <Binding Path="DataContext.CurrentSelections.SelectedProp" RelativeSource="{RelativeSource AncestorType=ScrollViewer}"/>
+                                                </MultiBinding>
+                                            </Rectangle.Visibility>
+                                        </Rectangle>
+                                    </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -625,13 +634,22 @@
                                         </i:Interaction.Triggers>
                                     </Image>
                                     <Image Source="/Resources/MiscTextures/LootGlare.png" IsHitTestVisible="False" Opacity="0.7"/>
-                                </Grid>
+                                        <Rectangle Stroke="Orange" Fill="Transparent" StrokeThickness="2" IsHitTestVisible="False">
+                                            <Rectangle.Visibility>
+                                                <MultiBinding Converter="{StaticResource SelectedObjectConvert}">
+                                                    <Binding/>
+                                                    <Binding Path="DataContext.CurrentSelections.SelectedLoot" RelativeSource="{RelativeSource AncestorType=ScrollViewer}"/>
+                                                </MultiBinding>
+                                            </Rectangle.Visibility>
+                                        </Rectangle>
+                                    </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                     <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentWalls}" Visibility="{Binding CurrentLayerData.WallsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type object:Wall}">
+                                    <Grid>
                                 <Line StrokeThickness="{Binding Width}" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
                                       X2="{Binding Point2.XPos}" Y2="{Binding Point2.YPos}" Fill="Beige" Stroke="Beige">
                                     <i:Interaction.Triggers>
@@ -641,7 +659,17 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Line>
-                            </DataTemplate>
+                                        <Line StrokeThickness="{Binding Width}" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
+                                        X2="{Binding Point2.XPos}" Y2="{Binding Point2.YPos}" Fill="Orange" Stroke="Orange" IsHitTestVisible="False">
+                                            <Line.Visibility>
+                                                <MultiBinding Converter="{StaticResource SelectedObjectConvert}">
+                                                    <Binding/>
+                                                    <Binding Path="DataContext.CurrentSelections.SelectedWall" RelativeSource="{RelativeSource AncestorType=ScrollViewer}"/>
+                                                </MultiBinding>
+                                            </Line.Visibility>
+                                        </Line>
+                                    </Grid>
+                                </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -662,7 +690,16 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Line>
-                                </Canvas>
+                                        <Line StrokeThickness="10" X1="{Binding Point1.XPos}" Y1="{Binding Point1.YPos}"
+                                                X2="{Binding Point2.XPos}" Y2="{Binding Point2.YPos}" Fill="Orange" Stroke="Orange" IsHitTestVisible="False">
+                                            <Line.Visibility>
+                                                <MultiBinding Converter="{StaticResource SelectedObjectConvert}">
+                                                    <Binding/>
+                                                    <Binding Path="DataContext.CurrentSelections.SelectedDoor" RelativeSource="{RelativeSource AncestorType=ScrollViewer}"/>
+                                                </MultiBinding>
+                                            </Line.Visibility>
+                                        </Line>
+                                    </Canvas>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
@@ -692,19 +729,29 @@
                                             <RotateTransform Angle="{Binding Rotation}"/>
                                         </TransformGroup>
                                     </Grid.RenderTransform>
-                                    <local:CenteringCanvas>
-                                        <Image Source="{Binding Texture}">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
+                                        <local:CenteringCanvas>
+                                            <Grid>
+                                            <Image Source="{Binding Texture}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
                                                 RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </Image>
-                                        <Image Source="/Resources/MiscTextures/LootGlare.png" Visibility="{Binding AttachLoot, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
-                                        <Image Source="/Resources/MiscTextures/MainLoot.png" Visibility="{Binding AttachMainLoot, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
-                                    </local:CenteringCanvas>
-                                </Grid>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Image>
+                                            <Rectangle Stroke="Orange" Fill="Transparent" StrokeThickness="2" IsHitTestVisible="False">
+                                                <Rectangle.Visibility>
+                                                    <MultiBinding Converter="{StaticResource SelectedObjectConvert}">
+                                                        <Binding/>
+                                                        <Binding Path="DataContext.CurrentSelections.SelectedNPC" RelativeSource="{RelativeSource AncestorType=ScrollViewer}"/>
+                                                    </MultiBinding>
+                                                </Rectangle.Visibility>
+                                            </Rectangle>
+                                            </Grid>
+                                            <Image Source="/Resources/MiscTextures/LootGlare.png" Visibility="{Binding AttachLoot, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
+                                            <Image Source="/Resources/MiscTextures/MainLoot.png" Visibility="{Binding AttachMainLoot, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
+                                        </local:CenteringCanvas>
+                                    </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -729,7 +776,18 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Ellipse>
-                                </Canvas>
+                                        <Ellipse Width="10" Height="10" Stroke="Orange" Fill="Orange" IsHitTestVisible="False">
+                                            <Ellipse.RenderTransform>
+                                                <TranslateTransform X="-5" Y="-5"/>
+                                            </Ellipse.RenderTransform>
+                                            <Ellipse.Visibility>
+                                                <MultiBinding Converter="{StaticResource SelectedObjectConvert}">
+                                                    <Binding/>
+                                                    <Binding Path="DataContext.CurrentSelections.SelectedPathPoint" RelativeSource="{RelativeSource AncestorType=ScrollViewer}"/>
+                                                </MultiBinding>
+                                            </Ellipse.Visibility>
+                                        </Ellipse>
+                                    </Canvas>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
@@ -772,7 +830,15 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Image>
-                                </Grid>
+                                        <Rectangle Stroke="Orange" Fill="Transparent" StrokeThickness="2" IsHitTestVisible="False">
+                                            <Rectangle.Visibility>
+                                                <MultiBinding Converter="{StaticResource SelectedObjectConvert}">
+                                                    <Binding/>
+                                                    <Binding Path="DataContext.CurrentSelections.SelectedMisc" RelativeSource="{RelativeSource AncestorType=ScrollViewer}"/>
+                                                </MultiBinding>
+                                            </Rectangle.Visibility>
+                                        </Rectangle>
+                                    </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
