@@ -36,6 +36,7 @@ namespace BobMapper.ViewModel
         public Map CurrentMap { get; set; }
         public MapProperties CurrentMapProperties { get; set; }
         public EditingInteractions CurrentEditingInteractions { get; set; }
+        public TwoPointToolsData TwoPointToolsData { get; set; }
 
         public EditorViewModel(string filename)
         {
@@ -70,6 +71,7 @@ namespace BobMapper.ViewModel
                 CurrentLoots = new ObservableCollection<Loot>(CurrentMap.loots),
                 CurrentExitZones = new ObservableCollection<ExitZone>(CurrentMap.exitZones)
             };
+            TwoPointToolsData = new TwoPointToolsData();
             CurrentEditingInteractions = new(CurrentObjectCollection, CurrentSelections, CurrentMapProperties);
             CurrentEditingInteractions.AttachAllPathPointHandlers();
             CurrentSelections.CurrentTileSet = CurrentMapProperties.Tileset;
@@ -120,6 +122,7 @@ namespace BobMapper.ViewModel
         [RelayCommand]
         public void SelectTool(Tools tool)
         {
+            TwoPointToolsData.IsVisible = false;
             if (CurrentSelections.SelectedTool != tool)
             {
                 CurrentSelections.SelectedTool = tool;
@@ -129,6 +132,7 @@ namespace BobMapper.ViewModel
             {
                 case Tools.AddWall:
                     CurrentSelections.SelectedTextureType = TextureType.Wall;
+                    TwoPointToolsData.IsVisible = true;
                     break;
                 case Tools.AddProp:
                     CurrentSelections.SelectedTextureType = TextureType.Prop;
@@ -141,13 +145,69 @@ namespace BobMapper.ViewModel
                     break;
                 case Tools.AddDoor:
                     CurrentSelections.SelectedTextureType = TextureType.Door;
+                    TwoPointToolsData.IsVisible = true;
                     break;
             }
         }
 
         public void ClickEmpty(Coordinate placementPos)
         {
+            if(TwoPointToolsData.IsVisible)
+            {
+                TwoPointToolsData.IsDragging = true;
+                return;
+            }
+            float unsnappedX = (placementPos.XPos - CurrentViewportData.CameraX) / (float)CurrentViewportData.ZoomX;
+            float unsnappedY = (placementPos.YPos - CurrentViewportData.CameraY) / (float)CurrentViewportData.ZoomX;
+            placementPos = new(unsnappedX, unsnappedY);
             CurrentEditingInteractions.HandleClickEmpty(placementPos);
+        }
+
+        public void MoveMouse(Coordinate mousePos)
+        {
+            if (!TwoPointToolsData.IsVisible)
+                return;
+            float unsnappedX = (mousePos.XPos - CurrentViewportData.CameraX) / (float)CurrentViewportData.ZoomX;
+            float unsnappedY = (mousePos.YPos - CurrentViewportData.CameraY) / (float)CurrentViewportData.ZoomX;
+            SnapCoordinate snapCoordinate = SnapCoordinate.UnsnappedCoordinateFactory(unsnappedX, unsnappedY);
+            TwoPointToolsData.HandleMouseMove(snapCoordinate);
+        }
+
+        [RelayCommand]
+        public void ReleaseMouse()
+        {
+            if (!TwoPointToolsData.IsVisible)
+                return;
+            SnapCoordinate startCoordinate = new(TwoPointToolsData.StartCoordinate.SnappedXPos, TwoPointToolsData.StartCoordinate.SnappedYPos);
+            SnapCoordinate endCoordinate = new(TwoPointToolsData.EndCoordinate.SnappedXPos, TwoPointToolsData.EndCoordinate.SnappedYPos);
+            if (startCoordinate.XPos == endCoordinate.XPos && startCoordinate.YPos == endCoordinate.YPos)
+            {
+                TwoPointToolsData.IsDragging = false;
+                return;
+            }
+            if (CurrentSelections.SelectedTool == Tools.AddWall)
+            {
+                string validWallTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Wall, CurrentMapProperties.Tileset, true);
+                Wall wall = new Wall(startCoordinate, endCoordinate, Wall.WallType.Normal, validWallTexture, validWallTexture);
+                CurrentObjectCollection.CurrentWalls.Add(wall);
+                if (UserSettings.Instance.AutoSelect)
+                {
+                    CurrentEditingInteractions.SelectObject(wall);
+                }
+            }
+            else
+            {
+                string validDoorTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Door, CurrentMapProperties.Tileset, true);
+                Door door = new Door(startCoordinate, endCoordinate, CurrentSelections.SelectedTexture, false, false, false);
+                CurrentObjectCollection.CurrentDoors.Add(door);
+                if (UserSettings.Instance.AutoSelect)
+                {
+                    CurrentEditingInteractions.SelectObject(door);
+                }
+            }
+            TwoPointToolsData.StartCoordinate.SnappedXPos = endCoordinate.SnappedXPos;
+            TwoPointToolsData.StartCoordinate.SnappedYPos = endCoordinate.SnappedYPos;
+            TwoPointToolsData.IsDragging = false;
         }
 
         public bool CheckForChanges()

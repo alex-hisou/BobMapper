@@ -38,7 +38,6 @@ namespace BobMapper.Model.MapObjects
         public int Duration { get; set; }
 
         private SnapCoordinate coordinates;
-
         public SnapCoordinate Coordinates
         {
             get => coordinates;
@@ -46,26 +45,16 @@ namespace BobMapper.Model.MapObjects
             {
                 if (coordinates != null)
                     coordinates.PropertyChanged -= OnCoordinatesChanged;
-
                 coordinates = value;
-
                 if (coordinates != null)
                     coordinates.PropertyChanged += OnCoordinatesChanged;
-
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(ConnectionDeltaX));
-                OnPropertyChanged(nameof(ConnectionDeltaY));
+                NotifyConnectionChanged();
             }
         }
 
-        private void OnCoordinatesChanged(object sender, PropertyChangedEventArgs e)
-        {
-            OnPropertyChanged(nameof(Coordinates));
-            OnPropertyChanged(nameof(ConnectionDeltaX));
-            OnPropertyChanged(nameof(ConnectionDeltaY));
-        }
-
         private PathPoint connectedPathPoint;
+
         [JsonIgnore]
         public PathPoint ConnectedPathPoint
         {
@@ -73,30 +62,20 @@ namespace BobMapper.Model.MapObjects
             set
             {
                 if (connectedPathPoint != null)
-                    connectedPathPoint.PropertyChanged -= OnConnectedPointMoved;
+                    connectedPathPoint.PropertyChanged -= OnConnectedPointChanged;
                 connectedPathPoint = value;
                 if (connectedPathPoint != null)
-                    connectedPathPoint.PropertyChanged += OnConnectedPointMoved;
+                    connectedPathPoint.PropertyChanged += OnConnectedPointChanged;
                 NotifyConnectionChanged();
             }
         }
 
-        public void NotifyConnectionChanged()
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ConnectionDeltaX)));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ConnectionDeltaY)));
-        }
+        [JsonIgnore]
+        public float ConnectionDeltaX => ConnectedPathPoint == null ? 0 : ConnectedPathPoint.Coordinates.XPos - Coordinates.XPos;
 
-        private void OnConnectedPointMoved(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(Coordinates))
-            {
-                NotifyConnectionChanged();
-            }
-        }
+        [JsonIgnore]
+        public float ConnectionDeltaY => ConnectedPathPoint == null ? 0 : ConnectedPathPoint.Coordinates.YPos - Coordinates.YPos;
 
-        public float ConnectionDeltaX => ConnectedPathPoint != null ? (ConnectedPathPoint.Coordinates.XPos - Coordinates.XPos) : 0;
-        public float ConnectionDeltaY => ConnectedPathPoint != null ? (ConnectedPathPoint.Coordinates.YPos - Coordinates.YPos) : 0;
 
         [JsonConstructor]
         public PathPoint(SnapCoordinate coordinates, int duration, int id, int? connectToId, float rotation)
@@ -116,13 +95,30 @@ namespace BobMapper.Model.MapObjects
             Rotation = rotation;
         }
 
+        private void OnCoordinatesChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Coordinates));
+            NotifyConnectionChanged();
+        }
+
+        private void OnConnectedPointChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Coordinates))
+                NotifyConnectionChanged();
+        }
+
+        private void NotifyConnectionChanged()
+        {
+            OnPropertyChanged(nameof(ConnectionDeltaX));
+            OnPropertyChanged(nameof(ConnectionDeltaY));
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler ConnectionPointChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public event EventHandler ConnectionPointChanged;
-        
     }
 }

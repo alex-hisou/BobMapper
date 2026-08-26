@@ -164,8 +164,8 @@ namespace BobMapper
 
         public static SnapCoordinate UnsnappedCoordinateFactory(float unsnappedXPos, float unsnappedYPos)
         {
-            float snappedXPos = (unsnappedXPos - (unsnappedXPos % FloorSize)) / FloorSize;
-            float snappedYPos = (unsnappedYPos - (unsnappedYPos % FloorSize)) / FloorSize;
+            float snappedXPos = (float)Math.Round(unsnappedXPos / FloorSize);
+            float snappedYPos = (float)Math.Round(unsnappedYPos / FloorSize);
             SnapCoordinate SnapCoordinate = new SnapCoordinate(snappedXPos, snappedYPos);
             return SnapCoordinate;
         }
