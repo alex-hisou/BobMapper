@@ -119,6 +119,41 @@ namespace BobMapper.ViewModel
             }
         }
 
+        internal void ShiftObjects(int northOffset, int eastOffset, int westOffset, int southOffset)
+        {
+            //Man-made horrors beyond comprehension lay here
+            CurrentObjectCollection.CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors));
+            CurrentViewportData.ViewOffsetX = CurrentMapProperties.Width / -2;
+            CurrentViewportData.ViewOffsetY = CurrentMapProperties.Height / -2;
+            foreach(Prop prop in CurrentObjectCollection.CurrentProps)
+                ShiftObjectCoordinates(prop.Coordinates, northOffset, eastOffset, westOffset, southOffset);
+            foreach(PathPoint pathPoint in  CurrentObjectCollection.CurrentPathPoints)
+                ShiftObjectCoordinates(pathPoint.Coordinates, northOffset, eastOffset, westOffset, southOffset);
+            foreach(Misc misc in CurrentObjectCollection.CurrentMiscs)
+                ShiftObjectCoordinates(misc.Coordinates, northOffset, eastOffset, westOffset, southOffset);
+            foreach(NPC nPC in CurrentObjectCollection.CurrentNPCs)
+                ShiftObjectCoordinates(nPC.Coordinates, northOffset, eastOffset, westOffset, southOffset);
+            foreach(Loot loot in CurrentObjectCollection.CurrentLoots)
+                ShiftObjectCoordinates(loot.Coordinates, northOffset, eastOffset, westOffset, southOffset);
+            foreach (Wall wall in CurrentObjectCollection.CurrentWalls)
+            {
+                ShiftObjectCoordinates(wall.Point1, northOffset, eastOffset, westOffset, southOffset);
+                ShiftObjectCoordinates(wall.Point2, northOffset, eastOffset, westOffset, southOffset);
+            }
+            foreach(Door door in CurrentObjectCollection.CurrentDoors)
+            {
+                ShiftObjectCoordinates(door.Point1, northOffset, eastOffset, westOffset, southOffset);
+                ShiftObjectCoordinates(door.Point2, northOffset, eastOffset, westOffset, southOffset);
+            }
+            foreach(ExitZone exitZone in CurrentObjectCollection.CurrentExitZones)
+            {
+                ShiftObjectCoordinates(exitZone.Point1, northOffset, eastOffset, westOffset, southOffset);
+                ShiftObjectCoordinates(exitZone.Point2, northOffset, eastOffset, westOffset, southOffset);
+                ShiftObjectCoordinates(exitZone.Point3, northOffset, eastOffset, westOffset, southOffset);
+                ShiftObjectCoordinates(exitZone.Point4, northOffset, eastOffset, westOffset, southOffset);
+            }
+        }
+
         [RelayCommand]
         public void SelectTool(Tools tool)
         {
@@ -158,7 +193,7 @@ namespace BobMapper.ViewModel
                 return;
             }
             float unsnappedX = (placementPos.XPos - CurrentViewportData.CameraX) / (float)CurrentViewportData.ZoomX;
-            float unsnappedY = (placementPos.YPos - CurrentViewportData.CameraY) / (float)CurrentViewportData.ZoomX;
+            float unsnappedY = (placementPos.YPos + CurrentViewportData.CameraY) / (float)CurrentViewportData.ZoomX;
             placementPos = new(unsnappedX, unsnappedY);
             CurrentEditingInteractions.HandleClickEmpty(placementPos);
         }
@@ -168,7 +203,7 @@ namespace BobMapper.ViewModel
             if (!TwoPointToolsData.IsVisible)
                 return;
             float unsnappedX = (mousePos.XPos - CurrentViewportData.CameraX) / (float)CurrentViewportData.ZoomX;
-            float unsnappedY = (mousePos.YPos - CurrentViewportData.CameraY) / (float)CurrentViewportData.ZoomX;
+            float unsnappedY = (mousePos.YPos + CurrentViewportData.CameraY) / (float)CurrentViewportData.ZoomX;
             SnapCoordinate snapCoordinate = SnapCoordinate.UnsnappedCoordinateFactory(unsnappedX, unsnappedY);
             TwoPointToolsData.HandleMouseMove(snapCoordinate);
         }

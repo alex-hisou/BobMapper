@@ -237,29 +237,29 @@ namespace BobMapper.Model
         [RelayCommand]
         public void WallGizmo1Moved(SnapCoordinate newCoordinate)
         {
-            CurrentSelections.SelectedWall.Point1.SnappedXPos += (float)Math.Ceiling(newCoordinate.SnappedXPos * 2) / 2;
-            CurrentSelections.SelectedWall.Point1.SnappedYPos += (float)Math.Ceiling(newCoordinate.SnappedYPos * 2) / 2;
+            CurrentSelections.SelectedWall.Point1.SnappedXPos += (float)Math.Ceiling(newCoordinate.SnappedXPos);
+            CurrentSelections.SelectedWall.Point1.SnappedYPos += (float)Math.Ceiling(newCoordinate.SnappedYPos);
         }
 
         [RelayCommand]
         public void WallGizmo2Moved(SnapCoordinate newCoordinate)
         {
-            CurrentSelections.SelectedWall.Point2.SnappedXPos += (float)Math.Ceiling(newCoordinate.SnappedXPos * 2) / 2;
-            CurrentSelections.SelectedWall.Point2.SnappedYPos += (float)Math.Ceiling(newCoordinate.SnappedYPos * 2) / 2;
+            CurrentSelections.SelectedWall.Point2.SnappedXPos += (float)Math.Ceiling(newCoordinate.SnappedXPos);
+            CurrentSelections.SelectedWall.Point2.SnappedYPos += (float)Math.Ceiling(newCoordinate.SnappedYPos);
         }
 
         [RelayCommand]
         public void DoorGizmo1Moved(SnapCoordinate newCoordinate)
         {
-            CurrentSelections.SelectedDoor.Point1.SnappedXPos += (float)Math.Ceiling(newCoordinate.SnappedXPos * 2) / 2;
-            CurrentSelections.SelectedDoor.Point1.SnappedYPos += (float)Math.Ceiling(newCoordinate.SnappedYPos * 2) / 2;
+            CurrentSelections.SelectedDoor.Point1.SnappedXPos += (float)Math.Ceiling(newCoordinate.SnappedXPos);
+            CurrentSelections.SelectedDoor.Point1.SnappedYPos += (float)Math.Ceiling(newCoordinate.SnappedYPos);
         }
 
         [RelayCommand]
         public void DoorGizmo2Moved(SnapCoordinate newCoordinate)
         {
-            CurrentSelections.SelectedDoor.Point2.SnappedXPos += (float)Math.Ceiling(newCoordinate.SnappedXPos * 2) / 2;
-            CurrentSelections.SelectedDoor.Point2.SnappedYPos += (float)Math.Ceiling(newCoordinate.SnappedYPos * 2) / 2;
+            CurrentSelections.SelectedDoor.Point2.SnappedXPos += (float)Math.Ceiling(newCoordinate.SnappedXPos);
+            CurrentSelections.SelectedDoor.Point2.SnappedYPos += (float)Math.Ceiling(newCoordinate.SnappedYPos);
         }
 
         [RelayCommand]

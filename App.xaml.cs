@@ -87,6 +87,22 @@ namespace BobMapper
         
     }
 
+    public class MapSizeChangedEventArgs : EventArgs
+    {
+        public int NorthOffset { get; set; }
+        public int EastOffset {  get; set; }
+        public int WestOffset { get; set; }
+        public int SouthOffset {  get; set; }
+
+        public MapSizeChangedEventArgs(int northOffset, int eastOffset, int westOffset, int southOffset)
+        {
+            NorthOffset = northOffset;
+            EastOffset = eastOffset;
+            WestOffset = westOffset;
+            SouthOffset = southOffset;
+        }
+    }
+
     
     public class CenteringCanvas : Canvas
     {
