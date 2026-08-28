@@ -314,19 +314,19 @@
                                         <WrapPanel Width="300">
                                             <Label Width="170">Point 1 - X Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                             PreviewTextInput="TextBox_PreviewTextInput"
+                                             PreviewTextInput="TextBox_PreviewRoundedInput"
                                                      PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Point 1 - Y Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                             PreviewTextInput="TextBox_PreviewTextInput"
+                                             PreviewTextInput="TextBox_PreviewRoundedInput"
                                                      PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Point 2 - X Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                             PreviewTextInput="TextBox_PreviewTextInput"
+                                             PreviewTextInput="TextBox_PreviewRoundedInput"
                                                      PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Point 2 - Y Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                             PreviewTextInput="TextBox_PreviewTextInput"
+                                             PreviewTextInput="TextBox_PreviewRoundedInput"
                                                      PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Texture</Label>
                                             <Image Source="{Binding Texture1}" MaxHeight="100" MaxWidth="100"/>
@@ -352,19 +352,19 @@
                                         <WrapPanel Width="300">
                                             <Label Width="170">Point 1 - X Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                            PreviewTextInput="TextBox_PreviewRoundedInput"
                                                      PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Point 1 - Y Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Point1.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                            PreviewTextInput="TextBox_PreviewRoundedInput"
                                                      PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Point 2 - X Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedXPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                            PreviewTextInput="TextBox_PreviewRoundedInput"
                                                      PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Point 2 - Y Coordinate</Label>
                                             <TextBox Width="100" Height="20" Text="{Binding Point2.SnappedYPos, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                            PreviewTextInput="TextBox_PreviewRoundedInput"
                                                      PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                             <Label Width="170">Left Texture</Label>
                                             <Image Source="{Binding Texture1}" MaxHeight="100" MaxWidth="100"/>
@@ -463,9 +463,8 @@
                             </Border>
                             <Label Width="250" Content="{Binding CurrentSelections.SelectedTexture}"></Label>
 
-                            <ComboBox Width="250" Height="20" Margin="20" ItemsSource="{Binding CurrentMap.TextureTypeValues}" SelectedItem="{Binding CurrentSelections.SelectedTextureType}">
-                            </ComboBox>
-                            <ScrollViewer MinHeight="150" MaxHeight="600" x:Name="AssetGalleryScroll" GotKeyboardFocus="AssetGalleryScroll_GotKeyboardFocus" MinWidth="300">
+                            <ComboBox Width="250" Height="20" Margin="20" ItemsSource="{Binding CurrentMap.TextureTypeValues}" SelectedItem="{Binding CurrentSelections.SelectedTextureType}"/>
+                            <ScrollViewer MinHeight="150" MaxHeight="600" x:Name="AssetGalleryScroll" MinWidth="300">
                                 <ItemsControl ItemsSource="{Binding CurrentSelections.CurrentTextureSet}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
@@ -592,13 +591,16 @@
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Image>
-                                        <Rectangle Stroke="Orange" Fill="Transparent" StrokeThickness="2" IsHitTestVisible="False">
+                                        <Rectangle Stroke="Orange" StrokeThickness="2" IsHitTestVisible="False">
                                             <Rectangle.Visibility>
                                                 <MultiBinding Converter="{StaticResource SelectedObjectConvert}">
                                                     <Binding/>
                                                     <Binding Path="DataContext.CurrentSelections.SelectedProp" RelativeSource="{RelativeSource AncestorType=ScrollViewer}"/>
                                                 </MultiBinding>
                                             </Rectangle.Visibility>
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="Orange" Opacity="0.2"/>
+                                            </Rectangle.Fill>
                                         </Rectangle>
                                     </Grid>
                             </DataTemplate>
@@ -634,13 +636,16 @@
                                         </i:Interaction.Triggers>
                                     </Image>
                                     <Image Source="/Resources/MiscTextures/LootGlare.png" IsHitTestVisible="False" Opacity="0.7"/>
-                                        <Rectangle Stroke="Orange" Fill="Transparent" StrokeThickness="2" IsHitTestVisible="False">
+                                        <Rectangle Stroke="Orange" StrokeThickness="2" IsHitTestVisible="False">
                                             <Rectangle.Visibility>
                                                 <MultiBinding Converter="{StaticResource SelectedObjectConvert}">
                                                     <Binding/>
                                                     <Binding Path="DataContext.CurrentSelections.SelectedLoot" RelativeSource="{RelativeSource AncestorType=ScrollViewer}"/>
                                                 </MultiBinding>
                                             </Rectangle.Visibility>
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="Orange" Opacity="0.2"/>
+                                            </Rectangle.Fill>
                                         </Rectangle>
                                     </Grid>
                             </DataTemplate>
@@ -739,14 +744,17 @@
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
                                             </Image>
-                                            <Rectangle Stroke="Orange" Fill="Transparent" StrokeThickness="2" IsHitTestVisible="False">
+                                            <Rectangle Stroke="Orange" StrokeThickness="2" IsHitTestVisible="False">
                                                 <Rectangle.Visibility>
                                                     <MultiBinding Converter="{StaticResource SelectedObjectConvert}">
                                                         <Binding/>
                                                         <Binding Path="DataContext.CurrentSelections.SelectedNPC" RelativeSource="{RelativeSource AncestorType=ScrollViewer}"/>
                                                     </MultiBinding>
                                                 </Rectangle.Visibility>
-                                            </Rectangle>
+                                                    <Rectangle.Fill>
+                                                        <SolidColorBrush Color="Orange" Opacity="0.2"/>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
                                             </Grid>
                                             <Image Source="/Resources/MiscTextures/LootGlare.png" Visibility="{Binding AttachLoot, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
                                             <Image Source="/Resources/MiscTextures/MainLoot.png" Visibility="{Binding AttachMainLoot, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
@@ -830,13 +838,16 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Image>
-                                        <Rectangle Stroke="Orange" Fill="Transparent" StrokeThickness="2" IsHitTestVisible="False">
+                                        <Rectangle Stroke="Orange" StrokeThickness="2" IsHitTestVisible="False">
                                             <Rectangle.Visibility>
                                                 <MultiBinding Converter="{StaticResource SelectedObjectConvert}">
                                                     <Binding/>
                                                     <Binding Path="DataContext.CurrentSelections.SelectedMisc" RelativeSource="{RelativeSource AncestorType=ScrollViewer}"/>
                                                 </MultiBinding>
                                             </Rectangle.Visibility>
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="Orange" Opacity="0.2"/>
+                                            </Rectangle.Fill>
                                         </Rectangle>
                                     </Grid>
                             </DataTemplate>

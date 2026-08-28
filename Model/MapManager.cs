@@ -132,6 +132,16 @@ namespace BobMapper.Model
             }
         }
 
+        public static void ShiftObjectCoordinates(SnapCoordinate inputCoordinate, int northOffset, int eastOffset, int westOffset, int southOffset)
+        {
+            float netVerticalOffset = southOffset - northOffset;
+            float netHorizontalOffset = westOffset - eastOffset;
+            netVerticalOffset /= 2;
+            netHorizontalOffset /= 2;
+            inputCoordinate.SnappedXPos += netHorizontalOffset;
+            inputCoordinate.SnappedYPos += netVerticalOffset;
+        }
+
         public static ResourceManager resourceManager = Resources.ResourceManager;
 
         public class LevelInjectPromptEventArgs : EventArgs

@@ -40,6 +40,11 @@ namespace BobMapper
             e.Handled = Regex.IsMatch(e.Text, "[^0-9\\-.]");
         }
 
+        private void TextBox_PreviewRoundedInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9\\-]");
+        }
+
         private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -73,6 +78,10 @@ namespace BobMapper
 
         private void ClickEmpty(object sender, MouseEventArgs e)
         {
+            Keyboard.ClearFocus();
+            FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), this);
+            Keyboard.Focus(Editor1);
+            Editor1.Focus();
             var mousePos = e.GetPosition(ScrollPlane);
             int wholeX = Convert.ToInt32(mousePos.X);
             int wholeY = Convert.ToInt32(mousePos.Y);
@@ -156,12 +165,6 @@ namespace BobMapper
             shortcutList.Show();
         }
 
-        private void AssetGalleryScroll_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            Keyboard.ClearFocus();
-            FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), this);
-        }
-
         private void AboutOpen(object sender, RoutedEventArgs e)
         {
             About about = new About();
@@ -186,10 +189,10 @@ namespace BobMapper
             var vm = (EditorViewModel)DataContext;
             ExpandOrContract expandOrContract = new(vm.CurrentMap);
             expandOrContract.Show();
-            EventHandler mapSizeChangeHandler = null!;
+            EventHandler<MapSizeChangedEventArgs> mapSizeChangeHandler = null!;
             mapSizeChangeHandler = (sender, e) =>
             {
-                vm.CurrentObjectCollection.CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(vm.CurrentMap.floors));
+                vm.ShiftObjects(e.NorthOffset, e.EastOffset, e.WestOffset, e.SouthOffset);
                 vm.CurrentMap.MapSizeChanged -= mapSizeChangeHandler;
             };
             vm.CurrentMap.MapSizeChanged += mapSizeChangeHandler;

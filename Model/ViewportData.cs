@@ -16,7 +16,7 @@ namespace BobMapper.Model
         public int ViewOffsetX
         {
             get { return viewOffsetX; }
-            set { viewOffsetX = value; }
+            set { viewOffsetX = value; OnPropertyChanged(); }
         }
 
         private int viewOffsetY;
@@ -24,7 +24,7 @@ namespace BobMapper.Model
         public int ViewOffsetY
         {
             get { return viewOffsetY; }
-            set { viewOffsetY = value; }
+            set { viewOffsetY = value; OnPropertyChanged(); }
         }
 
         private int cameraX;

@@ -115,6 +115,9 @@ namespace BobMapper.Model
                         SelectObject(loot);
                     }
                     break;
+                case Tools.Select:
+                    ResetSelection();
+                    break;
                 default:
                     break;
             }

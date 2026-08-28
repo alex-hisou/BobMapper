@@ -105,10 +105,10 @@ namespace BobMapper.Model
             mapProperties.Height = newFloorHeight * 64;
             mapProperties.Width = newFloorWidth * 64;
             floors = newFloor;
-            MapSizeChanged?.Invoke(this, EventArgs.Empty);
+            MapSizeChanged?.Invoke(this, new(northOffset, eastOffset, westOffset, southOffset));
         }
 
-        public event EventHandler MapSizeChanged;
+        public event EventHandler<MapSizeChangedEventArgs> MapSizeChanged;
 
         public static Array TextureTypeValues => Enum.GetValues(typeof(TextureType));
 
