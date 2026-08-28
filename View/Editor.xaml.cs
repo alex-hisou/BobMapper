@@ -40,6 +40,11 @@ namespace BobMapper
             e.Handled = Regex.IsMatch(e.Text, "[^0-9\\-.]");
         }
 
+        private void TextBox_PreviewRoundedInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = Regex.IsMatch(e.Text, "[^0-9\\-]");
+        }
+
         private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
