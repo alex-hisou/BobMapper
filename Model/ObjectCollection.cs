@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BobMapper.Model.MapObjects;
+using BobMapper.ViewModel;
 
 namespace BobMapper.Model
 {
@@ -39,11 +40,15 @@ namespace BobMapper.Model
         private ObservableCollection<Loot> currentLoots;
         public ObservableCollection<ExitZone> CurrentExitZones { get => currentExitZones; set => currentExitZones = value; }
         private ObservableCollection<ExitZone> currentExitZones;
+        public ObservableCollection<CableViewModel> CurrentCables { get => currentCables; set => currentCables = value; }
+        private ObservableCollection<CableViewModel> currentCables;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
+        }
     }
-}

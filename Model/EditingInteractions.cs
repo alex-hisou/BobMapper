@@ -307,6 +307,10 @@ namespace BobMapper.Model
                 Floor floor = (Floor)sender;
                 floor.Flip++;
             }
+            if(CurrentSelections.SelectedTool == Tools.Select)
+            {
+                ResetSelection();
+            }
         }
 
         private void ResetSelection()

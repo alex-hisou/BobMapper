@@ -22,6 +22,7 @@ namespace BobMapper.Model
         public List<Misc> miscs = new List<Misc>();
         public List<Loot> loots = new List<Loot>();
         public List<ExitZone> exitZones = new List<ExitZone>();
+        public List<Cable> cables = new List<Cable>();
         public Floor[][] floors;
         public MapProperties mapProperties;
 
@@ -47,7 +48,7 @@ namespace BobMapper.Model
 
 
         [JsonConstructor] //Use only for initialization from json. Otherwise write properties directly using the no param constructor above
-        public Map(List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, List<Loot> loots, Floor[][] floors, List<Door> doors, MapProperties mapProperties, List<ExitZone> exitZones)
+        public Map(List<Wall> walls, List<Prop> props, List<NPC> npcs, List<PathPoint> pathPoints, List<Misc> miscs, List<Loot> loots, Floor[][] floors, List<Door> doors, MapProperties mapProperties, List<ExitZone> exitZones, List<Cable> cables)
         {
             this.walls = walls;
             this.props = props;
@@ -59,6 +60,7 @@ namespace BobMapper.Model
             this.mapProperties = mapProperties;
             this.doors = doors;
             this.exitZones = exitZones;
+            this.cables = cables;
         }
 
         public enum Chapter
