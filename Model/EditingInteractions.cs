@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using BobMapper.Data;
 using BobMapper.Model.MapObjects;
+using BobMapper.ViewModel;
 using CommunityToolkit.Mvvm.Input;
 using static BobMapper.Model.MapManager;
 
@@ -114,6 +115,14 @@ namespace BobMapper.Model
                     {
                         SelectObject(loot);
                     }
+                    break;
+                case Tools.AddCable:
+                    if (CurrentSelections.SelectedObjectType != ObjectType.Cable)
+                        break;
+                    float snapX = placementPos.XPos / 64;
+                    float snapY = placementPos.YPos / 64;
+                    SnapCoordinate snappedCableNodePos = new(snapX, snapY);
+                    CurrentSelections.SelectedCable.Coordinates.Add(snappedCableNodePos);
                     break;
                 case Tools.Select:
                     ResetSelection();
@@ -306,6 +315,19 @@ namespace BobMapper.Model
             {
                 Floor floor = (Floor)sender;
                 floor.Flip++;
+            }
+            if(CurrentSelections.SelectedTool == Tools.AddCable)
+            {
+                List<string> buttonTextures = new List<string>();
+                if (sender.GetType() != typeof(Prop)) 
+                    return;
+                Prop prop = (Prop)sender;
+                if (!buttonTextures.Any(x => x == prop.PropTexture))
+                    return;
+                Cable cable = new();
+                CableViewModel cableViewModel = new(cable);
+                cableViewModel.Coordinates.Add(prop.Coordinates);
+                CurrentObjectCollection.CurrentCables.Add(cableViewModel);
             }
             if(CurrentSelections.SelectedTool == Tools.Select)
             {

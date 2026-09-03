@@ -178,7 +178,7 @@
                         <Image Source="/Resources/UI/AddFloorTool.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Add Door" Name="AddDoorTool"
+                <MenuItem Header="Draw Door" Name="AddDoorTool"
                     Command="{Binding SelectToolCommand}" 
                     CommandParameter="{x:Static local:Tools.AddDoor}">
                     <MenuItem.Icon>
@@ -195,6 +195,13 @@
                 <MenuItem Header="Add Misc" Name="AddMiscTool"
                           Command="{Binding SelectToolCommand}" 
                           CommandParameter="{x:Static local:Tools.AddMisc}">
+                    <MenuItem.Icon>
+                        <Image Source="/Resources/UI/AddMiscTool.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Add Cable" Name="AddCableTool"
+                    Command="{Binding SelectToolCommand}" 
+                    CommandParameter="{x:Static local:Tools.AddCable}">
                     <MenuItem.Icon>
                         <Image Source="/Resources/UI/AddMiscTool.png"/>
                     </MenuItem.Icon>

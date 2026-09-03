@@ -9,6 +9,7 @@ using Microsoft.Data.Sqlite;
 using BobMapper.Model.MapObjects;
 using static BobMapper.Model.MapManager;
 using BobMapper.Services;
+using BobMapper.ViewModel;
 
 namespace BobMapper.Model
 {
@@ -156,6 +157,13 @@ namespace BobMapper.Model
             set { selectedLoot = value; OnPropertyChanged(); }
         }
 
+        private CableViewModel selectedCable;
+
+        public CableViewModel SelectedCable
+        {
+            get { return selectedCable; }
+            set { selectedCable = value; OnPropertyChanged(); }
+        }
 
         public Tilesets CurrentTileSet { get; set; }
 

@@ -59,6 +59,8 @@ namespace BobMapper.ViewModel
             CurrentLayerData = new LayerData();
             if (CurrentMap.exitZones == null)
                 CurrentMap.exitZones = new();
+            if(CurrentMap.cables == null) 
+                CurrentMap.cables = new();
             CurrentObjectCollection = new ObjectCollection
             {
                 CurrentProps = new ObservableCollection<Prop>(CurrentMap.props),
@@ -69,7 +71,8 @@ namespace BobMapper.ViewModel
                 CurrentFloors = new ObservableCollection<ObservableCollection<Floor>>(FlattenFloors(CurrentMap.floors)),
                 CurrentDoors = new ObservableCollection<Door>(CurrentMap.doors),
                 CurrentLoots = new ObservableCollection<Loot>(CurrentMap.loots),
-                CurrentExitZones = new ObservableCollection<ExitZone>(CurrentMap.exitZones)
+                CurrentExitZones = new ObservableCollection<ExitZone>(CurrentMap.exitZones),
+                CurrentCables = CableViewModel.CableViewModelFactory(CurrentMap.cables)
             };
             TwoPointToolsData = new TwoPointToolsData();
             CurrentEditingInteractions = new(CurrentObjectCollection, CurrentSelections, CurrentMapProperties);
@@ -268,6 +271,7 @@ namespace BobMapper.ViewModel
             CurrentMap.loots = CurrentObjectCollection.CurrentLoots.ToList();
             CurrentMap.floors = SaveFloor();
             CurrentMap.exitZones = CurrentObjectCollection.CurrentExitZones.ToList();
+            CurrentMap.cables = CableViewModel.ModelCablesFactory(CurrentObjectCollection.CurrentCables);
             if(saveNewFile)
             {
                 FileDialogService fileDialogService = new FileDialogService();

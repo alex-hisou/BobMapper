@@ -9,13 +9,8 @@ using System.Threading.Tasks;
 
 namespace BobMapper.Model.MapObjects
 {
-    public class Cable : INotifyPropertyChanged
+    public class Cable
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         private List<SnapCoordinate> coordinates = new();
 
@@ -29,7 +24,7 @@ namespace BobMapper.Model.MapObjects
         public string ColourHex
         {
             get { return colourHex; }
-            set { colourHex = value; }
+            set { colourHex = value;}
         }
 
         public Cable()

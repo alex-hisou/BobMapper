@@ -684,7 +684,6 @@
     <None Remove="Resources\PropTextures\Lab_Mice.png" />
     <None Remove="Resources\PropTextures\Lab_Radar.png" />
     <None Remove="Resources\PropTextures\Lamppost_Double.png" />
-    <None Remove="Resources\PropTextures\laser_button.png" />
     <None Remove="Resources\PropTextures\laser_button_blue.png" />
     <None Remove="Resources\PropTextures\laser_button_green.png" />
     <None Remove="Resources\PropTextures\laser_button_red.png" />
@@ -2348,7 +2347,6 @@
     <Resource Include="Resources\PropTextures\Lab_Mice.png" />
     <Resource Include="Resources\PropTextures\Lab_Radar.png" />
     <Resource Include="Resources\PropTextures\Lamppost_Double.png" />
-    <Resource Include="Resources\PropTextures\laser_button.png" />
     <Resource Include="Resources\PropTextures\laser_button_blue.png" />
     <Resource Include="Resources\PropTextures\laser_button_green.png" />
     <Resource Include="Resources\PropTextures\laser_button_red.png" />
