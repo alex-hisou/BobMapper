@@ -102,6 +102,14 @@ namespace BobMapper.Model
             }
         }
 
+        private bool cablesVisible = true;
+
+        public bool CablesVisible
+        {
+            get { return cablesVisible; }
+            set { cablesVisible = value; }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

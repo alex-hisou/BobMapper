@@ -30,6 +30,7 @@
         </ObjectDataProvider>
         <services:EnumBoolConverter x:Key="EnumBoolConvert"/>
         <services:SelectedObjectVisibilityConverter x:Key="SelectedObjectConvert"/>
+        <services:SnapCoordinateListToPathConverter x:Key="SnapCoordinatePathConvert"/>
         <ctrls:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <s:Boolean x:Key="True">True</s:Boolean>
         <s:Boolean x:Key="False">False</s:Boolean>
@@ -569,7 +570,26 @@
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                     </ItemsControl>
-                    <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentProps}" Visibility="{Binding CurrentLayerData.PropsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentCables}" Visibility="{Binding CurrentLayerData.CablesVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <local:CenteringCanvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:CableViewModel}">
+                                    <Path Stroke="{Binding ColourBrush}" StrokeThickness="4">
+                                        <Path.Data>
+                                            <MultiBinding Converter="{StaticResource SnapCoordinatePathConvert}">
+                                                <Binding Path="Coordinates" />
+                                                <Binding Path="PointsVersion" />
+                                            </MultiBinding>
+                                        </Path.Data>
+                                    </Path>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentProps}" Visibility="{Binding CurrentLayerData.PropsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <local:CenteringCanvas />
@@ -595,6 +615,10 @@
                                                 <i:EventTrigger EventName="MouseLeftButtonDown">
                                                     <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
                                                 RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
+                                                </i:EventTrigger>
+                                                <i:EventTrigger EventName="MouseRightButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.RightClickObjectCommand, 
+                                                    RelativeSource={RelativeSource AncestorType=Canvas}}" CommandParameter="{Binding}"/>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </Image>

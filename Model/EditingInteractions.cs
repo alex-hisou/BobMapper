@@ -322,12 +322,13 @@ namespace BobMapper.Model
                 if (sender.GetType() != typeof(Prop)) 
                     return;
                 Prop prop = (Prop)sender;
-                if (!buttonTextures.Any(x => x == prop.PropTexture))
-                    return;
+                //if (!buttonTextures.Any(x => x == prop.PropTexture))
+                //    return;
                 Cable cable = new();
                 CableViewModel cableViewModel = new(cable);
                 cableViewModel.Coordinates.Add(prop.Coordinates);
                 CurrentObjectCollection.CurrentCables.Add(cableViewModel);
+                SelectObject(cableViewModel);
             }
             if(CurrentSelections.SelectedTool == Tools.Select)
             {
@@ -377,6 +378,11 @@ namespace BobMapper.Model
                 case ObjectType.Loot:
                     {
                         CurrentSelections.SelectedLoot = null;
+                        break;
+                    }
+                case ObjectType.Cable:
+                    {
+                        CurrentSelections.SelectedCable = null;
                         break;
                     }
             }
@@ -432,6 +438,10 @@ namespace BobMapper.Model
                     selectedObjectIndex = CurrentObjectCollection.CurrentLoots.IndexOf((Loot)sender);
                     CurrentSelections.SelectedLoot = CurrentObjectCollection.CurrentLoots[selectedObjectIndex];
                     break;
+                case ObjectType.Cable:
+                    selectedObjectIndex = CurrentObjectCollection.CurrentCables.IndexOf((CableViewModel)sender);
+                    CurrentSelections.SelectedCable = CurrentObjectCollection.CurrentCables[selectedObjectIndex];
+                    break;
                 default:
                     throw new Exception("Invalid object type");
             }
@@ -446,7 +456,8 @@ namespace BobMapper.Model
             {typeof(Floor), ObjectType.Floor},
             {typeof(Misc), ObjectType.Misc},
             {typeof(Door), ObjectType.Door },
-            {typeof(Loot), ObjectType.Loot }
+            {typeof(Loot), ObjectType.Loot },
+            {typeof(CableViewModel), ObjectType.Cable }
         };
     }
 }

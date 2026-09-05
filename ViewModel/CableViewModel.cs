@@ -19,7 +19,7 @@ namespace BobMapper.ViewModel
         public ObservableCollection<SnapCoordinate> Coordinates
         {
             get { return coordinates; }
-            set { coordinates = value; }
+            set { coordinates = value; OnPropertyChanged(); }
         }
 
         private SolidColorBrush colourBrush;
@@ -30,6 +30,16 @@ namespace BobMapper.ViewModel
             set { colourBrush = value; OnPropertyChanged(); }
         }
 
+        private int pointsVersion;
+        public int PointsVersion
+        {
+            get => pointsVersion;
+            private set
+            {
+                pointsVersion = value;
+                OnPropertyChanged();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -44,6 +54,7 @@ namespace BobMapper.ViewModel
             Coordinates = new ObservableCollection<SnapCoordinate>();
             BrushConverter converter = new BrushConverter();
             ColourBrush = (SolidColorBrush)converter.ConvertFromString(cable.ColourHex);
+            Coordinates.CollectionChanged += (_, _) => PointsVersion++;
         }
 
         public static ObservableCollection<CableViewModel> CableViewModelFactory(List<Cable> cables)
