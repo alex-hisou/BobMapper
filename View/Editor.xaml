@@ -457,6 +457,17 @@
                                     </DataTemplate>
                                 </ContentControl.Resources>
                             </ContentControl>
+                            <ContentControl Content="{Binding CurrentSelections.SelectedCable}">
+                                <ContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type vm:CableViewModel}">
+                                        <WrapPanel Width="300">
+                                            <Label Width="170" Height="30">Cable colour</Label>
+                                            <Border Background="{Binding ColourBrush}" Width="200" Height="30"/>
+                                            <TextBox Text="{Binding ColourBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="170" Height="30"/>
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ContentControl.Resources>
+                            </ContentControl>
                         </WrapPanel>
                     </Expander>
                     <Label>Properties</Label>
@@ -573,19 +584,27 @@
                         <ItemsControl ItemsSource="{Binding CurrentObjectCollection.CurrentCables}" Visibility="{Binding CurrentLayerData.CablesVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <local:CenteringCanvas />
+                                    <Canvas/>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="{x:Type vm:CableViewModel}">
-                                    <Path Stroke="{Binding ColourBrush}" StrokeThickness="4">
-                                        <Path.Data>
-                                            <MultiBinding Converter="{StaticResource SnapCoordinatePathConvert}">
-                                                <Binding Path="Coordinates" />
-                                                <Binding Path="PointsVersion" />
-                                            </MultiBinding>
-                                        </Path.Data>
-                                    </Path>
+                                    <Canvas>
+                                        <Path Stroke="{Binding ColourBrush}" StrokeThickness="4">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding DataContext.CurrentEditingInteractions.ClickObjectCommand, 
+                                                    RelativeSource={RelativeSource AncestorType=ScrollViewer}}" CommandParameter="{Binding}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <Path.Data>
+                                                <MultiBinding Converter="{StaticResource SnapCoordinatePathConvert}">
+                                                    <Binding Path="Coordinates" />
+                                                    <Binding Path="PointsVersion" />
+                                                </MultiBinding>
+                                            </Path.Data>
+                                        </Path>
+                                    </Canvas>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

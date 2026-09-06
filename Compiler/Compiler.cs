@@ -16,9 +16,11 @@ namespace BobMapper.Compiler
         internal void Compile(Map map)
         {
             List<Wall> unsplitWalls = SplitWalls(map.walls);
-            byte[] fileHeader = [0x01, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00];
+            byte[] fileHeader = [0x01, 0x00, 0x00, 0x00];
             output.AddRange(fileHeader);
-            //output.AddRange(CablesAsBytes());
+            if(map.cables.Count > 0)
+                output.AddRange(CablesAsBytes(map.cables));
+
             output.AddRange(FloorAsBytes(map.floors));
 
             Items_v4 items_V4 = new(unsplitWalls, map.doors, map.props, map.loots, this);
@@ -76,15 +78,42 @@ namespace BobMapper.Compiler
             return splitWalls;
         }
 
-        private List<byte> CablesAsBytes()
+        private List<byte> CablesAsBytes(List<Cable> cables)
         {
-            List<byte> ByteCables = new List<byte>();
-            return ByteCables;
+            List<byte> cablesOutput = new List<byte>();
+            byte[] sectionHeader = [0x06, 0x00, 0x00, 0x00];
+            cablesOutput.AddRange(sectionHeader);
+            byte[] cablesText = Encoding.ASCII.GetBytes("Cables");
+            cablesOutput.AddRange(cablesText);
+            List<byte> cablesByteBuffer = new();
+            int cablesCount = Convert.ToInt32(cables.Count);
+            cablesByteBuffer.AddRange(BitConverter.GetBytes(cablesCount));
+            foreach (Cable cable in cables)
+            {
+                List<byte> currentCableOutput = new();
+                //Regex out #
+                byte[] hexBytes = Encoding.ASCII.GetBytes(cable.ColourHex);
+                currentCableOutput.AddRange(hexBytes);
+                byte[] cableSegmentHeader = [0x0A, 0xD7, 0xA3, 0x3D];
+                currentCableOutput.AddRange(cableSegmentHeader);
+                int cableNodesCount = Convert.ToInt32(cable.Coordinates.Count);
+                currentCableOutput.AddRange(BitConverter.GetBytes(cableNodesCount));
+                foreach(SnapCoordinate coordinate  in cable.Coordinates)
+                {
+                    FloatCoordinate floatCoordinate = new(coordinate);
+                    currentCableOutput.AddRange(floatCoordinate.CompiledBytes);
+                }
+            }
+            int sectionLength = Convert.ToInt32(cablesByteBuffer.Count);
+            cablesOutput.AddRange(BitConverter.GetBytes(sectionLength));
+            return cablesOutput;
         }
 
         private List<byte> FloorAsBytes(Floor[][] floors)
         {
             List<byte> byteFloors = new List<byte>();
+            byte[] sectionHeader = [0x08, 0x00, 0x00, 0x00];
+            byteFloors.AddRange(sectionHeader);
             byte[] floors_v3 = Encoding.ASCII.GetBytes("Floor_v3");
             byteFloors.AddRange(floors_v3);
             

@@ -224,6 +224,13 @@ namespace BobMapper.Model
                         CurrentObjectCollection.CurrentLoots.RemoveAt(toDeleteId);
                         break;
                     }
+                case ObjectType.Cable:
+                    {
+                        toDeleteId = CurrentObjectCollection.CurrentCables.IndexOf(CurrentSelections.SelectedCable);
+                        CurrentSelections.SelectedCable = null;
+                        CurrentObjectCollection.CurrentCables.RemoveAt(toDeleteId);
+                        break;
+                    }
                 default:
                     {
                         return;
@@ -319,6 +326,10 @@ namespace BobMapper.Model
             if(CurrentSelections.SelectedTool == Tools.AddCable)
             {
                 List<string> buttonTextures = new List<string>();
+                if (sender.GetType() == typeof(Door))
+                {
+
+                }
                 if (sender.GetType() != typeof(Prop)) 
                     return;
                 Prop prop = (Prop)sender;
