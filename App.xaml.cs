@@ -50,7 +50,8 @@ namespace BobMapper
         AddMisc,
         ChangeFloor,
         AddDoor,
-        AddLoot
+        AddLoot,
+        AddCable
     }
 
     public enum Tilesets

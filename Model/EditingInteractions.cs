@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using BobMapper.Data;
 using BobMapper.Model.MapObjects;
+using BobMapper.ViewModel;
 using CommunityToolkit.Mvvm.Input;
 using static BobMapper.Model.MapManager;
 
@@ -115,6 +116,14 @@ namespace BobMapper.Model
                         SelectObject(loot);
                     }
                     break;
+                case Tools.AddCable:
+                    if (CurrentSelections.SelectedObjectType != ObjectType.Cable)
+                        break;
+                    float snapX = placementPos.XPos / 64;
+                    float snapY = placementPos.YPos / 64;
+                    SnapCoordinate snappedCableNodePos = new(snapX, snapY);
+                    CurrentSelections.SelectedCable.Coordinates.Add(snappedCableNodePos);
+                    break;
                 case Tools.Select:
                     ResetSelection();
                     break;
@@ -215,12 +224,33 @@ namespace BobMapper.Model
                         CurrentObjectCollection.CurrentLoots.RemoveAt(toDeleteId);
                         break;
                     }
+                case ObjectType.Cable:
+                    {
+                        toDeleteId = CurrentObjectCollection.CurrentCables.IndexOf(CurrentSelections.SelectedCable);
+                        CurrentSelections.SelectedCable = null;
+                        CurrentObjectCollection.CurrentCables.RemoveAt(toDeleteId);
+                        break;
+                    }
                 default:
                     {
                         return;
                     }
             }
             CurrentSelections.SelectedObjectType = ObjectType.None;
+        }
+
+        [RelayCommand]
+        public void Backspace()
+        {
+            if (CurrentSelections.SelectedObjectType != ObjectType.Cable)
+                return;
+            int lastIndex = CurrentSelections.SelectedCable.Coordinates.Count - 1;
+            if (lastIndex < 1)
+            {
+                DeleteObject();
+                return;
+            }
+            CurrentSelections.SelectedCable.Coordinates.RemoveAt(lastIndex);
         }
 
         [RelayCommand]
@@ -307,6 +337,28 @@ namespace BobMapper.Model
                 Floor floor = (Floor)sender;
                 floor.Flip++;
             }
+            if(CurrentSelections.SelectedTool == Tools.AddCable)
+            {
+                List<string> buttonTextures = new List<string>();
+                if (sender.GetType() == typeof(Door))
+                {
+
+                }
+                if (sender.GetType() != typeof(Prop)) 
+                    return;
+                Prop prop = (Prop)sender;
+                //if (!buttonTextures.Any(x => x == prop.PropTexture))
+                //    return;
+                Cable cable = new(prop);
+                CableViewModel cableViewModel = new(cable);
+                cableViewModel.Coordinates.Add(prop.Coordinates);
+                CurrentObjectCollection.CurrentCables.Add(cableViewModel);
+                SelectObject(cableViewModel);
+            }
+            if(CurrentSelections.SelectedTool == Tools.Select)
+            {
+                ResetSelection();
+            }
         }
 
         private void ResetSelection()
@@ -351,6 +403,11 @@ namespace BobMapper.Model
                 case ObjectType.Loot:
                     {
                         CurrentSelections.SelectedLoot = null;
+                        break;
+                    }
+                case ObjectType.Cable:
+                    {
+                        CurrentSelections.SelectedCable = null;
                         break;
                     }
             }
@@ -406,6 +463,10 @@ namespace BobMapper.Model
                     selectedObjectIndex = CurrentObjectCollection.CurrentLoots.IndexOf((Loot)sender);
                     CurrentSelections.SelectedLoot = CurrentObjectCollection.CurrentLoots[selectedObjectIndex];
                     break;
+                case ObjectType.Cable:
+                    selectedObjectIndex = CurrentObjectCollection.CurrentCables.IndexOf((CableViewModel)sender);
+                    CurrentSelections.SelectedCable = CurrentObjectCollection.CurrentCables[selectedObjectIndex];
+                    break;
                 default:
                     throw new Exception("Invalid object type");
             }
@@ -420,7 +481,8 @@ namespace BobMapper.Model
             {typeof(Floor), ObjectType.Floor},
             {typeof(Misc), ObjectType.Misc},
             {typeof(Door), ObjectType.Door },
-            {typeof(Loot), ObjectType.Loot }
+            {typeof(Loot), ObjectType.Loot },
+            {typeof(CableViewModel), ObjectType.Cable }
         };
     }
 }

@@ -27,7 +27,9 @@ namespace BobMapper.Model
             Floor,
             Misc,
             Door,
-            Loot
+            Loot,
+            ExitZone,
+            Cable
         }
 
 

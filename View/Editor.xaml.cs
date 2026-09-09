@@ -151,6 +151,9 @@ namespace BobMapper
                 case Tools.AddLoot:
                     AddLootTool.Background = Brushes.DarkGray;
                     break;
+                case Tools.AddCable:
+                    AddCableTool.Background = Brushes.DarkGray;
+                    break;
                 case Tools.None:
                     break;
                 default:
