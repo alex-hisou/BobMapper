@@ -84,6 +84,7 @@
             CommandParameter="{StaticResource True}"/>
         <KeyBinding Key="I" Command="{Binding InjectCommand}" Modifiers="Ctrl"
                     CommandParameter="{StaticResource False}"/>
+        <KeyBinding Key="Backspace" Command="{Binding CurrentEditingInteractions.BackspaceCommand}"/>
     </Window.InputBindings>
 
     <Grid x:Name="WindowGrid">
@@ -464,6 +465,10 @@
                                             <Label Width="170" Height="30">Cable colour</Label>
                                             <Border Background="{Binding ColourBrush}" Width="200" Height="30"/>
                                             <TextBox Text="{Binding ColourBrush, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="170" Height="30"/>
+                                            <Label Width="170">Duration</Label>
+                                            <TextBox Width="100" Height="20" Text="{Binding Duration, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                                                PreviewTextInput="TextBox_PreviewTextInput"
+                                                PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ContentControl.Resources>

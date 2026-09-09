@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BobMapper.Compiler.WriteSteps;
 using BobMapper.Model;
@@ -13,6 +14,8 @@ namespace BobMapper.Compiler
     {
         internal List<byte> output = new List<byte>();
         internal List<QueuedLocator> locatorQueue = new List<QueuedLocator>();
+
+        internal List<CablePropDataBuffer> cablePropDataBuffer = new List<CablePropDataBuffer>();
         internal void Compile(Map map)
         {
             List<Wall> unsplitWalls = SplitWalls(map.walls);
@@ -92,8 +95,11 @@ namespace BobMapper.Compiler
             {
                 List<byte> currentCableOutput = new();
                 //Regex out #
-                byte[] hexBytes = Encoding.ASCII.GetBytes(cable.ColourHex);
-                currentCableOutput.AddRange(hexBytes);
+                string processedHex = Regex.Replace(cable.ColourHex, @"\W", "");
+                byte[] hexBytes = Convert.FromHexString(processedHex);
+                //Adds in spaces
+                byte[] processedHexBytes = [hexBytes[0], 0x00, hexBytes[1], 0x00, hexBytes[2], 0x00];
+                currentCableOutput.AddRange(processedHexBytes);
                 byte[] cableSegmentHeader = [0x0A, 0xD7, 0xA3, 0x3D];
                 currentCableOutput.AddRange(cableSegmentHeader);
                 int cableNodesCount = Convert.ToInt32(cable.Coordinates.Count);
@@ -103,9 +109,12 @@ namespace BobMapper.Compiler
                     FloatCoordinate floatCoordinate = new(coordinate);
                     currentCableOutput.AddRange(floatCoordinate.CompiledBytes);
                 }
+                cablesByteBuffer.AddRange(currentCableOutput);
+                cablePropDataBuffer.Add(new(cable.StartButton, cable.Duration));
             }
             int sectionLength = Convert.ToInt32(cablesByteBuffer.Count);
             cablesOutput.AddRange(BitConverter.GetBytes(sectionLength));
+            cablesOutput.AddRange(cablesByteBuffer);
             return cablesOutput;
         }
 
@@ -202,6 +211,18 @@ namespace BobMapper.Compiler
             zones.AddRange(BitConverter.GetBytes(Convert.ToInt32(byteContentZones.Count)));
             zones.AddRange(byteContentZones);
             return zones;
+        }
+
+        internal class CablePropDataBuffer
+        {
+            public Prop StartButton { get; set; }
+            public int Duration { get; set; }
+
+            internal CablePropDataBuffer(Prop startButton, int duration)
+            {
+                StartButton = startButton;
+                Duration = duration;
+            }
         }
 
         

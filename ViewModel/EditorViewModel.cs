@@ -77,6 +77,7 @@ namespace BobMapper.ViewModel
             TwoPointToolsData = new TwoPointToolsData();
             CurrentEditingInteractions = new(CurrentObjectCollection, CurrentSelections, CurrentMapProperties);
             CurrentEditingInteractions.AttachAllPathPointHandlers();
+            AttachButtonsToCables();
             CurrentSelections.CurrentTileSet = CurrentMapProperties.Tileset;
             CurrentSelections.SelectedTextureType = TextureType.All;
         }
@@ -119,6 +120,17 @@ namespace BobMapper.ViewModel
                 {
                     floor.SetOpacity(CurrentMapProperties.IsApartment);
                 }
+            }
+        }
+
+        private void AttachButtonsToCables()
+        {
+            foreach (CableViewModel cableViewModel in CurrentObjectCollection.CurrentCables)
+            {
+                SnapCoordinate cableFirstNode = cableViewModel.Coordinates[0];
+                Func<Prop, bool> predicate = (x) => x.Coordinates.SnappedXPos == cableFirstNode.SnappedXPos && x.Coordinates.SnappedYPos == cableFirstNode.SnappedYPos;
+                Prop attachProp = CurrentObjectCollection.CurrentProps.FirstOrDefault(predicate);
+                cableViewModel.StartButton = attachProp;
             }
         }
 

@@ -240,6 +240,20 @@ namespace BobMapper.Model
         }
 
         [RelayCommand]
+        public void Backspace()
+        {
+            if (CurrentSelections.SelectedObjectType != ObjectType.Cable)
+                return;
+            int lastIndex = CurrentSelections.SelectedCable.Coordinates.Count - 1;
+            if (lastIndex < 1)
+            {
+                DeleteObject();
+                return;
+            }
+            CurrentSelections.SelectedCable.Coordinates.RemoveAt(lastIndex);
+        }
+
+        [RelayCommand]
         public void SetObjectTexture(object sender)
         {
             //SUUUUUUUUPER BAAAAAAAD!!!!!
@@ -335,7 +349,7 @@ namespace BobMapper.Model
                 Prop prop = (Prop)sender;
                 //if (!buttonTextures.Any(x => x == prop.PropTexture))
                 //    return;
-                Cable cable = new();
+                Cable cable = new(prop);
                 CableViewModel cableViewModel = new(cable);
                 cableViewModel.Coordinates.Add(prop.Coordinates);
                 CurrentObjectCollection.CurrentCables.Add(cableViewModel);

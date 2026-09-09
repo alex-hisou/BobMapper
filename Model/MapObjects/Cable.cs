@@ -27,16 +27,34 @@ namespace BobMapper.Model.MapObjects
             set { colourHex = value;}
         }
 
-        public Cable()
+        private int duration;
+
+        public int Duration
+        {
+            get { return duration; }
+            set { duration = value; }
+        }
+
+        private Prop startButton;
+        [JsonIgnore]
+        public Prop StartButton
+        {
+            get { return startButton; }
+            set { startButton = value; }
+        }
+
+        public Cable(Prop startButton)
         {
             ColourHex = "#FF0000";
+            StartButton = startButton;
         }
 
         [JsonConstructor]
-        public Cable(string colourHex, List<SnapCoordinate> coordinates)
+        public Cable(string colourHex, List<SnapCoordinate> coordinates, int duration)
         {
             ColourHex = colourHex;
             Coordinates = coordinates;
+            Duration = duration;
         }
 
     }

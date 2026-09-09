@@ -17,7 +17,7 @@ namespace BobMapper.Compiler.WriteSteps
             currentCompiler = compiler;
             itemsOutput = new List<byte>();
             itemsOutput.AddRange([0x08, 0x00, 0x00, 0x00]); //SECTION HEAD
-            byte[] items_v4 = Encoding.ASCII.GetBytes("Items_v2");
+            byte[] items_v4 = Encoding.ASCII.GetBytes("Items_v4");
             itemsOutput.AddRange(items_v4);
 
             List<byte> objectByteBuffer =
@@ -40,7 +40,7 @@ namespace BobMapper.Compiler.WriteSteps
             
             foreach (Wall wall in walls)
             {
-                byte[] currentByteWall = new byte[76];
+                byte[] currentByteWall = new byte[96];
                 switch (wall.Type)
                 {
                     case Wall.WallType.Normal:
@@ -103,13 +103,24 @@ namespace BobMapper.Compiler.WriteSteps
             List<byte> byteProps = new List<byte>();
             foreach (Prop prop in props)
             {
-                byte[] currentByteProp = new byte[48];
+                byte[] currentByteProp = new byte[60];
                 currentByteProp[0] = 0x35;
                 Encoding.ASCII.GetBytes(prop.InternalTexture, 0, prop.InternalTexture.Length, currentByteProp, 4);
                 FloatCoordinate compiledCoordinate = new(prop.Coordinates, prop.Rotation, true);
                 Array.Copy(compiledCoordinate.CompiledBytes, 0, currentByteProp, 36, compiledCoordinate.CompiledBytes.Length);
+                if (currentCompiler.cablePropDataBuffer.Any(x => x.StartButton == prop))
+                {
+                    int buttonDurration = currentCompiler.cablePropDataBuffer.FirstOrDefault(x => x.StartButton == prop).Duration;
+                    if (buttonDurration > 0)
+                    {
+                        byte[] buttonDurationBytes = BitConverter.GetBytes(buttonDurration);
+                        Array.Copy(buttonDurationBytes, 0, currentByteProp, 56, 4);
+                        currentByteProp[48] = 0x01;
+                        //currentByteProp[52] = 0x01;
+                    }
+                }
                 byteProps.AddRange(currentByteProp);
-                if(prop.PropTexture == "/Resources/PropTextures/Teleporter.png")
+                if (prop.PropTexture == "/Resources/PropTextures/Teleporter.png")
                 {
                     QueuedLocator queuedLocator = new(QueuedLocator.LocatorTypes.Teleporter, prop.Coordinates);
                     currentCompiler.locatorQueue.Add(queuedLocator);
@@ -128,7 +139,7 @@ namespace BobMapper.Compiler.WriteSteps
             List<byte> byteLootTextures = new List<byte>();
             foreach (Loot loot in loots)
             {
-                byte[] currentLootTexture = new byte[48];
+                byte[] currentLootTexture = new byte[60];
                 currentLootTexture[0] = 0x35;
                 Encoding.ASCII.GetBytes(loot.InternalTexture, 0, loot.InternalTexture.Length, currentLootTexture, 4);
                 FloatCoordinate compiledCoordinate = new(loot.Coordinates, loot.Rotation, true);
