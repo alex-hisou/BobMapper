@@ -36,7 +36,7 @@ namespace BobMapper.ViewModel
         public Map CurrentMap { get; set; }
         public MapProperties CurrentMapProperties { get; set; }
         public EditingInteractions CurrentEditingInteractions { get; set; }
-        public TwoPointToolsData TwoPointToolsData { get; set; }
+        public PlaceObjectPreviewData PlaceObjectPreviewData { get; set; }
 
         public EditorViewModel(string filename)
         {
@@ -74,8 +74,8 @@ namespace BobMapper.ViewModel
                 CurrentExitZones = new ObservableCollection<ExitZone>(CurrentMap.exitZones),
                 CurrentCables = CableViewModel.CableViewModelFactory(CurrentMap.cables)
             };
-            TwoPointToolsData = new TwoPointToolsData();
-            CurrentEditingInteractions = new(CurrentObjectCollection, CurrentSelections, CurrentMapProperties);
+            PlaceObjectPreviewData = new PlaceObjectPreviewData();
+            CurrentEditingInteractions = new(CurrentObjectCollection, CurrentSelections, CurrentMapProperties, PlaceObjectPreviewData);
             CurrentEditingInteractions.AttachAllPathPointHandlers();
             AttachButtonsToCables();
             CurrentSelections.CurrentTileSet = CurrentMapProperties.Tileset;
@@ -172,7 +172,9 @@ namespace BobMapper.ViewModel
         [RelayCommand]
         public void SelectTool(Tools tool)
         {
-            TwoPointToolsData.IsVisible = false;
+            PlaceObjectPreviewData.IsTwoPointVisible = false;
+            PlaceObjectPreviewData.IsSinglePointVisible = false;
+            PlaceObjectPreviewData.PreviewTexture = null;
             if (CurrentSelections.SelectedTool != tool)
             {
                 CurrentSelections.SelectedTool = tool;
@@ -182,29 +184,44 @@ namespace BobMapper.ViewModel
             {
                 case Tools.AddWall:
                     CurrentSelections.SelectedTextureType = TextureType.Wall;
-                    TwoPointToolsData.IsVisible = true;
+                    PlaceObjectPreviewData.IsTwoPointVisible = true;
                     break;
                 case Tools.AddProp:
                     CurrentSelections.SelectedTextureType = TextureType.Prop;
+                    PlaceObjectPreviewData.IsSinglePointVisible = true;
+                    PlaceObjectPreviewData.PreviewTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Prop, CurrentSelections.CurrentTileSet, true);
                     break;
                 case Tools.AddLoot:
                     CurrentSelections.SelectedTextureType = TextureType.Loot;
+                    PlaceObjectPreviewData.IsSinglePointVisible = true;
+                    PlaceObjectPreviewData.PreviewTexture = ValidateTexture(CurrentSelections.SelectedTexture, TextureType.Loot, CurrentSelections.CurrentTileSet, true);
                     break;
                 case Tools.ChangeFloor:
                     CurrentSelections.SelectedTextureType = TextureType.Floor;
                     break;
+                case Tools.AddMisc:
+                    PlaceObjectPreviewData.IsSinglePointVisible = true;
+                    PlaceObjectPreviewData.PreviewTexture = @"/Resources/MiscTextures/Key.png";
+                    break;
+                case Tools.AddPathPoint:
+                    PlaceObjectPreviewData.IsSinglePointVisible = true;
+                    break;
+                case Tools.AddNPC:
+                    PlaceObjectPreviewData.IsSinglePointVisible = true;
+                    PlaceObjectPreviewData.PreviewTexture = @"/Resources/NPCTextures/Guard.png";
+                    break;
                 case Tools.AddDoor:
                     CurrentSelections.SelectedTextureType = TextureType.Door;
-                    TwoPointToolsData.IsVisible = true;
+                    PlaceObjectPreviewData.IsTwoPointVisible = true;
                     break;
             }
         }
 
         public void ClickEmpty(Coordinate placementPos)
         {
-            if(TwoPointToolsData.IsVisible)
+            if(PlaceObjectPreviewData.IsTwoPointVisible)
             {
-                TwoPointToolsData.IsDragging = true;
+                PlaceObjectPreviewData.IsDragging = true;
                 return;
             }
             float unsnappedX = (placementPos.XPos - CurrentViewportData.CameraX) / (float)CurrentViewportData.ZoomX;
@@ -215,24 +232,32 @@ namespace BobMapper.ViewModel
 
         public void MoveMouse(Coordinate mousePos)
         {
-            if (!TwoPointToolsData.IsVisible)
-                return;
-            float unsnappedX = (mousePos.XPos - CurrentViewportData.CameraX) / (float)CurrentViewportData.ZoomX;
-            float unsnappedY = (mousePos.YPos + CurrentViewportData.CameraY) / (float)CurrentViewportData.ZoomX;
-            SnapCoordinate snapCoordinate = SnapCoordinate.UnsnappedCoordinateFactory(unsnappedX, unsnappedY);
-            TwoPointToolsData.HandleMouseMove(snapCoordinate);
+            if (PlaceObjectPreviewData.IsTwoPointVisible)
+            {
+                float unsnappedX = (mousePos.XPos - CurrentViewportData.CameraX) / (float)CurrentViewportData.ZoomX;
+                float unsnappedY = (mousePos.YPos + CurrentViewportData.CameraY) / (float)CurrentViewportData.ZoomX;
+                SnapCoordinate snapCoordinate = SnapCoordinate.UnsnappedCoordinateFactory(unsnappedX, unsnappedY);
+                PlaceObjectPreviewData.HandleTwoPointMouseMove(snapCoordinate);
+            }
+            if(PlaceObjectPreviewData.IsSinglePointVisible)
+            {
+                float unsnappedX = (mousePos.XPos - CurrentViewportData.CameraX) / (float)CurrentViewportData.ZoomX;
+                float unsnappedY = (mousePos.YPos + CurrentViewportData.CameraY) / (float)CurrentViewportData.ZoomX;
+                SnapCoordinate snapCoordinate = SnapCoordinate.UnsnappedCoordinateFactory(unsnappedX, unsnappedY);
+                PlaceObjectPreviewData.HandleSinglePointMouseMove(snapCoordinate);
+            }
         }
 
         [RelayCommand]
         public void ReleaseMouse()
         {
-            if (!TwoPointToolsData.IsVisible)
+            if (!PlaceObjectPreviewData.IsTwoPointVisible)
                 return;
-            SnapCoordinate startCoordinate = new(TwoPointToolsData.StartCoordinate.SnappedXPos, TwoPointToolsData.StartCoordinate.SnappedYPos);
-            SnapCoordinate endCoordinate = new(TwoPointToolsData.EndCoordinate.SnappedXPos, TwoPointToolsData.EndCoordinate.SnappedYPos);
+            SnapCoordinate startCoordinate = new(PlaceObjectPreviewData.StartCoordinate.SnappedXPos, PlaceObjectPreviewData.StartCoordinate.SnappedYPos);
+            SnapCoordinate endCoordinate = new(PlaceObjectPreviewData.EndCoordinate.SnappedXPos, PlaceObjectPreviewData.EndCoordinate.SnappedYPos);
             if (startCoordinate.XPos == endCoordinate.XPos && startCoordinate.YPos == endCoordinate.YPos)
             {
-                TwoPointToolsData.IsDragging = false;
+                PlaceObjectPreviewData.IsDragging = false;
                 return;
             }
             if (CurrentSelections.SelectedTool == Tools.AddWall)
@@ -255,9 +280,9 @@ namespace BobMapper.ViewModel
                     CurrentEditingInteractions.SelectObject(door);
                 }
             }
-            TwoPointToolsData.StartCoordinate.SnappedXPos = endCoordinate.SnappedXPos;
-            TwoPointToolsData.StartCoordinate.SnappedYPos = endCoordinate.SnappedYPos;
-            TwoPointToolsData.IsDragging = false;
+            PlaceObjectPreviewData.StartCoordinate.SnappedXPos = endCoordinate.SnappedXPos;
+            PlaceObjectPreviewData.StartCoordinate.SnappedYPos = endCoordinate.SnappedYPos;
+            PlaceObjectPreviewData.IsDragging = false;
         }
 
         public bool CheckForChanges()

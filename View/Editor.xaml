@@ -921,25 +921,32 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <Canvas Visibility="{Binding TwoPointToolsData.IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <Ellipse Width="10" Height="10" Fill="GreenYellow" Canvas.Left="{Binding TwoPointToolsData.StartCoordinate.XPos}"
-                                Canvas.Top="{Binding TwoPointToolsData.StartCoordinate.YPos}">
+                        <Canvas Visibility="{Binding PlaceObjectPreviewData.IsTwoPointVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Ellipse Width="10" Height="10" Fill="GreenYellow" Canvas.Left="{Binding PlaceObjectPreviewData.StartCoordinate.XPos}"
+                                Canvas.Top="{Binding PlaceObjectPreviewData.StartCoordinate.YPos}">
                                 <Ellipse.RenderTransform>
                                     <TranslateTransform X="-5" Y="-5"/>
                                 </Ellipse.RenderTransform>
                             </Ellipse>
                             <Line Stroke="Beige" Opacity="0.4" StrokeThickness="10"
-                                X1="{Binding TwoPointToolsData.StartCoordinate.XPos}"
-                                Y1="{Binding TwoPointToolsData.StartCoordinate.YPos}"
-                                X2="{Binding TwoPointToolsData.EndCoordinate.XPos}"
-                                Y2="{Binding TwoPointToolsData.EndCoordinate.YPos}"/>
-                            <Ellipse Width="10" Height="10" Fill="Gold" Canvas.Left="{Binding TwoPointToolsData.EndCoordinate.XPos}"
-                                Canvas.Top="{Binding TwoPointToolsData.EndCoordinate.YPos}">
+                                X1="{Binding PlaceObjectPreviewData.StartCoordinate.XPos}"
+                                Y1="{Binding PlaceObjectPreviewData.StartCoordinate.YPos}"
+                                X2="{Binding PlaceObjectPreviewData.EndCoordinate.XPos}"
+                                Y2="{Binding PlaceObjectPreviewData.EndCoordinate.YPos}"/>
+                            <Ellipse Width="10" Height="10" Fill="Gold" Canvas.Left="{Binding PlaceObjectPreviewData.EndCoordinate.XPos}"
+                                Canvas.Top="{Binding PlaceObjectPreviewData.EndCoordinate.YPos}">
                                 <Ellipse.RenderTransform>
                                     <TranslateTransform X="-5" Y="-5"/>
                                 </Ellipse.RenderTransform>
                             </Ellipse>
                         </Canvas>
+                        <local:CenteringCanvas Visibility="{Binding PlaceObjectPreviewData.IsSinglePointVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                               Opacity="0.4">
+                            <Image IsHitTestVisible="False" Canvas.Left="{Binding PlaceObjectPreviewData.SinglePointCoordinate.XPos}" 
+                                   Canvas.Top="{Binding PlaceObjectPreviewData.SinglePointCoordinate.YPos}" 
+                                   Source="{Binding PlaceObjectPreviewData.PreviewTexture, TargetNullValue={x:Null}}">
+                            </Image>
+                        </local:CenteringCanvas>
                         <uc:MoveGizmo x:Name="PropGizmo" Visibility="{Binding CurrentGizmoData.PropGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
                         Canvas.Left="{Binding CurrentSelections.SelectedProp.Coordinates.XPos}"
                                   Canvas.Top="{Binding CurrentSelections.SelectedProp.Coordinates.YPos}"
