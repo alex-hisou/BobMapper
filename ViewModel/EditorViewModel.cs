@@ -205,6 +205,7 @@ namespace BobMapper.ViewModel
                     break;
                 case Tools.AddPathPoint:
                     PlaceObjectPreviewData.IsSinglePointVisible = true;
+                    PlaceObjectPreviewData.PreviewTexture = @"/Resources/MiscTextures/Path.png";
                     break;
                 case Tools.AddNPC:
                     PlaceObjectPreviewData.IsSinglePointVisible = true;

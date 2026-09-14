@@ -339,6 +339,7 @@
     <None Remove="Resources\MiscTextures\Lock.png" />
     <None Remove="Resources\MiscTextures\LootGlare.png" />
     <None Remove="Resources\MiscTextures\MainLoot.png" />
+    <None Remove="Resources\MiscTextures\Path.png" />
     <None Remove="Resources\MiscTextures\SoundPoint.png" />
     <None Remove="Resources\NPCTextures\Agent.png" />
     <None Remove="Resources\NPCTextures\BaldGuard.png" />
@@ -1976,6 +1977,7 @@
     <Resource Include="Resources\MiscTextures\MainLoot.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\MiscTextures\Path.png" />
     <Resource Include="Resources\MiscTextures\SoundPoint.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

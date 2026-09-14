@@ -524,7 +524,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <Grid>
-                <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Width="0" Height="0" 
+                    <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Width="0" Height="0" 
                     RenderTransformOrigin="0.5,0.5">
                     <Canvas.RenderTransform>
                         <TransformGroup>
@@ -944,8 +944,11 @@
                                                Opacity="0.4">
                             <Image IsHitTestVisible="False" Canvas.Left="{Binding PlaceObjectPreviewData.SinglePointCoordinate.XPos}" 
                                    Canvas.Top="{Binding PlaceObjectPreviewData.SinglePointCoordinate.YPos}" 
-                                   Source="{Binding PlaceObjectPreviewData.PreviewTexture, TargetNullValue={x:Null}}">
-                            </Image>
+                                   Source="{Binding PlaceObjectPreviewData.PreviewTexture, TargetNullValue={x:Null}}" RenderTransformOrigin="0.5,0.5">
+                                    <Image.RenderTransform>
+                                        <ScaleTransform ScaleY="-1"/>
+                                    </Image.RenderTransform>
+                                </Image>
                         </local:CenteringCanvas>
                         <uc:MoveGizmo x:Name="PropGizmo" Visibility="{Binding CurrentGizmoData.PropGizmoEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"
                         Canvas.Left="{Binding CurrentSelections.SelectedProp.Coordinates.XPos}"

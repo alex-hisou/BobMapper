@@ -428,7 +428,9 @@ namespace BobMapper.Model
         public void SetTexture(object sender)
         {
             CurrentSelections.SelectedTexture = (string)sender;
-            PlaceObjectPreviewData.PreviewTexture = ValidateTexture((string)sender, CurrentSelections.SelectedTextureType, CurrentSelections.CurrentTileSet, true);
+            string previewTextureBuffer = ValidateTexture((string)sender, CurrentSelections.SelectedTextureType, CurrentSelections.CurrentTileSet, true);
+            if (previewTextureBuffer != null)
+                PlaceObjectPreviewData.PreviewTexture = previewTextureBuffer;
         }
 
         public void SelectObject(object sender)
