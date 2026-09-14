@@ -39,12 +39,22 @@ namespace BobMapper.Model
             set { currentMapProperties = value; }
         }
 
+        private PlaceObjectPreviewData placeObjectPreviewData;
 
-        public EditingInteractions(ObjectCollection objectCollection, Selections selections, MapProperties mapProperties) 
+        public PlaceObjectPreviewData PlaceObjectPreviewData
+        {
+            get { return placeObjectPreviewData; }
+            set { placeObjectPreviewData = value; }
+        }
+
+
+
+        public EditingInteractions(ObjectCollection objectCollection, Selections selections, MapProperties mapProperties, PlaceObjectPreviewData placeObjectPreviewData) 
         {
             CurrentObjectCollection = objectCollection;
             CurrentSelections = selections;
             CurrentMapProperties = mapProperties;
+            PlaceObjectPreviewData = placeObjectPreviewData;
         }
 
         public void HandleClickEmpty(Coordinate placementPos)
@@ -418,6 +428,9 @@ namespace BobMapper.Model
         public void SetTexture(object sender)
         {
             CurrentSelections.SelectedTexture = (string)sender;
+            string previewTextureBuffer = ValidateTexture((string)sender, CurrentSelections.SelectedTextureType, CurrentSelections.CurrentTileSet, true);
+            if (previewTextureBuffer != null)
+                PlaceObjectPreviewData.PreviewTexture = previewTextureBuffer;
         }
 
         public void SelectObject(object sender)

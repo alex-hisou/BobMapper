@@ -10,7 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace BobMapper.Model
 {
-    public class TwoPointToolsData : INotifyPropertyChanged
+    public class PlaceObjectPreviewData : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -24,19 +24,45 @@ namespace BobMapper.Model
         public float ConnectionDeltaX => EndCoordinate.XPos - StartCoordinate.XPos;
         public float ConnectionDeltaY => EndCoordinate.YPos - StartCoordinate.YPos;
 
-        private bool isVisible;
+        private bool isTwoPointVisible;
 
-        public bool IsVisible
+        public bool IsTwoPointVisible
         {
-            get { return isVisible; }
-            set { isVisible = value;
+            get { return isTwoPointVisible; }
+            set { isTwoPointVisible = value;
                 OnPropertyChanged();
             }
         }
 
+        private bool isSinglePointVisible;
+
+        public bool IsSinglePointVisible
+        {
+            get { return isSinglePointVisible; }
+            set { isSinglePointVisible = value; OnPropertyChanged(); }
+        }
+
+
+        private string previewTexture;
+
+        public string PreviewTexture
+        {
+            get { return previewTexture; }
+            set { previewTexture = value; OnPropertyChanged(); }
+        }
+
+        private SnapCoordinate singlePointCoordinate = new(0,0);
+
+        public SnapCoordinate SinglePointCoordinate
+        {
+            get { return singlePointCoordinate; }
+            set { singlePointCoordinate = value; }
+        }
+
+
         public bool IsDragging { get; set; }
 
-        public void HandleMouseMove(SnapCoordinate mousePos)
+        public void HandleTwoPointMouseMove(SnapCoordinate mousePos)
         {
             if (!IsDragging)
             {
@@ -47,6 +73,12 @@ namespace BobMapper.Model
             EndCoordinate.SnappedYPos = mousePos.SnappedYPos;
             OnPropertyChanged(nameof(ConnectionDeltaX));
             OnPropertyChanged(nameof(ConnectionDeltaY));
+        }
+
+        public void HandleSinglePointMouseMove(SnapCoordinate mousePos)
+        {
+            SinglePointCoordinate.SnappedXPos = mousePos.SnappedXPos;
+            SinglePointCoordinate.SnappedYPos = mousePos.SnappedYPos;
         }
 
     }

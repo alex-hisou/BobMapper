@@ -130,7 +130,7 @@ namespace BobMapper.Model
                     }
                     return "/Resources/PropTextures/ColaMachine.png";
                 default:
-                    throw new NotImplementedException();
+                    return null;
             }
         }
 
