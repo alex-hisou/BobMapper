@@ -76,6 +76,7 @@ namespace BobMapper
 
     public class Coordinate
     {
+        //TODO: Fuck this
         public float XPos {  get; set; }
         public float YPos { get; set; }
 

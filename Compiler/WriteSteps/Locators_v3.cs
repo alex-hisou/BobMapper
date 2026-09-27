@@ -110,9 +110,8 @@ namespace BobMapper.Compiler.WriteSteps
                 Array.Copy(miscCompiledCoordinate.CompiledBytes, 0, currentByteMisc, 0, miscCompiledCoordinate.CompiledBytes.Length);
                 currentByteMisc[14] = 0x80;
                 currentByteMisc[15] = 0x3F;
-                currentByteMisc[16] = Convert.ToByte((int)misc.Type); //Hacky way to get header from enum value
+                currentByteMisc[16] = Convert.ToByte((int)misc.Type);
                 Array.Copy(BitConverter.GetBytes(currentLocatorId), 0, currentByteMisc, 20, 4);
-                //TODO: Check if any other params exist for the different types of miscs
                 byteMiscs.AddRange(currentByteMisc);
                 currentLocatorId++;
             }

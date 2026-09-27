@@ -186,7 +186,6 @@ namespace BobMapper.Compiler
 
         private List<byte> Zones(List<ExitZone> exitZones)
         {
-            //TODO: Figure out the purpose of this section
             List<byte> zones = new List<byte>();
             zones.AddRange([0x05, 0x00, 0x00, 0x00]); //SECTION HEAD
             byte[] zonesText = Encoding.ASCII.GetBytes("Zones");

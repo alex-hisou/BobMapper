@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace BobMapper.Services
@@ -13,18 +14,20 @@ namespace BobMapper.Services
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null || parameter == null)
-            {  
-                return false;
-            }
+                return DependencyProperty.UnsetValue;
 
-            return value.Equals(parameter);
+            string checkValue = value.ToString();
+            string targetValue = parameter.ToString();
+
+            return string.Equals(checkValue, targetValue, StringComparison.OrdinalIgnoreCase);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((bool)value)
+            if (value is bool isChecked && isChecked)
             {
-                return parameter;
+                string paramString = parameter as string;
+                return Enum.Parse(targetType, paramString);
             }
 
             return Binding.DoNothing;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BobMapper.Data;
+using BobMapper.Model;
 using BobMapper.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -41,10 +42,24 @@ namespace BobMapper.ViewModel
             }
         }
 
+        private ThemeData.Themes currentTheme;
+
+        public ThemeData.Themes CurrentTheme
+        {
+            get { return currentTheme; }
+            set { currentTheme = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Array ThemeValues => Enum.GetValues(typeof(ThemeData.Themes));
+
+
         public PrefrencesViewModel()
         {
             SteamPath = UserSettings.Instance.SteamResourcesDirectory;
             AutoSelect = UserSettings.Instance.AutoSelect;
+            CurrentTheme = UserSettings.Instance.SelectedTheme;
         }
 
         [RelayCommand]
@@ -52,6 +67,7 @@ namespace BobMapper.ViewModel
         {
             UserSettings.Instance.AutoSelect = AutoSelect;
             UserSettings.Instance.SteamResourcesDirectory = SteamPath;
+            UserSettings.Instance.SelectedTheme = CurrentTheme;
             UserSettings.Instance.Save();
             NewChanges = false;
         }

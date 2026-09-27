@@ -23,11 +23,6 @@
                 <x:Type Type="{x:Type local:Tools}"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="TextureTypes" ObjectType="{x:Type s:Enum}" MethodName="GetValues">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type Type="{x:Type local:Tools}"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
         <services:EnumBoolConverter x:Key="EnumBoolConvert"/>
         <services:SelectedObjectVisibilityConverter x:Key="SelectedObjectConvert"/>
         <services:SnapCoordinateListToPathConverter x:Key="SnapCoordinatePathConvert"/>
@@ -218,14 +213,15 @@
                 <StackPanel Orientation="Horizontal">
                     <Expander IsExpanded="True">
                         <WrapPanel Orientation="Horizontal" Width="300">
-                            <CheckBox Content="Walls" IsChecked="{Binding CurrentLayerData.WallsVisible}" Margin="10,5,10,10" Width="100"/>
-                            <CheckBox Content="Props" IsChecked="{Binding CurrentLayerData.PropsVisible}" Margin="10,5,10,10" Width="100"/>
-                            <CheckBox Content="NPCs" IsChecked="{Binding CurrentLayerData.NPCsVisible}" Margin="10,5,10,10" Width="100"/>
-                            <CheckBox Content="Paths" IsChecked="{Binding CurrentLayerData.PathPointsVisible}" Margin="10,5,10,10" Width="100"/>
-                            <CheckBox Content="Floor" IsChecked="{Binding CurrentLayerData.FloorsVisible}" Margin="10,5,10,10" Width="100"/>
-                            <CheckBox Content="Miscs" IsChecked="{Binding CurrentLayerData.MiscsVisible}" Margin="10,5,10,10" Width="100"/>
-                            <CheckBox Content="Doors" IsChecked="{Binding CurrentLayerData.DoorsVisible}" Margin="10,5,10,10" Width="100"/>
-                            <CheckBox Content="Loots" IsChecked="{Binding CurrentLayerData.LootsVisible}" Margin="10,5,10,10" Width="100"/>
+                            <CheckBox Content="Walls" IsChecked="{Binding CurrentLayerData.WallsVisible}" Margin="10,5,10,10" Width="80"/>
+                            <CheckBox Content="Props" IsChecked="{Binding CurrentLayerData.PropsVisible}" Margin="10,5,10,10" Width="80"/>
+                            <CheckBox Content="NPCs" IsChecked="{Binding CurrentLayerData.NPCsVisible}" Margin="10,5,10,10" Width="80"/>
+                            <CheckBox Content="Paths" IsChecked="{Binding CurrentLayerData.PathPointsVisible}" Margin="10,5,10,10" Width="80"/>
+                            <CheckBox Content="Floor" IsChecked="{Binding CurrentLayerData.FloorsVisible}" Margin="10,5,10,10" Width="80"/>
+                            <CheckBox Content="Miscs" IsChecked="{Binding CurrentLayerData.MiscsVisible}" Margin="10,5,10,10" Width="80"/>
+                            <CheckBox Content="Doors" IsChecked="{Binding CurrentLayerData.DoorsVisible}" Margin="10,5,10,10" Width="80"/>
+                            <CheckBox Content="Loots" IsChecked="{Binding CurrentLayerData.LootsVisible}" Margin="10,5,10,10" Width="80"/>
+                            <CheckBox Content="Cables" IsChecked="{Binding CurrentLayerData.CablesVisible}" Margin="10,5,10,10" Width="80"/>
                         </WrapPanel>
                     </Expander>
                     <Label>Layers</Label>

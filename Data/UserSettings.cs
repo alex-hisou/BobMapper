@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Text.Json;
 using BobMapper.Services;
+using BobMapper.Model;
 using System.Text.Json.Serialization;
 
 namespace BobMapper.Data
@@ -22,6 +23,9 @@ namespace BobMapper.Data
 
         [JsonInclude]
         public bool AutoSelect { get; set; } = true;
+
+        [JsonInclude]
+        public ThemeData.Themes SelectedTheme { get; set; }
 
         private static UserSettings instance;
 
