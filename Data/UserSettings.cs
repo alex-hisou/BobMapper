@@ -25,7 +25,7 @@ namespace BobMapper.Data
         public bool AutoSelect { get; set; } = true;
 
         [JsonInclude]
-        public ThemeData.Themes SelectedTheme { get; set; }
+        public Themes SelectedTheme { get; set; }
 
         private static UserSettings instance;
 

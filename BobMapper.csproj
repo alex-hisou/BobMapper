@@ -1269,6 +1269,10 @@
     <None Remove="Resources\WallTextures\Wall_wood_2.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Remove="View\Themes\Classic.xaml" />
+    <Page Remove="View\Themes\Dark.xaml" />
+  </ItemGroup>
+  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
@@ -2936,6 +2940,8 @@
     <Resource Include="Resources\WallTextures\Wall_wending_side.png" />
     <Resource Include="Resources\WallTextures\Wall_wood_1.png" />
     <Resource Include="Resources\WallTextures\Wall_wood_2.png" />
+    <Resource Include="View\Themes\Classic.xaml" />
+    <Resource Include="View\Themes\Dark.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">

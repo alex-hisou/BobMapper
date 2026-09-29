@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="Color.Text">White</Color>
+    <Color x:Key="Color.BackgroundMain">#404040</Color>
+    <Color x:Key="Color.BackgroundSecondary">#202020</Color>
+
+    <SolidColorBrush x:Key="Brush.Text" Color="{DynamicResource Color.Text}"/>
+    <SolidColorBrush x:Key="Brush.BackgroundMain" Color="{DynamicResource Color.BackgroundMain}"/>
+    <SolidColorBrush x:Key="Brush.BackgroundSecondary" Color="{DynamicResource Color.BackgroundSecondary}"/>
+</ResourceDictionary>

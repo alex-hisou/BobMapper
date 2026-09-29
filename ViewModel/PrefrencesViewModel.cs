@@ -42,9 +42,9 @@ namespace BobMapper.ViewModel
             }
         }
 
-        private ThemeData.Themes currentTheme;
+        private Themes currentTheme;
 
-        public ThemeData.Themes CurrentTheme
+        public Themes CurrentTheme
         {
             get { return currentTheme; }
             set { currentTheme = value;
@@ -52,7 +52,7 @@ namespace BobMapper.ViewModel
             }
         }
 
-        public Array ThemeValues => Enum.GetValues(typeof(ThemeData.Themes));
+        public Array ThemeValues => Enum.GetValues(typeof(Themes));
 
 
         public PrefrencesViewModel()
@@ -68,6 +68,7 @@ namespace BobMapper.ViewModel
             UserSettings.Instance.AutoSelect = AutoSelect;
             UserSettings.Instance.SteamResourcesDirectory = SteamPath;
             UserSettings.Instance.SelectedTheme = CurrentTheme;
+            ThemeService.SetTheme(CurrentTheme);
             UserSettings.Instance.Save();
             NewChanges = false;
         }
