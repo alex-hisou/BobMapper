@@ -3,8 +3,12 @@
     <Color x:Key="Color.Text">Black</Color>
     <Color x:Key="Color.BackgroundMain">#F0F0F0</Color>
     <Color x:Key="Color.BackgroundSecondary">LightGray</Color>
+    <Color x:Key="Color.Border">Transparent</Color>
+    <Color x:Key="Color.WindowBackground">White</Color>
     
     <SolidColorBrush x:Key="Brush.Text" Color="{DynamicResource Color.Text}"/>
     <SolidColorBrush x:Key="Brush.BackgroundMain" Color="{DynamicResource Color.BackgroundMain}"/>
     <SolidColorBrush x:Key="Brush.BackgroundSecondary" Color="{DynamicResource Color.BackgroundSecondary}"/>
+    <SolidColorBrush x:Key="Brush.Border" Color="{DynamicResource Color.Border}"/>
+    <SolidColorBrush x:Key="Brush.WindowBackground" Color="{DynamicResource Color.WindowBackground}"/>
 </ResourceDictionary>

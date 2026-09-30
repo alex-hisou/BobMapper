@@ -42,10 +42,12 @@ namespace BobMapper.Data
         }
 
         [JsonConstructor]
-        public UserSettings(bool AutoSelect, string SteamResourcesDirectory)
+        public UserSettings(bool AutoSelect, string SteamResourcesDirectory, Themes selectedTheme)
         {
             this.AutoSelect = AutoSelect;
             this.SteamResourcesDirectory = SteamResourcesDirectory;
+            SelectedTheme = selectedTheme;
+            ThemeService.SetTheme(selectedTheme);
         }
 
         public void Save()
@@ -56,7 +58,7 @@ namespace BobMapper.Data
 
         private static UserSettings Load()
         {
-            UserSettings userSettings = new(true, null);
+            UserSettings userSettings = new(true, null, Themes.Classic);
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
             if (!File.Exists(settingsFile))

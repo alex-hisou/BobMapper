@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         ResizeMode="CanMinimize"
         Title="Expand or contract map" Height="254" Width="401">
-    <Grid>
+    <Grid Background="{DynamicResource Brush.WindowBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="63*"/>
             <ColumnDefinition Width="55*"/>
@@ -27,7 +27,7 @@
             <RowDefinition Height="29*"/>
             <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
-        <Rectangle Fill="Black" Margin="26,23,31,21" Grid.Row="2" Grid.Column="2" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
+        <Rectangle Fill="{DynamicResource Brush.Text}" Margin="26,23,31,21" Grid.Row="2" Grid.Column="2" Grid.RowSpan="3" Grid.ColumnSpan="3"/>
         <TextBox x:Name="NorthTextBox" Grid.Row="1" Grid.Column="3" Text="0"/>
         <TextBox x:Name="SouthTextBox" Grid.Row="5" Grid.Column="3" Text="0"/>
         <TextBox x:Name="EastTextBox" Grid.Row="3" Grid.Column="5" Text="0"/>

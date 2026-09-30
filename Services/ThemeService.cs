@@ -16,13 +16,9 @@ namespace BobMapper.Services
     public class ThemeService
     {
 
-        private static ResourceDictionary currentTheme;
-
         public static void SetTheme(Themes theme)
         {
-            if (currentTheme != null)
-                Application.Current.Resources.MergedDictionaries
-                    .Remove(currentTheme);
+            Application.Current.Resources.MergedDictionaries.RemoveAt(0);
             string themeName;
             switch (theme)
             {
@@ -35,6 +31,7 @@ namespace BobMapper.Services
                 default:
                     throw new NotImplementedException();
             }
+            ResourceDictionary currentTheme;
             var assemblyName = typeof(App).Assembly.GetName().Name;
             currentTheme = new ResourceDictionary
             {

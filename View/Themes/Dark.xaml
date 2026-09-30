@@ -2,9 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Color x:Key="Color.Text">White</Color>
     <Color x:Key="Color.BackgroundMain">#404040</Color>
-    <Color x:Key="Color.BackgroundSecondary">#202020</Color>
+    <Color x:Key="Color.BackgroundSecondary">#303030</Color>
+    <Color x:Key="Color.Border">#202020</Color>
+    <Color x:Key="Color.WindowBackground">Black</Color>
 
     <SolidColorBrush x:Key="Brush.Text" Color="{DynamicResource Color.Text}"/>
     <SolidColorBrush x:Key="Brush.BackgroundMain" Color="{DynamicResource Color.BackgroundMain}"/>
     <SolidColorBrush x:Key="Brush.BackgroundSecondary" Color="{DynamicResource Color.BackgroundSecondary}"/>
+    <SolidColorBrush x:Key="Brush.Border" Color="{DynamicResource Color.Border}"/>
+    <SolidColorBrush x:Key="Brush.WindowBackground" Color="{DynamicResource Color.WindowBackground}"/>
 </ResourceDictionary>

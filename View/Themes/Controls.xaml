@@ -3,4 +3,14 @@
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource Brush.Text}"/>
     </Style>
+    <Style TargetType="{x:Type Menu}">
+        <Setter Property="Background" Value="{DynamicResource Brush.BackgroundMain}"/>
+    </Style>
+    <Style TargetType="{x:Type MenuItem}">
+        <Setter Property="Background" Value="{DynamicResource Brush.BackgroundMain}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+    </Style>
+    <Style TargetType="{x:Type Window}">
+        <Setter Property="Background" Value="{DynamicResource Brush.WindowBackground}"/>
+    </Style>
 </ResourceDictionary>

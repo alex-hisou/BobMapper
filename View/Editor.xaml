@@ -118,13 +118,6 @@
                 </MenuItem>
             </Menu>
             <Menu DockPanel.Dock="Left" Width="auto" Height="auto" Name="ToolDrawer">
-                <Menu.Background>
-                    <SolidColorBrush>
-                        <SolidColorBrush.Color>
-                            <Color A="255" R="40" G="40" B="40"/>
-                        </SolidColorBrush.Color>
-                    </SolidColorBrush>
-                </Menu.Background>
                 <MenuItem Header="Select" Name="SelectTool"
                           Command="{Binding SelectToolCommand}" 
                           CommandParameter="{x:Static local:Tools.Select}">
@@ -216,7 +209,7 @@
                     </ItemsPanelTemplate>
                 </Menu.ItemsPanel>
             </Menu>
-            <StackPanel DockPanel.Dock="Right" Width="300" Height="auto" HorizontalAlignment="Right" Background="LightGray">
+            <StackPanel DockPanel.Dock="Right" Width="300" Height="auto" HorizontalAlignment="Right" Background="{DynamicResource Brush.BackgroundSecondary}">
                 <StackPanel Orientation="Horizontal">
                     <Expander IsExpanded="True">
                         <WrapPanel Orientation="Horizontal" Width="300">

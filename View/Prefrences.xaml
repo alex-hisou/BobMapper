@@ -15,7 +15,7 @@
     <Window.Resources>
         <services:EnumBoolConverter x:Key="EnumBoolConverter"/>
     </Window.Resources>
-    <Grid>
+    <Grid Background="{DynamicResource Brush.WindowBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="37*"/>
             <RowDefinition Height="33*"/>

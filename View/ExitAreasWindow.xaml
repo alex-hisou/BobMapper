@@ -16,7 +16,7 @@
             <i:InvokeCommandAction Command="{Binding CloseWindowCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Grid>
+    <Grid Background="{DynamicResource Brush.WindowBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="53*"/>
             <ColumnDefinition Width="144*"/>

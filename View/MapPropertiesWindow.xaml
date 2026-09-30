@@ -15,8 +15,8 @@
             <Setter Property="TextBlock.Foreground" Value="DarkBlue" />
         </Style>
     </Window.Resources>
-    
-    <Grid>
+
+    <Grid Background="{DynamicResource Brush.WindowBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="23*"/>
             <RowDefinition Height="48*"/>

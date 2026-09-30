@@ -7,7 +7,7 @@
         d:DataContext="{d:DesignInstance Type=viewmodel:CreateMapViewModel}"
         mc:Ignorable="d"
         Title="CreateMap" Height="288" Width="543" ResizeMode="NoResize">
-    <Grid>
+    <Grid Background="{DynamicResource Brush.WindowBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="29*"/>
             <RowDefinition Height="30*"/>

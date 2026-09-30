@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         ResizeMode="CanMinimize"
         Title="Select level to inject into" Height="172" Width="404">
-    <Grid>
+    <Grid Background="{DynamicResource Brush.WindowBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="24*"/>
             <RowDefinition Height="48*"/>

@@ -8,7 +8,7 @@
         d:DataContext="{d:DesignInstance Type=viewmodel:ShortcutListViewModel}"
         mc:Ignorable="d"
         Title="ShortcutList" Height="552" Width="750">
-    <Grid>
+    <Grid Background="{DynamicResource Brush.WindowBackground}">
         <ScrollViewer>
             <ListView ItemsSource="{Binding Shortcuts}">
                 <ListView.View>

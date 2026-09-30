@@ -5,8 +5,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!--DO NOT TOUCH THIS EVER-->
                 <ResourceDictionary Source="/View/Themes/Classic.xaml"/>
-                <ResourceDictionary Source="/View/Themes/Dark.xaml"/>
                 <ResourceDictionary Source="/View/Themes/Controls.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
