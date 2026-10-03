@@ -5,10 +5,18 @@
     <Color x:Key="Color.BackgroundSecondary">#303030</Color>
     <Color x:Key="Color.Border">#202020</Color>
     <Color x:Key="Color.WindowBackground">Black</Color>
+    <Color x:Key="Color.ButtonBackground">#1D1D1D</Color>
+    <Color x:Key="Color.DisabledButton">#3D3D3D</Color>
+    <Color x:Key="Color.Highlight">#445487</Color>
+    <Color x:Key="Color.Canvas">#202020</Color>
 
     <SolidColorBrush x:Key="Brush.Text" Color="{DynamicResource Color.Text}"/>
     <SolidColorBrush x:Key="Brush.BackgroundMain" Color="{DynamicResource Color.BackgroundMain}"/>
     <SolidColorBrush x:Key="Brush.BackgroundSecondary" Color="{DynamicResource Color.BackgroundSecondary}"/>
     <SolidColorBrush x:Key="Brush.Border" Color="{DynamicResource Color.Border}"/>
     <SolidColorBrush x:Key="Brush.WindowBackground" Color="{DynamicResource Color.WindowBackground}"/>
+    <SolidColorBrush x:Key="Brush.ButtonBackground" Color="{DynamicResource Color.ButtonBackground}"/>
+    <SolidColorBrush x:Key="Brush.DisabledButton" Color="{DynamicResource Color.DisabledButton}"/>
+    <SolidColorBrush x:Key="Brush.Highlight" Color="{DynamicResource Color.Highlight}"/>
+    <SolidColorBrush x:Key="Brush.Canvas" Color="{DynamicResource Color.Canvas}"/>
 </ResourceDictionary>

@@ -8,9 +8,76 @@
     </Style>
     <Style TargetType="{x:Type MenuItem}">
         <Setter Property="Background" Value="{DynamicResource Brush.BackgroundMain}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+        <Setter Property="Padding" Value="8,5"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Grid>
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+
+                            <ContentPresenter
+                                ContentSource="Header"
+                                RecognizesAccessKey="True"/>
+                        </Border>
+                        <Popup
+                            x:Name="PART_Popup"
+                            AllowsTransparency="True"
+                            IsOpen="{TemplateBinding IsSubmenuOpen}"
+                            Placement="Bottom"
+                            Focusable="False">
+                            <Border
+                                Background="{DynamicResource Brush.BackgroundMain}"
+                                BorderBrush="{DynamicResource Brush.Border}"
+                                BorderThickness="1"
+                                Padding="2">
+                                <ItemsPresenter/>
+                            </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
     </Style>
     <Style TargetType="{x:Type Window}">
-        <Setter Property="Background" Value="{DynamicResource Brush.WindowBackground}"/>
+        <Setter Property="Background" Value="{DynamicResource Brush.ButtonBackground}"/>
+    </Style>
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource Brush.ButtonBackground}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Margin="{TemplateBinding Padding}"
+                            TextElement.Foreground="{TemplateBinding Foreground}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background"
+                                    Value="{DynamicResource Brush.Highlight}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background"
+                                    Value="{DynamicResource Brush.DisabledButton}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type ComboBox}">
+        <Setter Property="Background" Value="{DynamicResource Brush.ButtonBackground}"/>
     </Style>
 </ResourceDictionary>

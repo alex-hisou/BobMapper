@@ -5,10 +5,19 @@
     <Color x:Key="Color.BackgroundSecondary">LightGray</Color>
     <Color x:Key="Color.Border">Transparent</Color>
     <Color x:Key="Color.WindowBackground">White</Color>
-    
+    <Color x:Key="Color.ButtonBackground">#DDDDDD</Color>
+    <Color x:Key="Color.DisabledButton">#FFE5E5E5</Color>
+    <Color x:Key="Color.Highlight">#CCE4F7</Color>
+    <Color x:Key="Color.Canvas">Gray</Color>
+
+
     <SolidColorBrush x:Key="Brush.Text" Color="{DynamicResource Color.Text}"/>
     <SolidColorBrush x:Key="Brush.BackgroundMain" Color="{DynamicResource Color.BackgroundMain}"/>
     <SolidColorBrush x:Key="Brush.BackgroundSecondary" Color="{DynamicResource Color.BackgroundSecondary}"/>
     <SolidColorBrush x:Key="Brush.Border" Color="{DynamicResource Color.Border}"/>
     <SolidColorBrush x:Key="Brush.WindowBackground" Color="{DynamicResource Color.WindowBackground}"/>
+    <SolidColorBrush x:Key="Brush.ButtonBackground" Color="{DynamicResource Color.ButtonBackground}"/>
+    <SolidColorBrush x:Key="Brush.DisabledButton" Color="{DynamicResource Color.DisabledButton}"/>
+    <SolidColorBrush x:Key="Brush.Highlight" Color="{DynamicResource Color.Highlight}"/>
+    <SolidColorBrush x:Key="Brush.Canvas" Color="{DynamicResource Color.Canvas}"/>
 </ResourceDictionary>

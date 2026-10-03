@@ -512,7 +512,7 @@
             </StackPanel>
             <!-- BAD CANVAS CODE AHEAD -->
             <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" HorizontalContentAlignment="Center"
-                          VerticalContentAlignment="Center" Background="Gray" Focusable="False"
+                          VerticalContentAlignment="Center" Background="{DynamicResource Brush.Canvas}" Focusable="False"
                           PreviewMouseDown="ClickEmpty" MouseMove="MoveMouse" x:Name="ScrollPlane">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonUp">
