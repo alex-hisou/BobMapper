@@ -3,7 +3,7 @@
     <Color x:Key="Color.Text">Black</Color>
     <Color x:Key="Color.BackgroundMain">#F0F0F0</Color>
     <Color x:Key="Color.BackgroundSecondary">LightGray</Color>
-    <Color x:Key="Color.Border">Transparent</Color>
+    <Color x:Key="Color.Border">#888888</Color>
     <Color x:Key="Color.WindowBackground">White</Color>
     <Color x:Key="Color.ButtonBackground">#DDDDDD</Color>
     <Color x:Key="Color.DisabledButton">#FFE5E5E5</Color>

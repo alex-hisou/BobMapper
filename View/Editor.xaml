@@ -394,7 +394,7 @@
                                             </Button>
                                             <Label Content="{Binding Texture2}"/>
                                             <Label Width="170">Wall Type:</Label>
-                                            <ComboBox ItemsSource="{Binding WallTypeValues}" SelectedItem="{Binding Type}"/>
+                                            <ComboBox ItemsSource="{Binding WallTypeValues}" SelectedItem="{Binding Type}" Width="100"/>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ContentControl.Resources>
