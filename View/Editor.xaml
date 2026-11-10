@@ -86,7 +86,7 @@
         <DockPanel Background="SlateGray">
             <Menu DockPanel.Dock="Top" Width="auto" Height="20">
                 <MenuItem Header="File">
-                    <MenuItem Header="New Project" Click="NewProject"/>
+                    <MenuItem Header="New Project" Click="NewProject" Margin="2,2,20,2"/>
                     <MenuItem Header="Open Project" Click="OpenProject"/>
                     <Separator/>
                     <MenuItem Header="Save" Command="{Binding SaveCommand}" CommandParameter="{StaticResource False}"/>
@@ -96,13 +96,13 @@
                 <MenuItem Header="Edit">
                     <MenuItem Header="Map Properties" Click="MapPropertiesClick"/>
                     <MenuItem Header="Additional Exit Areas" Click="ExitAreasOpen"/>
-                    <MenuItem Header="Expand or Contract Map" Click="ExpandOrContractOpen"/>
+                    <MenuItem Header="Expand or Contract Map" Click="ExpandOrContractOpen" Margin="2,2,20,2"/>
                     <MenuItem Header="Object list" IsEnabled="False"/>
                     <Separator/>
                     <MenuItem Header="Prefrences" Click="PrefrencesClick"/>
                 </MenuItem>
                 <MenuItem Header="Tools">
-                    <MenuItem Header="Dialogue Editor" IsEnabled="False"/>
+                    <MenuItem Header="Dialogue Editor" IsEnabled="False" Margin="2,2,20,2"/>
                 </MenuItem>
                 <MenuItem Header="Inject">
                     <MenuItem Header="(LEGACY) Compile to" Command="{Binding CompileCommand}"></MenuItem>
@@ -110,10 +110,10 @@
                     <MenuItem Header="Inject and Play (Steam)" Command="{Binding SteamInjectCommand}"></MenuItem>
                     <MenuItem Header="Inject and Make APK (Android)" Command="{Binding InjectCommand}" CommandParameter="{StaticResource True}"/>
                     <Separator/>
-                    <MenuItem Header="Download Android Moddable zip" Click="DownloadZip"/>
+                    <MenuItem Header="Download Android Moddable zip" Click="DownloadZip" Margin="2,2,20,2"/>
                 </MenuItem>
                 <MenuItem Header="Help">
-                    <MenuItem Header="Shortcuts" Click="ShortcutListOpen"/>
+                    <MenuItem Header="Shortcuts" Click="ShortcutListOpen" Margin="2,2,20,2"/>
                     <MenuItem Header="About" Click="AboutOpen"/>
                 </MenuItem>
             </Menu>

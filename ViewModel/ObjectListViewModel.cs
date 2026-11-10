@@ -19,6 +19,16 @@ namespace BobMapper.ViewModel
 
         internal class MapObject
         {
+
+            private MapManager.ObjectType objectType;
+
+            public MapManager.ObjectType ObjectType
+            {
+                get { return objectType; }
+                set { objectType = value; }
+            }
+
+
             private SnapCoordinate coordinate1;
 
             public SnapCoordinate Coordinate1

@@ -9,16 +9,23 @@
         mc:Ignorable="d"
         ResizeMode="CanMinimize"
         Title="ObjectList" Height="476" Width="800">
-    <Grid>
-        <ScrollViewer Margin="34,29,34,66">
+    <Grid Background="{DynamicResource Brush.WindowBackground}">
+        <ScrollViewer Margin="34,29,34,89">
             <ListView>
                 <ListView.View>
                     <GridView>
+                        <GridViewColumn Header="Type">
+                        </GridViewColumn>
+                        <GridViewColumn Header="Asset">
+                        </GridViewColumn>
+                        <GridViewColumn Header="Coordinates">
+                        </GridViewColumn>
                         <GridViewColumn Header="Type">
                         </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
         </ScrollViewer>
+        <Button Margin="34,385,562,19" Content="Select"/>
     </Grid>
 </Window>

@@ -115,8 +115,6 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="5"/>
                             </Grid.ColumnDefinitions>
-
-                            <!-- Selected item / editable text -->
                             <ContentPresenter
                             x:Name="SelectionPresenter"
                             Grid.Column="0"
@@ -137,8 +135,6 @@
                                  Padding="{TemplateBinding Padding}"
                                  VerticalContentAlignment="Center"
                                  IsReadOnly="{TemplateBinding IsReadOnly}"/>
-
-                            <!-- Dropdown arrow -->
                             <ToggleButton
                                 x:Name="DropDownButton" Grid.ColumnSpan="2"
                                 Panel.ZIndex="1" Focusable="False"
@@ -157,8 +153,6 @@
                                 Fill="{DynamicResource Brush.Text}" HorizontalAlignment="Right"
                                 VerticalAlignment="Center"/>
                         </Grid>
-
-                        <!-- Dropdown popup -->
                         <Popup x:Name="PART_Popup"
                            Placement="Bottom"
                            IsOpen="{TemplateBinding IsDropDownOpen}"
@@ -233,6 +227,14 @@
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{DynamicResource Brush.WindowBackground}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Text}"/>
+    </Style>
+    <Style TargetType="{x:Type ListView}">
+        <Setter Property="Background" Value="{DynamicResource Brush.WindowBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Text}"/>
+    </Style>
+    <Style TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="Background" Value="{DynamicResource Brush.WindowBackground}"/>
         <Setter Property="Foreground" Value="{DynamicResource Brush.Text}"/>
     </Style>
 </ResourceDictionary>

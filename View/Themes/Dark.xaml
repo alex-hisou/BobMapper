@@ -10,6 +10,8 @@
     <Color x:Key="Color.Highlight">#445487</Color>
     <Color x:Key="Color.Canvas">#202020</Color>
 
+    <BitmapImage x:Key="Banner" UriSource="/Resources/UI/Banner-Dark.png"/>
+    
     <SolidColorBrush x:Key="Brush.Text" Color="{DynamicResource Color.Text}"/>
     <SolidColorBrush x:Key="Brush.BackgroundMain" Color="{DynamicResource Color.BackgroundMain}"/>
     <SolidColorBrush x:Key="Brush.BackgroundSecondary" Color="{DynamicResource Color.BackgroundSecondary}"/>

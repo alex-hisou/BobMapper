@@ -10,6 +10,7 @@
     <Color x:Key="Color.Highlight">#CCE4F7</Color>
     <Color x:Key="Color.Canvas">Gray</Color>
 
+    <BitmapImage x:Key="Banner" UriSource="/Resources/UI/Banner.png"/>
 
     <SolidColorBrush x:Key="Brush.Text" Color="{DynamicResource Color.Text}"/>
     <SolidColorBrush x:Key="Brush.BackgroundMain" Color="{DynamicResource Color.BackgroundMain}"/>
