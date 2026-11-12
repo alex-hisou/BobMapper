@@ -229,6 +229,13 @@ namespace BobMapper
             exitAreasWindow.Show();
         }
 
+        private void ObjectListOpen(object sender, RoutedEventArgs e)
+        {
+            var vm = (EditorViewModel)DataContext;
+            ObjectList objectListWindow = new(vm.CurrentMap);
+            objectListWindow.Show();
+        }
+
         private void DownloadZip(object sender, RoutedEventArgs e)
         {
             Uri uri = new("https://drive.google.com/uc?export=download&id=1Sg1AC8RJLRYd5_-EcOH96j8C9IjwXY6n");

@@ -24,7 +24,7 @@ namespace BobMapper.View
         public ObjectList(Map map)
         {
             InitializeComponent();
-            ObjectListViewModel objectListViewModel = new();
+            ObjectListViewModel objectListViewModel = new(map);
             DataContext = objectListViewModel;
         }
     }

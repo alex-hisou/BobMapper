@@ -11,16 +11,14 @@
         Title="ObjectList" Height="476" Width="800">
     <Grid Background="{DynamicResource Brush.WindowBackground}">
         <ScrollViewer Margin="34,29,34,89">
-            <ListView>
+            <ListView ItemsSource="{Binding mapObjects}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Type">
+                        <GridViewColumn Header="Type" DisplayMemberBinding="{Binding ObjectType}">
                         </GridViewColumn>
-                        <GridViewColumn Header="Asset">
+                        <GridViewColumn Header="Asset" DisplayMemberBinding="{Binding Texture1}">
                         </GridViewColumn>
-                        <GridViewColumn Header="Coordinates">
-                        </GridViewColumn>
-                        <GridViewColumn Header="Type">
+                        <GridViewColumn Header="Coordinates" DisplayMemberBinding="{Binding Coordinate1}">
                         </GridViewColumn>
                     </GridView>
                 </ListView.View>
