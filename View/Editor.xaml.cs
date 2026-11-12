@@ -232,7 +232,7 @@ namespace BobMapper
         private void ObjectListOpen(object sender, RoutedEventArgs e)
         {
             var vm = (EditorViewModel)DataContext;
-            ObjectList objectListWindow = new(vm.CurrentMap);
+            ObjectList objectListWindow = new(vm.CurrentObjectCollection, vm.CurrentSelections);
             objectListWindow.Show();
         }
 

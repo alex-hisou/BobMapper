@@ -11,7 +11,7 @@
         Title="ObjectList" Height="476" Width="800">
     <Grid Background="{DynamicResource Brush.WindowBackground}">
         <ScrollViewer Margin="34,29,34,89">
-            <ListView ItemsSource="{Binding mapObjects}">
+            <ListView ItemsSource="{Binding mapObjects}" SelectedIndex="{Binding SelectedId}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Type" DisplayMemberBinding="{Binding ObjectType}">

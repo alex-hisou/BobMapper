@@ -21,10 +21,10 @@ namespace BobMapper.View
     /// </summary>
     public partial class ObjectList : Window
     {
-        public ObjectList(Map map)
+        public ObjectList(ObjectCollection objectCollection, Selections selections)
         {
             InitializeComponent();
-            ObjectListViewModel objectListViewModel = new(map);
+            ObjectListViewModel objectListViewModel = new(objectCollection, selections);
             DataContext = objectListViewModel;
         }
     }
