@@ -24,6 +24,6 @@
                 </ListView.View>
             </ListView>
         </ScrollViewer>
-        <Button Margin="34,385,562,19" Content="Select"/>
+        <Button Margin="34,385,562,19" Content="Select" Command="{Binding SelectCommand}"/>
     </Grid>
 </Window>
