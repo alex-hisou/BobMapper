@@ -190,6 +190,7 @@ namespace BobMapper.Model
                         toDeleteId = CurrentObjectCollection.CurrentWalls.IndexOf(CurrentSelections.SelectedWall);
                         CurrentSelections.SelectedWall = null;
                         CurrentObjectCollection.CurrentWalls.RemoveAt(toDeleteId);
+                        CurrentObjectCollection.TriggerCollectionUpdate(ObjectType.Wall);
                         break;
                     }
                 case ObjectType.Prop:
@@ -197,6 +198,7 @@ namespace BobMapper.Model
                         toDeleteId = CurrentObjectCollection.CurrentProps.IndexOf(CurrentSelections.SelectedProp);
                         CurrentSelections.SelectedProp = null;
                         CurrentObjectCollection.CurrentProps.RemoveAt(toDeleteId);
+                        CurrentObjectCollection.TriggerCollectionUpdate(ObjectType.Prop);
                         break;
                     }
                 case ObjectType.NPC:
@@ -204,6 +206,7 @@ namespace BobMapper.Model
                         toDeleteId = CurrentObjectCollection.CurrentNPCs.IndexOf(CurrentSelections.SelectedNPC);
                         CurrentSelections.SelectedNPC = null;
                         CurrentObjectCollection.CurrentNPCs.RemoveAt(toDeleteId);
+                        CurrentObjectCollection.TriggerCollectionUpdate(ObjectType.NPC);
                         break;
                     }
                 case ObjectType.PathPoint:
@@ -211,6 +214,7 @@ namespace BobMapper.Model
                         toDeleteId = CurrentObjectCollection.CurrentPathPoints.IndexOf(CurrentSelections.SelectedPathPoint);
                         CurrentSelections.SelectedPathPoint = null;
                         CurrentObjectCollection.CurrentPathPoints.RemoveAt(toDeleteId);
+                        CurrentObjectCollection.TriggerCollectionUpdate(ObjectType.PathPoint);
                         break;
                     }
                 case ObjectType.Misc:
@@ -218,6 +222,7 @@ namespace BobMapper.Model
                         toDeleteId = CurrentObjectCollection.CurrentMiscs.IndexOf(CurrentSelections.SelectedMisc);
                         CurrentSelections.SelectedMisc = null;
                         CurrentObjectCollection.CurrentMiscs.RemoveAt(toDeleteId);
+                        CurrentObjectCollection.TriggerCollectionUpdate(ObjectType.Misc);
                         break;
                     }
                 case ObjectType.Door:
@@ -225,6 +230,7 @@ namespace BobMapper.Model
                         toDeleteId = CurrentObjectCollection.CurrentDoors.IndexOf(CurrentSelections.SelectedDoor);
                         CurrentSelections.SelectedDoor = null;
                         CurrentObjectCollection.CurrentDoors.RemoveAt(toDeleteId);
+                        CurrentObjectCollection.TriggerCollectionUpdate(ObjectType.Door);
                         break;
                     }
                 case ObjectType.Loot:
@@ -232,6 +238,7 @@ namespace BobMapper.Model
                         toDeleteId = CurrentObjectCollection.CurrentLoots.IndexOf(CurrentSelections.SelectedLoot);
                         CurrentSelections.SelectedLoot = null;
                         CurrentObjectCollection.CurrentLoots.RemoveAt(toDeleteId);
+                        CurrentObjectCollection.TriggerCollectionUpdate(ObjectType.Loot);
                         break;
                     }
                 case ObjectType.Cable:
@@ -239,6 +246,7 @@ namespace BobMapper.Model
                         toDeleteId = CurrentObjectCollection.CurrentCables.IndexOf(CurrentSelections.SelectedCable);
                         CurrentSelections.SelectedCable = null;
                         CurrentObjectCollection.CurrentCables.RemoveAt(toDeleteId);
+                        CurrentObjectCollection.TriggerCollectionUpdate(ObjectType.Cable);
                         break;
                     }
                 default:

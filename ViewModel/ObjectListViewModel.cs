@@ -16,56 +16,57 @@ namespace BobMapper.ViewModel
         {
             mapObjects = new();
             ObjectCollection = objectCollection;
+            ObjectCollection.CollectionUpdate += Refresh;
             CurrentSelections = selections;
-            for (int i = 0; i < objectCollection.CurrentWalls.Count; i++)
+            for (int i = 0; i < ObjectCollection.CurrentWalls.Count; i++)
             {
-                Wall wall = objectCollection.CurrentWalls[i];
+                Wall wall = ObjectCollection.CurrentWalls[i];
                 string procTexture = $"{wall.Texture1} || {wall.Texture2}";
                 MapObject procWall = new MapObject(MapManager.ObjectType.Wall, wall.Point1, procTexture, i);
                 mapObjects.Add(procWall);
             }
-            for (int i = 0; i < objectCollection.CurrentDoors.Count; i++)
+            for (int i = 0; i < ObjectCollection.CurrentDoors.Count; i++)
             {
-                Door door = objectCollection.CurrentDoors[i];
+                Door door = ObjectCollection.CurrentDoors[i];
                 MapObject procDoor = new MapObject(MapManager.ObjectType.Door, door.Point1, door.Texture1, i);
                 mapObjects.Add(procDoor);
             }
-            for (int i = 0; i < objectCollection.CurrentProps.Count; i++)
+            for (int i = 0; i < ObjectCollection.CurrentProps.Count; i++)
             {
-                Prop prop = objectCollection.CurrentProps[i];
+                Prop prop = ObjectCollection.CurrentProps[i];
                 MapObject procProp = new MapObject(MapManager.ObjectType.Prop, prop.Coordinates, prop.PropTexture, i);
                 mapObjects.Add(procProp);
             }
-            for (int i = 0; i < objectCollection.CurrentNPCs.Count; i++)
+            for (int i = 0; i < ObjectCollection.CurrentNPCs.Count; i++)
             {
-                NPC npc = objectCollection.CurrentNPCs[i];
+                NPC npc = ObjectCollection.CurrentNPCs[i];
                 string npcType = npc.Type.ToString();
                 MapObject procNPC = new MapObject(MapManager.ObjectType.NPC, npc.Coordinates, npcType, i);
                 mapObjects.Add(procNPC);
             }
-            for (int i = 0; i < objectCollection.CurrentPathPoints.Count; i++)
+            for (int i = 0; i < ObjectCollection.CurrentPathPoints.Count; i++)
             {
-                PathPoint pathPoint = objectCollection.CurrentPathPoints[i];
+                PathPoint pathPoint = ObjectCollection.CurrentPathPoints[i];
                 string pathIDAsString = pathPoint.Id.ToString();
                 MapObject procPath = new MapObject(MapManager.ObjectType.PathPoint, pathPoint.Coordinates, pathIDAsString, i);
                 mapObjects.Add(procPath);
             }
-            for (int i = 0; i < objectCollection.CurrentMiscs.Count; i++)
+            for (int i = 0; i < ObjectCollection.CurrentMiscs.Count; i++)
             {
-                Misc misc = objectCollection.CurrentMiscs[i];
+                Misc misc = ObjectCollection.CurrentMiscs[i];
                 string miscTypeAsString = misc.Type.ToString();
                 MapObject procMisc = new MapObject(MapManager.ObjectType.Misc, misc.Coordinates, miscTypeAsString, i);
                 mapObjects.Add(procMisc);
             }
-            for (int i = 0; i < objectCollection.CurrentLoots.Count; i++)
+            for (int i = 0; i < ObjectCollection.CurrentLoots.Count; i++)
             {
-                Loot loot = objectCollection.CurrentLoots[i];
+                Loot loot = ObjectCollection.CurrentLoots[i];
                 MapObject procLoot = new(MapManager.ObjectType.Loot, loot.Coordinates, loot.Texture, i);
                 mapObjects.Add(procLoot);
             }
-            for (int i = 0; i < objectCollection.CurrentCables.Count; i++)
+            for (int i = 0; i < ObjectCollection.CurrentCables.Count; i++)
             {
-                CableViewModel cable = objectCollection.CurrentCables[i];
+                CableViewModel cable = ObjectCollection.CurrentCables[i];
                 string color = cable.ColourBrush.ToString();
                 MapObject procCable = new(MapManager.ObjectType.Cable, cable.Coordinates[0], color, i);
                 mapObjects.Add(procCable);
@@ -126,6 +127,91 @@ namespace BobMapper.ViewModel
                     CurrentSelections.SelectedObjectType = MapManager.ObjectType.Cable;
                     CableViewModel selectedCable = ObjectCollection.CurrentCables[selectedObject.ID];
                     CurrentSelections.SelectedCable = selectedCable;
+                    break;
+            }
+        }
+
+        public void Refresh(object sender, MapManager.ObjectType objectTypeRefresh)
+        {
+            //Wildly ultra mega inefficient, but I don't want to put any more brain power into this.
+            for (int i = mapObjects.Count - 1; i >= 0; i--)
+            {
+                MapObject item = mapObjects[i];
+                if (item.ObjectType == objectTypeRefresh)
+                {
+                    mapObjects.Remove(item);
+                }
+            }
+            switch (objectTypeRefresh)
+            {
+                case MapManager.ObjectType.Wall:
+                    for (int i = 0; i < ObjectCollection.CurrentWalls.Count; i++)
+                    {
+                        Wall wall = ObjectCollection.CurrentWalls[i];
+                        string procTexture = $"{wall.Texture1} || {wall.Texture2}";
+                        MapObject procWall = new MapObject(MapManager.ObjectType.Wall, wall.Point1, procTexture, i);
+                        mapObjects.Add(procWall);
+                    }
+                    break;
+                case MapManager.ObjectType.Prop:
+                    for (int i = 0; i < ObjectCollection.CurrentProps.Count; i++)
+                    {
+                        Prop prop = ObjectCollection.CurrentProps[i];
+                        MapObject procProp = new MapObject(MapManager.ObjectType.Prop, prop.Coordinates, prop.PropTexture, i);
+                        mapObjects.Add(procProp);
+                    }
+                    break;
+                case MapManager.ObjectType.NPC:
+                    for (int i = 0; i < ObjectCollection.CurrentNPCs.Count; i++)
+                    {
+                        NPC npc = ObjectCollection.CurrentNPCs[i];
+                        string npcType = npc.Type.ToString();
+                        MapObject procNPC = new MapObject(MapManager.ObjectType.NPC, npc.Coordinates, npcType, i);
+                        mapObjects.Add(procNPC);
+                    }
+                    break;
+                case MapManager.ObjectType.PathPoint:
+                    for (int i = 0; i < ObjectCollection.CurrentPathPoints.Count; i++)
+                    {
+                        PathPoint pathPoint = ObjectCollection.CurrentPathPoints[i];
+                        string pathIDAsString = pathPoint.Id.ToString();
+                        MapObject procPath = new MapObject(MapManager.ObjectType.PathPoint, pathPoint.Coordinates, pathIDAsString, i);
+                        mapObjects.Add(procPath);
+                    }
+                    break;
+                case MapManager.ObjectType.Misc:
+                    for (int i = 0; i < ObjectCollection.CurrentMiscs.Count; i++)
+                    {
+                        Misc misc = ObjectCollection.CurrentMiscs[i];
+                        string miscTypeAsString = misc.Type.ToString();
+                        MapObject procMisc = new MapObject(MapManager.ObjectType.Misc, misc.Coordinates, miscTypeAsString, i);
+                        mapObjects.Add(procMisc);
+                    }
+                    break;
+                case MapManager.ObjectType.Door:
+                    for (int i = 0; i < ObjectCollection.CurrentDoors.Count; i++)
+                    {
+                        Door door = ObjectCollection.CurrentDoors[i];
+                        MapObject procDoor = new MapObject(MapManager.ObjectType.Door, door.Point1, door.Texture1, i);
+                        mapObjects.Add(procDoor);
+                    }
+                    break;
+                case MapManager.ObjectType.Loot:
+                    for (int i = 0; i < ObjectCollection.CurrentLoots.Count; i++)
+                    {
+                        Loot loot = ObjectCollection.CurrentLoots[i];
+                        MapObject procLoot = new(MapManager.ObjectType.Loot, loot.Coordinates, loot.Texture, i);
+                        mapObjects.Add(procLoot);
+                    }
+                    break;
+                case MapManager.ObjectType.Cable:
+                    for (int i = 0; i < ObjectCollection.CurrentCables.Count; i++)
+                    {
+                        CableViewModel cable = ObjectCollection.CurrentCables[i];
+                        string color = cable.ColourBrush.ToString();
+                        MapObject procCable = new(MapManager.ObjectType.Cable, cable.Coordinates[0], color, i);
+                        mapObjects.Add(procCable);
+                    }
                     break;
             }
         }

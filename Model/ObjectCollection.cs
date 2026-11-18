@@ -49,6 +49,12 @@ namespace BobMapper.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public event EventHandler<MapManager.ObjectType>? CollectionUpdate;
+
+        public void TriggerCollectionUpdate(MapManager.ObjectType objectType)
+        {
+            CollectionUpdate?.Invoke(this, objectType);
+        }
 
         }
     }
